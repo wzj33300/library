@@ -3,7 +3,7 @@ data:
   libraryCategories:
   - name: .
     pages:
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: common.hpp
       title: common.hpp
   - name: datastructure
@@ -16,15 +16,15 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/convolution.hpp
       title: Convolution
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/radix2_ntt.hpp
       title: Radix-2 NTT
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/truncated_formal_power_series.hpp
       title: Truncated Formal Power Series
   - name: modint
     pages:
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: modint/montgomery_modint.hpp
       title: Montgomery ModInt
   verificationCategories:
@@ -41,6 +41,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/convolution_mod.1.test.cpp
       title: remote_test/yosupo/math/convolution_mod.1.test.cpp
+    - icon: ':x:'
+      path: remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
+      title: remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
 layout: toppage
 ---
 [![License](https://img.shields.io/github/license/hly1204/library)](https://github.com/hly1204/library/blob/master/LICENSE) ![Standard](https://img.shields.io/badge/C%2B%2B-17-green)

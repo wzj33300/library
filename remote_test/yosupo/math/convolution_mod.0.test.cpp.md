@@ -1,19 +1,19 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
   - icon: ':heavy_check_mark:'
     path: math/convolution.hpp
     title: Convolution
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
@@ -157,7 +157,7 @@ data:
     \  int n, m;\n  std::cin >> n >> m;\n  using mint = lib::mm30<998244353>;\n  std::vector<mint>\
     \ a, b;\n  std::copy_n(std::istream_iterator<mint>(std::cin), n, std::back_inserter(a));\n\
     \  std::copy_n(std::istream_iterator<mint>(std::cin), m, std::back_inserter(b));\n\
-    \  auto res = lib::convolution(a, b);\n  std::copy_n(res.begin(), n + m - 1, std::ostream_iterator<mint>(std::cout,\
+    \  auto ab = lib::convolution(a, b);\n  std::copy(ab.begin(), ab.end(), std::ostream_iterator<mint>(std::cout,\
     \ \" \"));\n  return 0;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/convolution_mod\"\n\n#include\
     \ \"math/convolution.hpp\"\n#include \"modint/montgomery_modint.hpp\"\n\n#include\
@@ -166,8 +166,8 @@ data:
     \  std::cin.tie(nullptr);\n  int n, m;\n  std::cin >> n >> m;\n  using mint =\
     \ lib::mm30<998244353>;\n  std::vector<mint> a, b;\n  std::copy_n(std::istream_iterator<mint>(std::cin),\
     \ n, std::back_inserter(a));\n  std::copy_n(std::istream_iterator<mint>(std::cin),\
-    \ m, std::back_inserter(b));\n  auto res = lib::convolution(a, b);\n  std::copy_n(res.begin(),\
-    \ n + m - 1, std::ostream_iterator<mint>(std::cout, \" \"));\n  return 0;\n}"
+    \ m, std::back_inserter(b));\n  auto ab = lib::convolution(a, b);\n  std::copy(ab.begin(),\
+    \ ab.end(), std::ostream_iterator<mint>(std::cout, \" \"));\n  return 0;\n}"
   dependsOn:
   - math/convolution.hpp
   - common.hpp
@@ -177,7 +177,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/convolution_mod.0.test.cpp
   requiredBy: []
-  timestamp: '2022-04-20 19:28:02+08:00'
+  timestamp: '2022-04-20 19:48:35+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/convolution_mod.0.test.cpp
