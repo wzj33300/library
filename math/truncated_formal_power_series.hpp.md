@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
   _extendedRequiredBy: []
@@ -75,12 +75,14 @@ data:
     \ l; ++k) {\n        T u(a[k]), v(a[k + l]);\n        a[k] = u + v, a[k + l] =\
     \ (u - v) * root[m];\n      }\n    }\n  }\n  const T iv(T::mod() - T::mod() /\
     \ n);\n  for (int j = 0, l = n >> 1; j != l; ++j) {\n    T u(a[j] * iv), v(a[j\
-    \ + l] * iv);\n    a[j] = u + v, a[j + l] = u - v;\n  }\n}\n\nLIB_END\n\n\n#line\
-    \ 6 \"math/truncated_formal_power_series.hpp\"\n\n#include <algorithm>\n#line\
-    \ 9 \"math/truncated_formal_power_series.hpp\"\n#include <iostream>\n#include\
-    \ <iterator>\n#line 13 \"math/truncated_formal_power_series.hpp\"\n\nLIB_BEGIN\n\
-    \ntemplate <typename ModIntT>\nclass truncated_formal_power_series : public std::vector<ModIntT>\
-    \ {\n  static_assert(std::is_same_v<typename std::vector<ModIntT>::value_type,\
+    \ + l] * iv);\n    a[j] = u + v, a[j + l] = u - v;\n  }\n}\n\ntemplate <typename\
+    \ ContainerT>\nvoid dft(ContainerT &a) {\n  dft_n(a.begin(), a.size());\n}\n\n\
+    template <typename ContainerT>\nvoid idft(ContainerT &a) {\n  idft_n(a.begin(),\
+    \ a.size());\n}\n\nLIB_END\n\n\n#line 6 \"math/truncated_formal_power_series.hpp\"\
+    \n\n#include <algorithm>\n#line 9 \"math/truncated_formal_power_series.hpp\"\n\
+    #include <iostream>\n#include <iterator>\n#line 13 \"math/truncated_formal_power_series.hpp\"\
+    \n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nclass truncated_formal_power_series\
+    \ : public std::vector<ModIntT> {\n  static_assert(std::is_same_v<typename std::vector<ModIntT>::value_type,\
     \ ModIntT>);\n\npublic:\n  using std::vector<ModIntT>::vector;\n\n  enum : int\
     \ { NEGATIVE_INFINITY = -1 };\n\n  // leading coefficient\n  ModIntT lc() const\
     \ {\n    int d = deg();\n    return d == NEGATIVE_INFINITY ? ModIntT() : this->operator[](d);\n\
@@ -212,7 +214,7 @@ data:
   isVerificationFile: false
   path: math/truncated_formal_power_series.hpp
   requiredBy: []
-  timestamp: '2022-04-20 19:56:42+08:00'
+  timestamp: '2022-04-20 23:28:51+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod.1.test.cpp

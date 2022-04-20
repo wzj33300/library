@@ -1,13 +1,16 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
     path: math/convolution.hpp
     title: Convolution
+  - icon: ':x:'
+    path: math/semi_relaxed_convolution.hpp
+    title: Semi-Relaxed Convolution
   - icon: ':heavy_check_mark:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series
@@ -21,9 +24,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
-  _isVerificationFailed: false
+  - icon: ':x:'
+    path: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
+    title: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/radix2_ntt.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\
@@ -80,7 +86,10 @@ data:
     \ l; ++k) {\n        T u(a[k]), v(a[k + l]);\n        a[k] = u + v, a[k + l] =\
     \ (u - v) * root[m];\n      }\n    }\n  }\n  const T iv(T::mod() - T::mod() /\
     \ n);\n  for (int j = 0, l = n >> 1; j != l; ++j) {\n    T u(a[j] * iv), v(a[j\
-    \ + l] * iv);\n    a[j] = u + v, a[j + l] = u - v;\n  }\n}\n\nLIB_END\n\n\n"
+    \ + l] * iv);\n    a[j] = u + v, a[j + l] = u - v;\n  }\n}\n\ntemplate <typename\
+    \ ContainerT>\nvoid dft(ContainerT &a) {\n  dft_n(a.begin(), a.size());\n}\n\n\
+    template <typename ContainerT>\nvoid idft(ContainerT &a) {\n  idft_n(a.begin(),\
+    \ a.size());\n}\n\nLIB_END\n\n\n"
   code: "#ifndef RADIX2_NTT_HPP\n#define RADIX2_NTT_HPP\n\n#include \"../common.hpp\"\
     \n\n#include <array>\n#include <cassert>\n#include <type_traits>\n#include <vector>\n\
     \nLIB_BEGIN\n\nnamespace detail {\n\ntemplate <typename IntT>\nconstexpr std::enable_if_t<std::is_integral_v<IntT>,\
@@ -133,19 +142,24 @@ data:
     \ l; ++k) {\n        T u(a[k]), v(a[k + l]);\n        a[k] = u + v, a[k + l] =\
     \ (u - v) * root[m];\n      }\n    }\n  }\n  const T iv(T::mod() - T::mod() /\
     \ n);\n  for (int j = 0, l = n >> 1; j != l; ++j) {\n    T u(a[j] * iv), v(a[j\
-    \ + l] * iv);\n    a[j] = u + v, a[j + l] = u - v;\n  }\n}\n\nLIB_END\n\n#endif"
+    \ + l] * iv);\n    a[j] = u + v, a[j + l] = u - v;\n  }\n}\n\ntemplate <typename\
+    \ ContainerT>\nvoid dft(ContainerT &a) {\n  dft_n(a.begin(), a.size());\n}\n\n\
+    template <typename ContainerT>\nvoid idft(ContainerT &a) {\n  idft_n(a.begin(),\
+    \ a.size());\n}\n\nLIB_END\n\n#endif"
   dependsOn:
   - common.hpp
   isVerificationFile: false
   path: math/radix2_ntt.hpp
   requiredBy:
+  - math/semi_relaxed_convolution.hpp
   - math/convolution.hpp
   - math/truncated_formal_power_series.hpp
-  timestamp: '2022-04-20 12:50:40+08:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2022-04-20 23:28:51+08:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod.1.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/convolution_mod.0.test.cpp
 documentation_of: math/radix2_ntt.hpp
 layout: document

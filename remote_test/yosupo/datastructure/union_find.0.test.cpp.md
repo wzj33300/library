@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
   - icon: ':heavy_check_mark:'
@@ -23,8 +23,8 @@ data:
     \ LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END }\n#define LIB\
     \ ::lib::\n\n\n#line 5 \"datastructure/disjoint_set.hpp\"\n\n#include <numeric>\n\
     #include <vector>\n\nLIB_BEGIN\n\nclass disjoint_set {\n  mutable std::vector<int>\
-    \ p_; // parent\n  std::vector<int> s_;         // size\n\npublic:\n  disjoint_set()\
-    \ = default;\n  disjoint_set(int n) : p_(n), s_(n, 1) { std::iota(p_.begin(),\
+    \ p_{}; // parent\n  std::vector<int> s_{};         // size\n\npublic:\n  disjoint_set()\
+    \ = default;\n  explicit disjoint_set(int n) : p_(n), s_(n, 1) { std::iota(p_.begin(),\
     \ p_.end(), 0); }\n  void make_set(int n) {\n    p_.resize(n);\n    s_.assign(n,\
     \ 1);\n    std::iota(p_.begin(), p_.end(), 0);\n  }\n  int find(int u) const {\n\
     \    // path havling\n    while (p_[u] != p_[p_[u]]) u = p_[u] = p_[p_[u]];\n\
@@ -54,7 +54,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/datastructure/union_find.0.test.cpp
   requiredBy: []
-  timestamp: '2022-04-20 11:49:11+08:00'
+  timestamp: '2022-04-20 23:28:51+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/datastructure/union_find.0.test.cpp
