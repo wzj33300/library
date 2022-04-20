@@ -1,20 +1,20 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
     title: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/semi_relaxed_convolution.hpp\"\n\n\n\n#line 1 \"common.hpp\"\
@@ -104,18 +104,18 @@ data:
     \ 1);\n          }\n          dft(dft_A_cache_[lv].emplace_back(fixed_A_.begin()\
     \ + (i - 1) * block_size,\n                                            fixed_A_.begin()\
     \ + (i + 1) * block_size));\n        }\n        auto &B_cache = dft_B_cache_[lv];\n\
-    \        B_cache[i - 1].resize(block_size2);\n        std::copy_n(B_.begin() +\
-    \ l, block_size, B_cache[i - 1].begin());\n        dft(B_cache[i - 1]);\n    \
-    \    std::vector<ModIntT> temp_sum(block_size2);\n        for (int j = 0; j <\
-    \ i; ++j)\n          for (int k = 0; k != block_size2; ++k)\n            temp_sum[k]\
-    \ += dft_A_cache_[lv][i - 1 - j][k] * B_cache[j][k];\n        idft(temp_sum);\n\
-    \        for (int j = block_size; j != block_size2; ++j) c_[j + n_ - block_size]\
-    \ += temp_sum[j];\n        break;\n      }\n    }\n  }\n  for (int i = 0, l =\
-    \ n_ & ~(BASE_CASE_SIZE - 1); i < n_ - l; ++i)\n    c_[n_] += fixed_A_[n_ - l\
-    \ - i] * B_[l + i];\n  if constexpr (std::is_invocable_r_v<ModIntT, FnT, int,\
-    \ const std::vector<ModIntT> &>) {\n    c_[n_] += fixed_A_[0] * B_.emplace_back(handle_(n_,\
-    \ c_));\n  } else {\n    c_[n_] += fixed_A_[0] * B_.emplace_back(handle_(n_));\n\
-    \  }\n  return c_[n_++];\n}\n\nLIB_END\n\n\n"
+    \        B_cache[i - 1].resize(block_size2);\n        std::fill_n(std::copy_n(B_.begin()\
+    \ + l, block_size, B_cache[i - 1].begin()), block_size,\n                    ModIntT());\n\
+    \        dft(B_cache[i - 1]);\n        std::vector<ModIntT> temp_sum(block_size2);\n\
+    \        for (int j = 0; j < i; ++j)\n          for (int k = 0; k != block_size2;\
+    \ ++k)\n            temp_sum[k] += dft_A_cache_[lv][i - 1 - j][k] * B_cache[j][k];\n\
+    \        idft(temp_sum);\n        for (int j = block_size; j != block_size2; ++j)\
+    \ c_[j + n_ - block_size] += temp_sum[j];\n        break;\n      }\n    }\n  }\n\
+    \  for (int i = 0, l = n_ & ~(BASE_CASE_SIZE - 1); i < n_ - l; ++i)\n    c_[n_]\
+    \ += fixed_A_[n_ - l - i] * B_[l + i];\n  if constexpr (std::is_invocable_r_v<ModIntT,\
+    \ FnT, int, const std::vector<ModIntT> &>) {\n    c_[n_] += fixed_A_.front() *\
+    \ B_.emplace_back(handle_(n_, c_));\n  } else {\n    c_[n_] += fixed_A_.front()\
+    \ * B_.emplace_back(handle_(n_));\n  }\n  return c_[n_++];\n}\n\nLIB_END\n\n\n"
   code: "#ifndef SEMI_RELAXED_CONVOLUTION_HPP\n#define SEMI_RELAXED_CONVOLUTION_HPP\n\
     \n#include \"../common.hpp\"\n#include \"radix2_ntt.hpp\"\n\n#include <algorithm>\n\
     #include <type_traits>\n#include <utility>\n#include <vector>\n\nLIB_BEGIN\n\n\
@@ -145,26 +145,26 @@ data:
     \ 1);\n          }\n          dft(dft_A_cache_[lv].emplace_back(fixed_A_.begin()\
     \ + (i - 1) * block_size,\n                                            fixed_A_.begin()\
     \ + (i + 1) * block_size));\n        }\n        auto &B_cache = dft_B_cache_[lv];\n\
-    \        B_cache[i - 1].resize(block_size2);\n        std::copy_n(B_.begin() +\
-    \ l, block_size, B_cache[i - 1].begin());\n        dft(B_cache[i - 1]);\n    \
-    \    std::vector<ModIntT> temp_sum(block_size2);\n        for (int j = 0; j <\
-    \ i; ++j)\n          for (int k = 0; k != block_size2; ++k)\n            temp_sum[k]\
-    \ += dft_A_cache_[lv][i - 1 - j][k] * B_cache[j][k];\n        idft(temp_sum);\n\
-    \        for (int j = block_size; j != block_size2; ++j) c_[j + n_ - block_size]\
-    \ += temp_sum[j];\n        break;\n      }\n    }\n  }\n  for (int i = 0, l =\
-    \ n_ & ~(BASE_CASE_SIZE - 1); i < n_ - l; ++i)\n    c_[n_] += fixed_A_[n_ - l\
-    \ - i] * B_[l + i];\n  if constexpr (std::is_invocable_r_v<ModIntT, FnT, int,\
-    \ const std::vector<ModIntT> &>) {\n    c_[n_] += fixed_A_[0] * B_.emplace_back(handle_(n_,\
-    \ c_));\n  } else {\n    c_[n_] += fixed_A_[0] * B_.emplace_back(handle_(n_));\n\
-    \  }\n  return c_[n_++];\n}\n\nLIB_END\n\n#endif"
+    \        B_cache[i - 1].resize(block_size2);\n        std::fill_n(std::copy_n(B_.begin()\
+    \ + l, block_size, B_cache[i - 1].begin()), block_size,\n                    ModIntT());\n\
+    \        dft(B_cache[i - 1]);\n        std::vector<ModIntT> temp_sum(block_size2);\n\
+    \        for (int j = 0; j < i; ++j)\n          for (int k = 0; k != block_size2;\
+    \ ++k)\n            temp_sum[k] += dft_A_cache_[lv][i - 1 - j][k] * B_cache[j][k];\n\
+    \        idft(temp_sum);\n        for (int j = block_size; j != block_size2; ++j)\
+    \ c_[j + n_ - block_size] += temp_sum[j];\n        break;\n      }\n    }\n  }\n\
+    \  for (int i = 0, l = n_ & ~(BASE_CASE_SIZE - 1); i < n_ - l; ++i)\n    c_[n_]\
+    \ += fixed_A_[n_ - l - i] * B_[l + i];\n  if constexpr (std::is_invocable_r_v<ModIntT,\
+    \ FnT, int, const std::vector<ModIntT> &>) {\n    c_[n_] += fixed_A_.front() *\
+    \ B_.emplace_back(handle_(n_, c_));\n  } else {\n    c_[n_] += fixed_A_.front()\
+    \ * B_.emplace_back(handle_(n_));\n  }\n  return c_[n_++];\n}\n\nLIB_END\n\n#endif"
   dependsOn:
   - common.hpp
   - math/radix2_ntt.hpp
   isVerificationFile: false
   path: math/semi_relaxed_convolution.hpp
   requiredBy: []
-  timestamp: '2022-04-20 23:33:26+08:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2022-04-21 00:04:48+08:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
 documentation_of: math/semi_relaxed_convolution.hpp

@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
   _extendedRequiredBy: []
@@ -214,7 +214,7 @@ data:
   isVerificationFile: false
   path: math/truncated_formal_power_series.hpp
   requiredBy: []
-  timestamp: '2022-04-20 23:33:26+08:00'
+  timestamp: '2022-04-21 00:04:48+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod.1.test.cpp

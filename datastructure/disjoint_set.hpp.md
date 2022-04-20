@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
   _extendedRequiredBy: []
@@ -47,7 +47,7 @@ data:
   isVerificationFile: false
   path: datastructure/disjoint_set.hpp
   requiredBy: []
-  timestamp: '2022-04-20 23:33:26+08:00'
+  timestamp: '2022-04-21 00:04:48+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/datastructure/union_find.0.test.cpp

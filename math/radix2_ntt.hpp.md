@@ -1,14 +1,14 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
     path: math/convolution.hpp
     title: Convolution
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution
   - icon: ':heavy_check_mark:'
@@ -24,12 +24,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
     title: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/radix2_ntt.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\
@@ -154,8 +154,8 @@ data:
   - math/semi_relaxed_convolution.hpp
   - math/convolution.hpp
   - math/truncated_formal_power_series.hpp
-  timestamp: '2022-04-20 23:33:26+08:00'
-  verificationStatus: LIBRARY_SOME_WA
+  timestamp: '2022-04-21 00:04:48+08:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod.1.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
