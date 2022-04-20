@@ -1,28 +1,28 @@
 ---
 data:
   libraryCategories:
-  - name: src
+  - name: .
     pages:
     - icon: ':heavy_check_mark:'
-      path: src/common.hpp
-      title: src/common.hpp
-  - name: src/datastructure
+      path: common.hpp
+      title: common.hpp
+  - name: datastructure
     pages:
     - icon: ':heavy_check_mark:'
-      path: src/datastructure/disjoint_set.hpp
+      path: datastructure/disjoint_set.hpp
       title: Disjoint Set
-  - name: src/math
+  - name: math
     pages:
     - icon: ':heavy_check_mark:'
-      path: src/math/convolution.hpp
+      path: math/convolution.hpp
       title: Convolution
     - icon: ':heavy_check_mark:'
-      path: src/math/radix2_ntt.hpp
+      path: math/radix2_ntt.hpp
       title: Radix-2 NTT
-  - name: src/modint
+  - name: modint
     pages:
     - icon: ':heavy_check_mark:'
-      path: src/modint/montgomery_modint.hpp
+      path: modint/montgomery_modint.hpp
       title: Montgomery ModInt
   verificationCategories:
   - name: remote_test/yosupo/datastructure

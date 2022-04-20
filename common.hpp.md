@@ -3,16 +3,16 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
-    path: src/datastructure/disjoint_set.hpp
+    path: datastructure/disjoint_set.hpp
     title: Disjoint Set
   - icon: ':heavy_check_mark:'
-    path: src/math/convolution.hpp
+    path: math/convolution.hpp
     title: Convolution
   - icon: ':heavy_check_mark:'
-    path: src/math/radix2_ntt.hpp
+    path: math/radix2_ntt.hpp
     title: Radix-2 NTT
   - icon: ':heavy_check_mark:'
-    path: src/modint/montgomery_modint.hpp
+    path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
@@ -26,7 +26,7 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
-  bundledCode: '#line 1 "src/common.hpp"
+  bundledCode: '#line 1 "common.hpp"
 
 
 
@@ -61,21 +61,21 @@ data:
     #endif'
   dependsOn: []
   isVerificationFile: false
-  path: src/common.hpp
+  path: common.hpp
   requiredBy:
-  - src/math/radix2_ntt.hpp
-  - src/math/convolution.hpp
-  - src/modint/montgomery_modint.hpp
-  - src/datastructure/disjoint_set.hpp
-  timestamp: '2022-04-20 11:11:22+08:00'
+  - math/radix2_ntt.hpp
+  - math/convolution.hpp
+  - modint/montgomery_modint.hpp
+  - datastructure/disjoint_set.hpp
+  timestamp: '2022-04-20 11:49:11+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod.0.test.cpp
   - remote_test/yosupo/datastructure/union_find.0.test.cpp
-documentation_of: src/common.hpp
+documentation_of: common.hpp
 layout: document
 redirect_from:
-- /library/src/common.hpp
-- /library/src/common.hpp.html
-title: src/common.hpp
+- /library/common.hpp
+- /library/common.hpp.html
+title: common.hpp
 ---
