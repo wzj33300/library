@@ -21,6 +21,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod.0.test.cpp
     title: remote_test/yosupo/math/convolution_mod.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/convolution_mod.0.test.cpp
+    title: remote_test/yosupo/math/convolution_mod.0.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -70,6 +73,7 @@ data:
   timestamp: '2022-04-20 11:49:11+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - remote_test/yosupo/math/convolution_mod.0.test.cpp
   - remote_test/yosupo/math/convolution_mod.0.test.cpp
   - remote_test/yosupo/datastructure/union_find.0.test.cpp
 documentation_of: common.hpp

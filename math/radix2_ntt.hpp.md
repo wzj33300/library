@@ -72,7 +72,7 @@ data:
     \ (u - v) * root[m];\n      }\n    }\n  }\n  const T iv(T::mod() - T::mod() /\
     \ n);\n  for (int j = 0, l = n >> 1; j != l; ++j) {\n    T u(a[j] * iv), v(a[j\
     \ + l] * iv);\n    a[j] = u + v, a[j + l] = u - v;\n  }\n}\n\nLIB_END\n\n\n"
-  code: "#ifndef RADIX2_NTT_HPP\n#define RADIX2_NTT_HPP\n\n#include \"common.hpp\"\
+  code: "#ifndef RADIX2_NTT_HPP\n#define RADIX2_NTT_HPP\n\n#include \"../common.hpp\"\
     \n\n#include <array>\n#include <cassert>\n#include <type_traits>\n#include <vector>\n\
     \nLIB_BEGIN\n\nnamespace detail {\n\ntemplate <typename IntT>\nconstexpr std::enable_if_t<std::is_integral_v<IntT>,\
     \ int> bsf(IntT v) {\n  if (static_cast<std::make_signed_t<IntT>>(v) <= 0) return\
@@ -131,7 +131,7 @@ data:
   path: math/radix2_ntt.hpp
   requiredBy:
   - math/convolution.hpp
-  timestamp: '2022-04-20 11:49:11+08:00'
+  timestamp: '2022-04-20 12:50:40+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod.0.test.cpp

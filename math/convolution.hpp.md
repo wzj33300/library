@@ -84,7 +84,7 @@ data:
     \ len), dft_n(rhs_cpy.begin(), len);\n  for (int i = 0; i != len; ++i) lhs_cpy[i]\
     \ *= rhs_cpy[i];\n  idft_n(lhs_cpy.begin(), len);\n  lhs_cpy.resize(n + m - 1);\n\
     \  return lhs_cpy;\n}\n\nLIB_END\n\n\n"
-  code: "#ifndef CONVOLUTION_HPP\n#define CONVOLUTION_HPP\n\n#include \"common.hpp\"\
+  code: "#ifndef CONVOLUTION_HPP\n#define CONVOLUTION_HPP\n\n#include \"../common.hpp\"\
     \n#include \"radix2_ntt.hpp\"\n\n#include <algorithm>\n#include <vector>\n\nLIB_BEGIN\n\
     \ntemplate <typename ModIntT>\nstd::vector<ModIntT> convolution(const std::vector<ModIntT>\
     \ &lhs, std::vector<ModIntT> &rhs) {\n  int n = static_cast<int>(lhs.size()),\
@@ -103,7 +103,7 @@ data:
   isVerificationFile: false
   path: math/convolution.hpp
   requiredBy: []
-  timestamp: '2022-04-20 11:49:11+08:00'
+  timestamp: '2022-04-20 12:50:40+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod.0.test.cpp

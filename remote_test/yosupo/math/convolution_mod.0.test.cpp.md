@@ -5,6 +5,9 @@ data:
     path: common.hpp
     title: common.hpp
   - icon: ':heavy_check_mark:'
+    path: common.hpp
+    title: common.hpp
+  - icon: ':heavy_check_mark:'
     path: math/convolution.hpp
     title: Convolution
   - icon: ':heavy_check_mark:'
@@ -145,8 +148,8 @@ data:
     \ != norm(rhs.v_);\n  }\n  friend std::istream &operator>>(std::istream &is, montgomery_modint30\
     \ &rhs) {\n    i32 x;\n    is >> x;\n    rhs = montgomery_modint30(x);\n    return\
     \ is;\n  }\n  friend std::ostream &operator<<(std::ostream &os, const montgomery_modint30\
-    \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t MOD>\n\
-    using mm30 = montgomery_modint30<MOD>;\n\nLIB_END\n\n\n#line 5 \"remote_test/yosupo/math/convolution_mod.0.test.cpp\"\
+    \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t ModT>\n\
+    using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 5 \"remote_test/yosupo/math/convolution_mod.0.test.cpp\"\
     \n\n#line 7 \"remote_test/yosupo/math/convolution_mod.0.test.cpp\"\n#include <iterator>\n\
     \nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"\
     out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
@@ -169,10 +172,11 @@ data:
   - common.hpp
   - math/radix2_ntt.hpp
   - modint/montgomery_modint.hpp
+  - common.hpp
   isVerificationFile: true
   path: remote_test/yosupo/math/convolution_mod.0.test.cpp
   requiredBy: []
-  timestamp: '2022-04-20 11:49:11+08:00'
+  timestamp: '2022-04-20 12:50:40+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/convolution_mod.0.test.cpp

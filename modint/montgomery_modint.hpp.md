@@ -69,10 +69,10 @@ data:
     \ != norm(rhs.v_);\n  }\n  friend std::istream &operator>>(std::istream &is, montgomery_modint30\
     \ &rhs) {\n    i32 x;\n    is >> x;\n    rhs = montgomery_modint30(x);\n    return\
     \ is;\n  }\n  friend std::ostream &operator<<(std::ostream &os, const montgomery_modint30\
-    \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t MOD>\n\
-    using mm30 = montgomery_modint30<MOD>;\n\nLIB_END\n\n\n"
+    \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t ModT>\n\
+    using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n"
   code: "#ifndef MONTGOMERY_MODINT_HPP\n#define MONTGOMERY_MODINT_HPP\n\n#include\
-    \ \"common.hpp\"\n\n#ifdef LIB_DEBUG\n  #include <exception>\n#endif\n#include\
+    \ \"../common.hpp\"\n\n#ifdef LIB_DEBUG\n  #include <exception>\n#endif\n#include\
     \ <cstdint>\n#include <iostream>\n#include <type_traits>\n\nLIB_BEGIN\n\ntemplate\
     \ <std::uint32_t ModT>\nclass montgomery_modint30 {\n  using i32 = std::int32_t;\n\
     \  using u32 = std::uint32_t;\n  using u64 = std::uint64_t;\n\n  u32 v_;\n\n \
@@ -125,14 +125,14 @@ data:
     \  }\n  friend std::istream &operator>>(std::istream &is, montgomery_modint30\
     \ &rhs) {\n    i32 x;\n    is >> x;\n    rhs = montgomery_modint30(x);\n    return\
     \ is;\n  }\n  friend std::ostream &operator<<(std::ostream &os, const montgomery_modint30\
-    \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t MOD>\n\
-    using mm30 = montgomery_modint30<MOD>;\n\nLIB_END\n\n#endif"
+    \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t ModT>\n\
+    using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n#endif"
   dependsOn:
   - common.hpp
   isVerificationFile: false
   path: modint/montgomery_modint.hpp
   requiredBy: []
-  timestamp: '2022-04-20 11:49:11+08:00'
+  timestamp: '2022-04-20 12:50:40+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod.0.test.cpp
