@@ -26,14 +26,14 @@ data:
     , line 260, in _resolve\n    raise BundleErrorAt(path, -1, \"no such header\"\
     )\nonlinejudge_verify.languages.cplusplus_bundle.BundleErrorAt: datastructure/disjoint_set.hpp:\
     \ line -1: no such header\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/unionfind\"\r\n\r\n#include\
-    \ \"datastructure/disjoint_set.hpp\"\r\n\r\n#include <iostream>\r\n\r\nint main()\
-    \ {\r\n#ifdef LOCAL\r\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\"\
-    , \"w\", stdout);\r\n#endif\r\n  std::ios::sync_with_stdio(false);\r\n  std::cin.tie(nullptr);\r\
-    \n  int n, q;\r\n  std::cin >> n >> q;\r\n  lib::disjoint_set ds(n);\r\n  while\
-    \ (q--) {\r\n    int cmd, u, v;\r\n    std::cin >> cmd >> u >> v;\r\n    if (cmd\
-    \ == 0) {\r\n      ds.unite(u, v);\r\n    } else {\r\n      std::cout << static_cast<int>(ds.is_same(u,\
-    \ v)) << '\\n';\r\n    }\r\n  }\r\n  return 0;\r\n}"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/unionfind\"\n\n#include\
+    \ \"datastructure/disjoint_set.hpp\"\n\n#include <iostream>\n\nint main() {\n\
+    #ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\", \"w\"\
+    , stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
+    \  int n, q;\n  std::cin >> n >> q;\n  lib::disjoint_set ds(n);\n  while (q--)\
+    \ {\n    int cmd, u, v;\n    std::cin >> cmd >> u >> v;\n    if (cmd == 0) {\n\
+    \      ds.unite(u, v);\n    } else {\n      std::cout << static_cast<int>(ds.is_same(u,\
+    \ v)) << '\\n';\n    }\n  }\n  return 0;\n}"
   dependsOn:
   - src/datastructure/disjoint_set.hpp
   - src/common.hpp

@@ -14,12 +14,39 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
-  bundledCode: "#line 1 \"src/common.hpp\"\n\n\n\r\n#define LIB_DEBUG\r\n\r\n#define\
-    \ LIB_BEGIN namespace lib {\r\n#define LIB_END }\r\n#define LIB ::lib::\r\n\r\n\
-    \n"
-  code: "#ifndef COMMON_HPP\r\n#define COMMON_HPP\r\n\r\n#define LIB_DEBUG\r\n\r\n\
-    #define LIB_BEGIN namespace lib {\r\n#define LIB_END }\r\n#define LIB ::lib::\r\
-    \n\r\n#endif"
+  bundledCode: '#line 1 "src/common.hpp"
+
+
+
+
+    #define LIB_DEBUG
+
+
+    #define LIB_BEGIN namespace lib {
+
+    #define LIB_END }
+
+    #define LIB ::lib::
+
+
+
+    '
+  code: '#ifndef COMMON_HPP
+
+    #define COMMON_HPP
+
+
+    #define LIB_DEBUG
+
+
+    #define LIB_BEGIN namespace lib {
+
+    #define LIB_END }
+
+    #define LIB ::lib::
+
+
+    #endif'
   dependsOn: []
   isVerificationFile: false
   path: src/common.hpp
