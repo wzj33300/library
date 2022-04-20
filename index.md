@@ -19,6 +19,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/radix2_ntt.hpp
       title: Radix-2 NTT
+    - icon: ':heavy_check_mark:'
+      path: math/truncated_formal_power_series.hpp
+      title: Truncated Formal Power Series
   - name: modint
     pages:
     - icon: ':heavy_check_mark:'
@@ -35,6 +38,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/convolution_mod.0.test.cpp
       title: remote_test/yosupo/math/convolution_mod.0.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: remote_test/yosupo/math/convolution_mod.1.test.cpp
+      title: remote_test/yosupo/math/convolution_mod.1.test.cpp
 layout: toppage
 ---
 [![License](https://img.shields.io/github/license/hly1204/library)](https://github.com/hly1204/library/blob/master/LICENSE) ![Standard](https://img.shields.io/badge/C%2B%2B-17-green)

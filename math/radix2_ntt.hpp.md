@@ -8,10 +8,16 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/convolution.hpp
     title: Convolution
+  - icon: ':heavy_check_mark:'
+    path: math/truncated_formal_power_series.hpp
+    title: Truncated Formal Power Series
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod.0.test.cpp
     title: remote_test/yosupo/math/convolution_mod.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/convolution_mod.1.test.cpp
+    title: remote_test/yosupo/math/convolution_mod.1.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -131,9 +137,11 @@ data:
   path: math/radix2_ntt.hpp
   requiredBy:
   - math/convolution.hpp
+  - math/truncated_formal_power_series.hpp
   timestamp: '2022-04-20 12:50:40+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - remote_test/yosupo/math/convolution_mod.1.test.cpp
   - remote_test/yosupo/math/convolution_mod.0.test.cpp
 documentation_of: math/radix2_ntt.hpp
 layout: document

@@ -12,6 +12,9 @@ data:
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
   - icon: ':heavy_check_mark:'
+    path: math/truncated_formal_power_series.hpp
+    title: Truncated Formal Power Series
+  - icon: ':heavy_check_mark:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedVerifiedWith:
@@ -24,6 +27,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod.0.test.cpp
     title: remote_test/yosupo/math/convolution_mod.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/convolution_mod.1.test.cpp
+    title: remote_test/yosupo/math/convolution_mod.1.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/convolution_mod.1.test.cpp
+    title: remote_test/yosupo/math/convolution_mod.1.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -68,11 +77,14 @@ data:
   requiredBy:
   - math/radix2_ntt.hpp
   - math/convolution.hpp
+  - math/truncated_formal_power_series.hpp
   - modint/montgomery_modint.hpp
   - datastructure/disjoint_set.hpp
   timestamp: '2022-04-20 11:49:11+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - remote_test/yosupo/math/convolution_mod.1.test.cpp
+  - remote_test/yosupo/math/convolution_mod.1.test.cpp
   - remote_test/yosupo/math/convolution_mod.0.test.cpp
   - remote_test/yosupo/math/convolution_mod.0.test.cpp
   - remote_test/yosupo/datastructure/union_find.0.test.cpp

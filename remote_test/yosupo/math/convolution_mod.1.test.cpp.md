@@ -8,11 +8,11 @@ data:
     path: common.hpp
     title: common.hpp
   - icon: ':heavy_check_mark:'
-    path: math/convolution.hpp
-    title: Convolution
-  - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
+  - icon: ':heavy_check_mark:'
+    path: math/truncated_formal_power_series.hpp
+    title: Truncated Formal Power Series
   - icon: ':heavy_check_mark:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
@@ -26,8 +26,8 @@ data:
     PROBLEM: https://judge.yosupo.jp/problem/convolution_mod
     links:
     - https://judge.yosupo.jp/problem/convolution_mod
-  bundledCode: "#line 1 \"remote_test/yosupo/math/convolution_mod.0.test.cpp\"\n#define\
-    \ PROBLEM \"https://judge.yosupo.jp/problem/convolution_mod\"\n\n#line 1 \"math/convolution.hpp\"\
+  bundledCode: "#line 1 \"remote_test/yosupo/math/convolution_mod.1.test.cpp\"\n#define\
+    \ PROBLEM \"https://judge.yosupo.jp/problem/convolution_mod\"\n\n#line 1 \"math/truncated_formal_power_series.hpp\"\
     \n\n\n\n#line 1 \"common.hpp\"\n\n\n\n#define LIB_DEBUG\n\n#define LIB_BEGIN namespace\
     \ lib {\n#define LIB_END }\n#define LIB ::lib::\n\n\n#line 1 \"math/radix2_ntt.hpp\"\
     \n\n\n\n#line 5 \"math/radix2_ntt.hpp\"\n\n#include <array>\n#include <cassert>\n\
@@ -83,37 +83,74 @@ data:
     \ (u - v) * root[m];\n      }\n    }\n  }\n  const T iv(T::mod() - T::mod() /\
     \ n);\n  for (int j = 0, l = n >> 1; j != l; ++j) {\n    T u(a[j] * iv), v(a[j\
     \ + l] * iv);\n    a[j] = u + v, a[j + l] = u - v;\n  }\n}\n\nLIB_END\n\n\n#line\
-    \ 6 \"math/convolution.hpp\"\n\n#include <algorithm>\n#line 9 \"math/convolution.hpp\"\
-    \n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nstd::vector<ModIntT> convolution(const\
-    \ std::vector<ModIntT> &lhs, std::vector<ModIntT> &rhs) {\n  int n = static_cast<int>(lhs.size()),\
-    \ m = static_cast<int>(rhs.size());\n  if (n == 0 || m == 0) return std::vector<ModIntT>{};\n\
-    \  if (std::min(n, m) <= 32) {\n    std::vector<ModIntT> res(n + m - 1);\n   \
-    \ for (int i = 0; i != n; ++i)\n      for (int j = 0; j != m; ++j) res[i + j]\
-    \ += lhs[i] * rhs[j];\n    return res;\n  }\n  int len = ntt_len(n + m - 1);\n\
-    \  std::vector<ModIntT> lhs_cpy(len), rhs_cpy(len);\n  std::copy_n(lhs.cbegin(),\
-    \ n, lhs_cpy.begin());\n  std::copy_n(rhs.cbegin(), m, rhs_cpy.begin());\n  dft_n(lhs_cpy.begin(),\
-    \ len), dft_n(rhs_cpy.begin(), len);\n  for (int i = 0; i != len; ++i) lhs_cpy[i]\
-    \ *= rhs_cpy[i];\n  idft_n(lhs_cpy.begin(), len);\n  lhs_cpy.resize(n + m - 1);\n\
-    \  return lhs_cpy;\n}\n\nLIB_END\n\n\n#line 1 \"modint/montgomery_modint.hpp\"\
-    \n\n\n\n#line 5 \"modint/montgomery_modint.hpp\"\n\n#ifdef LIB_DEBUG\n  #include\
-    \ <stdexcept>\n#endif\n#include <cstdint>\n#include <iostream>\n#line 12 \"modint/montgomery_modint.hpp\"\
-    \n\nLIB_BEGIN\n\ntemplate <std::uint32_t ModT>\nclass montgomery_modint30 {\n\
-    \  using i32 = std::int32_t;\n  using u32 = std::uint32_t;\n  using u64 = std::uint64_t;\n\
-    \n  u32 v_;\n\n  static constexpr u32 get_r() {\n    u32 t = 2, iv = MOD * (t\
-    \ - MOD * MOD);\n    iv *= t - MOD * iv, iv *= t - MOD * iv;\n    return iv *\
-    \ (MOD * iv - t);\n  }\n  static constexpr u32 redc(u64 x) {\n    return (x +\
-    \ static_cast<u64>(static_cast<u32>(x) * R) * MOD) >> 32;\n  }\n  static constexpr\
-    \ u32 norm(u32 x) { return x - (MOD & -((MOD - 1 - x) >> 31)); }\n\n  enum : u32\
-    \ { MOD = ModT, MOD2 = MOD * 2, R = get_r(), R2 = -static_cast<u64>(MOD) % MOD\
-    \ };\n  enum : i32 { SMOD = MOD };\n\n  static_assert(MOD & 1);\n  static_assert(-R\
-    \ * MOD == 1);\n  static_assert((MOD >> 30) == 0);\n  static_assert(MOD != 1);\n\
-    \npublic:\n  static constexpr u32 mod() { return MOD; }\n  static constexpr i32\
-    \ smod() { return SMOD; }\n  constexpr montgomery_modint30() : v_() {}\n  template\
-    \ <typename Int, std::enable_if_t<std::is_integral_v<Int>, int> = 0>\n  constexpr\
-    \ montgomery_modint30(Int v) : v_(redc(static_cast<u64>(v % SMOD + SMOD) * R2))\
-    \ {}\n  constexpr u32 val() const { return norm(redc(v_)); }\n  constexpr i32\
-    \ sval() const { return norm(redc(v_)); }\n  constexpr bool is_zero() const {\
-    \ return norm(v_) == 0; }\n  template <typename IntT, std::enable_if_t<std::is_integral_v<IntT>,\
+    \ 6 \"math/truncated_formal_power_series.hpp\"\n\n#include <algorithm>\n#include\
+    \ <iostream>\n#include <iterator>\n#line 12 \"math/truncated_formal_power_series.hpp\"\
+    \n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nclass truncated_formal_power_series\
+    \ : public std::vector<ModIntT> {\n  static_assert(std::is_same_v<typename std::vector<ModIntT>::value_type,\
+    \ ModIntT>);\n\npublic:\n  using std::vector<ModIntT>::vector;\n\n  enum : int\
+    \ { NEGATIVE_INFINITY = -1 };\n\n  // leading coefficient\n  ModIntT lc() const\
+    \ {\n    int d = deg();\n    return d == NEGATIVE_INFINITY ? ModIntT() : this->operator[](d);\n\
+    \  }\n  // degree\n  int deg() const {\n    // treat formal power series like\
+    \ polynomials\n    int n = static_cast<int>(this->size());\n    while (n >= 0\
+    \ && !this->operator[](n).is_zero()) --n;\n    return n == -1 ? NEGATIVE_INFINITY\
+    \ : n;\n  }\n  // order\n  int ord() const;\n  bool is_zero() const { return deg()\
+    \ == NEGATIVE_INFINITY; }\n  void shrink() { this->resize(deg() + 1); }\n  truncated_formal_power_series\
+    \ operator-() {\n    truncated_formal_power_series res(*this);\n    for (auto\
+    \ &&i : res) i = -i;\n    return res;\n  }\n\n  truncated_formal_power_series\
+    \ &operator+=(const truncated_formal_power_series &rhs) {\n    if (this->size()\
+    \ < rhs.size()) this->resize(rhs.size());\n    for (int i = 0, e = static_cast<int>(rhs.size());\
+    \ i != e; ++i) this->operator[](i) += rhs[i];\n    return *this;\n  }\n  truncated_formal_power_series\
+    \ &operator-=(const truncated_formal_power_series &rhs) {\n    if (this->size()\
+    \ < rhs.size()) this->resize(rhs.size());\n    for (int i = 0, e = static_cast<int>(rhs.size());\
+    \ i != e; ++i) this->operator[](i) -= rhs[i];\n    return *this;\n  }\n  truncated_formal_power_series\
+    \ &operator*=(const truncated_formal_power_series &rhs);\n  truncated_formal_power_series\
+    \ inv(int n) const;\n  truncated_formal_power_series log(int n) const;\n  truncated_formal_power_series\
+    \ exp(int n) const;\n  truncated_formal_power_series div(const truncated_formal_power_series\
+    \ &rhs, int n) const;\n\n  friend truncated_formal_power_series operator+(const\
+    \ truncated_formal_power_series &lhs,\n                                      \
+    \           const truncated_formal_power_series &rhs) {\n    return truncated_formal_power_series(lhs)\
+    \ += rhs;\n  }\n  friend truncated_formal_power_series operator-(const truncated_formal_power_series\
+    \ &lhs,\n                                                 const truncated_formal_power_series\
+    \ &rhs) {\n    return truncated_formal_power_series(lhs) -= rhs;\n  }\n  friend\
+    \ truncated_formal_power_series operator*(const truncated_formal_power_series\
+    \ &lhs,\n                                                 const truncated_formal_power_series\
+    \ &rhs) {\n    return truncated_formal_power_series(lhs) *= rhs;\n  }\n\n  friend\
+    \ std::istream &operator>>(std::istream &lhs, truncated_formal_power_series &rhs)\
+    \ {\n    for (auto &&i : rhs) lhs >> i;\n    return lhs;\n  }\n  friend std::ostream\
+    \ &operator<<(std::ostream &lhs, const truncated_formal_power_series &rhs) {\n\
+    \    int s = 0, e = static_cast<int>(rhs.size());\n    lhs << '[';\n    for (auto\
+    \ &&i : rhs) {\n      lhs << i;\n      if (s >= 1) lhs << 'x';\n      if (s >\
+    \ 1) lhs << '^' << s;\n      if (++s != e) lhs << \" + \";\n    }\n    return\
+    \ lhs << ']';\n  }\n};\n\ntemplate <typename ModIntT>\nusing tfps = truncated_formal_power_series<ModIntT>;\n\
+    \ntemplate <typename ModIntT>\ntfps<ModIntT> &tfps<ModIntT>::operator*=(const\
+    \ tfps<ModIntT> &rhs) {\n  int n = static_cast<int>(this->size()), m = static_cast<int>(rhs.size());\n\
+    \  if (n == 0 || m == 0) {\n    this->clear();\n    return *this;\n  }\n  if (std::min(n,\
+    \ m) <= 32) {\n    tfps<ModIntT> res(n + m - 1);\n    for (int i = 0; i != n;\
+    \ ++i)\n      for (int j = 0; j != m; ++j) res[i + j] += this->operator[](i) *\
+    \ rhs[j];\n    return this->operator=(res);\n  }\n  int len = ntt_len(n + m -\
+    \ 1);\n  tfps<ModIntT> rhs_cpy(len);\n  std::copy_n(rhs.cbegin(), m, rhs_cpy.begin());\n\
+    \  this->resize(len);\n  dft_n(this->begin(), len), dft_n(rhs_cpy.begin(), len);\n\
+    \  for (int i = 0; i != len; ++i) this->operator[](i) *= rhs_cpy[i];\n  idft_n(this->begin(),\
+    \ len);\n  this->resize(n + m - 1);\n  return *this;\n}\n\nLIB_END\n\n\n#line\
+    \ 1 \"modint/montgomery_modint.hpp\"\n\n\n\n#line 5 \"modint/montgomery_modint.hpp\"\
+    \n\n#ifdef LIB_DEBUG\n  #include <stdexcept>\n#endif\n#include <cstdint>\n#line\
+    \ 12 \"modint/montgomery_modint.hpp\"\n\nLIB_BEGIN\n\ntemplate <std::uint32_t\
+    \ ModT>\nclass montgomery_modint30 {\n  using i32 = std::int32_t;\n  using u32\
+    \ = std::uint32_t;\n  using u64 = std::uint64_t;\n\n  u32 v_;\n\n  static constexpr\
+    \ u32 get_r() {\n    u32 t = 2, iv = MOD * (t - MOD * MOD);\n    iv *= t - MOD\
+    \ * iv, iv *= t - MOD * iv;\n    return iv * (MOD * iv - t);\n  }\n  static constexpr\
+    \ u32 redc(u64 x) {\n    return (x + static_cast<u64>(static_cast<u32>(x) * R)\
+    \ * MOD) >> 32;\n  }\n  static constexpr u32 norm(u32 x) { return x - (MOD & -((MOD\
+    \ - 1 - x) >> 31)); }\n\n  enum : u32 { MOD = ModT, MOD2 = MOD * 2, R = get_r(),\
+    \ R2 = -static_cast<u64>(MOD) % MOD };\n  enum : i32 { SMOD = MOD };\n\n  static_assert(MOD\
+    \ & 1);\n  static_assert(-R * MOD == 1);\n  static_assert((MOD >> 30) == 0);\n\
+    \  static_assert(MOD != 1);\n\npublic:\n  static constexpr u32 mod() { return\
+    \ MOD; }\n  static constexpr i32 smod() { return SMOD; }\n  constexpr montgomery_modint30()\
+    \ : v_() {}\n  template <typename Int, std::enable_if_t<std::is_integral_v<Int>,\
+    \ int> = 0>\n  constexpr montgomery_modint30(Int v) : v_(redc(static_cast<u64>(v\
+    \ % SMOD + SMOD) * R2)) {}\n  constexpr u32 val() const { return norm(redc(v_));\
+    \ }\n  constexpr i32 sval() const { return norm(redc(v_)); }\n  constexpr bool\
+    \ is_zero() const { return norm(v_) == 0; }\n  template <typename IntT, std::enable_if_t<std::is_integral_v<IntT>,\
     \ int> = 0>\n  explicit constexpr operator IntT() const {\n    return static_cast<IntT>(val());\n\
     \  }\n  constexpr montgomery_modint30 operator-() const {\n    montgomery_modint30\
     \ res;\n    res.v_ = (MOD2 & -(v_ != 0)) - v_;\n    return res;\n  }\n  constexpr\
@@ -150,40 +187,41 @@ data:
     \ &rhs) {\n    i32 x;\n    is >> x;\n    rhs = montgomery_modint30(x);\n    return\
     \ is;\n  }\n  friend std::ostream &operator<<(std::ostream &os, const montgomery_modint30\
     \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t ModT>\n\
-    using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 5 \"remote_test/yosupo/math/convolution_mod.0.test.cpp\"\
-    \n\n#line 7 \"remote_test/yosupo/math/convolution_mod.0.test.cpp\"\n#include <iterator>\n\
-    \nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"\
-    out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
-    \  int n, m;\n  std::cin >> n >> m;\n  using mint = lib::mm30<998244353>;\n  std::vector<mint>\
+    using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 5 \"remote_test/yosupo/math/convolution_mod.1.test.cpp\"\
+    \n\n#line 8 \"remote_test/yosupo/math/convolution_mod.1.test.cpp\"\n\nint main()\
+    \ {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\"\
+    , \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
+    \  int n, m;\n  std::cin >> n >> m;\n  using mint = lib::mm30<998244353>;\n  lib::tfps<mint>\
     \ a, b;\n  std::copy_n(std::istream_iterator<mint>(std::cin), n, std::back_inserter(a));\n\
     \  std::copy_n(std::istream_iterator<mint>(std::cin), m, std::back_inserter(b));\n\
-    \  auto res = lib::convolution(a, b);\n  std::copy_n(res.begin(), n + m - 1, std::ostream_iterator<mint>(std::cout,\
+    \  auto res = a * b;\n  std::copy_n(res.begin(), n + m - 1, std::ostream_iterator<mint>(std::cout,\
     \ \" \"));\n  return 0;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/convolution_mod\"\n\n#include\
-    \ \"math/convolution.hpp\"\n#include \"modint/montgomery_modint.hpp\"\n\n#include\
-    \ <iostream>\n#include <iterator>\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"\
-    in\", \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
-    \  std::cin.tie(nullptr);\n  int n, m;\n  std::cin >> n >> m;\n  using mint =\
-    \ lib::mm30<998244353>;\n  std::vector<mint> a, b;\n  std::copy_n(std::istream_iterator<mint>(std::cin),\
-    \ n, std::back_inserter(a));\n  std::copy_n(std::istream_iterator<mint>(std::cin),\
-    \ m, std::back_inserter(b));\n  auto res = lib::convolution(a, b);\n  std::copy_n(res.begin(),\
-    \ n + m - 1, std::ostream_iterator<mint>(std::cout, \" \"));\n  return 0;\n}"
+    \ \"math/truncated_formal_power_series.hpp\"\n#include \"modint/montgomery_modint.hpp\"\
+    \n\n#include <iostream>\n#include <iterator>\n\nint main() {\n#ifdef LOCAL\n \
+    \ std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n\
+    #endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n  int n,\
+    \ m;\n  std::cin >> n >> m;\n  using mint = lib::mm30<998244353>;\n  lib::tfps<mint>\
+    \ a, b;\n  std::copy_n(std::istream_iterator<mint>(std::cin), n, std::back_inserter(a));\n\
+    \  std::copy_n(std::istream_iterator<mint>(std::cin), m, std::back_inserter(b));\n\
+    \  auto res = a * b;\n  std::copy_n(res.begin(), n + m - 1, std::ostream_iterator<mint>(std::cout,\
+    \ \" \"));\n  return 0;\n}"
   dependsOn:
-  - math/convolution.hpp
+  - math/truncated_formal_power_series.hpp
   - common.hpp
   - math/radix2_ntt.hpp
   - modint/montgomery_modint.hpp
   - common.hpp
   isVerificationFile: true
-  path: remote_test/yosupo/math/convolution_mod.0.test.cpp
+  path: remote_test/yosupo/math/convolution_mod.1.test.cpp
   requiredBy: []
   timestamp: '2022-04-20 19:28:02+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: remote_test/yosupo/math/convolution_mod.0.test.cpp
+documentation_of: remote_test/yosupo/math/convolution_mod.1.test.cpp
 layout: document
 redirect_from:
-- /verify/remote_test/yosupo/math/convolution_mod.0.test.cpp
-- /verify/remote_test/yosupo/math/convolution_mod.0.test.cpp.html
-title: remote_test/yosupo/math/convolution_mod.0.test.cpp
+- /verify/remote_test/yosupo/math/convolution_mod.1.test.cpp
+- /verify/remote_test/yosupo/math/convolution_mod.1.test.cpp.html
+title: remote_test/yosupo/math/convolution_mod.1.test.cpp
 ---
