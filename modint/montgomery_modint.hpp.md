@@ -142,7 +142,7 @@ data:
   isVerificationFile: false
   path: modint/montgomery_modint.hpp
   requiredBy: []
-  timestamp: '2022-04-20 23:28:51+08:00'
+  timestamp: '2022-04-20 23:33:26+08:00'
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod.1.test.cpp
