@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
   _extendedRequiredBy: []
@@ -131,8 +131,8 @@ data:
     \ len);\n  for (int i = 0; i != len; ++i) this->operator[](i) *= rhs_cpy[i];\n\
     \  idft_n(this->begin(), len);\n  this->resize(n + m - 1);\n  return *this;\n\
     }\n\ntemplate <typename ModIntT>\ntfps<ModIntT> tfps<ModIntT>::inv(int n) const\
-    \ {\n  // 10E\n  assert(n > 0);\n  assert(!this->front().is_zero());\n  if (n\
-    \ == 1) return tfps<ModIntT>{this->front().inv()};\n  int len = ntt_len(n);\n\
+    \ {\n  // 10E\n  assert(n >= 0);\n  if (n == 0) return tfps<ModIntT>{};\n  assert(!this->front().is_zero());\n\
+    \  if (n == 1) return tfps<ModIntT>{this->front().inv()};\n  int len = ntt_len(n);\n\
     \  tfps<ModIntT> res(len), temp0(len), temp1(len), cpy(len);\n  std::copy(this->cbegin(),\
     \ this->cend(), cpy.begin());\n  res.front() = this->front().inv();\n  for (int\
     \ i = 2; i <= len; i <<= 1) {\n    std::copy_n(cpy.cbegin(), i, temp0.begin());\n\
@@ -196,8 +196,8 @@ data:
     \ len);\n  for (int i = 0; i != len; ++i) this->operator[](i) *= rhs_cpy[i];\n\
     \  idft_n(this->begin(), len);\n  this->resize(n + m - 1);\n  return *this;\n\
     }\n\ntemplate <typename ModIntT>\ntfps<ModIntT> tfps<ModIntT>::inv(int n) const\
-    \ {\n  // 10E\n  assert(n > 0);\n  assert(!this->front().is_zero());\n  if (n\
-    \ == 1) return tfps<ModIntT>{this->front().inv()};\n  int len = ntt_len(n);\n\
+    \ {\n  // 10E\n  assert(n >= 0);\n  if (n == 0) return tfps<ModIntT>{};\n  assert(!this->front().is_zero());\n\
+    \  if (n == 1) return tfps<ModIntT>{this->front().inv()};\n  int len = ntt_len(n);\n\
     \  tfps<ModIntT> res(len), temp0(len), temp1(len), cpy(len);\n  std::copy(this->cbegin(),\
     \ this->cend(), cpy.begin());\n  res.front() = this->front().inv();\n  for (int\
     \ i = 2; i <= len; i <<= 1) {\n    std::copy_n(cpy.cbegin(), i, temp0.begin());\n\
@@ -214,7 +214,7 @@ data:
   isVerificationFile: false
   path: math/truncated_formal_power_series.hpp
   requiredBy: []
-  timestamp: '2022-04-21 00:04:48+08:00'
+  timestamp: '2022-04-23 01:20:30+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod.1.test.cpp

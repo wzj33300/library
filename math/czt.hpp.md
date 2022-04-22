@@ -9,17 +9,17 @@ data:
     title: Radix-2 NTT
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: remote_test/yosupo/math/convolution_mod.0.test.cpp
-    title: remote_test/yosupo/math/convolution_mod.0.test.cpp
-  _isVerificationFailed: false
+  - icon: ':x:'
+    path: remote_test/yosupo/math/convolution_mod.2.test.cpp
+    title: remote_test/yosupo/math/convolution_mod.2.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     links: []
-  bundledCode: "#line 1 \"math/convolution.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\
-    \n\n#define LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END }\n\
-    #define LIB ::lib::\n\n\n#line 1 \"math/radix2_ntt.hpp\"\n\n\n\n#line 5 \"math/radix2_ntt.hpp\"\
+  bundledCode: "#line 1 \"math/czt.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\n#define\
+    \ LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END }\n#define LIB\
+    \ ::lib::\n\n\n#line 1 \"math/radix2_ntt.hpp\"\n\n\n\n#line 5 \"math/radix2_ntt.hpp\"\
     \n\n#include <array>\n#include <cassert>\n#include <type_traits>\n#include <vector>\n\
     \nLIB_BEGIN\n\nnamespace detail {\n\ntemplate <typename IntT>\nconstexpr std::enable_if_t<std::is_integral_v<IntT>,\
     \ int> bsf(IntT v) {\n  if (static_cast<std::make_signed_t<IntT>>(v) <= 0) return\
@@ -74,43 +74,57 @@ data:
     \ + l] * iv);\n    a[j] = u + v, a[j + l] = u - v;\n  }\n}\n\ntemplate <typename\
     \ ContainerT>\nvoid dft(ContainerT &a) {\n  dft_n(a.begin(), a.size());\n}\n\n\
     template <typename ContainerT>\nvoid idft(ContainerT &a) {\n  idft_n(a.begin(),\
-    \ a.size());\n}\n\nLIB_END\n\n\n#line 6 \"math/convolution.hpp\"\n\n#include <algorithm>\n\
-    #line 9 \"math/convolution.hpp\"\n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\n\
-    std::vector<ModIntT> convolution(const std::vector<ModIntT> &lhs, std::vector<ModIntT>\
-    \ &rhs) {\n  int n = static_cast<int>(lhs.size()), m = static_cast<int>(rhs.size());\n\
-    \  if (n == 0 || m == 0) return std::vector<ModIntT>{};\n  if (std::min(n, m)\
-    \ <= 32) {\n    std::vector<ModIntT> res(n + m - 1);\n    for (int i = 0; i !=\
-    \ n; ++i)\n      for (int j = 0; j != m; ++j) res[i + j] += lhs[i] * rhs[j];\n\
-    \    return res;\n  }\n  int len = ntt_len(n + m - 1);\n  std::vector<ModIntT>\
-    \ lhs_cpy(len), rhs_cpy(len);\n  std::copy_n(lhs.cbegin(), n, lhs_cpy.begin());\n\
-    \  std::copy_n(rhs.cbegin(), m, rhs_cpy.begin());\n  dft_n(lhs_cpy.begin(), len),\
-    \ dft_n(rhs_cpy.begin(), len);\n  for (int i = 0; i != len; ++i) lhs_cpy[i] *=\
-    \ rhs_cpy[i];\n  idft_n(lhs_cpy.begin(), len);\n  lhs_cpy.resize(n + m - 1);\n\
-    \  return lhs_cpy;\n}\n\nLIB_END\n\n\n"
-  code: "#ifndef CONVOLUTION_HPP\n#define CONVOLUTION_HPP\n\n#include \"../common.hpp\"\
-    \n#include \"radix2_ntt.hpp\"\n\n#include <algorithm>\n#include <vector>\n\nLIB_BEGIN\n\
-    \ntemplate <typename ModIntT>\nstd::vector<ModIntT> convolution(const std::vector<ModIntT>\
-    \ &lhs, std::vector<ModIntT> &rhs) {\n  int n = static_cast<int>(lhs.size()),\
-    \ m = static_cast<int>(rhs.size());\n  if (n == 0 || m == 0) return std::vector<ModIntT>{};\n\
-    \  if (std::min(n, m) <= 32) {\n    std::vector<ModIntT> res(n + m - 1);\n   \
-    \ for (int i = 0; i != n; ++i)\n      for (int j = 0; j != m; ++j) res[i + j]\
-    \ += lhs[i] * rhs[j];\n    return res;\n  }\n  int len = ntt_len(n + m - 1);\n\
-    \  std::vector<ModIntT> lhs_cpy(len), rhs_cpy(len);\n  std::copy_n(lhs.cbegin(),\
-    \ n, lhs_cpy.begin());\n  std::copy_n(rhs.cbegin(), m, rhs_cpy.begin());\n  dft_n(lhs_cpy.begin(),\
-    \ len), dft_n(rhs_cpy.begin(), len);\n  for (int i = 0; i != len; ++i) lhs_cpy[i]\
-    \ *= rhs_cpy[i];\n  idft_n(lhs_cpy.begin(), len);\n  lhs_cpy.resize(n + m - 1);\n\
-    \  return lhs_cpy;\n}\n\nLIB_END\n\n#endif"
+    \ a.size());\n}\n\nLIB_END\n\n\n#line 6 \"math/czt.hpp\"\n\n#include <algorithm>\n\
+    #line 9 \"math/czt.hpp\"\n#include <numeric>\n#line 11 \"math/czt.hpp\"\n\nLIB_BEGIN\n\
+    \n// Chirp Z-transform\n// Input:  A(x) = `a[0]` + `a[1]`x + ..., constant `c`,\
+    \ and integer `n`.\n// Output: [A(1), A(c), A(c^2), ..., A(c^(n - 1))].\ntemplate\
+    \ <typename ModIntT>\nstd::vector<ModIntT> czt(const std::vector<ModIntT> &a,\
+    \ const ModIntT &c, int n) {\n  assert(n >= 0);\n  if (n == 0) return std::vector<ModIntT>{};\n\
+    \  int m = static_cast<int>(a.size());\n  while (m > 0 && a[m - 1].is_zero())\
+    \ --m;\n  if (m == 0) return std::vector<ModIntT>(n);\n  if (c.is_zero()) {\n\
+    \    std::vector<ModIntT> res(n, a.front());\n    res.front() = std::accumulate(a.begin(),\
+    \ a.begin() + m, ModIntT());\n    return res;\n  }\n  const int sz = n + m - 1,\
+    \ len = ntt_len(sz), nm_max = std::max(n, m);\n  std::vector<ModIntT> a_cpy(len),\
+    \ c_binom{1, 1}, ic_binom{1, 1};\n  c_binom.resize(len);\n  ic_binom.resize(nm_max);\n\
+    \  {\n    const ModIntT ic(c.inv());\n    ModIntT c_temp(1), ic_temp(1);\n   \
+    \ for (int i = 2; i < sz; ++i) c_binom[i] = c_binom[i - 1] * (c_temp *= c);\n\
+    \    for (int i = 2; i < nm_max; ++i) ic_binom[i] = ic_binom[i - 1] * (ic_temp\
+    \ *= ic);\n  }\n  for (int i = 0; i != m; ++i) a_cpy[m - 1 - i] = a[i] * ic_binom[i];\n\
+    \  dft(a_cpy), dft(c_binom);\n  for (int i = 0; i != len; ++i) a_cpy[i] *= c_binom[i];\n\
+    \  idft(a_cpy);\n  a_cpy.erase(a_cpy.begin(), a_cpy.begin() + m - 1);\n  a_cpy.resize(n);\n\
+    \  for (int i = 0; i != n; ++i) a_cpy[i] *= ic_binom[i];\n  return a_cpy;\n}\n\
+    \nLIB_END\n\n\n"
+  code: "#ifndef CZT_HPP\n#define CZT_HPP\n\n#include \"../common.hpp\"\n#include\
+    \ \"radix2_ntt.hpp\"\n\n#include <algorithm>\n#include <cassert>\n#include <numeric>\n\
+    #include <vector>\n\nLIB_BEGIN\n\n// Chirp Z-transform\n// Input:  A(x) = `a[0]`\
+    \ + `a[1]`x + ..., constant `c`, and integer `n`.\n// Output: [A(1), A(c), A(c^2),\
+    \ ..., A(c^(n - 1))].\ntemplate <typename ModIntT>\nstd::vector<ModIntT> czt(const\
+    \ std::vector<ModIntT> &a, const ModIntT &c, int n) {\n  assert(n >= 0);\n  if\
+    \ (n == 0) return std::vector<ModIntT>{};\n  int m = static_cast<int>(a.size());\n\
+    \  while (m > 0 && a[m - 1].is_zero()) --m;\n  if (m == 0) return std::vector<ModIntT>(n);\n\
+    \  if (c.is_zero()) {\n    std::vector<ModIntT> res(n, a.front());\n    res.front()\
+    \ = std::accumulate(a.begin(), a.begin() + m, ModIntT());\n    return res;\n \
+    \ }\n  const int sz = n + m - 1, len = ntt_len(sz), nm_max = std::max(n, m);\n\
+    \  std::vector<ModIntT> a_cpy(len), c_binom{1, 1}, ic_binom{1, 1};\n  c_binom.resize(len);\n\
+    \  ic_binom.resize(nm_max);\n  {\n    const ModIntT ic(c.inv());\n    ModIntT\
+    \ c_temp(1), ic_temp(1);\n    for (int i = 2; i < sz; ++i) c_binom[i] = c_binom[i\
+    \ - 1] * (c_temp *= c);\n    for (int i = 2; i < nm_max; ++i) ic_binom[i] = ic_binom[i\
+    \ - 1] * (ic_temp *= ic);\n  }\n  for (int i = 0; i != m; ++i) a_cpy[m - 1 - i]\
+    \ = a[i] * ic_binom[i];\n  dft(a_cpy), dft(c_binom);\n  for (int i = 0; i != len;\
+    \ ++i) a_cpy[i] *= c_binom[i];\n  idft(a_cpy);\n  a_cpy.erase(a_cpy.begin(), a_cpy.begin()\
+    \ + m - 1);\n  a_cpy.resize(n);\n  for (int i = 0; i != n; ++i) a_cpy[i] *= ic_binom[i];\n\
+    \  return a_cpy;\n}\n\nLIB_END\n\n#endif"
   dependsOn:
   - common.hpp
   - math/radix2_ntt.hpp
   isVerificationFile: false
-  path: math/convolution.hpp
+  path: math/czt.hpp
   requiredBy: []
-  timestamp: '2022-04-21 00:04:48+08:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2022-04-23 01:20:30+08:00'
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
-  - remote_test/yosupo/math/convolution_mod.0.test.cpp
-documentation_of: math/convolution.hpp
+  - remote_test/yosupo/math/convolution_mod.2.test.cpp
+documentation_of: math/czt.hpp
 layout: document
-title: Convolution
+title: Chirp Z-transform (Bluestein's algorithm)
 ---
