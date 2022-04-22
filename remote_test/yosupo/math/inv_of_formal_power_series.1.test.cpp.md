@@ -1,26 +1,26 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/inv_of_formal_power_series
@@ -109,7 +109,7 @@ data:
     \    for (int t = n_ / BASE_CASE_SIZE, block_size = BASE_CASE_SIZE, lv = 0; t\
     \ != 0;\n         t >>= LOG_BLOCK, block_size <<= LOG_BLOCK, ++lv) {\n      if\
     \ (int i = t & MASK, block_size2 = block_size << 1, l = n_ - block_size; i !=\
-    \ 0) {\n        if (block_size * i == n) {\n          if (static_cast<int>(dft_A_cache_.size())\
+    \ 0) {\n        if (block_size * i == n_) {\n          if (static_cast<int>(dft_A_cache_.size())\
     \ == lv) {\n            dft_A_cache_.emplace_back();\n            dft_B_cache_.emplace_back(BLOCK\
     \ - 1);\n          }\n          dft(dft_A_cache_[lv].emplace_back(fixed_A_.begin()\
     \ + (i - 1) * block_size,\n                                            fixed_A_.begin()\
@@ -212,8 +212,8 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
   requiredBy: []
-  timestamp: '2022-04-23 01:20:30+08:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2022-04-23 01:32:00+08:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
 layout: document

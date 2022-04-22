@@ -1,20 +1,20 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
     title: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/semi_relaxed_convolution.hpp\"\n\n\n\n#line 1 \"common.hpp\"\
@@ -98,7 +98,7 @@ data:
     \    for (int t = n_ / BASE_CASE_SIZE, block_size = BASE_CASE_SIZE, lv = 0; t\
     \ != 0;\n         t >>= LOG_BLOCK, block_size <<= LOG_BLOCK, ++lv) {\n      if\
     \ (int i = t & MASK, block_size2 = block_size << 1, l = n_ - block_size; i !=\
-    \ 0) {\n        if (block_size * i == n) {\n          if (static_cast<int>(dft_A_cache_.size())\
+    \ 0) {\n        if (block_size * i == n_) {\n          if (static_cast<int>(dft_A_cache_.size())\
     \ == lv) {\n            dft_A_cache_.emplace_back();\n            dft_B_cache_.emplace_back(BLOCK\
     \ - 1);\n          }\n          dft(dft_A_cache_[lv].emplace_back(fixed_A_.begin()\
     \ + (i - 1) * block_size,\n                                            fixed_A_.begin()\
@@ -138,7 +138,7 @@ data:
     \    for (int t = n_ / BASE_CASE_SIZE, block_size = BASE_CASE_SIZE, lv = 0; t\
     \ != 0;\n         t >>= LOG_BLOCK, block_size <<= LOG_BLOCK, ++lv) {\n      if\
     \ (int i = t & MASK, block_size2 = block_size << 1, l = n_ - block_size; i !=\
-    \ 0) {\n        if (block_size * i == n) {\n          if (static_cast<int>(dft_A_cache_.size())\
+    \ 0) {\n        if (block_size * i == n_) {\n          if (static_cast<int>(dft_A_cache_.size())\
     \ == lv) {\n            dft_A_cache_.emplace_back();\n            dft_B_cache_.emplace_back(BLOCK\
     \ - 1);\n          }\n          dft(dft_A_cache_[lv].emplace_back(fixed_A_.begin()\
     \ + (i - 1) * block_size,\n                                            fixed_A_.begin()\
@@ -161,8 +161,8 @@ data:
   isVerificationFile: false
   path: math/semi_relaxed_convolution.hpp
   requiredBy: []
-  timestamp: '2022-04-23 01:20:30+08:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2022-04-23 01:32:00+08:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
 documentation_of: math/semi_relaxed_convolution.hpp

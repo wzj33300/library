@@ -1,26 +1,26 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/czt.hpp
     title: Chirp Z-transform (Bluestein's algorithm)
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/convolution_mod
@@ -170,8 +170,8 @@ data:
     \  int len = lib::ntt_len(n + m - 1);\n  const mint PR(3), c(PR.pow((mint::mod()\
     \ - 1) / len));\n  auto a_czt = lib::czt(a, c, len);\n  auto b_czt = lib::czt(b,\
     \ c, len);\n  for (int i = 0; i != len; ++i) a_czt[i] *= b_czt[i];\n  auto ab\
-    \ = lib::czt(a_czt, c.inv(), len);\n  const mint iv(mint(len).inv());\n  for (auto\
-    \ &&i : ab) std::cout << i * iv << ' ';\n  return 0;\n}\n"
+    \ = lib::czt(a_czt, c.inv(), len);\n  ab.resize(n + m - 1);\n  const mint iv(mint(len).inv());\n\
+    \  for (auto &&i : ab) std::cout << i * iv << ' ';\n  return 0;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/convolution_mod\"\n\n#include\
     \ \"math/czt.hpp\"\n#include \"math/radix2_ntt.hpp\"\n#include \"modint/montgomery_modint.hpp\"\
     \n\n#include <iostream>\n#include <iterator>\n#include <vector>\n\nint main()\
@@ -183,8 +183,8 @@ data:
     \  int len = lib::ntt_len(n + m - 1);\n  const mint PR(3), c(PR.pow((mint::mod()\
     \ - 1) / len));\n  auto a_czt = lib::czt(a, c, len);\n  auto b_czt = lib::czt(b,\
     \ c, len);\n  for (int i = 0; i != len; ++i) a_czt[i] *= b_czt[i];\n  auto ab\
-    \ = lib::czt(a_czt, c.inv(), len);\n  const mint iv(mint(len).inv());\n  for (auto\
-    \ &&i : ab) std::cout << i * iv << ' ';\n  return 0;\n}"
+    \ = lib::czt(a_czt, c.inv(), len);\n  ab.resize(n + m - 1);\n  const mint iv(mint(len).inv());\n\
+    \  for (auto &&i : ab) std::cout << i * iv << ' ';\n  return 0;\n}"
   dependsOn:
   - math/czt.hpp
   - common.hpp
@@ -194,8 +194,8 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/convolution_mod.2.test.cpp
   requiredBy: []
-  timestamp: '2022-04-23 01:20:30+08:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2022-04-23 01:32:00+08:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/convolution_mod.2.test.cpp
 layout: document

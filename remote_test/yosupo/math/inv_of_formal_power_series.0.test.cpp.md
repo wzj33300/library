@@ -1,19 +1,19 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
   - icon: ':heavy_check_mark:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
@@ -231,7 +231,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
   requiredBy: []
-  timestamp: '2022-04-23 01:20:30+08:00'
+  timestamp: '2022-04-23 01:32:00+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
