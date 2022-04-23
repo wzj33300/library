@@ -54,7 +54,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/datastructure/union_find.0.test.cpp
   requiredBy: []
-  timestamp: '2022-04-23 15:37:06+08:00'
+  timestamp: '2022-04-23 15:43:11+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/datastructure/union_find.0.test.cpp
