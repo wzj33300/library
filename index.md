@@ -11,6 +11,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: datastructure/disjoint_set.hpp
       title: Disjoint Set
+    - icon: ':heavy_check_mark:'
+      path: datastructure/weighted_disjoint_set.hpp
+      title: Weighted Disjoint Set
   - name: math
     pages:
     - icon: ':heavy_check_mark:'
@@ -37,6 +40,11 @@ data:
       path: modint/montgomery_modint.hpp
       title: Montgomery ModInt
   verificationCategories:
+  - name: remote_test/aizu/datastructure
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: remote_test/aizu/datastructure/weighted_union_find.0.test.cpp
+      title: remote_test/aizu/datastructure/weighted_union_find.0.test.cpp
   - name: remote_test/yosupo/datastructure
     pages:
     - icon: ':heavy_check_mark:'

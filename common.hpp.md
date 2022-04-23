@@ -6,6 +6,9 @@ data:
     path: datastructure/disjoint_set.hpp
     title: Disjoint Set
   - icon: ':heavy_check_mark:'
+    path: datastructure/weighted_disjoint_set.hpp
+    title: Weighted Disjoint Set
+  - icon: ':heavy_check_mark:'
     path: math/convolution.hpp
     title: Convolution
   - icon: ':heavy_check_mark:'
@@ -30,6 +33,9 @@ data:
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: remote_test/aizu/datastructure/weighted_union_find.0.test.cpp
+    title: remote_test/aizu/datastructure/weighted_union_find.0.test.cpp
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/datastructure/union_find.0.test.cpp
     title: remote_test/yosupo/datastructure/union_find.0.test.cpp
@@ -119,10 +125,12 @@ data:
   - math/czt.hpp
   - modint/montgomery_modint.hpp
   - modint/long_montgomery_modint.hpp
+  - datastructure/weighted_disjoint_set.hpp
   - datastructure/disjoint_set.hpp
   timestamp: '2022-04-20 11:49:11+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - remote_test/aizu/datastructure/weighted_union_find.0.test.cpp
   - remote_test/yosupo/math/convolution_mod.1.test.cpp
   - remote_test/yosupo/math/convolution_mod.1.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp

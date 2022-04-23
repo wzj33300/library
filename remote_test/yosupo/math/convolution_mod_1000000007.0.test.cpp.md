@@ -171,20 +171,21 @@ data:
     \  auto res1   = convolution(std::vector<mint1>(lhs.begin(), lhs.end()),\n   \
     \                       std::vector<mint1>(rhs.begin(), rhs.end()));\n  const\
     \ int n = res0.size();\n  std::vector<IntT> res(n);\n  //    a mod m_0 = a_0,\
-    \ a mod m_1 = a_1\n  // -> a_0 + k_0m_0 = a_1 + k_1m_1\n  // -> a_0 - a_1 = k_1m_1\
-    \ (mod m_0)\n  // -> k_1 = (a_0 - a_1) / m_1 (mod m_0)\n  static constexpr mint0\
-    \ im1_mod_m0(mint0(mint1::mod()).inv());\n  const IntT m1_mod_modular = mint1::mod()\
-    \ % modular;\n  for (int i = 0; i != n; ++i) {\n    mint0 k1((res0[i] - res1[i].val())\
-    \ * im1_mod_m0);\n    res[i] = (k1.val() % modular * m1_mod_modular + res1[i].val())\
-    \ % modular;\n  }\n  return res;\n}\n\nLIB_END\n\n\n#line 5 \"remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp\"\
-    \n\n#line 7 \"remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp\"\n\
-    #include <iterator>\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\"\
-    , stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
-    \  std::cin.tie(nullptr);\n  int n, m;\n  std::cin >> n >> m;\n  std::vector<int>\
-    \ a, b;\n  std::copy_n(std::istream_iterator<int>(std::cin), n, std::back_inserter(a));\n\
-    \  std::copy_n(std::istream_iterator<int>(std::cin), m, std::back_inserter(b));\n\
-    \  auto ab = lib::convolution_mod(a, b, 1000000007);\n  std::copy(ab.begin(),\
-    \ ab.end(), std::ostream_iterator<int>(std::cout, \" \"));\n  return 0;\n}\n"
+    \ a mod m_1 = a_1\n  // -> a_0 + k_0m_0 = a_1 + k_1m_1\n  // -> a_0 - a_1 \u2261\
+    \ k_1m_1 (mod m_0)\n  // -> k_1 \u2261 (a_0 - a_1) / m_1 (mod m_0)\n  static constexpr\
+    \ mint0 im1_mod_m0(mint0(mint1::mod()).inv());\n  const IntT m1_mod_modular =\
+    \ mint1::mod() % modular;\n  for (int i = 0; i != n; ++i) {\n    mint0 k1((res0[i]\
+    \ - res1[i].val()) * im1_mod_m0);\n    res[i] = (k1.val() % modular * m1_mod_modular\
+    \ + res1[i].val()) % modular;\n  }\n  return res;\n}\n\nLIB_END\n\n\n#line 5 \"\
+    remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp\"\n\n#line 7 \"\
+    remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp\"\n#include <iterator>\n\
+    \nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"\
+    out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
+    \  int n, m;\n  std::cin >> n >> m;\n  std::vector<int> a, b;\n  std::copy_n(std::istream_iterator<int>(std::cin),\
+    \ n, std::back_inserter(a));\n  std::copy_n(std::istream_iterator<int>(std::cin),\
+    \ m, std::back_inserter(b));\n  auto ab = lib::convolution_mod(a, b, 1000000007);\n\
+    \  std::copy(ab.begin(), ab.end(), std::ostream_iterator<int>(std::cout, \" \"\
+    ));\n  return 0;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/convolution_mod_1000000007\"\
     \n\n#include \"math/convolution.hpp\"\n#include \"modint/long_montgomery_modint.hpp\"\
     \n\n#include <iostream>\n#include <iterator>\n\nint main() {\n#ifdef LOCAL\n \
@@ -205,7 +206,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
   requiredBy: []
-  timestamp: '2022-04-23 15:00:57+08:00'
+  timestamp: '2022-04-23 15:37:06+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp

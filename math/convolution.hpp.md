@@ -166,12 +166,12 @@ data:
     \  auto res1   = convolution(std::vector<mint1>(lhs.begin(), lhs.end()),\n   \
     \                       std::vector<mint1>(rhs.begin(), rhs.end()));\n  const\
     \ int n = res0.size();\n  std::vector<IntT> res(n);\n  //    a mod m_0 = a_0,\
-    \ a mod m_1 = a_1\n  // -> a_0 + k_0m_0 = a_1 + k_1m_1\n  // -> a_0 - a_1 = k_1m_1\
-    \ (mod m_0)\n  // -> k_1 = (a_0 - a_1) / m_1 (mod m_0)\n  static constexpr mint0\
-    \ im1_mod_m0(mint0(mint1::mod()).inv());\n  const IntT m1_mod_modular = mint1::mod()\
-    \ % modular;\n  for (int i = 0; i != n; ++i) {\n    mint0 k1((res0[i] - res1[i].val())\
-    \ * im1_mod_m0);\n    res[i] = (k1.val() % modular * m1_mod_modular + res1[i].val())\
-    \ % modular;\n  }\n  return res;\n}\n\nLIB_END\n\n\n"
+    \ a mod m_1 = a_1\n  // -> a_0 + k_0m_0 = a_1 + k_1m_1\n  // -> a_0 - a_1 \u2261\
+    \ k_1m_1 (mod m_0)\n  // -> k_1 \u2261 (a_0 - a_1) / m_1 (mod m_0)\n  static constexpr\
+    \ mint0 im1_mod_m0(mint0(mint1::mod()).inv());\n  const IntT m1_mod_modular =\
+    \ mint1::mod() % modular;\n  for (int i = 0; i != n; ++i) {\n    mint0 k1((res0[i]\
+    \ - res1[i].val()) * im1_mod_m0);\n    res[i] = (k1.val() % modular * m1_mod_modular\
+    \ + res1[i].val()) % modular;\n  }\n  return res;\n}\n\nLIB_END\n\n\n"
   code: "#ifndef CONVOLUTION_HPP\n#define CONVOLUTION_HPP\n\n#include \"../common.hpp\"\
     \n#include \"../modint/long_montgomery_modint.hpp\"\n#include \"radix2_ntt.hpp\"\
     \n\n#include <algorithm>\n#include <cstdint>\n#include <type_traits>\n#include\
@@ -194,12 +194,12 @@ data:
     \  auto res1   = convolution(std::vector<mint1>(lhs.begin(), lhs.end()),\n   \
     \                       std::vector<mint1>(rhs.begin(), rhs.end()));\n  const\
     \ int n = res0.size();\n  std::vector<IntT> res(n);\n  //    a mod m_0 = a_0,\
-    \ a mod m_1 = a_1\n  // -> a_0 + k_0m_0 = a_1 + k_1m_1\n  // -> a_0 - a_1 = k_1m_1\
-    \ (mod m_0)\n  // -> k_1 = (a_0 - a_1) / m_1 (mod m_0)\n  static constexpr mint0\
-    \ im1_mod_m0(mint0(mint1::mod()).inv());\n  const IntT m1_mod_modular = mint1::mod()\
-    \ % modular;\n  for (int i = 0; i != n; ++i) {\n    mint0 k1((res0[i] - res1[i].val())\
-    \ * im1_mod_m0);\n    res[i] = (k1.val() % modular * m1_mod_modular + res1[i].val())\
-    \ % modular;\n  }\n  return res;\n}\n\nLIB_END\n\n#endif"
+    \ a mod m_1 = a_1\n  // -> a_0 + k_0m_0 = a_1 + k_1m_1\n  // -> a_0 - a_1 \u2261\
+    \ k_1m_1 (mod m_0)\n  // -> k_1 \u2261 (a_0 - a_1) / m_1 (mod m_0)\n  static constexpr\
+    \ mint0 im1_mod_m0(mint0(mint1::mod()).inv());\n  const IntT m1_mod_modular =\
+    \ mint1::mod() % modular;\n  for (int i = 0; i != n; ++i) {\n    mint0 k1((res0[i]\
+    \ - res1[i].val()) * im1_mod_m0);\n    res[i] = (k1.val() % modular * m1_mod_modular\
+    \ + res1[i].val()) % modular;\n  }\n  return res;\n}\n\nLIB_END\n\n#endif"
   dependsOn:
   - common.hpp
   - modint/long_montgomery_modint.hpp
@@ -208,7 +208,7 @@ data:
   isVerificationFile: false
   path: math/convolution.hpp
   requiredBy: []
-  timestamp: '2022-04-23 15:00:57+08:00'
+  timestamp: '2022-04-23 15:37:06+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
