@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
   _extendedRequiredBy: []
@@ -86,24 +86,23 @@ data:
     \ FnT, int, const std::vector<ModIntT> &> ||\n                std::is_invocable_r_v<ModIntT,\
     \ FnT, int>);\n\npublic:\n  semi_relaxed_convolution(const std::vector<ModIntT>\
     \ &A, FnT &&handle)\n      : fixed_A_(A), c_(1024), handle_(std::forward<FnT>(handle))\
-    \ {}\n\n  const std::vector<ModIntT> &get_multiplier() const { return B_; }\n\
-    \  const std::vector<ModIntT> &get_multiplicand() const { return fixed_A_; }\n\
-    \  semi_relaxed_convolution &await(int k) {\n    while (n_ < k) next();\n    return\
-    \ *this;\n  }\n  ModIntT at(int k) {\n    while (n_ <= k) next();\n    return\
-    \ c_[k];\n  }\n  ModIntT operator[](int k) { return at(k); }\n  ModIntT next();\n\
-    };\n\ntemplate <typename ModIntT, typename FnT>\nModIntT semi_relaxed_convolution<ModIntT,\
-    \ FnT>::next() {\n  {\n    // enlarge space\n    int len = ntt_len(n_ << 1 | 1);\n\
-    \    if (static_cast<int>(c_.size()) < len) c_.resize(len);\n    if (static_cast<int>(fixed_A_.size())\
-    \ < len) fixed_A_.resize(len);\n  }\n  if ((n_ & (BASE_CASE_SIZE - 1)) == 0) {\n\
-    \    for (int t = n_ / BASE_CASE_SIZE, block_size = BASE_CASE_SIZE, lv = 0; t\
-    \ != 0;\n         t >>= LOG_BLOCK, block_size <<= LOG_BLOCK, ++lv) {\n      if\
-    \ (int i = t & MASK, block_size2 = block_size << 1, l = n_ - block_size; i !=\
-    \ 0) {\n        if (block_size * i == n_) {\n          if (static_cast<int>(dft_A_cache_.size())\
-    \ == lv) {\n            dft_A_cache_.emplace_back();\n            dft_B_cache_.emplace_back(BLOCK\
-    \ - 1);\n          }\n          dft(dft_A_cache_[lv].emplace_back(fixed_A_.begin()\
-    \ + (i - 1) * block_size,\n                                            fixed_A_.begin()\
+    \ {}\n  const std::vector<ModIntT> &get_multiplier() const { return B_; }\n  const\
+    \ std::vector<ModIntT> &get_multiplicand() const { return fixed_A_; }\n  semi_relaxed_convolution\
+    \ &await(int k) {\n    while (n_ < k) next();\n    return *this;\n  }\n  ModIntT\
+    \ at(int k) {\n    while (n_ <= k) next();\n    return c_[k];\n  }\n  ModIntT\
+    \ operator[](int k) { return at(k); }\n  ModIntT next();\n};\n\ntemplate <typename\
+    \ ModIntT, typename FnT>\nModIntT semi_relaxed_convolution<ModIntT, FnT>::next()\
+    \ {\n  {\n    // enlarge space\n    int len = ntt_len(n_ << 1 | 1);\n    if (static_cast<int>(c_.size())\
+    \ < len) c_.resize(len);\n    if (static_cast<int>(fixed_A_.size()) < len) fixed_A_.resize(len);\n\
+    \  }\n  if ((n_ & (BASE_CASE_SIZE - 1)) == 0) {\n    for (int t = n_ / BASE_CASE_SIZE,\
+    \ block_size = BASE_CASE_SIZE, lv = 0; t != 0;\n         t >>= LOG_BLOCK, block_size\
+    \ <<= LOG_BLOCK, ++lv) {\n      if (int i = t & MASK, block_size2 = block_size\
+    \ << 1, l = n_ - block_size; i != 0) {\n        if (block_size * i == n_) {\n\
+    \          if (static_cast<int>(dft_A_cache_.size()) == lv) {\n            dft_A_cache_.emplace_back();\n\
+    \            dft_B_cache_.emplace_back(BLOCK - 1);\n          }\n          dft(dft_A_cache_[lv].emplace_back(fixed_A_.cbegin()\
+    \ + (i - 1) * block_size,\n                                            fixed_A_.cbegin()\
     \ + (i + 1) * block_size));\n        }\n        auto &B_cache = dft_B_cache_[lv];\n\
-    \        B_cache[i - 1].resize(block_size2);\n        std::fill_n(std::copy_n(B_.begin()\
+    \        B_cache[i - 1].resize(block_size2);\n        std::fill_n(std::copy_n(B_.cbegin()\
     \ + l, block_size, B_cache[i - 1].begin()), block_size,\n                    ModIntT());\n\
     \        dft(B_cache[i - 1]);\n        std::vector<ModIntT> temp_sum(block_size2);\n\
     \        for (int j = 0; j != i; ++j)\n          for (int k = 0; k != block_size2;\
@@ -126,24 +125,23 @@ data:
     \ FnT, int, const std::vector<ModIntT> &> ||\n                std::is_invocable_r_v<ModIntT,\
     \ FnT, int>);\n\npublic:\n  semi_relaxed_convolution(const std::vector<ModIntT>\
     \ &A, FnT &&handle)\n      : fixed_A_(A), c_(1024), handle_(std::forward<FnT>(handle))\
-    \ {}\n\n  const std::vector<ModIntT> &get_multiplier() const { return B_; }\n\
-    \  const std::vector<ModIntT> &get_multiplicand() const { return fixed_A_; }\n\
-    \  semi_relaxed_convolution &await(int k) {\n    while (n_ < k) next();\n    return\
-    \ *this;\n  }\n  ModIntT at(int k) {\n    while (n_ <= k) next();\n    return\
-    \ c_[k];\n  }\n  ModIntT operator[](int k) { return at(k); }\n  ModIntT next();\n\
-    };\n\ntemplate <typename ModIntT, typename FnT>\nModIntT semi_relaxed_convolution<ModIntT,\
-    \ FnT>::next() {\n  {\n    // enlarge space\n    int len = ntt_len(n_ << 1 | 1);\n\
-    \    if (static_cast<int>(c_.size()) < len) c_.resize(len);\n    if (static_cast<int>(fixed_A_.size())\
-    \ < len) fixed_A_.resize(len);\n  }\n  if ((n_ & (BASE_CASE_SIZE - 1)) == 0) {\n\
-    \    for (int t = n_ / BASE_CASE_SIZE, block_size = BASE_CASE_SIZE, lv = 0; t\
-    \ != 0;\n         t >>= LOG_BLOCK, block_size <<= LOG_BLOCK, ++lv) {\n      if\
-    \ (int i = t & MASK, block_size2 = block_size << 1, l = n_ - block_size; i !=\
-    \ 0) {\n        if (block_size * i == n_) {\n          if (static_cast<int>(dft_A_cache_.size())\
-    \ == lv) {\n            dft_A_cache_.emplace_back();\n            dft_B_cache_.emplace_back(BLOCK\
-    \ - 1);\n          }\n          dft(dft_A_cache_[lv].emplace_back(fixed_A_.begin()\
-    \ + (i - 1) * block_size,\n                                            fixed_A_.begin()\
+    \ {}\n  const std::vector<ModIntT> &get_multiplier() const { return B_; }\n  const\
+    \ std::vector<ModIntT> &get_multiplicand() const { return fixed_A_; }\n  semi_relaxed_convolution\
+    \ &await(int k) {\n    while (n_ < k) next();\n    return *this;\n  }\n  ModIntT\
+    \ at(int k) {\n    while (n_ <= k) next();\n    return c_[k];\n  }\n  ModIntT\
+    \ operator[](int k) { return at(k); }\n  ModIntT next();\n};\n\ntemplate <typename\
+    \ ModIntT, typename FnT>\nModIntT semi_relaxed_convolution<ModIntT, FnT>::next()\
+    \ {\n  {\n    // enlarge space\n    int len = ntt_len(n_ << 1 | 1);\n    if (static_cast<int>(c_.size())\
+    \ < len) c_.resize(len);\n    if (static_cast<int>(fixed_A_.size()) < len) fixed_A_.resize(len);\n\
+    \  }\n  if ((n_ & (BASE_CASE_SIZE - 1)) == 0) {\n    for (int t = n_ / BASE_CASE_SIZE,\
+    \ block_size = BASE_CASE_SIZE, lv = 0; t != 0;\n         t >>= LOG_BLOCK, block_size\
+    \ <<= LOG_BLOCK, ++lv) {\n      if (int i = t & MASK, block_size2 = block_size\
+    \ << 1, l = n_ - block_size; i != 0) {\n        if (block_size * i == n_) {\n\
+    \          if (static_cast<int>(dft_A_cache_.size()) == lv) {\n            dft_A_cache_.emplace_back();\n\
+    \            dft_B_cache_.emplace_back(BLOCK - 1);\n          }\n          dft(dft_A_cache_[lv].emplace_back(fixed_A_.cbegin()\
+    \ + (i - 1) * block_size,\n                                            fixed_A_.cbegin()\
     \ + (i + 1) * block_size));\n        }\n        auto &B_cache = dft_B_cache_[lv];\n\
-    \        B_cache[i - 1].resize(block_size2);\n        std::fill_n(std::copy_n(B_.begin()\
+    \        B_cache[i - 1].resize(block_size2);\n        std::fill_n(std::copy_n(B_.cbegin()\
     \ + l, block_size, B_cache[i - 1].begin()), block_size,\n                    ModIntT());\n\
     \        dft(B_cache[i - 1]);\n        std::vector<ModIntT> temp_sum(block_size2);\n\
     \        for (int j = 0; j != i; ++j)\n          for (int k = 0; k != block_size2;\
@@ -161,7 +159,7 @@ data:
   isVerificationFile: false
   path: math/semi_relaxed_convolution.hpp
   requiredBy: []
-  timestamp: '2022-04-23 22:52:36+08:00'
+  timestamp: '2022-04-23 23:27:16+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp

@@ -3,7 +3,7 @@ data:
   libraryCategories:
   - name: .
     pages:
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: common.hpp
       title: common.hpp
   - name: datastructure
@@ -22,10 +22,10 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/czt.hpp
       title: Chirp Z-transform (Bluestein's algorithm)
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/radix2_ntt.hpp
       title: Radix-2 NTT
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: math/relaxed_convolution.hpp
       title: Relaxed Convolution
     - icon: ':heavy_check_mark:'
@@ -39,7 +39,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: modint/long_montgomery_modint.hpp
       title: Long Montgomery ModInt
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: modint/montgomery_modint.hpp
       title: Montgomery ModInt
   verificationCategories:
@@ -64,7 +64,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/convolution_mod.2.test.cpp
       title: remote_test/yosupo/math/convolution_mod.2.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: remote_test/yosupo/math/convolution_mod.3.test.cpp
       title: remote_test/yosupo/math/convolution_mod.3.test.cpp
     - icon: ':heavy_check_mark:'
