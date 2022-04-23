@@ -21,6 +21,9 @@ data:
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
   - icon: ':heavy_check_mark:'
+    path: math/relaxed_convolution.hpp
+    title: Relaxed Convolution
+  - icon: ':heavy_check_mark:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution
   - icon: ':heavy_check_mark:'
@@ -57,6 +60,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod.2.test.cpp
     title: remote_test/yosupo/math/convolution_mod.2.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/convolution_mod.3.test.cpp
+    title: remote_test/yosupo/math/convolution_mod.3.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/convolution_mod.3.test.cpp
+    title: remote_test/yosupo/math/convolution_mod.3.test.cpp
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
     title: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
@@ -119,6 +128,7 @@ data:
   requiredBy:
   - math/semi_relaxed_convolution.hpp
   - math/radix2_ntt.hpp
+  - math/relaxed_convolution.hpp
   - math/convolution.hpp
   - math/convolution.hpp
   - math/truncated_formal_power_series.hpp
@@ -139,6 +149,8 @@ data:
   - remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
   - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
+  - remote_test/yosupo/math/convolution_mod.3.test.cpp
+  - remote_test/yosupo/math/convolution_mod.3.test.cpp
   - remote_test/yosupo/math/convolution_mod.0.test.cpp
   - remote_test/yosupo/math/convolution_mod.0.test.cpp
   - remote_test/yosupo/math/convolution_mod.2.test.cpp

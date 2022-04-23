@@ -36,20 +36,21 @@ data:
     \ i != 64; ++i)\n      if ((iv <<= 1) >= MOD) iv -= MOD;\n    return iv;\n  }\n\
     \  static constexpr u64 mul_high(u64 x, u64 y) {\n    u64 a = x >> 32, b = static_cast<u32>(x),\
     \ c = y >> 32, d = static_cast<u32>(y), ad = a * d,\n        bc = b * c;\n   \
-    \ return a * c + (ad >> 32) + (bc >> 32) + (((ad & MASK) + (bc & MASK) + (b *\
-    \ d >> 32)) >> 32);\n  }\n  static constexpr u64 redc_mul(u64 x, u64 y) {\n  \
-    \  u64 res = mul_high(x, y) - mul_high(x * y * R, MOD);\n    return res + (MOD\
-    \ & -(res >> 63));\n  }\n  static constexpr u64 norm(i64 x) { return x + (MOD\
-    \ & -(x < 0)); }\n\n  enum : u64 { MOD = ModT, R = get_r(), R2 = get_r2(), MASK\
-    \ = 0xFFFFFFFF };\n  enum : i64 { SMOD = MOD };\n\n  static_assert(MOD & 1);\n\
-    \  static_assert(R * MOD == 1);\n  static_assert((MOD >> 63) == 0);\n  static_assert(MOD\
-    \ != 1);\n\npublic:\n  static constexpr u64 mod() { return MOD; }\n  static constexpr\
-    \ i64 smod() { return SMOD; }\n  constexpr montgomery_modint63() {}\n  template\
-    \ <typename IntT, std::enable_if_t<std::is_integral_v<IntT>, int> = 0>\n  constexpr\
-    \ montgomery_modint63(IntT v) : v_(redc_mul(norm(v % SMOD), R2)) {}\n  constexpr\
-    \ u64 val() const {\n    u64 res = -mul_high(v_ * R, MOD);\n    return res + (MOD\
-    \ & -(res >> 63));\n  }\n  constexpr i64 sval() const { return val(); }\n  constexpr\
-    \ bool is_zero() const { return v_ == 0; }\n  template <typename IntT, std::enable_if_t<std::is_integral_v<IntT>,\
+    \ return a * c + (ad >> 32) + (bc >> 32) +\n           (((ad & 0xFFFFFFFF) + (bc\
+    \ & 0xFFFFFFFF) + (b * d >> 32)) >> 32);\n  }\n  static constexpr u64 redc_mul(u64\
+    \ x, u64 y) {\n    u64 res = mul_high(x, y) - mul_high(x * y * R, MOD);\n    return\
+    \ res + (MOD & -(res >> 63));\n  }\n  static constexpr u64 norm(i64 x) { return\
+    \ x + (MOD & -(x < 0)); }\n\n  static constexpr u64 MOD  = ModT;\n  static constexpr\
+    \ u64 R    = get_r();\n  static constexpr u64 R2   = get_r2();\n  static constexpr\
+    \ i64 SMOD = static_cast<i64>(MOD);\n\n  static_assert(MOD & 1);\n  static_assert(R\
+    \ * MOD == 1);\n  static_assert((MOD >> 63) == 0);\n  static_assert(MOD != 1);\n\
+    \npublic:\n  static constexpr u64 mod() { return MOD; }\n  static constexpr i64\
+    \ smod() { return SMOD; }\n  constexpr montgomery_modint63() {}\n  template <typename\
+    \ IntT, std::enable_if_t<std::is_integral_v<IntT>, int> = 0>\n  constexpr montgomery_modint63(IntT\
+    \ v) : v_(redc_mul(norm(v % SMOD), R2)) {}\n  constexpr u64 val() const {\n  \
+    \  u64 res = -mul_high(v_ * R, MOD);\n    return res + (MOD & -(res >> 63));\n\
+    \  }\n  constexpr i64 sval() const { return val(); }\n  constexpr bool is_zero()\
+    \ const { return v_ == 0; }\n  template <typename IntT, std::enable_if_t<std::is_integral_v<IntT>,\
     \ int> = 0>\n  explicit constexpr operator IntT() const {\n    return static_cast<IntT>(val());\n\
     \  }\n  constexpr montgomery_modint63 operator-() const {\n    montgomery_modint63\
     \ res;\n    res.v_ = (MOD & -(v_ != 0)) - v_;\n    return res;\n  }\n  constexpr\
@@ -99,12 +100,13 @@ data:
     \ MOD;\n    return iv;\n  }\n  static constexpr u64 mul_high(u64 x, u64 y) {\n\
     \    u64 a = x >> 32, b = static_cast<u32>(x), c = y >> 32, d = static_cast<u32>(y),\
     \ ad = a * d,\n        bc = b * c;\n    return a * c + (ad >> 32) + (bc >> 32)\
-    \ + (((ad & MASK) + (bc & MASK) + (b * d >> 32)) >> 32);\n  }\n  static constexpr\
-    \ u64 redc_mul(u64 x, u64 y) {\n    u64 res = mul_high(x, y) - mul_high(x * y\
-    \ * R, MOD);\n    return res + (MOD & -(res >> 63));\n  }\n  static constexpr\
-    \ u64 norm(i64 x) { return x + (MOD & -(x < 0)); }\n\n  enum : u64 { MOD = ModT,\
-    \ R = get_r(), R2 = get_r2(), MASK = 0xFFFFFFFF };\n  enum : i64 { SMOD = MOD\
-    \ };\n\n  static_assert(MOD & 1);\n  static_assert(R * MOD == 1);\n  static_assert((MOD\
+    \ +\n           (((ad & 0xFFFFFFFF) + (bc & 0xFFFFFFFF) + (b * d >> 32)) >> 32);\n\
+    \  }\n  static constexpr u64 redc_mul(u64 x, u64 y) {\n    u64 res = mul_high(x,\
+    \ y) - mul_high(x * y * R, MOD);\n    return res + (MOD & -(res >> 63));\n  }\n\
+    \  static constexpr u64 norm(i64 x) { return x + (MOD & -(x < 0)); }\n\n  static\
+    \ constexpr u64 MOD  = ModT;\n  static constexpr u64 R    = get_r();\n  static\
+    \ constexpr u64 R2   = get_r2();\n  static constexpr i64 SMOD = static_cast<i64>(MOD);\n\
+    \n  static_assert(MOD & 1);\n  static_assert(R * MOD == 1);\n  static_assert((MOD\
     \ >> 63) == 0);\n  static_assert(MOD != 1);\n\npublic:\n  static constexpr u64\
     \ mod() { return MOD; }\n  static constexpr i64 smod() { return SMOD; }\n  constexpr\
     \ montgomery_modint63() {}\n  template <typename IntT, std::enable_if_t<std::is_integral_v<IntT>,\
@@ -156,7 +158,7 @@ data:
   path: modint/long_montgomery_modint.hpp
   requiredBy:
   - math/convolution.hpp
-  timestamp: '2022-04-23 15:00:57+08:00'
+  timestamp: '2022-04-23 22:52:36+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp

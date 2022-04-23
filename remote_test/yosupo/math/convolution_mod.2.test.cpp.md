@@ -38,23 +38,24 @@ data:
     }\n\ntemplate <typename ModIntT>\nconstexpr ModIntT quadratic_nonresidue_prime()\
     \ {\n  auto mod = ModIntT::mod();\n  for (int i = 2;; ++i)\n    if (ModIntT(i).pow(mod\
     \ >> 1) == mod - 1) return ModIntT(i);\n}\n\ntemplate <typename ModIntT>\nconstexpr\
-    \ ModIntT gen_of_sylow2subgroup() {\n  auto mod = ModIntT::mod();\n  return quadratic_nonresidue_prime<ModIntT>().pow(mod\
-    \ >> bsf(mod - 1));\n}\n\ntemplate <typename ModIntT>\nconstexpr std::array<ModIntT,\
-    \ bsf(ModIntT::mod() - 1) - 1> root() {\n  std::array<ModIntT, bsf(ModIntT::mod()\
-    \ - 1) - 1> rt; // order(`rt[i]`) = 2^(i + 2).\n  rt.back() = gen_of_sylow2subgroup<ModIntT>();\n\
-    \  for (int i = bsf(ModIntT::mod() - 1) - 3; i >= 0; --i) rt[i] = rt[i + 1] *\
-    \ rt[i + 1];\n  return rt;\n}\n\ntemplate <typename ModIntT>\nconstexpr std::array<ModIntT,\
+    \ ModIntT gen_of_sylow_2_subgroup() {\n  auto mod = ModIntT::mod();\n  return\
+    \ quadratic_nonresidue_prime<ModIntT>().pow(mod >> bsf(mod - 1));\n}\n\ntemplate\
+    \ <typename ModIntT>\nconstexpr std::array<ModIntT, bsf(ModIntT::mod() - 1) -\
+    \ 1> root() {\n  std::array<ModIntT, bsf(ModIntT::mod() - 1) - 1> rt; // order(`rt[i]`)\
+    \ = 2^(i + 2).\n  rt.back() = gen_of_sylow_2_subgroup<ModIntT>();\n  for (int\
+    \ i = bsf(ModIntT::mod() - 1) - 3; i >= 0; --i) rt[i] = rt[i + 1] * rt[i + 1];\n\
+    \  return rt;\n}\n\ntemplate <typename ModIntT>\nconstexpr std::array<ModIntT,\
     \ bsf(ModIntT::mod() - 1) - 1> iroot() {\n  std::array<ModIntT, bsf(ModIntT::mod()\
-    \ - 1) - 1> irt;\n  irt.back() = gen_of_sylow2subgroup<ModIntT>().inv();\n  for\
-    \ (int i = bsf(ModIntT::mod() - 1) - 3; i >= 0; --i) irt[i] = irt[i + 1] * irt[i\
-    \ + 1];\n  return irt;\n}\n\n} // namespace detail\n\n// Input:  integer `n`.\n\
-    // Output: 2^(\u2308log_2(`n`)\u2309).\nint ntt_len(int n) {\n  --n;\n  n |= n\
-    \ >> 1;\n  n |= n >> 2;\n  n |= n >> 4;\n  n |= n >> 8;\n  return (n | n >> 16)\
-    \ + 1;\n}\n\n// Input:           f(x) = `a[0]` + `a[1]`x + ... + `a[n - 1]`x^(`n`\
-    \ - 1) where `n` is power of 2.\n// Output(inplace): reversed binary permutation\
-    \ of [f(\u03B6^0), f(\u03B6), f(\u03B6^2), ..., f(\u03B6^(`n` - 1))].\ntemplate\
-    \ <typename IterT>\nvoid dft_n(IterT a, int n) {\n  assert((n & (n - 1)) == 0);\n\
-    \  using T                  = typename std::iterator_traits<IterT>::value_type;\n\
+    \ - 1) - 1> irt;\n  irt.back() = gen_of_sylow_2_subgroup<ModIntT>().inv();\n \
+    \ for (int i = bsf(ModIntT::mod() - 1) - 3; i >= 0; --i) irt[i] = irt[i + 1] *\
+    \ irt[i + 1];\n  return irt;\n}\n\n} // namespace detail\n\n// Input:  integer\
+    \ `n`.\n// Output: 2^(\u2308log_2(`n`)\u2309).\nint ntt_len(int n) {\n  --n;\n\
+    \  n |= n >> 1;\n  n |= n >> 2;\n  n |= n >> 4;\n  n |= n >> 8;\n  return (n |\
+    \ n >> 16) + 1;\n}\n\n// Input:           f(x) = `a[0]` + `a[1]`x + ... + `a[n\
+    \ - 1]`x^(`n` - 1) where `n` is power of 2.\n// Output(inplace): reversed binary\
+    \ permutation of [f(\u03B6^0), f(\u03B6), f(\u03B6^2), ..., f(\u03B6^(`n` - 1))].\n\
+    template <typename IterT>\nvoid dft_n(IterT a, int n) {\n  assert((n & (n - 1))\
+    \ == 0);\n  using T                  = typename std::iterator_traits<IterT>::value_type;\n\
     \  static constexpr auto rt = detail::root<T>();\n  static std::vector<T> root(1);\n\
     \  if (int s = static_cast<int>(root.size()); s << 1 < n) {\n    root.resize(n\
     \ >> 1);\n    for (int i = detail::bsf(s); (1 << i) < (n >> 1); ++i) {\n     \
@@ -113,52 +114,53 @@ data:
     \    iv *= t - MOD * iv, iv *= t - MOD * iv;\n    return iv * (MOD * iv - t);\n\
     \  }\n  static constexpr u32 redc(u64 x) {\n    return (x + static_cast<u64>(static_cast<u32>(x)\
     \ * R) * MOD) >> 32;\n  }\n  static constexpr u32 norm(u32 x) { return x - (MOD\
-    \ & -((MOD - 1 - x) >> 31)); }\n\n  enum : u32 { MOD = ModT, MOD2 = MOD << 1,\
-    \ R = get_r(), R2 = -static_cast<u64>(MOD) % MOD };\n  enum : i32 { SMOD = MOD\
-    \ };\n\n  static_assert(MOD & 1);\n  static_assert(-R * MOD == 1);\n  static_assert((MOD\
-    \ >> 30) == 0);\n  static_assert(MOD != 1);\n\npublic:\n  static constexpr u32\
-    \ mod() { return MOD; }\n  static constexpr i32 smod() { return SMOD; }\n  constexpr\
-    \ montgomery_modint30() {}\n  template <typename IntT, std::enable_if_t<std::is_integral_v<IntT>,\
-    \ int> = 0>\n  constexpr montgomery_modint30(IntT v) : v_(redc(static_cast<u64>(v\
-    \ % SMOD + SMOD) * R2)) {}\n  constexpr u32 val() const { return norm(redc(v_));\
-    \ }\n  constexpr i32 sval() const { return norm(redc(v_)); }\n  constexpr bool\
-    \ is_zero() const { return v_ == 0 || v_ == MOD; }\n  template <typename IntT,\
-    \ std::enable_if_t<std::is_integral_v<IntT>, int> = 0>\n  explicit constexpr operator\
-    \ IntT() const {\n    return static_cast<IntT>(val());\n  }\n  constexpr montgomery_modint30\
-    \ operator-() const {\n    montgomery_modint30 res;\n    res.v_ = (MOD2 & -(v_\
-    \ != 0)) - v_;\n    return res;\n  }\n  constexpr montgomery_modint30 inv() const\
-    \ {\n    i32 x1 = 1, x3 = 0, a = sval(), b = SMOD;\n    while (b != 0) {\n   \
-    \   i32 q = a / b, x1_old = x1, a_old = a;\n      x1 = x3, x3 = x1_old - x3 *\
-    \ q, a = b, b = a_old - b * q;\n    }\n#ifdef LIB_DEBUG\n    if (a != 1) throw\
-    \ std::runtime_error(\"modular inverse error\");\n#endif\n    return montgomery_modint30(x1);\n\
-    \  }\n  constexpr montgomery_modint30 &operator+=(const montgomery_modint30 &rhs)\
-    \ {\n    v_ += rhs.v_ - MOD2, v_ += MOD2 & -(v_ >> 31);\n    return *this;\n \
-    \ }\n  constexpr montgomery_modint30 &operator-=(const montgomery_modint30 &rhs)\
-    \ {\n    v_ -= rhs.v_, v_ += MOD2 & -(v_ >> 31);\n    return *this;\n  }\n  constexpr\
-    \ montgomery_modint30 &operator*=(const montgomery_modint30 &rhs) {\n    v_ =\
-    \ redc(static_cast<u64>(v_) * rhs.v_);\n    return *this;\n  }\n  constexpr montgomery_modint30\
-    \ &operator/=(const montgomery_modint30 &rhs) {\n    return operator*=(rhs.inv());\n\
-    \  }\n  constexpr montgomery_modint30 pow(u64 e) const {\n    for (montgomery_modint30\
-    \ res(1), x(*this);; x *= x) {\n      if (e & 1) res *= x;\n      if ((e >>= 1)\
-    \ == 0) return res;\n    }\n  }\n  constexpr void swap(montgomery_modint30 &rhs)\
-    \ {\n    auto v = v_;\n    v_ = rhs.v_, rhs.v_ = v;\n  }\n  friend constexpr montgomery_modint30\
-    \ operator+(const montgomery_modint30 &lhs,\n                                \
-    \                 const montgomery_modint30 &rhs) {\n    return montgomery_modint30(lhs)\
-    \ += rhs;\n  }\n  friend constexpr montgomery_modint30 operator-(const montgomery_modint30\
+    \ & -((MOD - 1 - x) >> 31)); }\n\n  static constexpr u32 MOD  = ModT;\n  static\
+    \ constexpr u32 MOD2 = MOD << 1;\n  static constexpr u32 R    = get_r();\n  static\
+    \ constexpr u32 R2   = -static_cast<u64>(MOD) % MOD;\n  static constexpr i32 SMOD\
+    \ = static_cast<i32>(MOD);\n\n  static_assert(MOD & 1);\n  static_assert(-R *\
+    \ MOD == 1);\n  static_assert((MOD >> 30) == 0);\n  static_assert(MOD != 1);\n\
+    \npublic:\n  static constexpr u32 mod() { return MOD; }\n  static constexpr i32\
+    \ smod() { return SMOD; }\n  constexpr montgomery_modint30() {}\n  template <typename\
+    \ IntT, std::enable_if_t<std::is_integral_v<IntT>, int> = 0>\n  constexpr montgomery_modint30(IntT\
+    \ v) : v_(redc(static_cast<u64>(v % SMOD + SMOD) * R2)) {}\n  constexpr u32 val()\
+    \ const { return norm(redc(v_)); }\n  constexpr i32 sval() const { return norm(redc(v_));\
+    \ }\n  constexpr bool is_zero() const { return v_ == 0 || v_ == MOD; }\n  template\
+    \ <typename IntT, std::enable_if_t<std::is_integral_v<IntT>, int> = 0>\n  explicit\
+    \ constexpr operator IntT() const {\n    return static_cast<IntT>(val());\n  }\n\
+    \  constexpr montgomery_modint30 operator-() const {\n    montgomery_modint30\
+    \ res;\n    res.v_ = (MOD2 & -(v_ != 0)) - v_;\n    return res;\n  }\n  constexpr\
+    \ montgomery_modint30 inv() const {\n    i32 x1 = 1, x3 = 0, a = sval(), b = SMOD;\n\
+    \    while (b != 0) {\n      i32 q = a / b, x1_old = x1, a_old = a;\n      x1\
+    \ = x3, x3 = x1_old - x3 * q, a = b, b = a_old - b * q;\n    }\n#ifdef LIB_DEBUG\n\
+    \    if (a != 1) throw std::runtime_error(\"modular inverse error\");\n#endif\n\
+    \    return montgomery_modint30(x1);\n  }\n  constexpr montgomery_modint30 &operator+=(const\
+    \ montgomery_modint30 &rhs) {\n    v_ += rhs.v_ - MOD2, v_ += MOD2 & -(v_ >> 31);\n\
+    \    return *this;\n  }\n  constexpr montgomery_modint30 &operator-=(const montgomery_modint30\
+    \ &rhs) {\n    v_ -= rhs.v_, v_ += MOD2 & -(v_ >> 31);\n    return *this;\n  }\n\
+    \  constexpr montgomery_modint30 &operator*=(const montgomery_modint30 &rhs) {\n\
+    \    v_ = redc(static_cast<u64>(v_) * rhs.v_);\n    return *this;\n  }\n  constexpr\
+    \ montgomery_modint30 &operator/=(const montgomery_modint30 &rhs) {\n    return\
+    \ operator*=(rhs.inv());\n  }\n  constexpr montgomery_modint30 pow(u64 e) const\
+    \ {\n    for (montgomery_modint30 res(1), x(*this);; x *= x) {\n      if (e &\
+    \ 1) res *= x;\n      if ((e >>= 1) == 0) return res;\n    }\n  }\n  constexpr\
+    \ void swap(montgomery_modint30 &rhs) {\n    auto v = v_;\n    v_ = rhs.v_, rhs.v_\
+    \ = v;\n  }\n  friend constexpr montgomery_modint30 operator+(const montgomery_modint30\
     \ &lhs,\n                                                 const montgomery_modint30\
-    \ &rhs) {\n    return montgomery_modint30(lhs) -= rhs;\n  }\n  friend constexpr\
-    \ montgomery_modint30 operator*(const montgomery_modint30 &lhs,\n            \
+    \ &rhs) {\n    return montgomery_modint30(lhs) += rhs;\n  }\n  friend constexpr\
+    \ montgomery_modint30 operator-(const montgomery_modint30 &lhs,\n            \
     \                                     const montgomery_modint30 &rhs) {\n    return\
-    \ montgomery_modint30(lhs) *= rhs;\n  }\n  friend constexpr montgomery_modint30\
-    \ operator/(const montgomery_modint30 &lhs,\n                                \
+    \ montgomery_modint30(lhs) -= rhs;\n  }\n  friend constexpr montgomery_modint30\
+    \ operator*(const montgomery_modint30 &lhs,\n                                \
     \                 const montgomery_modint30 &rhs) {\n    return montgomery_modint30(lhs)\
-    \ /= rhs;\n  }\n  friend constexpr bool operator==(const montgomery_modint30 &lhs,\
-    \ const montgomery_modint30 &rhs) {\n    return norm(lhs.v_) == norm(rhs.v_);\n\
-    \  }\n  friend constexpr bool operator!=(const montgomery_modint30 &lhs, const\
-    \ montgomery_modint30 &rhs) {\n    return norm(lhs.v_) != norm(rhs.v_);\n  }\n\
-    \  friend std::istream &operator>>(std::istream &is, montgomery_modint30 &rhs)\
-    \ {\n    i32 x;\n    is >> x;\n    rhs = montgomery_modint30(x);\n    return is;\n\
-    \  }\n  friend std::ostream &operator<<(std::ostream &os, const montgomery_modint30\
+    \ *= rhs;\n  }\n  friend constexpr montgomery_modint30 operator/(const montgomery_modint30\
+    \ &lhs,\n                                                 const montgomery_modint30\
+    \ &rhs) {\n    return montgomery_modint30(lhs) /= rhs;\n  }\n  friend constexpr\
+    \ bool operator==(const montgomery_modint30 &lhs, const montgomery_modint30 &rhs)\
+    \ {\n    return norm(lhs.v_) == norm(rhs.v_);\n  }\n  friend constexpr bool operator!=(const\
+    \ montgomery_modint30 &lhs, const montgomery_modint30 &rhs) {\n    return norm(lhs.v_)\
+    \ != norm(rhs.v_);\n  }\n  friend std::istream &operator>>(std::istream &is, montgomery_modint30\
+    \ &rhs) {\n    i32 x;\n    is >> x;\n    rhs = montgomery_modint30(x);\n    return\
+    \ is;\n  }\n  friend std::ostream &operator<<(std::ostream &os, const montgomery_modint30\
     \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t ModT>\n\
     using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 6 \"remote_test/yosupo/math/convolution_mod.2.test.cpp\"\
     \n\n#line 8 \"remote_test/yosupo/math/convolution_mod.2.test.cpp\"\n#include <iterator>\n\
@@ -195,7 +197,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/convolution_mod.2.test.cpp
   requiredBy: []
-  timestamp: '2022-04-23 15:00:57+08:00'
+  timestamp: '2022-04-23 22:52:36+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/convolution_mod.2.test.cpp

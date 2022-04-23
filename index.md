@@ -26,6 +26,9 @@ data:
       path: math/radix2_ntt.hpp
       title: Radix-2 NTT
     - icon: ':heavy_check_mark:'
+      path: math/relaxed_convolution.hpp
+      title: Relaxed Convolution
+    - icon: ':heavy_check_mark:'
       path: math/semi_relaxed_convolution.hpp
       title: Semi-Relaxed Convolution
     - icon: ':heavy_check_mark:'
@@ -61,6 +64,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/convolution_mod.2.test.cpp
       title: remote_test/yosupo/math/convolution_mod.2.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: remote_test/yosupo/math/convolution_mod.3.test.cpp
+      title: remote_test/yosupo/math/convolution_mod.3.test.cpp
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
       title: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp

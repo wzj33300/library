@@ -40,16 +40,17 @@ data:
     \ <<= 1) >= MOD) iv -= MOD;\n    return iv;\n  }\n  static constexpr u64 mul_high(u64\
     \ x, u64 y) {\n    u64 a = x >> 32, b = static_cast<u32>(x), c = y >> 32, d =\
     \ static_cast<u32>(y), ad = a * d,\n        bc = b * c;\n    return a * c + (ad\
-    \ >> 32) + (bc >> 32) + (((ad & MASK) + (bc & MASK) + (b * d >> 32)) >> 32);\n\
-    \  }\n  static constexpr u64 redc_mul(u64 x, u64 y) {\n    u64 res = mul_high(x,\
-    \ y) - mul_high(x * y * R, MOD);\n    return res + (MOD & -(res >> 63));\n  }\n\
-    \  static constexpr u64 norm(i64 x) { return x + (MOD & -(x < 0)); }\n\n  enum\
-    \ : u64 { MOD = ModT, R = get_r(), R2 = get_r2(), MASK = 0xFFFFFFFF };\n  enum\
-    \ : i64 { SMOD = MOD };\n\n  static_assert(MOD & 1);\n  static_assert(R * MOD\
-    \ == 1);\n  static_assert((MOD >> 63) == 0);\n  static_assert(MOD != 1);\n\npublic:\n\
-    \  static constexpr u64 mod() { return MOD; }\n  static constexpr i64 smod() {\
-    \ return SMOD; }\n  constexpr montgomery_modint63() {}\n  template <typename IntT,\
-    \ std::enable_if_t<std::is_integral_v<IntT>, int> = 0>\n  constexpr montgomery_modint63(IntT\
+    \ >> 32) + (bc >> 32) +\n           (((ad & 0xFFFFFFFF) + (bc & 0xFFFFFFFF) +\
+    \ (b * d >> 32)) >> 32);\n  }\n  static constexpr u64 redc_mul(u64 x, u64 y) {\n\
+    \    u64 res = mul_high(x, y) - mul_high(x * y * R, MOD);\n    return res + (MOD\
+    \ & -(res >> 63));\n  }\n  static constexpr u64 norm(i64 x) { return x + (MOD\
+    \ & -(x < 0)); }\n\n  static constexpr u64 MOD  = ModT;\n  static constexpr u64\
+    \ R    = get_r();\n  static constexpr u64 R2   = get_r2();\n  static constexpr\
+    \ i64 SMOD = static_cast<i64>(MOD);\n\n  static_assert(MOD & 1);\n  static_assert(R\
+    \ * MOD == 1);\n  static_assert((MOD >> 63) == 0);\n  static_assert(MOD != 1);\n\
+    \npublic:\n  static constexpr u64 mod() { return MOD; }\n  static constexpr i64\
+    \ smod() { return SMOD; }\n  constexpr montgomery_modint63() {}\n  template <typename\
+    \ IntT, std::enable_if_t<std::is_integral_v<IntT>, int> = 0>\n  constexpr montgomery_modint63(IntT\
     \ v) : v_(redc_mul(norm(v % SMOD), R2)) {}\n  constexpr u64 val() const {\n  \
     \  u64 res = -mul_high(v_ * R, MOD);\n    return res + (MOD & -(res >> 63));\n\
     \  }\n  constexpr i64 sval() const { return val(); }\n  constexpr bool is_zero()\
@@ -98,23 +99,24 @@ data:
     }\n\ntemplate <typename ModIntT>\nconstexpr ModIntT quadratic_nonresidue_prime()\
     \ {\n  auto mod = ModIntT::mod();\n  for (int i = 2;; ++i)\n    if (ModIntT(i).pow(mod\
     \ >> 1) == mod - 1) return ModIntT(i);\n}\n\ntemplate <typename ModIntT>\nconstexpr\
-    \ ModIntT gen_of_sylow2subgroup() {\n  auto mod = ModIntT::mod();\n  return quadratic_nonresidue_prime<ModIntT>().pow(mod\
-    \ >> bsf(mod - 1));\n}\n\ntemplate <typename ModIntT>\nconstexpr std::array<ModIntT,\
-    \ bsf(ModIntT::mod() - 1) - 1> root() {\n  std::array<ModIntT, bsf(ModIntT::mod()\
-    \ - 1) - 1> rt; // order(`rt[i]`) = 2^(i + 2).\n  rt.back() = gen_of_sylow2subgroup<ModIntT>();\n\
-    \  for (int i = bsf(ModIntT::mod() - 1) - 3; i >= 0; --i) rt[i] = rt[i + 1] *\
-    \ rt[i + 1];\n  return rt;\n}\n\ntemplate <typename ModIntT>\nconstexpr std::array<ModIntT,\
+    \ ModIntT gen_of_sylow_2_subgroup() {\n  auto mod = ModIntT::mod();\n  return\
+    \ quadratic_nonresidue_prime<ModIntT>().pow(mod >> bsf(mod - 1));\n}\n\ntemplate\
+    \ <typename ModIntT>\nconstexpr std::array<ModIntT, bsf(ModIntT::mod() - 1) -\
+    \ 1> root() {\n  std::array<ModIntT, bsf(ModIntT::mod() - 1) - 1> rt; // order(`rt[i]`)\
+    \ = 2^(i + 2).\n  rt.back() = gen_of_sylow_2_subgroup<ModIntT>();\n  for (int\
+    \ i = bsf(ModIntT::mod() - 1) - 3; i >= 0; --i) rt[i] = rt[i + 1] * rt[i + 1];\n\
+    \  return rt;\n}\n\ntemplate <typename ModIntT>\nconstexpr std::array<ModIntT,\
     \ bsf(ModIntT::mod() - 1) - 1> iroot() {\n  std::array<ModIntT, bsf(ModIntT::mod()\
-    \ - 1) - 1> irt;\n  irt.back() = gen_of_sylow2subgroup<ModIntT>().inv();\n  for\
-    \ (int i = bsf(ModIntT::mod() - 1) - 3; i >= 0; --i) irt[i] = irt[i + 1] * irt[i\
-    \ + 1];\n  return irt;\n}\n\n} // namespace detail\n\n// Input:  integer `n`.\n\
-    // Output: 2^(\u2308log_2(`n`)\u2309).\nint ntt_len(int n) {\n  --n;\n  n |= n\
-    \ >> 1;\n  n |= n >> 2;\n  n |= n >> 4;\n  n |= n >> 8;\n  return (n | n >> 16)\
-    \ + 1;\n}\n\n// Input:           f(x) = `a[0]` + `a[1]`x + ... + `a[n - 1]`x^(`n`\
-    \ - 1) where `n` is power of 2.\n// Output(inplace): reversed binary permutation\
-    \ of [f(\u03B6^0), f(\u03B6), f(\u03B6^2), ..., f(\u03B6^(`n` - 1))].\ntemplate\
-    \ <typename IterT>\nvoid dft_n(IterT a, int n) {\n  assert((n & (n - 1)) == 0);\n\
-    \  using T                  = typename std::iterator_traits<IterT>::value_type;\n\
+    \ - 1) - 1> irt;\n  irt.back() = gen_of_sylow_2_subgroup<ModIntT>().inv();\n \
+    \ for (int i = bsf(ModIntT::mod() - 1) - 3; i >= 0; --i) irt[i] = irt[i + 1] *\
+    \ irt[i + 1];\n  return irt;\n}\n\n} // namespace detail\n\n// Input:  integer\
+    \ `n`.\n// Output: 2^(\u2308log_2(`n`)\u2309).\nint ntt_len(int n) {\n  --n;\n\
+    \  n |= n >> 1;\n  n |= n >> 2;\n  n |= n >> 4;\n  n |= n >> 8;\n  return (n |\
+    \ n >> 16) + 1;\n}\n\n// Input:           f(x) = `a[0]` + `a[1]`x + ... + `a[n\
+    \ - 1]`x^(`n` - 1) where `n` is power of 2.\n// Output(inplace): reversed binary\
+    \ permutation of [f(\u03B6^0), f(\u03B6), f(\u03B6^2), ..., f(\u03B6^(`n` - 1))].\n\
+    template <typename IterT>\nvoid dft_n(IterT a, int n) {\n  assert((n & (n - 1))\
+    \ == 0);\n  using T                  = typename std::iterator_traits<IterT>::value_type;\n\
     \  static constexpr auto rt = detail::root<T>();\n  static std::vector<T> root(1);\n\
     \  if (int s = static_cast<int>(root.size()); s << 1 < n) {\n    root.resize(n\
     \ >> 1);\n    for (int i = detail::bsf(s); (1 << i) < (n >> 1); ++i) {\n     \
@@ -208,7 +210,7 @@ data:
   isVerificationFile: false
   path: math/convolution.hpp
   requiredBy: []
-  timestamp: '2022-04-23 15:43:11+08:00'
+  timestamp: '2022-04-23 22:52:36+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
