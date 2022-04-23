@@ -118,25 +118,26 @@ data:
     \ break;\n  case 1:\n    c_[1] = ha_() * b_.front() + a_.front() * hb_();\n  \
     \  c_[2] = a_[1] * b_[1];\n    break;\n  case 2:\n    c_[2] += ha_() * b_.front()\
     \ + a_.front() * hb_();\n    c_[3] = a_[2] * b_[1] + a_[1] * b_[2];\n    break;\n\
-    \  default:\n    if ((n_ & (n_ - 1)) == 0) {\n      int n2 = n_ >> 1;\n      std::copy_n(a_.cbegin()\
-    \ + n2, n2, ac_.emplace_back(n_).begin());\n      std::copy_n(b_.cbegin() + n2,\
-    \ n2, bc_.emplace_back(n_).begin());\n      dft(c0), dft(c1);\n      std::vector\
-    \ res(c0);\n      for (int i = 0; i != n_; ++i) res[i] *= c1[i];\n      idft(res);\n\
-    \      for (int i = 0; i != n_ - 1; ++i) c_[n_ + i] += res[i];\n    }\n    c_[n_]\
-    \ += ha_() * b_.front() + a_.front() * hb_();\n    c_[n_ + 1] += a_[1] * b_.back()\
-    \ + a_.back() * b_[1];\n    for (int sft = 1, offset = ntt_len(n_ + 1) >> 1, t\
-    \ = n_ + 1 - offset;\n         (t & 1) == 0 && 1 << sft < offset; ++sft, t >>=\
-    \ 1)\n      if (1 << sft <= BASE_CASE_SIZE) {\n        for (int i = 0, m = n_\
-    \ + 1 - (1 << sft); i != 1 << sft; ++i)\n          for (int j = 0; j != 1 << sft;\
-    \ ++j)\n            c_[n_ + 1 + i + j] += a_[m + i] * b_[j + (1 << sft)] + a_[j\
-    \ + (1 << sft)] * b_[m + i];\n      } else {\n        std::vector<ModIntT> c0(2\
-    \ << sft), c1(2 << sft);\n        std::copy_n(a_.cbegin() + n_ + 1 - (1 << sft),\
-    \ 1 << sft, c0.begin());\n        std::copy_n(b_.cbegin() + n_ + 1 - (1 << sft),\
-    \ 1 << sft, c1.begin());\n        dft(c0), dft(c1);\n        for (int i = 0; i\
-    \ != 2 << sft; ++i)\n          c0[i] = c0[i] * bc_[sft - 1][i] + c1[i] * ac_[sft\
-    \ - 1][i];\n        idft(c0);\n        for (int i = 0; i != (2 << sft) - 1; ++i)\
-    \ c_[n_ + 1 + i] += c0[i];\n      }\n  }\n  return c_[n_++];\n}\n\nLIB_END\n\n\
-    \n#line 1 \"modint/montgomery_modint.hpp\"\n\n\n\n#line 5 \"modint/montgomery_modint.hpp\"\
+    \  default:\n    if ((n_ & (n_ - 1)) == 0) {\n      auto &&c0 = ac_.emplace_back(n_);\n\
+    \      auto &&c1 = bc_.emplace_back(n_);\n      std::copy_n(a_.cbegin() + (n_\
+    \ >> 1), n_ >> 1n2, c0.begin());\n      std::copy_n(b_.cbegin() + (n_ >> 1), n_\
+    \ >> 1, c1.begin());\n      dft(c0), dft(c1);\n      std::vector c0_cpy(c0);\n\
+    \      for (int i = 0; i != n_; ++i) c0_cpy[i] *= c1[i];\n      idft(c0_cpy);\n\
+    \      for (int i = 0; i != n_ - 1; ++i) c_[n_ + i] += c0_cpy[i];\n    }\n   \
+    \ c_[n_] += ha_() * b_.front() + a_.front() * hb_();\n    c_[n_ + 1] += a_[1]\
+    \ * b_.back() + a_.back() * b_[1];\n    for (int sft = 1, offset = ntt_len(n_\
+    \ + 1) >> 1, t = n_ + 1 - offset;\n         (t & 1) == 0 && 1 << sft < offset;\
+    \ ++sft, t >>= 1)\n      if (1 << sft <= BASE_CASE_SIZE) {\n        for (int i\
+    \ = 0, m = n_ + 1 - (1 << sft); i != 1 << sft; ++i)\n          for (int j = 0;\
+    \ j != 1 << sft; ++j)\n            c_[n_ + 1 + i + j] += a_[m + i] * b_[j + (1\
+    \ << sft)] + a_[j + (1 << sft)] * b_[m + i];\n      } else {\n        std::vector<ModIntT>\
+    \ c0(2 << sft), c1(2 << sft);\n        std::copy_n(a_.cbegin() + n_ + 1 - (1 <<\
+    \ sft), 1 << sft, c0.begin());\n        std::copy_n(b_.cbegin() + n_ + 1 - (1\
+    \ << sft), 1 << sft, c1.begin());\n        dft(c0), dft(c1);\n        for (int\
+    \ i = 0; i != 2 << sft; ++i)\n          c0[i] = c0[i] * bc_[sft - 1][i] + c1[i]\
+    \ * ac_[sft - 1][i];\n        idft(c0);\n        for (int i = 0; i != (2 << sft)\
+    \ - 1; ++i) c_[n_ + 1 + i] += c0[i];\n      }\n  }\n  return c_[n_++];\n}\n\n\
+    LIB_END\n\n\n#line 1 \"modint/montgomery_modint.hpp\"\n\n\n\n#line 5 \"modint/montgomery_modint.hpp\"\
     \n\n#ifdef LIB_DEBUG\n  #include <stdexcept>\n#endif\n#include <cstdint>\n#include\
     \ <iostream>\n#line 12 \"modint/montgomery_modint.hpp\"\n\nLIB_BEGIN\n\ntemplate\
     \ <std::uint32_t ModT>\nclass montgomery_modint30 {\n  using i32 = std::int32_t;\n\
@@ -226,7 +227,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/convolution_mod.3.test.cpp
   requiredBy: []
-  timestamp: '2022-04-23 23:27:16+08:00'
+  timestamp: '2022-04-23 23:41:59+08:00'
   verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/convolution_mod.3.test.cpp

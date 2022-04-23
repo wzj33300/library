@@ -213,7 +213,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
   requiredBy: []
-  timestamp: '2022-04-23 23:27:16+08:00'
+  timestamp: '2022-04-23 23:41:59+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp

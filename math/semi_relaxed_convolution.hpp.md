@@ -159,7 +159,7 @@ data:
   isVerificationFile: false
   path: math/semi_relaxed_convolution.hpp
   requiredBy: []
-  timestamp: '2022-04-23 23:27:16+08:00'
+  timestamp: '2022-04-23 23:41:59+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
