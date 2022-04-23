@@ -1,20 +1,20 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/convolution_mod.2.test.cpp
     title: remote_test/yosupo/math/convolution_mod.2.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/czt.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\n#define\
@@ -121,7 +121,7 @@ data:
   path: math/czt.hpp
   requiredBy: []
   timestamp: '2022-04-23 01:32:00+08:00'
-  verificationStatus: LIBRARY_ALL_AC
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod.2.test.cpp
 documentation_of: math/czt.hpp

@@ -1,20 +1,20 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
     title: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/semi_relaxed_convolution.hpp\"\n\n\n\n#line 1 \"common.hpp\"\
@@ -79,7 +79,7 @@ data:
     \n#include <algorithm>\n#line 9 \"math/semi_relaxed_convolution.hpp\"\n#include\
     \ <utility>\n#line 11 \"math/semi_relaxed_convolution.hpp\"\n\nLIB_BEGIN\n\ntemplate\
     \ <typename ModIntT, typename FnT>\nclass semi_relaxed_convolution {\n  std::vector<ModIntT>\
-    \ fixed_A_{}, B_{}, c_;\n  std::vector<std::vector<std::vector<ModIntT>>> dft_A_cache_{},\
+    \ fixed_A_{}, B_{}, c_{};\n  std::vector<std::vector<std::vector<ModIntT>>> dft_A_cache_{},\
     \ dft_B_cache_{};\n  int n_{};\n  FnT handle_;\n\n  enum : int { BASE_CASE_SIZE\
     \ = 32, LOG_BLOCK = 4, BLOCK = 1 << LOG_BLOCK, MASK = BLOCK - 1 };\n\n  static_assert((BASE_CASE_SIZE\
     \ & (BASE_CASE_SIZE - 1)) == 0);\n  static_assert(std::is_invocable_r_v<ModIntT,\
@@ -119,7 +119,7 @@ data:
     \n#include \"../common.hpp\"\n#include \"radix2_ntt.hpp\"\n\n#include <algorithm>\n\
     #include <type_traits>\n#include <utility>\n#include <vector>\n\nLIB_BEGIN\n\n\
     template <typename ModIntT, typename FnT>\nclass semi_relaxed_convolution {\n\
-    \  std::vector<ModIntT> fixed_A_{}, B_{}, c_;\n  std::vector<std::vector<std::vector<ModIntT>>>\
+    \  std::vector<ModIntT> fixed_A_{}, B_{}, c_{};\n  std::vector<std::vector<std::vector<ModIntT>>>\
     \ dft_A_cache_{}, dft_B_cache_{};\n  int n_{};\n  FnT handle_;\n\n  enum : int\
     \ { BASE_CASE_SIZE = 32, LOG_BLOCK = 4, BLOCK = 1 << LOG_BLOCK, MASK = BLOCK -\
     \ 1 };\n\n  static_assert((BASE_CASE_SIZE & (BASE_CASE_SIZE - 1)) == 0);\n  static_assert(std::is_invocable_r_v<ModIntT,\
@@ -161,8 +161,8 @@ data:
   isVerificationFile: false
   path: math/semi_relaxed_convolution.hpp
   requiredBy: []
-  timestamp: '2022-04-23 01:32:00+08:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2022-04-23 14:52:50+08:00'
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
 documentation_of: math/semi_relaxed_convolution.hpp

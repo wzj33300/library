@@ -8,65 +8,70 @@ data:
     path: common.hpp
     title: common.hpp
   - icon: ':x:'
+    path: math/convolution.hpp
+    title: Convolution
+  - icon: ':x:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
   - icon: ':x:'
     path: modint/long_montgomery_modint.hpp
     title: Long Montgomery ModInt
+  - icon: ':x:'
+    path: modint/long_montgomery_modint.hpp
+    title: Long Montgomery ModInt
   _extendedRequiredBy: []
-  _extendedVerifiedWith:
-  - icon: ':x:'
-    path: remote_test/yosupo/math/convolution_mod.0.test.cpp
-    title: remote_test/yosupo/math/convolution_mod.0.test.cpp
-  - icon: ':x:'
-    path: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
-    title: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
+  _extendedVerifiedWith: []
   _isVerificationFailed: true
-  _pathExtension: hpp
+  _pathExtension: cpp
   _verificationStatusIcon: ':x:'
   attributes:
-    links: []
-  bundledCode: "#line 1 \"math/convolution.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\
-    \n\n#define LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END }\n\
-    #define LIB ::lib::\n\n\n#line 1 \"modint/long_montgomery_modint.hpp\"\n\n\n\n\
-    #line 5 \"modint/long_montgomery_modint.hpp\"\n\n#ifdef LIB_DEBUG\n  #include\
-    \ <stdexcept>\n#endif\n#include <cstdint>\n#include <iostream>\n#include <type_traits>\n\
-    \nLIB_BEGIN\n\ntemplate <std::uint64_t ModT>\nclass montgomery_modint63 {\n  using\
-    \ u32 = std::uint32_t;\n  using i64 = std::int64_t;\n  using u64 = std::uint64_t;\n\
-    \n  u64 v_{};\n\n  static constexpr u64 get_r() {\n    u64 t = 2, iv = MOD * (t\
-    \ - MOD * MOD);\n    iv *= t - MOD * iv, iv *= t - MOD * iv, iv *= t - MOD * iv;\n\
-    \    return iv * (t - MOD * iv);\n  }\n  static constexpr u64 get_r2() {\n   \
-    \ u64 iv = -u64(MOD) % MOD;\n    for (int i = 0; i != 64; ++i)\n      if ((iv\
-    \ <<= 1) >= MOD) iv -= MOD;\n    return iv;\n  }\n  static constexpr u64 mul_high(u64\
-    \ x, u64 y) {\n    u64 a = x >> 32, b = static_cast<u32>(x), c = y >> 32, d =\
-    \ static_cast<u32>(y), ad = a * d,\n        bc = b * c;\n    return a * c + (ad\
-    \ >> 32) + (bc >> 32) + (((ad & MASK) + (bc & MASK) + (b * d >> 32)) >> 32);\n\
-    \  }\n  static constexpr u64 redc_mul(u64 x, u64 y) {\n    u64 res = mul_high(x,\
-    \ y) - mul_high(x * y * R, MOD);\n    return res + (MOD & -(res >> 63));\n  }\n\
-    \  static constexpr u64 norm(i64 x) { return x + (MOD & -(x < 0)); }\n\n  enum\
-    \ : u64 { MOD = ModT, R = get_r(), R2 = get_r2(), MASK = 0xFFFFFFFF };\n  enum\
-    \ : i64 { SMOD = MOD };\n\n  static_assert(MOD & 1);\n  static_assert(R * MOD\
-    \ == 1);\n  static_assert((MOD >> 63) == 0);\n  static_assert(MOD != 1);\n\npublic:\n\
-    \  static constexpr u64 mod() { return MOD; }\n  static constexpr i64 smod() {\
-    \ return SMOD; }\n  constexpr montgomery_modint63() {}\n  template <typename IntT,\
-    \ std::enable_if_t<std::is_integral_v<IntT>, int> = 0>\n  constexpr montgomery_modint63(IntT\
-    \ v) : v_(redc_mul(norm(v % SMOD), R2)) {}\n  constexpr u64 val() const {\n  \
-    \  u64 res = -mul_high(v_ * R, MOD);\n    return res + (MOD & -(res >> 63));\n\
-    \  }\n  constexpr i64 sval() const { return val(); }\n  constexpr bool is_zero()\
-    \ const { return v_ == 0; }\n  template <typename IntT, std::enable_if_t<std::is_integral_v<IntT>,\
-    \ int> = 0>\n  explicit constexpr operator IntT() const {\n    return static_cast<IntT>(val());\n\
-    \  }\n  constexpr montgomery_modint63 operator-() const {\n    montgomery_modint63\
-    \ res;\n    res.v_ = (MOD & -(v_ != 0)) - v_;\n    return res;\n  }\n  constexpr\
-    \ montgomery_modint63 inv() const {\n    i64 x1 = 1, x3 = 0, a = sval(), b = SMOD;\n\
-    \    while (b != 0) {\n      i64 q = a / b, x1_old = x1, a_old = a;\n      x1\
-    \ = x3, x3 = x1_old - x3 * q, a = b, b = a_old - b * q;\n    }\n#ifdef LIB_DEBUG\n\
-    \    if (a != 1) throw std::runtime_error(\"modular inverse error\");\n#endif\n\
-    \    return montgomery_modint63(x1);\n  }\n  constexpr montgomery_modint63 &operator+=(const\
-    \ montgomery_modint63 &rhs) {\n    v_ += rhs.v_ - MOD, v_ += MOD & -(v_ >> 63);\n\
-    \    return *this;\n  }\n  constexpr montgomery_modint63 &operator-=(const montgomery_modint63\
-    \ &rhs) {\n    v_ -= rhs.v_, v_ += MOD & -(v_ >> 63);\n    return *this;\n  }\n\
-    \  constexpr montgomery_modint63 &operator*=(const montgomery_modint63 &rhs) {\n\
-    \    v_ = redc_mul(v_, rhs.v_);\n    return *this;\n  }\n  constexpr montgomery_modint63\
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://judge.yosupo.jp/problem/convolution_mod_1000000007
+    links:
+    - https://judge.yosupo.jp/problem/convolution_mod_1000000007
+  bundledCode: "#line 1 \"remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp\"\
+    \n#define PROBLEM \"https://judge.yosupo.jp/problem/convolution_mod_1000000007\"\
+    \n\n#line 1 \"math/convolution.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\n#define\
+    \ LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END }\n#define LIB\
+    \ ::lib::\n\n\n#line 1 \"modint/long_montgomery_modint.hpp\"\n\n\n\n#line 5 \"\
+    modint/long_montgomery_modint.hpp\"\n\n#ifdef LIB_DEBUG\n  #include <stdexcept>\n\
+    #endif\n#include <cstdint>\n#include <iostream>\n#include <type_traits>\n\nLIB_BEGIN\n\
+    \ntemplate <std::uint64_t ModT>\nclass montgomery_modint63 {\n  using u32 = std::uint32_t;\n\
+    \  using i64 = std::int64_t;\n  using u64 = std::uint64_t;\n\n  u64 v_{};\n\n\
+    \  static constexpr u64 get_r() {\n    u64 t = 2, iv = MOD * (t - MOD * MOD);\n\
+    \    iv *= t - MOD * iv, iv *= t - MOD * iv, iv *= t - MOD * iv;\n    return iv\
+    \ * (t - MOD * iv);\n  }\n  static constexpr u64 get_r2() {\n    u64 iv = -u64(MOD)\
+    \ % MOD;\n    for (int i = 0; i != 64; ++i)\n      if ((iv <<= 1) >= MOD) iv -=\
+    \ MOD;\n    return iv;\n  }\n  static constexpr u64 mul_high(u64 x, u64 y) {\n\
+    \    u64 a = x >> 32, b = static_cast<u32>(x), c = y >> 32, d = static_cast<u32>(y),\
+    \ ad = a * d,\n        bc = b * c;\n    return a * c + (ad >> 32) + (bc >> 32)\
+    \ + (((ad & MASK) + (bc & MASK) + (b * d >> 32)) >> 32);\n  }\n  static constexpr\
+    \ u64 redc_mul(u64 x, u64 y) {\n    u64 res = mul_high(x, y) - mul_high(x * y\
+    \ * R, MOD);\n    return res + (MOD & -(res >> 63));\n  }\n  static constexpr\
+    \ u64 norm(i64 x) { return x + (MOD & -(x < 0)); }\n\n  enum : u64 { MOD = ModT,\
+    \ R = get_r(), R2 = get_r2(), MASK = 0xFFFFFFFF };\n  enum : i64 { SMOD = MOD\
+    \ };\n\n  static_assert(MOD & 1);\n  static_assert(R * MOD == 1);\n  static_assert((MOD\
+    \ >> 63) == 0);\n  static_assert(MOD != 1);\n\npublic:\n  static constexpr u64\
+    \ mod() { return MOD; }\n  static constexpr i64 smod() { return SMOD; }\n  constexpr\
+    \ montgomery_modint63() {}\n  template <typename IntT, std::enable_if_t<std::is_integral_v<IntT>,\
+    \ int> = 0>\n  constexpr montgomery_modint63(IntT v) : v_(redc_mul(norm(v % SMOD),\
+    \ R2)) {}\n  constexpr u64 val() const {\n    u64 res = -mul_high(v_ * R, MOD);\n\
+    \    return res + (MOD & -(res >> 63));\n  }\n  constexpr i64 sval() const { return\
+    \ val(); }\n  constexpr bool is_zero() const { return v_ == 0; }\n  template <typename\
+    \ IntT, std::enable_if_t<std::is_integral_v<IntT>, int> = 0>\n  explicit constexpr\
+    \ operator IntT() const {\n    return static_cast<IntT>(val());\n  }\n  constexpr\
+    \ montgomery_modint63 operator-() const {\n    montgomery_modint63 res;\n    res.v_\
+    \ = (MOD & -(v_ != 0)) - v_;\n    return res;\n  }\n  constexpr montgomery_modint63\
+    \ inv() const {\n    i64 x1 = 1, x3 = 0, a = sval(), b = SMOD;\n    while (b !=\
+    \ 0) {\n      i64 q = a / b, x1_old = x1, a_old = a;\n      x1 = x3, x3 = x1_old\
+    \ - x3 * q, a = b, b = a_old - b * q;\n    }\n#ifdef LIB_DEBUG\n    if (a != 1)\
+    \ throw std::runtime_error(\"modular inverse error\");\n#endif\n    return montgomery_modint63(x1);\n\
+    \  }\n  constexpr montgomery_modint63 &operator+=(const montgomery_modint63 &rhs)\
+    \ {\n    v_ += rhs.v_ - MOD, v_ += MOD & -(v_ >> 63);\n    return *this;\n  }\n\
+    \  constexpr montgomery_modint63 &operator-=(const montgomery_modint63 &rhs) {\n\
+    \    v_ -= rhs.v_, v_ += MOD & -(v_ >> 63);\n    return *this;\n  }\n  constexpr\
+    \ montgomery_modint63 &operator*=(const montgomery_modint63 &rhs) {\n    v_ =\
+    \ redc_mul(v_, rhs.v_);\n    return *this;\n  }\n  constexpr montgomery_modint63\
     \ &operator/=(const montgomery_modint63 &rhs) {\n    return operator*=(rhs.inv());\n\
     \  }\n  constexpr montgomery_modint63 pow(u64 e) const {\n    for (montgomery_modint63\
     \ res(1), x(*this);; x *= x) {\n      if (e & 1) res *= x;\n      if ((e >>= 1)\
@@ -171,49 +176,42 @@ data:
     \  const IntT m1_mod_modular = mint1::mod() % modular;\n  for (int i = 0; i !=\
     \ n; ++i) {\n    mint0 k1((res0[i] - res1[i].val()) * im1_mod_m0);\n    res[i]\
     \ = (k1.val() % modular * m1_mod_modular + res1[i].val()) % modular;\n  }\n  return\
-    \ res;\n}\n\nLIB_END\n\n\n"
-  code: "#ifndef CONVOLUTION_HPP\n#define CONVOLUTION_HPP\n\n#include \"../common.hpp\"\
-    \n#include \"../modint/long_montgomery_modint.hpp\"\n#include \"radix2_ntt.hpp\"\
-    \n\n#include <algorithm>\n#include <cstdint>\n#include <type_traits>\n#include\
-    \ <vector>\n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nstd::vector<ModIntT> convolution(const\
-    \ std::vector<ModIntT> &lhs, std::vector<ModIntT> &rhs) {\n  int n = static_cast<int>(lhs.size()),\
-    \ m = static_cast<int>(rhs.size());\n  if (n == 0 || m == 0) return std::vector<ModIntT>{};\n\
-    \  if (std::min(n, m) <= 32) {\n    std::vector<ModIntT> res(n + m - 1);\n   \
-    \ for (int i = 0; i != n; ++i)\n      for (int j = 0; j != m; ++j) res[i + j]\
-    \ += lhs[i] * rhs[j];\n    return res;\n  }\n  int len = ntt_len(n + m - 1);\n\
-    \  std::vector<ModIntT> lhs_cpy(len), rhs_cpy(len);\n  std::copy_n(lhs.cbegin(),\
-    \ n, lhs_cpy.begin());\n  std::copy_n(rhs.cbegin(), m, rhs_cpy.begin());\n  dft_n(lhs_cpy.begin(),\
-    \ len), dft_n(rhs_cpy.begin(), len);\n  for (int i = 0; i != len; ++i) lhs_cpy[i]\
-    \ *= rhs_cpy[i];\n  idft_n(lhs_cpy.begin(), len);\n  lhs_cpy.resize(n + m - 1);\n\
-    \  return lhs_cpy;\n}\n\ntemplate <typename IntT>\nstd::enable_if_t<std::is_integral_v<IntT>\
-    \ && sizeof(IntT) <= sizeof(std::int32_t),\n                 std::vector<IntT>>\n\
-    convolution_mod(const std::vector<IntT> &lhs, std::vector<IntT> &rhs, const IntT\
-    \ modular) {\n  using mint0 = mm63<0x3F9A000000000001>;\n  using mint1 = mm63<0x3FC6000000000001>;\n\
-    \  auto res0   = convolution(std::vector<mint0>(lhs.begin(), lhs.end()),\n   \
-    \                       std::vector<mint0>(rhs.begin(), rhs.end()));\n  auto res1\
-    \   = convolution(std::vector<mint1>(lhs.begin(), lhs.end()),\n              \
-    \            std::vector<mint1>(rhs.begin(), rhs.end()));\n  const int n = res0.size();\n\
-    \  std::vector<IntT> res(n);\n  //    a mod m_0 = a_0, a mod m_1 = a_1\n  // ->\
-    \ a_0 + k_0m_0 = a_1 + k_1m_1\n  // -> a_0 - a_1 = k_1m_1 (mod m_0)\n  // -> k_1\
-    \ = (a_0 - a_1) / m_1 (mod m_0)\n  static constexpr mint0 im1_mod_m0(mint0(mint1::mod()).inv());\n\
-    \  const IntT m1_mod_modular = mint1::mod() % modular;\n  for (int i = 0; i !=\
-    \ n; ++i) {\n    mint0 k1((res0[i] - res1[i].val()) * im1_mod_m0);\n    res[i]\
-    \ = (k1.val() % modular * m1_mod_modular + res1[i].val()) % modular;\n  }\n  return\
-    \ res;\n}\n\nLIB_END\n\n#endif"
+    \ res;\n}\n\nLIB_END\n\n\n#line 5 \"remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp\"\
+    \n\n#line 7 \"remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp\"\n\
+    #include <iterator>\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\"\
+    , stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
+    \  std::cin.tie(nullptr);\n  int n, m;\n  std::cin >> n >> m;\n  std::vector<int>\
+    \ a, b;\n  std::copy_n(std::istream_iterator<int>(std::cin), n, std::back_inserter(a));\n\
+    \  std::copy_n(std::istream_iterator<int>(std::cin), m, std::back_inserter(b));\n\
+    \  auto ab = lib::convolution_mod(a, b, 1000000007);\n  std::copy(ab.begin(),\
+    \ ab.end(), std::ostream_iterator<int>(std::cout, \" \"));\n  return 0;\n}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/convolution_mod_1000000007\"\
+    \n\n#include \"math/convolution.hpp\"\n#include \"modint/long_montgomery_modint.hpp\"\
+    \n\n#include <iostream>\n#include <iterator>\n\nint main() {\n#ifdef LOCAL\n \
+    \ std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n\
+    #endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n  int n,\
+    \ m;\n  std::cin >> n >> m;\n  std::vector<int> a, b;\n  std::copy_n(std::istream_iterator<int>(std::cin),\
+    \ n, std::back_inserter(a));\n  std::copy_n(std::istream_iterator<int>(std::cin),\
+    \ m, std::back_inserter(b));\n  auto ab = lib::convolution_mod(a, b, 1000000007);\n\
+    \  std::copy(ab.begin(), ab.end(), std::ostream_iterator<int>(std::cout, \" \"\
+    ));\n  return 0;\n}"
   dependsOn:
+  - math/convolution.hpp
   - common.hpp
   - modint/long_montgomery_modint.hpp
   - common.hpp
   - math/radix2_ntt.hpp
-  isVerificationFile: false
-  path: math/convolution.hpp
+  - modint/long_montgomery_modint.hpp
+  isVerificationFile: true
+  path: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
   requiredBy: []
   timestamp: '2022-04-23 14:52:50+08:00'
-  verificationStatus: LIBRARY_ALL_WA
-  verifiedWith:
-  - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
-  - remote_test/yosupo/math/convolution_mod.0.test.cpp
-documentation_of: math/convolution.hpp
+  verificationStatus: TEST_WRONG_ANSWER
+  verifiedWith: []
+documentation_of: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
 layout: document
-title: Convolution
+redirect_from:
+- /verify/remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
+- /verify/remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp.html
+title: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
 ---
