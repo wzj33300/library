@@ -1,29 +1,29 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/convolution.hpp
     title: Convolution
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modint/long_montgomery_modint.hpp
     title: Long Montgomery ModInt
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/convolution_mod
@@ -151,7 +151,7 @@ data:
     template <typename ContainerT>\nvoid idft(ContainerT &a) {\n  idft_n(a.begin(),\
     \ a.size());\n}\n\nLIB_END\n\n\n#line 7 \"math/convolution.hpp\"\n\n#include <algorithm>\n\
     #line 12 \"math/convolution.hpp\"\n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\n\
-    std::vector<ModIntT> convolution(const std::vector<ModIntT> &lhs, std::vector<ModIntT>\
+    std::vector<ModIntT> convolution(const std::vector<ModIntT> &lhs, const std::vector<ModIntT>\
     \ &rhs) {\n  int n = static_cast<int>(lhs.size()), m = static_cast<int>(rhs.size());\n\
     \  if (n == 0 || m == 0) return std::vector<ModIntT>{};\n  if (std::min(n, m)\
     \ <= 32) {\n    std::vector<ModIntT> res(n + m - 1);\n    for (int i = 0; i !=\
@@ -163,37 +163,37 @@ data:
     \ rhs_cpy[i];\n  idft_n(lhs_cpy.begin(), len);\n  lhs_cpy.resize(n + m - 1);\n\
     \  return lhs_cpy;\n}\n\ntemplate <typename IntT>\nstd::enable_if_t<std::is_integral_v<IntT>\
     \ && sizeof(IntT) <= sizeof(std::int32_t),\n                 std::vector<IntT>>\n\
-    convolution_mod(const std::vector<IntT> &lhs, std::vector<IntT> &rhs, const IntT\
-    \ modular) {\n  using mint0 = mm63<0x3F9A000000000001>;\n  using mint1 = mm63<0x3FC6000000000001>;\n\
-    \  auto res0   = convolution(std::vector<mint0>(lhs.begin(), lhs.end()),\n   \
-    \                       std::vector<mint0>(rhs.begin(), rhs.end()));\n  auto res1\
-    \   = convolution(std::vector<mint1>(lhs.begin(), lhs.end()),\n              \
-    \            std::vector<mint1>(rhs.begin(), rhs.end()));\n  const int n = res0.size();\n\
-    \  std::vector<IntT> res(n);\n  //    a mod m_0 = a_0, a mod m_1 = a_1\n  // ->\
-    \ a_0 + k_0m_0 = a_1 + k_1m_1\n  // -> a_0 - a_1 = k_1m_1 (mod m_0)\n  // -> k_1\
-    \ = (a_0 - a_1) / m_1 (mod m_0)\n  static constexpr mint0 im1_mod_m0(mint0(mint1::mod()).inv());\n\
-    \  const IntT m1_mod_modular = mint1::mod() % modular;\n  for (int i = 0; i !=\
-    \ n; ++i) {\n    mint0 k1((res0[i] - res1[i].val()) * im1_mod_m0);\n    res[i]\
-    \ = (k1.val() % modular * m1_mod_modular + res1[i].val()) % modular;\n  }\n  return\
-    \ res;\n}\n\nLIB_END\n\n\n#line 1 \"modint/montgomery_modint.hpp\"\n\n\n\n#line\
-    \ 5 \"modint/montgomery_modint.hpp\"\n\n#ifdef LIB_DEBUG\n  #include <stdexcept>\n\
-    #endif\n#line 12 \"modint/montgomery_modint.hpp\"\n\nLIB_BEGIN\n\ntemplate <std::uint32_t\
-    \ ModT>\nclass montgomery_modint30 {\n  using i32 = std::int32_t;\n  using u32\
-    \ = std::uint32_t;\n  using u64 = std::uint64_t;\n\n  u32 v_{};\n\n  static constexpr\
-    \ u32 get_r() {\n    u32 t = 2, iv = MOD * (t - MOD * MOD);\n    iv *= t - MOD\
-    \ * iv, iv *= t - MOD * iv;\n    return iv * (MOD * iv - t);\n  }\n  static constexpr\
-    \ u32 redc(u64 x) {\n    return (x + static_cast<u64>(static_cast<u32>(x) * R)\
-    \ * MOD) >> 32;\n  }\n  static constexpr u32 norm(u32 x) { return x - (MOD & -((MOD\
-    \ - 1 - x) >> 31)); }\n\n  enum : u32 { MOD = ModT, MOD2 = MOD << 1, R = get_r(),\
-    \ R2 = -static_cast<u64>(MOD) % MOD };\n  enum : i32 { SMOD = MOD };\n\n  static_assert(MOD\
-    \ & 1);\n  static_assert(-R * MOD == 1);\n  static_assert((MOD >> 30) == 0);\n\
-    \  static_assert(MOD != 1);\n\npublic:\n  static constexpr u32 mod() { return\
-    \ MOD; }\n  static constexpr i32 smod() { return SMOD; }\n  constexpr montgomery_modint30()\
-    \ {}\n  template <typename IntT, std::enable_if_t<std::is_integral_v<IntT>, int>\
-    \ = 0>\n  constexpr montgomery_modint30(IntT v) : v_(redc(static_cast<u64>(v %\
-    \ SMOD + SMOD) * R2)) {}\n  constexpr u32 val() const { return norm(redc(v_));\
+    convolution_mod(const std::vector<IntT> &lhs, const std::vector<IntT> &rhs, const\
+    \ IntT modular) {\n  using mint0 = mm63<0x3F9A000000000001>;\n  using mint1 =\
+    \ mm63<0x3FC6000000000001>;\n  auto res0   = convolution(std::vector<mint0>(lhs.begin(),\
+    \ lhs.end()),\n                          std::vector<mint0>(rhs.begin(), rhs.end()));\n\
+    \  auto res1   = convolution(std::vector<mint1>(lhs.begin(), lhs.end()),\n   \
+    \                       std::vector<mint1>(rhs.begin(), rhs.end()));\n  const\
+    \ int n = res0.size();\n  std::vector<IntT> res(n);\n  //    a mod m_0 = a_0,\
+    \ a mod m_1 = a_1\n  // -> a_0 + k_0m_0 = a_1 + k_1m_1\n  // -> a_0 - a_1 = k_1m_1\
+    \ (mod m_0)\n  // -> k_1 = (a_0 - a_1) / m_1 (mod m_0)\n  static constexpr mint0\
+    \ im1_mod_m0(mint0(mint1::mod()).inv());\n  const IntT m1_mod_modular = mint1::mod()\
+    \ % modular;\n  for (int i = 0; i != n; ++i) {\n    mint0 k1((res0[i] - res1[i].val())\
+    \ * im1_mod_m0);\n    res[i] = (k1.val() % modular * m1_mod_modular + res1[i].val())\
+    \ % modular;\n  }\n  return res;\n}\n\nLIB_END\n\n\n#line 1 \"modint/montgomery_modint.hpp\"\
+    \n\n\n\n#line 5 \"modint/montgomery_modint.hpp\"\n\n#ifdef LIB_DEBUG\n  #include\
+    \ <stdexcept>\n#endif\n#line 12 \"modint/montgomery_modint.hpp\"\n\nLIB_BEGIN\n\
+    \ntemplate <std::uint32_t ModT>\nclass montgomery_modint30 {\n  using i32 = std::int32_t;\n\
+    \  using u32 = std::uint32_t;\n  using u64 = std::uint64_t;\n\n  u32 v_{};\n\n\
+    \  static constexpr u32 get_r() {\n    u32 t = 2, iv = MOD * (t - MOD * MOD);\n\
+    \    iv *= t - MOD * iv, iv *= t - MOD * iv;\n    return iv * (MOD * iv - t);\n\
+    \  }\n  static constexpr u32 redc(u64 x) {\n    return (x + static_cast<u64>(static_cast<u32>(x)\
+    \ * R) * MOD) >> 32;\n  }\n  static constexpr u32 norm(u32 x) { return x - (MOD\
+    \ & -((MOD - 1 - x) >> 31)); }\n\n  enum : u32 { MOD = ModT, MOD2 = MOD << 1,\
+    \ R = get_r(), R2 = -static_cast<u64>(MOD) % MOD };\n  enum : i32 { SMOD = MOD\
+    \ };\n\n  static_assert(MOD & 1);\n  static_assert(-R * MOD == 1);\n  static_assert((MOD\
+    \ >> 30) == 0);\n  static_assert(MOD != 1);\n\npublic:\n  static constexpr u32\
+    \ mod() { return MOD; }\n  static constexpr i32 smod() { return SMOD; }\n  constexpr\
+    \ montgomery_modint30() {}\n  template <typename IntT, std::enable_if_t<std::is_integral_v<IntT>,\
+    \ int> = 0>\n  constexpr montgomery_modint30(IntT v) : v_(redc(static_cast<u64>(v\
+    \ % SMOD + SMOD) * R2)) {}\n  constexpr u32 val() const { return norm(redc(v_));\
     \ }\n  constexpr i32 sval() const { return norm(redc(v_)); }\n  constexpr bool\
-    \ is_zero() const { return v_ == 0 || V_ == MOD; }\n  template <typename IntT,\
+    \ is_zero() const { return v_ == 0 || v_ == MOD; }\n  template <typename IntT,\
     \ std::enable_if_t<std::is_integral_v<IntT>, int> = 0>\n  explicit constexpr operator\
     \ IntT() const {\n    return static_cast<IntT>(val());\n  }\n  constexpr montgomery_modint30\
     \ operator-() const {\n    montgomery_modint30 res;\n    res.v_ = (MOD2 & -(v_\
@@ -259,8 +259,8 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/convolution_mod.0.test.cpp
   requiredBy: []
-  timestamp: '2022-04-23 14:52:50+08:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2022-04-23 15:00:57+08:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/convolution_mod.0.test.cpp
 layout: document

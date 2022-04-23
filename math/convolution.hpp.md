@@ -1,29 +1,29 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modint/long_montgomery_modint.hpp
     title: Long Montgomery ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod.0.test.cpp
     title: remote_test/yosupo/math/convolution_mod.0.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
     title: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/convolution.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\
@@ -147,7 +147,7 @@ data:
     template <typename ContainerT>\nvoid idft(ContainerT &a) {\n  idft_n(a.begin(),\
     \ a.size());\n}\n\nLIB_END\n\n\n#line 7 \"math/convolution.hpp\"\n\n#include <algorithm>\n\
     #line 12 \"math/convolution.hpp\"\n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\n\
-    std::vector<ModIntT> convolution(const std::vector<ModIntT> &lhs, std::vector<ModIntT>\
+    std::vector<ModIntT> convolution(const std::vector<ModIntT> &lhs, const std::vector<ModIntT>\
     \ &rhs) {\n  int n = static_cast<int>(lhs.size()), m = static_cast<int>(rhs.size());\n\
     \  if (n == 0 || m == 0) return std::vector<ModIntT>{};\n  if (std::min(n, m)\
     \ <= 32) {\n    std::vector<ModIntT> res(n + m - 1);\n    for (int i = 0; i !=\
@@ -159,24 +159,24 @@ data:
     \ rhs_cpy[i];\n  idft_n(lhs_cpy.begin(), len);\n  lhs_cpy.resize(n + m - 1);\n\
     \  return lhs_cpy;\n}\n\ntemplate <typename IntT>\nstd::enable_if_t<std::is_integral_v<IntT>\
     \ && sizeof(IntT) <= sizeof(std::int32_t),\n                 std::vector<IntT>>\n\
-    convolution_mod(const std::vector<IntT> &lhs, std::vector<IntT> &rhs, const IntT\
-    \ modular) {\n  using mint0 = mm63<0x3F9A000000000001>;\n  using mint1 = mm63<0x3FC6000000000001>;\n\
-    \  auto res0   = convolution(std::vector<mint0>(lhs.begin(), lhs.end()),\n   \
-    \                       std::vector<mint0>(rhs.begin(), rhs.end()));\n  auto res1\
-    \   = convolution(std::vector<mint1>(lhs.begin(), lhs.end()),\n              \
-    \            std::vector<mint1>(rhs.begin(), rhs.end()));\n  const int n = res0.size();\n\
-    \  std::vector<IntT> res(n);\n  //    a mod m_0 = a_0, a mod m_1 = a_1\n  // ->\
-    \ a_0 + k_0m_0 = a_1 + k_1m_1\n  // -> a_0 - a_1 = k_1m_1 (mod m_0)\n  // -> k_1\
-    \ = (a_0 - a_1) / m_1 (mod m_0)\n  static constexpr mint0 im1_mod_m0(mint0(mint1::mod()).inv());\n\
-    \  const IntT m1_mod_modular = mint1::mod() % modular;\n  for (int i = 0; i !=\
-    \ n; ++i) {\n    mint0 k1((res0[i] - res1[i].val()) * im1_mod_m0);\n    res[i]\
-    \ = (k1.val() % modular * m1_mod_modular + res1[i].val()) % modular;\n  }\n  return\
-    \ res;\n}\n\nLIB_END\n\n\n"
+    convolution_mod(const std::vector<IntT> &lhs, const std::vector<IntT> &rhs, const\
+    \ IntT modular) {\n  using mint0 = mm63<0x3F9A000000000001>;\n  using mint1 =\
+    \ mm63<0x3FC6000000000001>;\n  auto res0   = convolution(std::vector<mint0>(lhs.begin(),\
+    \ lhs.end()),\n                          std::vector<mint0>(rhs.begin(), rhs.end()));\n\
+    \  auto res1   = convolution(std::vector<mint1>(lhs.begin(), lhs.end()),\n   \
+    \                       std::vector<mint1>(rhs.begin(), rhs.end()));\n  const\
+    \ int n = res0.size();\n  std::vector<IntT> res(n);\n  //    a mod m_0 = a_0,\
+    \ a mod m_1 = a_1\n  // -> a_0 + k_0m_0 = a_1 + k_1m_1\n  // -> a_0 - a_1 = k_1m_1\
+    \ (mod m_0)\n  // -> k_1 = (a_0 - a_1) / m_1 (mod m_0)\n  static constexpr mint0\
+    \ im1_mod_m0(mint0(mint1::mod()).inv());\n  const IntT m1_mod_modular = mint1::mod()\
+    \ % modular;\n  for (int i = 0; i != n; ++i) {\n    mint0 k1((res0[i] - res1[i].val())\
+    \ * im1_mod_m0);\n    res[i] = (k1.val() % modular * m1_mod_modular + res1[i].val())\
+    \ % modular;\n  }\n  return res;\n}\n\nLIB_END\n\n\n"
   code: "#ifndef CONVOLUTION_HPP\n#define CONVOLUTION_HPP\n\n#include \"../common.hpp\"\
     \n#include \"../modint/long_montgomery_modint.hpp\"\n#include \"radix2_ntt.hpp\"\
     \n\n#include <algorithm>\n#include <cstdint>\n#include <type_traits>\n#include\
     \ <vector>\n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nstd::vector<ModIntT> convolution(const\
-    \ std::vector<ModIntT> &lhs, std::vector<ModIntT> &rhs) {\n  int n = static_cast<int>(lhs.size()),\
+    \ std::vector<ModIntT> &lhs, const std::vector<ModIntT> &rhs) {\n  int n = static_cast<int>(lhs.size()),\
     \ m = static_cast<int>(rhs.size());\n  if (n == 0 || m == 0) return std::vector<ModIntT>{};\n\
     \  if (std::min(n, m) <= 32) {\n    std::vector<ModIntT> res(n + m - 1);\n   \
     \ for (int i = 0; i != n; ++i)\n      for (int j = 0; j != m; ++j) res[i + j]\
@@ -187,19 +187,19 @@ data:
     \ *= rhs_cpy[i];\n  idft_n(lhs_cpy.begin(), len);\n  lhs_cpy.resize(n + m - 1);\n\
     \  return lhs_cpy;\n}\n\ntemplate <typename IntT>\nstd::enable_if_t<std::is_integral_v<IntT>\
     \ && sizeof(IntT) <= sizeof(std::int32_t),\n                 std::vector<IntT>>\n\
-    convolution_mod(const std::vector<IntT> &lhs, std::vector<IntT> &rhs, const IntT\
-    \ modular) {\n  using mint0 = mm63<0x3F9A000000000001>;\n  using mint1 = mm63<0x3FC6000000000001>;\n\
-    \  auto res0   = convolution(std::vector<mint0>(lhs.begin(), lhs.end()),\n   \
-    \                       std::vector<mint0>(rhs.begin(), rhs.end()));\n  auto res1\
-    \   = convolution(std::vector<mint1>(lhs.begin(), lhs.end()),\n              \
-    \            std::vector<mint1>(rhs.begin(), rhs.end()));\n  const int n = res0.size();\n\
-    \  std::vector<IntT> res(n);\n  //    a mod m_0 = a_0, a mod m_1 = a_1\n  // ->\
-    \ a_0 + k_0m_0 = a_1 + k_1m_1\n  // -> a_0 - a_1 = k_1m_1 (mod m_0)\n  // -> k_1\
-    \ = (a_0 - a_1) / m_1 (mod m_0)\n  static constexpr mint0 im1_mod_m0(mint0(mint1::mod()).inv());\n\
-    \  const IntT m1_mod_modular = mint1::mod() % modular;\n  for (int i = 0; i !=\
-    \ n; ++i) {\n    mint0 k1((res0[i] - res1[i].val()) * im1_mod_m0);\n    res[i]\
-    \ = (k1.val() % modular * m1_mod_modular + res1[i].val()) % modular;\n  }\n  return\
-    \ res;\n}\n\nLIB_END\n\n#endif"
+    convolution_mod(const std::vector<IntT> &lhs, const std::vector<IntT> &rhs, const\
+    \ IntT modular) {\n  using mint0 = mm63<0x3F9A000000000001>;\n  using mint1 =\
+    \ mm63<0x3FC6000000000001>;\n  auto res0   = convolution(std::vector<mint0>(lhs.begin(),\
+    \ lhs.end()),\n                          std::vector<mint0>(rhs.begin(), rhs.end()));\n\
+    \  auto res1   = convolution(std::vector<mint1>(lhs.begin(), lhs.end()),\n   \
+    \                       std::vector<mint1>(rhs.begin(), rhs.end()));\n  const\
+    \ int n = res0.size();\n  std::vector<IntT> res(n);\n  //    a mod m_0 = a_0,\
+    \ a mod m_1 = a_1\n  // -> a_0 + k_0m_0 = a_1 + k_1m_1\n  // -> a_0 - a_1 = k_1m_1\
+    \ (mod m_0)\n  // -> k_1 = (a_0 - a_1) / m_1 (mod m_0)\n  static constexpr mint0\
+    \ im1_mod_m0(mint0(mint1::mod()).inv());\n  const IntT m1_mod_modular = mint1::mod()\
+    \ % modular;\n  for (int i = 0; i != n; ++i) {\n    mint0 k1((res0[i] - res1[i].val())\
+    \ * im1_mod_m0);\n    res[i] = (k1.val() % modular * m1_mod_modular + res1[i].val())\
+    \ % modular;\n  }\n  return res;\n}\n\nLIB_END\n\n#endif"
   dependsOn:
   - common.hpp
   - modint/long_montgomery_modint.hpp
@@ -208,8 +208,8 @@ data:
   isVerificationFile: false
   path: math/convolution.hpp
   requiredBy: []
-  timestamp: '2022-04-23 14:52:50+08:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2022-04-23 15:00:57+08:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
   - remote_test/yosupo/math/convolution_mod.0.test.cpp
