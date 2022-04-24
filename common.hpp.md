@@ -17,13 +17,16 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/czt.hpp
     title: Chirp Z-transform (Bluestein's algorithm)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
+    path: math/formal_power_series.hpp
+    title: Formal Power Series
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/relaxed_convolution.hpp
     title: Relaxed Convolution
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution
   - icon: ':heavy_check_mark:'
@@ -32,7 +35,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: modint/long_montgomery_modint.hpp
     title: Long Montgomery ModInt
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedVerifiedWith:
@@ -73,20 +76,44 @@ data:
     path: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
     title: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
   - icon: ':heavy_check_mark:'
-    path: remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
-    title: remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
+    path: remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
+    title: remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
+    title: remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
   - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
+    title: remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
+  - icon: ':x:'
     path: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
     title: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
     title: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
-  _isVerificationFailed: false
+  - icon: ':x:'
+    path: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
+    title: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
+  - icon: ':x:'
+    path: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
+    title: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
+  - icon: ':x:'
+    path: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
+    title: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
+  - icon: ':x:'
+    path: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
+    title: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
+  - icon: ':x:'
+    path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
+    title: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
+  - icon: ':x:'
+    path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
+    title: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: '#line 1 "common.hpp"
@@ -133,14 +160,19 @@ data:
   - math/convolution.hpp
   - math/truncated_formal_power_series.hpp
   - math/czt.hpp
+  - math/formal_power_series.hpp
   - modint/montgomery_modint.hpp
   - modint/long_montgomery_modint.hpp
   - datastructure/weighted_disjoint_set.hpp
   - datastructure/disjoint_set.hpp
   timestamp: '2022-04-20 11:49:11+08:00'
-  verificationStatus: LIBRARY_ALL_AC
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - remote_test/aizu/datastructure/weighted_union_find.0.test.cpp
+  - remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
+  - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
   - remote_test/yosupo/math/convolution_mod.1.test.cpp
   - remote_test/yosupo/math/convolution_mod.1.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
@@ -151,8 +183,12 @@ data:
   - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
   - remote_test/yosupo/math/convolution_mod.3.test.cpp
   - remote_test/yosupo/math/convolution_mod.3.test.cpp
+  - remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
   - remote_test/yosupo/math/convolution_mod.0.test.cpp
   - remote_test/yosupo/math/convolution_mod.0.test.cpp
+  - remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
   - remote_test/yosupo/math/convolution_mod.2.test.cpp
   - remote_test/yosupo/math/convolution_mod.2.test.cpp
   - remote_test/yosupo/datastructure/union_find.0.test.cpp

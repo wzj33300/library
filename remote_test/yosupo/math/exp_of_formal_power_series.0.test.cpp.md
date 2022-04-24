@@ -8,6 +8,9 @@ data:
     path: common.hpp
     title: common.hpp
   - icon: ':question:'
+    path: math/formal_power_series.hpp
+    title: Formal Power Series
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
   - icon: ':question:'
@@ -23,16 +26,16 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/convolution_mod
+    PROBLEM: https://judge.yosupo.jp/problem/exp_of_formal_power_series
     links:
-    - https://judge.yosupo.jp/problem/convolution_mod
-  bundledCode: "#line 1 \"remote_test/yosupo/math/convolution_mod.3.test.cpp\"\n#define\
-    \ PROBLEM \"https://judge.yosupo.jp/problem/convolution_mod\"\n\n#line 1 \"math/relaxed_convolution.hpp\"\
-    \n\n\n\n#line 1 \"common.hpp\"\n\n\n\n#define LIB_DEBUG\n\n#define LIB_BEGIN namespace\
-    \ lib {\n#define LIB_END }\n#define LIB ::lib::\n\n\n#line 1 \"math/radix2_ntt.hpp\"\
-    \n\n\n\n#line 5 \"math/radix2_ntt.hpp\"\n\n#include <array>\n#include <cassert>\n\
-    #include <type_traits>\n#include <vector>\n\nLIB_BEGIN\n\nnamespace detail {\n\
-    \ntemplate <typename IntT>\nconstexpr std::enable_if_t<std::is_integral_v<IntT>,\
+    - https://judge.yosupo.jp/problem/exp_of_formal_power_series
+  bundledCode: "#line 1 \"remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp\"\
+    \n#define PROBLEM \"https://judge.yosupo.jp/problem/exp_of_formal_power_series\"\
+    \n\n#line 1 \"math/formal_power_series.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\
+    \n\n#define LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END }\n\
+    #define LIB ::lib::\n\n\n#line 1 \"math/radix2_ntt.hpp\"\n\n\n\n#line 5 \"math/radix2_ntt.hpp\"\
+    \n\n#include <array>\n#include <cassert>\n#include <type_traits>\n#include <vector>\n\
+    \nLIB_BEGIN\n\nnamespace detail {\n\ntemplate <typename IntT>\nconstexpr std::enable_if_t<std::is_integral_v<IntT>,\
     \ int> bsf(IntT v) {\n  if (static_cast<std::make_signed_t<IntT>>(v) <= 0) return\
     \ -1;\n  int res = 0;\n  for (; (v & 1) == 0; ++res) v >>= 1;\n  return res;\n\
     }\n\ntemplate <typename ModIntT>\nconstexpr ModIntT quadratic_nonresidue_prime()\
@@ -95,14 +98,15 @@ data:
     \ = dft_a.begin() + n;\n  for (int i = 0, is_even = 0, j; i != as; ++i) {\n  \
     \  if ((j = i & (n - 1)) == 0) is_even ^= 1;\n    it[j] += is_even ? a[i] : -a[i];\n\
     \  }\n  T r(n == 1 ? T(-1) : rt[detail::bsf(n) - 1]), v(1);\n  for (int i = 0;\
-    \ i != n; ++i) it[i] *= v, v *= r;\n  dft_n(it, n);\n}\n\nLIB_END\n\n\n#line 6\
-    \ \"math/relaxed_convolution.hpp\"\n\n#include <functional>\n#line 10 \"math/relaxed_convolution.hpp\"\
-    \n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nclass relaxed_convolution {    \
-    \                   // O(n log^2 n) impl\n  std::vector<ModIntT> a_{}, b_{}, c_{};\
-    \          // `a_ * b_` = `c_`\n  std::vector<std::vector<ModIntT>> ac_{}, bc_{};\
-    \ // cached DFTs\n  std::function<ModIntT()> ha_{}, hb_{};          // handle\
-    \ for `a` and `b`\n  int n_{};                                       // counter\n\
-    \n  template <typename FnT>\n  static auto wrap(FnT &&f, int &n, const std::vector<ModIntT>\
+    \ i != n; ++i) it[i] *= v, v *= r;\n  dft_n(it, n);\n}\n\nLIB_END\n\n\n#line 1\
+    \ \"math/relaxed_convolution.hpp\"\n\n\n\n#line 6 \"math/relaxed_convolution.hpp\"\
+    \n\n#include <functional>\n#line 10 \"math/relaxed_convolution.hpp\"\n\nLIB_BEGIN\n\
+    \ntemplate <typename ModIntT>\nclass relaxed_convolution {                   \
+    \    // O(n log^2 n) impl\n  std::vector<ModIntT> a_{}, b_{}, c_{};          //\
+    \ `a_ * b_` = `c_`\n  std::vector<std::vector<ModIntT>> ac_{}, bc_{}; // cached\
+    \ DFTs\n  std::function<ModIntT()> ha_{}, hb_{};          // handle for `a` and\
+    \ `b`\n  int n_{};                                       // counter\n\n  template\
+    \ <typename FnT>\n  static auto wrap(FnT &&f, int &n, const std::vector<ModIntT>\
     \ &c, std::vector<ModIntT> &e) {\n    if constexpr (std::is_invocable_r_v<ModIntT,\
     \ FnT, int, const std::vector<ModIntT> &>) {\n      return std::bind(\n      \
     \    [f](int n, const std::vector<ModIntT> &c, std::vector<ModIntT> &e) mutable\
@@ -147,6 +151,96 @@ data:
     \ i = 0; i != 2 << sft; ++i)\n          c0[i] = c0[i] * bc_[sft - 1][i] + c1[i]\
     \ * ac_[sft - 1][i];\n        idft(c0);\n        for (int i = 0; i != (2 << sft)\
     \ - 1; ++i) c_[n_ + 1 + i] += c0[i];\n      }\n  }\n  return c_[n_++];\n}\n\n\
+    LIB_END\n\n\n#line 7 \"math/formal_power_series.hpp\"\n\n#line 9 \"math/formal_power_series.hpp\"\
+    \n#include <memory>\n#include <optional>\n#line 12 \"math/formal_power_series.hpp\"\
+    \n\nLIB_BEGIN\n\nnamespace detail {\n\ntemplate <typename ModIntT>\nclass modular_inverse\
+    \ {\n  std::vector<ModIntT> ivs{ModIntT()};\n\npublic:\n  modular_inverse() {}\n\
+    \  ModIntT operator()(int k) {\n    // preprocess modular inverse from 1 to k\n\
+    \    if (int n = static_cast<int>(ivs.size()); n <= k) {\n      int nn = n;\n\
+    \      while (nn <= k) nn <<= 1;\n      ivs.resize(nn);\n      ModIntT v(1);\n\
+    \      for (int i = n; i != nn; ++i) ivs[i] = v, v *= ModIntT(i);\n      v = v.inv();\n\
+    \      for (int i = nn - 1; i >= n; --i) ivs[i] *= v, v *= ModIntT(i);\n    }\n\
+    \    return ivs[k];\n  }\n};\n\n} // namespace detail\n\ntemplate <typename ModIntT>\n\
+    class formal_power_series {\n  using F = std::function<ModIntT(int)>;\n  F h_;\n\
+    \n  static typename detail::modular_inverse<ModIntT> invs;\n\npublic:\n  formal_power_series()\
+    \ : h_([](int) { return ModIntT(); }) {}\n  explicit formal_power_series(F f)\n\
+    \      : h_([f, cache = std::make_shared<std::vector<ModIntT>>()](int k) {\n \
+    \         for (int i = static_cast<int>(cache->size()); i <= k; ++i) cache->emplace_back(f(i));\n\
+    \          return ModIntT(cache->at(k));\n        }) {}\n  explicit formal_power_series(const\
+    \ std::vector<ModIntT> &coeff)\n      : h_([cache = std::make_shared<std::vector<ModIntT>>(coeff)](int\
+    \ k) {\n          return k < static_cast<int>(cache->size()) ? ModIntT(cache->at(k))\
+    \ : ModIntT();\n        }) {}\n  formal_power_series(ModIntT v) : h_([v](int k)\
+    \ { return k == 0 ? v : ModIntT(); }) {}\n  F handle() const { return h_; }\n\
+    \  ModIntT operator[](int k) const { return h_(k); }\n  formal_power_series scale(int\
+    \ k) const {\n    return formal_power_series([h = h_, k](int i) { return i % k\
+    \ == 0 ? h(i / k) : ModIntT(); });\n  }\n  formal_power_series shift(int k) const\
+    \ {\n    return formal_power_series([h = h_, k](int i) { return i - k < 0 ? ModIntT()\
+    \ : h(i - k); });\n  }\n  formal_power_series deriv() const {\n    return formal_power_series([h\
+    \ = h_](int i) { return h(i + 1) * (i + 1); });\n  }\n  formal_power_series integr(ModIntT\
+    \ c = ModIntT()) const {\n    return formal_power_series([h = h_, c](int i) {\
+    \ return i == 0 ? c : h(i - 1) * invs(i); });\n  }\n  formal_power_series inv()\
+    \ const {\n    auto rc = std::make_shared<relaxed_convolution<ModIntT>>(\n   \
+    \     [h = h_](int i) { return h(i); },\n        [h = h_, iv = ModIntT()](int\
+    \ i, const auto &c) mutable {\n          return i == 0 ? ModIntT(iv = h(0).inv())\
+    \ : -(c[i] + h(i) * iv) * iv;\n        });\n    return formal_power_series([rc](int\
+    \ i) { return rc->next(), rc->get_multiplier()[i]; });\n  }\n  formal_power_series\
+    \ exp() const {\n    auto rc = std::make_shared<relaxed_convolution<ModIntT>>(\n\
+    \        [h = h_](int i) { return h(i + 1) * (i + 1); },\n        [](int i, const\
+    \ auto &c) { return i == 0 ? ModIntT(1) : c[i - 1] * invs(i); });\n    return\
+    \ formal_power_series(\n        [rc](int i) { return i == 0 ? ModIntT(1) : rc->at(i\
+    \ - 1) * invs(i); });\n  }\n  formal_power_series log() const { return (deriv()\
+    \ / (*this)).integr(); }\n  formal_power_series pow(int k) const {\n    return\
+    \ formal_power_series(\n        [h = h_, kk = ModIntT(k), k, zero_cnt = 0ull,\
+    \ s = std::optional<F>()](int i) mutable {\n          if (s) return i < zero_cnt\
+    \ ? ModIntT() : (*s)(i - zero_cnt);\n          ModIntT v(h(i));\n          if\
+    \ (v.is_zero()) return ++zero_cnt, ModIntT();\n          zero_cnt *= k;\n    \
+    \      formal_power_series t0([os = i, iv = v.inv(), h](int i) { return h(i +\
+    \ os) * iv; });\n          formal_power_series t1([h0 = t0.log().handle(), kk](int\
+    \ i) { return h0(i) * kk; });\n          s.emplace([vk = v.pow(k), h1 = t1.exp().handle()](int\
+    \ i) { return h1(i) * vk; });\n          return zero_cnt == 0 ? (*s)(i) : ModIntT();\n\
+    \        });\n  }\n  formal_power_series sqrt(std::function<ModIntT(ModIntT)>\
+    \ f) const {\n    // `h_(0) == 0` is not allowed.\n    auto t = [h = h_, f, i2\
+    \ = ModIntT()](int i, auto const &c) mutable {\n      if (i != 0) return (h(i)\
+    \ - c[i]) * i2;\n      ModIntT fi(f(h(i)));\n      i2 = (fi * ModIntT(2)).inv();\n\
+    \      return fi;\n    };\n    auto rc = std::make_shared<relaxed_convolution<ModIntT>>(t,\
+    \ t);\n    return formal_power_series([rc](int i) { return rc->next(), rc->get_multiplier()[i];\
+    \ });\n  }\n  formal_power_series operator+(const formal_power_series &rhs) const\
+    \ {\n    return formal_power_series([h0 = h_, h1 = rhs.h_](int i) { return h0(i)\
+    \ + h1(i); });\n  }\n  formal_power_series operator-(const formal_power_series\
+    \ &rhs) const {\n    return formal_power_series([h0 = h_, h1 = rhs.h_](int i)\
+    \ { return h0(i) - h1(i); });\n  }\n  formal_power_series operator-() const {\n\
+    \    return formal_power_series([h = h_](int i) { return -h(i); });\n  }\n  formal_power_series\
+    \ operator*(const formal_power_series &rhs) const {\n    auto rc = std::make_shared<relaxed_convolution<ModIntT>>([h\
+    \ = h_](int i) { return h(i); },\n                                           \
+    \                  [h = rhs.h_](int i) { return h(i); });\n    return formal_power_series([rc](int)\
+    \ { return rc->next(); });\n  }\n  formal_power_series operator/(const formal_power_series\
+    \ &rhs) const {\n    auto rc = std::make_shared<relaxed_convolution<ModIntT>>(\n\
+    \        [h0 = h_, h1 = rhs.h_, iv = ModIntT(), t0 = ModIntT()](int i, const auto\
+    \ &c) mutable {\n          if (i == 0) t0 = h0(0) * (iv = h1(0).inv());\n    \
+    \      return i == 0 ? t0 : (h0(i) - h1(i) * t0 - c[i]) * iv;\n        },\n  \
+    \      [h = rhs.h_](int i) { return h(i); });\n    return formal_power_series([rc](int\
+    \ i) { return rc->next(), rc->get_multiplicand()[i]; });\n  }\n  /*-------------------\
+    \ P\xF3lya operators begin -------------------*/\n  // SEQUENCE(SEQ)\n  formal_power_series\
+    \ Q() const {\n    // `h_(0) != 0` is not allowed.\n    return formal_power_series([h\
+    \ = h_](int i) { return i == 0 ? ModIntT(1) : -h(i); }).inv();\n  }\n  // MULTISET(MSET)\n\
+    \  formal_power_series Exp() const {\n    // `h_(0) != 0` is not allowed.\n  \
+    \  formal_power_series res([h = h_, cache = std::make_shared<std::vector<ModIntT>>()](int\
+    \ i) {\n      if (i == 0) return ModIntT();\n      if ((i & (i - 1)) == 0) {\n\
+    \        cache->resize(i << 1);\n        for (int j = 1; j < i; ++j) {\n     \
+    \     ModIntT hj(h(j));\n          for (int k = 2; j * k < i << 1; ++k)\n    \
+    \        if (j * k >= i) cache->at(j * k) += hj * invs(k);\n        }\n      }\n\
+    \      return cache->at(i) += h(i);\n    });\n    return res.exp();\n  }\n  //\
+    \ POWERSET(PSET)\n  formal_power_series Exp_m() const {\n    // `h_(0) != 0` is\
+    \ not allowed.\n    formal_power_series res([h = h_, cache = std::make_shared<std::vector<ModIntT>>()](int\
+    \ i) {\n      if (i == 0) return ModIntT();\n      if ((i & (i - 1)) == 0) {\n\
+    \        cache->resize(i << 1);\n        for (int j = 1; j < i; ++j) {\n     \
+    \     ModIntT hj(h(j));\n          for (int k = 2; j * k < i << 1; ++k)\n    \
+    \        if (j * k >= i) {\n              if (k & 1) {\n                cache->at(j\
+    \ * k) += hj * invs(k);\n              } else {\n                cache->at(j *\
+    \ k) -= hj * invs(k);\n              }\n            }\n        }\n      }\n  \
+    \    return cache->at(i) += h(i);\n    });\n    return res.exp();\n  }\n};\n\n\
+    template <typename ModIntT>\nusing fps = formal_power_series<ModIntT>;\n\ntemplate\
+    \ <typename ModIntT>\ndetail::modular_inverse<ModIntT> fps<ModIntT>::invs;\n\n\
     LIB_END\n\n\n#line 1 \"modint/montgomery_modint.hpp\"\n\n\n\n#line 5 \"modint/montgomery_modint.hpp\"\
     \n\n#ifdef LIB_DEBUG\n  #include <stdexcept>\n#endif\n#include <cstdint>\n#include\
     \ <iostream>\n#line 12 \"modint/montgomery_modint.hpp\"\n\nLIB_BEGIN\n\ntemplate\
@@ -204,46 +298,40 @@ data:
     \ &rhs) {\n    i32 x;\n    is >> x;\n    rhs = montgomery_modint30(x);\n    return\
     \ is;\n  }\n  friend std::ostream &operator<<(std::ostream &os, const montgomery_modint30\
     \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t ModT>\n\
-    using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 5 \"remote_test/yosupo/math/convolution_mod.3.test.cpp\"\
-    \n\n#line 7 \"remote_test/yosupo/math/convolution_mod.3.test.cpp\"\n#include <iterator>\n\
-    #line 9 \"remote_test/yosupo/math/convolution_mod.3.test.cpp\"\n\nint main() {\n\
-    #ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\", \"w\"\
-    , stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
-    \  int n, m;\n  std::cin >> n >> m;\n  using mint = lib::mm30<998244353>;\n  std::vector<mint>\
-    \ a, b;\n  std::copy_n(std::istream_iterator<mint>(std::cin), n, std::back_inserter(a));\n\
-    \  std::copy_n(std::istream_iterator<mint>(std::cin), m, std::back_inserter(b));\n\
-    \  lib::relaxed_convolution<mint> rc(\n      [&a](int n) { return n < static_cast<int>(a.size())\
-    \ ? a[n] : mint(); },\n      [&b](int n) { return n < static_cast<int>(b.size())\
-    \ ? b[n] : mint(); });\n  for (int i = 0; i != n + m - 1; ++i) std::cout << rc[i]\
-    \ << ' ';\n  return 0;\n}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/convolution_mod\"\n\n#include\
-    \ \"math/relaxed_convolution.hpp\"\n#include \"modint/montgomery_modint.hpp\"\n\
-    \n#include <iostream>\n#include <iterator>\n#include <vector>\n\nint main() {\n\
-    #ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\", \"w\"\
-    , stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
-    \  int n, m;\n  std::cin >> n >> m;\n  using mint = lib::mm30<998244353>;\n  std::vector<mint>\
-    \ a, b;\n  std::copy_n(std::istream_iterator<mint>(std::cin), n, std::back_inserter(a));\n\
-    \  std::copy_n(std::istream_iterator<mint>(std::cin), m, std::back_inserter(b));\n\
-    \  lib::relaxed_convolution<mint> rc(\n      [&a](int n) { return n < static_cast<int>(a.size())\
-    \ ? a[n] : mint(); },\n      [&b](int n) { return n < static_cast<int>(b.size())\
-    \ ? b[n] : mint(); });\n  for (int i = 0; i != n + m - 1; ++i) std::cout << rc[i]\
-    \ << ' ';\n  return 0;\n}"
+    using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 5 \"remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp\"\
+    \n\n#line 7 \"remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp\"\n\
+    #include <iterator>\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\"\
+    , stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
+    \  std::cin.tie(nullptr);\n  int n;\n  std::cin >> n;\n  using mint = lib::mm30<998244353>;\n\
+    \  lib::formal_power_series<mint> fps(\n      [it = std::istream_iterator<mint>(std::cin)](int)\
+    \ mutable { return *it++; });\n  auto iv = fps.exp();\n  for (int i = 0; i !=\
+    \ n; ++i) std::cout << iv[i] << ' ';\n  return 0;\n}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/exp_of_formal_power_series\"\
+    \n\n#include \"math/formal_power_series.hpp\"\n#include \"modint/montgomery_modint.hpp\"\
+    \n\n#include <iostream>\n#include <iterator>\n\nint main() {\n#ifdef LOCAL\n \
+    \ std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n\
+    #endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n  int n;\n\
+    \  std::cin >> n;\n  using mint = lib::mm30<998244353>;\n  lib::formal_power_series<mint>\
+    \ fps(\n      [it = std::istream_iterator<mint>(std::cin)](int) mutable { return\
+    \ *it++; });\n  auto iv = fps.exp();\n  for (int i = 0; i != n; ++i) std::cout\
+    \ << iv[i] << ' ';\n  return 0;\n}"
   dependsOn:
-  - math/relaxed_convolution.hpp
+  - math/formal_power_series.hpp
   - common.hpp
   - math/radix2_ntt.hpp
+  - math/relaxed_convolution.hpp
   - modint/montgomery_modint.hpp
   - common.hpp
   isVerificationFile: true
-  path: remote_test/yosupo/math/convolution_mod.3.test.cpp
+  path: remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
   requiredBy: []
   timestamp: '2022-04-24 22:23:52+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: remote_test/yosupo/math/convolution_mod.3.test.cpp
+documentation_of: remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
 layout: document
 redirect_from:
-- /verify/remote_test/yosupo/math/convolution_mod.3.test.cpp
-- /verify/remote_test/yosupo/math/convolution_mod.3.test.cpp.html
-title: remote_test/yosupo/math/convolution_mod.3.test.cpp
+- /verify/remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
+- /verify/remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp.html
+title: remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
 ---
