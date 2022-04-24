@@ -303,18 +303,18 @@ data:
     #include <iterator>\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\"\
     , stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
     \  std::cin.tie(nullptr);\n  int n;\n  std::cin >> n;\n  using mint = lib::mm30<998244353>;\n\
-    \  lib::formal_power_series<mint> fps(\n      [it = std::istream_iterator<mint>(std::cin)](int)\
-    \ mutable { return *it++; });\n  auto iv = fps.exp();\n  for (int i = 0; i !=\
-    \ n; ++i) std::cout << iv[i] << ' ';\n  return 0;\n}\n"
+    \  lib::fps<mint> f([it = std::istream_iterator<mint>(std::cin)](int) mutable\
+    \ { return *it++; });\n  auto iv = f.exp();\n  for (int i = 0; i != n; ++i) std::cout\
+    \ << iv[i] << ' ';\n  return 0;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/exp_of_formal_power_series\"\
     \n\n#include \"math/formal_power_series.hpp\"\n#include \"modint/montgomery_modint.hpp\"\
     \n\n#include <iostream>\n#include <iterator>\n\nint main() {\n#ifdef LOCAL\n \
     \ std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n\
     #endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n  int n;\n\
-    \  std::cin >> n;\n  using mint = lib::mm30<998244353>;\n  lib::formal_power_series<mint>\
-    \ fps(\n      [it = std::istream_iterator<mint>(std::cin)](int) mutable { return\
-    \ *it++; });\n  auto iv = fps.exp();\n  for (int i = 0; i != n; ++i) std::cout\
-    \ << iv[i] << ' ';\n  return 0;\n}"
+    \  std::cin >> n;\n  using mint = lib::mm30<998244353>;\n  lib::fps<mint> f([it\
+    \ = std::istream_iterator<mint>(std::cin)](int) mutable { return *it++; });\n\
+    \  auto iv = f.exp();\n  for (int i = 0; i != n; ++i) std::cout << iv[i] << '\
+    \ ';\n  return 0;\n}"
   dependsOn:
   - math/formal_power_series.hpp
   - common.hpp
@@ -325,7 +325,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
   requiredBy: []
-  timestamp: '2022-04-24 22:23:52+08:00'
+  timestamp: '2022-04-24 22:54:16+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
