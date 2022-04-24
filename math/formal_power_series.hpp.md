@@ -1,32 +1,32 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/relaxed_convolution.hpp
     title: Relaxed Convolution
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
     title: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/formal_power_series.hpp\"\n\n\n\n#line 1 \"common.hpp\"\
@@ -88,16 +88,22 @@ data:
     \ a.size()); }\ntemplate <typename ContainerT> void idft(ContainerT &&a) { idft_n(a.begin(),\
     \ a.size()); }\ntemplate <typename IterT> void dft(IterT beg, IterT end) { dft_n(beg,\
     \ end - beg); }\ntemplate <typename IterT> void idft(IterT beg, IterT end) { idft_n(beg,\
-    \ end - beg); }\n// clang-format on\n\ntemplate <typename T>\nvoid dft_doubling(const\
-    \ std::vector<T> &a, std::vector<T> &dft_a) {\n  static constexpr auto rt = detail::root<T>();\n\
-    \  int as = static_cast<int>(a.size()), n = static_cast<int>(dft_a.size());\n\
-    \  // `dft_a` = `dft_n`(`a` mod (x^n - 1))\n  // doubling `dft_a` is just computing\
-    \ dft_n((`a` mod (x^n + 1))(\u03B6^(2n))).\n  dft_a.resize(n << 1);\n  auto it\
-    \ = dft_a.begin() + n;\n  for (int i = 0, is_even = 0, j; i != as; ++i) {\n  \
-    \  if ((j = i & (n - 1)) == 0) is_even ^= 1;\n    it[j] += is_even ? a[i] : -a[i];\n\
-    \  }\n  T r(n == 1 ? T(-1) : rt[detail::bsf(n) - 1]), v(1);\n  for (int i = 0;\
-    \ i != n; ++i) it[i] *= v, v *= r;\n  dft_n(it, n);\n}\n\nLIB_END\n\n\n#line 1\
-    \ \"math/relaxed_convolution.hpp\"\n\n\n\n#line 6 \"math/relaxed_convolution.hpp\"\
+    \ end - beg); }\n// clang-format on\n\ntemplate <typename ModIntT>\nvoid dft_doubling(const\
+    \ std::vector<ModIntT> &a, std::vector<ModIntT> &dft_a) {\n  static constexpr\
+    \ auto rt = detail::root<ModIntT>();\n  int as = static_cast<int>(a.size()), n\
+    \ = static_cast<int>(dft_a.size());\n  // `dft_a` = dft_n(`a` mod (x^n - 1))\n\
+    \  // doubling `dft_a` is just computing dft_n((`a` mod (x^n + 1))(\u03B6^(2n))).\n\
+    \  dft_a.resize(n << 1);\n  auto it = dft_a.begin() + n;\n  for (int i = 0, is_even\
+    \ = 0, j; i != as; ++i) {\n    if ((j = i & (n - 1)) == 0) is_even ^= 1;\n   \
+    \ it[j] += is_even ? a[i] : -a[i];\n  }\n  ModIntT r(n == 1 ? ModIntT(-1) : rt[detail::bsf(n)\
+    \ - 1]), v(1);\n  for (int i = 0; i != n; ++i) it[i] *= v, v *= r;\n  dft_n(it,\
+    \ n);\n}\n\ntemplate <typename ModIntT>\nvoid dft_doubling(std::vector<ModIntT>\
+    \ &dft_a) {\n  static constexpr auto rt = detail::root<ModIntT>();\n  int n  \
+    \                  = static_cast<int>(dft_a.size());\n  dft_a.resize(n << 1);\n\
+    \  auto it = dft_a.begin() + n;\n  std::copy_n(dft_a.cbegin(), n, it);\n  idft_n(it,\
+    \ n);\n  ModIntT r(n == 1 ? ModIntT(-1) : rt[detail::bsf(n) - 1]), v(1);\n  for\
+    \ (int i = 0; i != n; ++i) it[i] *= v, v *= r;\n  dft_n(it, n);\n}\n\nLIB_END\n\
+    \n\n#line 1 \"math/relaxed_convolution.hpp\"\n\n\n\n#line 6 \"math/relaxed_convolution.hpp\"\
     \n\n#include <functional>\n#line 10 \"math/relaxed_convolution.hpp\"\n\nLIB_BEGIN\n\
     \ntemplate <typename ModIntT>\nclass relaxed_convolution {                   \
     \    // O(n log^2 n) impl\n  std::vector<ModIntT> a_{}, b_{}, c_{};          //\
@@ -339,8 +345,8 @@ data:
   isVerificationFile: false
   path: math/formal_power_series.hpp
   requiredBy: []
-  timestamp: '2022-04-24 22:23:52+08:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2022-04-25 00:23:48+08:00'
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp

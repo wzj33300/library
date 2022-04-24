@@ -1,35 +1,35 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
   _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/formal_power_series.hpp
     title: Formal Power Series
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/convolution_mod.3.test.cpp
     title: remote_test/yosupo/math/convolution_mod.3.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
     title: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/relaxed_convolution.hpp\"\n\n\n\n#line 1 \"common.hpp\"\
@@ -91,32 +91,38 @@ data:
     \ a.size()); }\ntemplate <typename ContainerT> void idft(ContainerT &&a) { idft_n(a.begin(),\
     \ a.size()); }\ntemplate <typename IterT> void dft(IterT beg, IterT end) { dft_n(beg,\
     \ end - beg); }\ntemplate <typename IterT> void idft(IterT beg, IterT end) { idft_n(beg,\
-    \ end - beg); }\n// clang-format on\n\ntemplate <typename T>\nvoid dft_doubling(const\
-    \ std::vector<T> &a, std::vector<T> &dft_a) {\n  static constexpr auto rt = detail::root<T>();\n\
-    \  int as = static_cast<int>(a.size()), n = static_cast<int>(dft_a.size());\n\
-    \  // `dft_a` = `dft_n`(`a` mod (x^n - 1))\n  // doubling `dft_a` is just computing\
-    \ dft_n((`a` mod (x^n + 1))(\u03B6^(2n))).\n  dft_a.resize(n << 1);\n  auto it\
-    \ = dft_a.begin() + n;\n  for (int i = 0, is_even = 0, j; i != as; ++i) {\n  \
-    \  if ((j = i & (n - 1)) == 0) is_even ^= 1;\n    it[j] += is_even ? a[i] : -a[i];\n\
-    \  }\n  T r(n == 1 ? T(-1) : rt[detail::bsf(n) - 1]), v(1);\n  for (int i = 0;\
-    \ i != n; ++i) it[i] *= v, v *= r;\n  dft_n(it, n);\n}\n\nLIB_END\n\n\n#line 6\
-    \ \"math/relaxed_convolution.hpp\"\n\n#include <functional>\n#line 10 \"math/relaxed_convolution.hpp\"\
-    \n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nclass relaxed_convolution {    \
-    \                   // O(n log^2 n) impl\n  std::vector<ModIntT> a_{}, b_{}, c_{};\
-    \          // `a_ * b_` = `c_`\n  std::vector<std::vector<ModIntT>> ac_{}, bc_{};\
-    \ // cached DFTs\n  std::function<ModIntT()> ha_{}, hb_{};          // handle\
-    \ for `a` and `b`\n  int n_{};                                       // counter\n\
-    \n  template <typename FnT>\n  static auto wrap(FnT &&f, int &n, const std::vector<ModIntT>\
-    \ &c, std::vector<ModIntT> &e) {\n    if constexpr (std::is_invocable_r_v<ModIntT,\
-    \ FnT, int, const std::vector<ModIntT> &>) {\n      return std::bind(\n      \
-    \    [f](int n, const std::vector<ModIntT> &c, std::vector<ModIntT> &e) mutable\
-    \ {\n            return ModIntT(e.emplace_back(f(n, c)));\n          },\n    \
-    \      std::cref(n), std::cref(c), std::ref(e));\n    } else if constexpr (std::is_invocable_r_v<ModIntT,\
-    \ FnT, int>) {\n      return std::bind(\n          [f](int n, std::vector<ModIntT>\
-    \ &e) mutable { return ModIntT(e.emplace_back(f(n))); },\n          std::cref(n),\
-    \ std::ref(e));\n    } else if constexpr (std::is_invocable_r_v<ModIntT, FnT>)\
-    \ {\n      return std::bind(\n          [f](std::vector<ModIntT> &e) mutable {\
-    \ return ModIntT(e.emplace_back(f())); },\n          std::ref(e));\n    } else\
+    \ end - beg); }\n// clang-format on\n\ntemplate <typename ModIntT>\nvoid dft_doubling(const\
+    \ std::vector<ModIntT> &a, std::vector<ModIntT> &dft_a) {\n  static constexpr\
+    \ auto rt = detail::root<ModIntT>();\n  int as = static_cast<int>(a.size()), n\
+    \ = static_cast<int>(dft_a.size());\n  // `dft_a` = dft_n(`a` mod (x^n - 1))\n\
+    \  // doubling `dft_a` is just computing dft_n((`a` mod (x^n + 1))(\u03B6^(2n))).\n\
+    \  dft_a.resize(n << 1);\n  auto it = dft_a.begin() + n;\n  for (int i = 0, is_even\
+    \ = 0, j; i != as; ++i) {\n    if ((j = i & (n - 1)) == 0) is_even ^= 1;\n   \
+    \ it[j] += is_even ? a[i] : -a[i];\n  }\n  ModIntT r(n == 1 ? ModIntT(-1) : rt[detail::bsf(n)\
+    \ - 1]), v(1);\n  for (int i = 0; i != n; ++i) it[i] *= v, v *= r;\n  dft_n(it,\
+    \ n);\n}\n\ntemplate <typename ModIntT>\nvoid dft_doubling(std::vector<ModIntT>\
+    \ &dft_a) {\n  static constexpr auto rt = detail::root<ModIntT>();\n  int n  \
+    \                  = static_cast<int>(dft_a.size());\n  dft_a.resize(n << 1);\n\
+    \  auto it = dft_a.begin() + n;\n  std::copy_n(dft_a.cbegin(), n, it);\n  idft_n(it,\
+    \ n);\n  ModIntT r(n == 1 ? ModIntT(-1) : rt[detail::bsf(n) - 1]), v(1);\n  for\
+    \ (int i = 0; i != n; ++i) it[i] *= v, v *= r;\n  dft_n(it, n);\n}\n\nLIB_END\n\
+    \n\n#line 6 \"math/relaxed_convolution.hpp\"\n\n#include <functional>\n#line 10\
+    \ \"math/relaxed_convolution.hpp\"\n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\n\
+    class relaxed_convolution {                       // O(n log^2 n) impl\n  std::vector<ModIntT>\
+    \ a_{}, b_{}, c_{};          // `a_ * b_` = `c_`\n  std::vector<std::vector<ModIntT>>\
+    \ ac_{}, bc_{}; // cached DFTs\n  std::function<ModIntT()> ha_{}, hb_{};     \
+    \     // handle for `a` and `b`\n  int n_{};                                 \
+    \      // counter\n\n  template <typename FnT>\n  static auto wrap(FnT &&f, int\
+    \ &n, const std::vector<ModIntT> &c, std::vector<ModIntT> &e) {\n    if constexpr\
+    \ (std::is_invocable_r_v<ModIntT, FnT, int, const std::vector<ModIntT> &>) {\n\
+    \      return std::bind(\n          [f](int n, const std::vector<ModIntT> &c,\
+    \ std::vector<ModIntT> &e) mutable {\n            return ModIntT(e.emplace_back(f(n,\
+    \ c)));\n          },\n          std::cref(n), std::cref(c), std::ref(e));\n \
+    \   } else if constexpr (std::is_invocable_r_v<ModIntT, FnT, int>) {\n      return\
+    \ std::bind(\n          [f](int n, std::vector<ModIntT> &e) mutable { return ModIntT(e.emplace_back(f(n)));\
+    \ },\n          std::cref(n), std::ref(e));\n    } else if constexpr (std::is_invocable_r_v<ModIntT,\
+    \ FnT>) {\n      return std::bind(\n          [f](std::vector<ModIntT> &e) mutable\
+    \ { return ModIntT(e.emplace_back(f())); },\n          std::ref(e));\n    } else\
     \ {\n      throw;\n    }\n  }\n\n  enum : int { BASE_CASE_SIZE = 32 };\n\n  static_assert((BASE_CASE_SIZE\
     \ & (BASE_CASE_SIZE - 1)) == 0);\n\npublic:\n  // `h0` multiplicand, `h1` multiplier\n\
     \  template <typename Fn0T, typename Fn1T>\n  relaxed_convolution(Fn0T &&h0, Fn1T\
@@ -212,8 +218,8 @@ data:
   path: math/relaxed_convolution.hpp
   requiredBy:
   - math/formal_power_series.hpp
-  timestamp: '2022-04-24 22:23:52+08:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2022-04-25 00:23:48+08:00'
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp

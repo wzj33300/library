@@ -1,29 +1,29 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/convolution.hpp
     title: Convolution
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: modint/long_montgomery_modint.hpp
     title: Long Montgomery ModInt
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/convolution_mod
@@ -152,16 +152,22 @@ data:
     \ a.size()); }\ntemplate <typename ContainerT> void idft(ContainerT &&a) { idft_n(a.begin(),\
     \ a.size()); }\ntemplate <typename IterT> void dft(IterT beg, IterT end) { dft_n(beg,\
     \ end - beg); }\ntemplate <typename IterT> void idft(IterT beg, IterT end) { idft_n(beg,\
-    \ end - beg); }\n// clang-format on\n\ntemplate <typename T>\nvoid dft_doubling(const\
-    \ std::vector<T> &a, std::vector<T> &dft_a) {\n  static constexpr auto rt = detail::root<T>();\n\
-    \  int as = static_cast<int>(a.size()), n = static_cast<int>(dft_a.size());\n\
-    \  // `dft_a` = `dft_n`(`a` mod (x^n - 1))\n  // doubling `dft_a` is just computing\
-    \ dft_n((`a` mod (x^n + 1))(\u03B6^(2n))).\n  dft_a.resize(n << 1);\n  auto it\
-    \ = dft_a.begin() + n;\n  for (int i = 0, is_even = 0, j; i != as; ++i) {\n  \
-    \  if ((j = i & (n - 1)) == 0) is_even ^= 1;\n    it[j] += is_even ? a[i] : -a[i];\n\
-    \  }\n  T r(n == 1 ? T(-1) : rt[detail::bsf(n) - 1]), v(1);\n  for (int i = 0;\
-    \ i != n; ++i) it[i] *= v, v *= r;\n  dft_n(it, n);\n}\n\nLIB_END\n\n\n#line 7\
-    \ \"math/convolution.hpp\"\n\n#include <algorithm>\n#line 12 \"math/convolution.hpp\"\
+    \ end - beg); }\n// clang-format on\n\ntemplate <typename ModIntT>\nvoid dft_doubling(const\
+    \ std::vector<ModIntT> &a, std::vector<ModIntT> &dft_a) {\n  static constexpr\
+    \ auto rt = detail::root<ModIntT>();\n  int as = static_cast<int>(a.size()), n\
+    \ = static_cast<int>(dft_a.size());\n  // `dft_a` = dft_n(`a` mod (x^n - 1))\n\
+    \  // doubling `dft_a` is just computing dft_n((`a` mod (x^n + 1))(\u03B6^(2n))).\n\
+    \  dft_a.resize(n << 1);\n  auto it = dft_a.begin() + n;\n  for (int i = 0, is_even\
+    \ = 0, j; i != as; ++i) {\n    if ((j = i & (n - 1)) == 0) is_even ^= 1;\n   \
+    \ it[j] += is_even ? a[i] : -a[i];\n  }\n  ModIntT r(n == 1 ? ModIntT(-1) : rt[detail::bsf(n)\
+    \ - 1]), v(1);\n  for (int i = 0; i != n; ++i) it[i] *= v, v *= r;\n  dft_n(it,\
+    \ n);\n}\n\ntemplate <typename ModIntT>\nvoid dft_doubling(std::vector<ModIntT>\
+    \ &dft_a) {\n  static constexpr auto rt = detail::root<ModIntT>();\n  int n  \
+    \                  = static_cast<int>(dft_a.size());\n  dft_a.resize(n << 1);\n\
+    \  auto it = dft_a.begin() + n;\n  std::copy_n(dft_a.cbegin(), n, it);\n  idft_n(it,\
+    \ n);\n  ModIntT r(n == 1 ? ModIntT(-1) : rt[detail::bsf(n) - 1]), v(1);\n  for\
+    \ (int i = 0; i != n; ++i) it[i] *= v, v *= r;\n  dft_n(it, n);\n}\n\nLIB_END\n\
+    \n\n#line 7 \"math/convolution.hpp\"\n\n#include <algorithm>\n#line 12 \"math/convolution.hpp\"\
     \n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nstd::vector<ModIntT> convolution(const\
     \ std::vector<ModIntT> &lhs, const std::vector<ModIntT> &rhs) {\n  int n = static_cast<int>(lhs.size()),\
     \ m = static_cast<int>(rhs.size());\n  if (n == 0 || m == 0) return std::vector<ModIntT>{};\n\
@@ -272,8 +278,8 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/convolution_mod.0.test.cpp
   requiredBy: []
-  timestamp: '2022-04-24 22:23:52+08:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2022-04-25 00:23:48+08:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/convolution_mod.0.test.cpp
 layout: document
