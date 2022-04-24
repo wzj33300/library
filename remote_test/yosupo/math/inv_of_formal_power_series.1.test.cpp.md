@@ -7,20 +7,20 @@ data:
   - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution
-  - icon: ':x:'
+  - icon: ':question:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/inv_of_formal_power_series
@@ -31,20 +31,21 @@ data:
     \n\n#line 1 \"math/semi_relaxed_convolution.hpp\"\n\n\n\n#line 1 \"common.hpp\"\
     \n\n\n\n#define LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END\
     \ }\n#define LIB ::lib::\n\n\n#line 1 \"math/radix2_ntt.hpp\"\n\n\n\n#line 5 \"\
-    math/radix2_ntt.hpp\"\n\n#include <array>\n#include <cassert>\n#include <type_traits>\n\
-    #include <vector>\n\nLIB_BEGIN\n\nnamespace detail {\n\ntemplate <typename IntT>\n\
-    constexpr std::enable_if_t<std::is_integral_v<IntT>, int> bsf(IntT v) {\n  if\
-    \ (static_cast<std::make_signed_t<IntT>>(v) <= 0) return -1;\n  int res = 0;\n\
-    \  for (; (v & 1) == 0; ++res) v >>= 1;\n  return res;\n}\n\ntemplate <typename\
-    \ ModIntT>\nconstexpr ModIntT quadratic_nonresidue_prime() {\n  auto mod = ModIntT::mod();\n\
-    \  for (int i = 2;; ++i)\n    if (ModIntT(i).pow(mod >> 1) == mod - 1) return\
-    \ ModIntT(i);\n}\n\ntemplate <typename ModIntT>\nconstexpr ModIntT gen_of_sylow_2_subgroup()\
-    \ {\n  auto mod = ModIntT::mod();\n  return quadratic_nonresidue_prime<ModIntT>().pow(mod\
-    \ >> bsf(mod - 1));\n}\n\ntemplate <typename ModIntT>\nconstexpr std::array<ModIntT,\
-    \ bsf(ModIntT::mod() - 1) - 1> root() {\n  std::array<ModIntT, bsf(ModIntT::mod()\
-    \ - 1) - 1> rt; // order(`rt[i]`) = 2^(i + 2).\n  rt.back() = gen_of_sylow_2_subgroup<ModIntT>();\n\
-    \  for (int i = bsf(ModIntT::mod() - 1) - 3; i >= 0; --i) rt[i] = rt[i + 1] *\
-    \ rt[i + 1];\n  return rt;\n}\n\ntemplate <typename ModIntT>\nconstexpr std::array<ModIntT,\
+    math/radix2_ntt.hpp\"\n\n#include <algorithm>\n#include <array>\n#include <cassert>\n\
+    #include <type_traits>\n#include <vector>\n\nLIB_BEGIN\n\nnamespace detail {\n\
+    \ntemplate <typename IntT>\nconstexpr std::enable_if_t<std::is_integral_v<IntT>,\
+    \ int> bsf(IntT v) {\n  if (static_cast<std::make_signed_t<IntT>>(v) <= 0) return\
+    \ -1;\n  int res = 0;\n  for (; (v & 1) == 0; ++res) v >>= 1;\n  return res;\n\
+    }\n\ntemplate <typename ModIntT>\nconstexpr ModIntT quadratic_nonresidue_prime()\
+    \ {\n  auto mod = ModIntT::mod();\n  for (int i = 2;; ++i)\n    if (ModIntT(i).pow(mod\
+    \ >> 1) == mod - 1) return ModIntT(i);\n}\n\ntemplate <typename ModIntT>\nconstexpr\
+    \ ModIntT gen_of_sylow_2_subgroup() {\n  auto mod = ModIntT::mod();\n  return\
+    \ quadratic_nonresidue_prime<ModIntT>().pow(mod >> bsf(mod - 1));\n}\n\ntemplate\
+    \ <typename ModIntT>\nconstexpr std::array<ModIntT, bsf(ModIntT::mod() - 1) -\
+    \ 1> root() {\n  std::array<ModIntT, bsf(ModIntT::mod() - 1) - 1> rt; // order(`rt[i]`)\
+    \ = 2^(i + 2).\n  rt.back() = gen_of_sylow_2_subgroup<ModIntT>();\n  for (int\
+    \ i = bsf(ModIntT::mod() - 1) - 3; i >= 0; --i) rt[i] = rt[i + 1] * rt[i + 1];\n\
+    \  return rt;\n}\n\ntemplate <typename ModIntT>\nconstexpr std::array<ModIntT,\
     \ bsf(ModIntT::mod() - 1) - 1> iroot() {\n  std::array<ModIntT, bsf(ModIntT::mod()\
     \ - 1) - 1> irt;\n  irt.back() = gen_of_sylow_2_subgroup<ModIntT>().inv();\n \
     \ for (int i = bsf(ModIntT::mod() - 1) - 3; i >= 0; --i) irt[i] = irt[i + 1] *\
@@ -102,10 +103,10 @@ data:
     \  auto it = dft_a.begin() + n;\n  std::copy_n(dft_a.cbegin(), n, it);\n  idft_n(it,\
     \ n);\n  ModIntT r(n == 1 ? ModIntT(-1) : rt[detail::bsf(n) - 1]), v(1);\n  for\
     \ (int i = 0; i != n; ++i) it[i] *= v, v *= r;\n  dft_n(it, n);\n}\n\nLIB_END\n\
-    \n\n#line 6 \"math/semi_relaxed_convolution.hpp\"\n\n#include <algorithm>\n#line\
-    \ 9 \"math/semi_relaxed_convolution.hpp\"\n#include <utility>\n#line 11 \"math/semi_relaxed_convolution.hpp\"\
-    \n\nLIB_BEGIN\n\ntemplate <typename ModIntT, typename FnT>\nclass semi_relaxed_convolution\
-    \ {\n  std::vector<ModIntT> fixed_A_{}, B_{}, c_{};\n  std::vector<std::vector<std::vector<ModIntT>>>\
+    \n\n#line 6 \"math/semi_relaxed_convolution.hpp\"\n\n#line 9 \"math/semi_relaxed_convolution.hpp\"\
+    \n#include <utility>\n#line 11 \"math/semi_relaxed_convolution.hpp\"\n\nLIB_BEGIN\n\
+    \ntemplate <typename ModIntT, typename FnT>\nclass semi_relaxed_convolution {\n\
+    \  std::vector<ModIntT> fixed_A_{}, B_{}, c_{};\n  std::vector<std::vector<std::vector<ModIntT>>>\
     \ dft_A_cache_{}, dft_B_cache_{};\n  int n_{};\n  FnT handle_;\n\n  enum : int\
     \ { BASE_CASE_SIZE = 32, LOG_BLOCK = 4, BLOCK = 1 << LOG_BLOCK, MASK = BLOCK -\
     \ 1 };\n\n  static_assert((BASE_CASE_SIZE & (BASE_CASE_SIZE - 1)) == 0);\n  static_assert(std::is_invocable_r_v<ModIntT,\
@@ -228,8 +229,8 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
   requiredBy: []
-  timestamp: '2022-04-25 00:23:48+08:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2022-04-25 00:35:22+08:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
 layout: document

@@ -7,20 +7,20 @@ data:
   - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/czt.hpp
     title: Chirp Z-transform (Bluestein's algorithm)
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':x:'
+  - icon: ':question:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/convolution_mod
@@ -30,9 +30,9 @@ data:
     \ PROBLEM \"https://judge.yosupo.jp/problem/convolution_mod\"\n\n#line 1 \"math/czt.hpp\"\
     \n\n\n\n#line 1 \"common.hpp\"\n\n\n\n#define LIB_DEBUG\n\n#define LIB_BEGIN namespace\
     \ lib {\n#define LIB_END }\n#define LIB ::lib::\n\n\n#line 1 \"math/radix2_ntt.hpp\"\
-    \n\n\n\n#line 5 \"math/radix2_ntt.hpp\"\n\n#include <array>\n#include <cassert>\n\
-    #include <type_traits>\n#include <vector>\n\nLIB_BEGIN\n\nnamespace detail {\n\
-    \ntemplate <typename IntT>\nconstexpr std::enable_if_t<std::is_integral_v<IntT>,\
+    \n\n\n\n#line 5 \"math/radix2_ntt.hpp\"\n\n#include <algorithm>\n#include <array>\n\
+    #include <cassert>\n#include <type_traits>\n#include <vector>\n\nLIB_BEGIN\n\n\
+    namespace detail {\n\ntemplate <typename IntT>\nconstexpr std::enable_if_t<std::is_integral_v<IntT>,\
     \ int> bsf(IntT v) {\n  if (static_cast<std::make_signed_t<IntT>>(v) <= 0) return\
     \ -1;\n  int res = 0;\n  for (; (v & 1) == 0; ++res) v >>= 1;\n  return res;\n\
     }\n\ntemplate <typename ModIntT>\nconstexpr ModIntT quadratic_nonresidue_prime()\
@@ -102,10 +102,10 @@ data:
     \  auto it = dft_a.begin() + n;\n  std::copy_n(dft_a.cbegin(), n, it);\n  idft_n(it,\
     \ n);\n  ModIntT r(n == 1 ? ModIntT(-1) : rt[detail::bsf(n) - 1]), v(1);\n  for\
     \ (int i = 0; i != n; ++i) it[i] *= v, v *= r;\n  dft_n(it, n);\n}\n\nLIB_END\n\
-    \n\n#line 6 \"math/czt.hpp\"\n\n#include <algorithm>\n#line 9 \"math/czt.hpp\"\
-    \n#include <numeric>\n#line 11 \"math/czt.hpp\"\n\nLIB_BEGIN\n\n// Chirp Z-transform\n\
-    // Input:  A(x) = `a[0]` + `a[1]`x + ..., constant `c`, and integer `n`.\n// Output:\
-    \ [A(1), A(c), A(c^2), ..., A(c^(n - 1))].\ntemplate <typename ModIntT>\nstd::vector<ModIntT>\
+    \n\n#line 6 \"math/czt.hpp\"\n\n#line 9 \"math/czt.hpp\"\n#include <numeric>\n\
+    #line 11 \"math/czt.hpp\"\n\nLIB_BEGIN\n\n// Chirp Z-transform\n// Input:  A(x)\
+    \ = `a[0]` + `a[1]`x + ..., constant `c`, and integer `n`.\n// Output: [A(1),\
+    \ A(c), A(c^2), ..., A(c^(n - 1))].\ntemplate <typename ModIntT>\nstd::vector<ModIntT>\
     \ czt(const std::vector<ModIntT> &a, const ModIntT &c, int n) {\n  assert(n >=\
     \ 0);\n  if (n == 0) return std::vector<ModIntT>{};\n  int m = static_cast<int>(a.size());\n\
     \  while (m > 0 && a[m - 1].is_zero()) --m;\n  if (m == 0) return std::vector<ModIntT>(n);\n\
@@ -213,8 +213,8 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/convolution_mod.2.test.cpp
   requiredBy: []
-  timestamp: '2022-04-25 00:23:48+08:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2022-04-25 00:35:22+08:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/convolution_mod.2.test.cpp
 layout: document
