@@ -1,22 +1,25 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
+    path: math/extended_gcd.hpp
+    title: Extended Euclidean Algorithm
+  - icon: ':question:'
     path: math/formal_power_series.hpp
     title: Formal Power Series
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/relaxed_convolution.hpp
     title: Relaxed Convolution
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
@@ -33,21 +36,44 @@ data:
     \n#define PROBLEM \"https://judge.yosupo.jp/problem/log_of_formal_power_series\"\
     \n\n#line 1 \"math/formal_power_series.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\
     \n\n#define LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END }\n\
-    #define LIB ::lib::\n\n\n#line 1 \"math/radix2_ntt.hpp\"\n\n\n\n#line 5 \"math/radix2_ntt.hpp\"\
+    #define LIB ::lib::\n\n\n#line 1 \"math/extended_gcd.hpp\"\n\n\n\n#line 5 \"math/extended_gcd.hpp\"\
+    \n\n#include <tuple>\n#include <utility>\n#include <vector>\n\nLIB_BEGIN\n\n//\
+    \ Input:  integer `a` and `b`.\n// Output: (x, y, z) such that `a`x + `b`y = z\
+    \ = gcd(`a`, `b`).\n[[deprecated]] std::tuple<long long, long long, long long>\
+    \ ext_gcd(long long a, long long b) {\n  long long x11 = 1, x12 = 0, x21 = 0,\
+    \ x22 = 1;\n  while (b != 0) {\n    long long q = a / b, x11_cpy = x11, x12_cpy\
+    \ = x12, a_cpy = a;\n    x11 = x21, x21 = x11_cpy - q * x21;\n    x12 = x22, x22\
+    \ = x12_cpy - q * x22;\n    a = b, b = a_cpy - q * b;\n  }\n  return std::make_tuple(x11,\
+    \ x12, a);\n}\n\n// Input:  integer `a` and `b`.\n// Output: (x, gcd(`a`, `b`))\
+    \ such that `a`x \u2261 gcd(`a`, `b`) (mod `b`).\nstd::pair<long long, long long>\
+    \ inv_gcd(long long a, long long b) {\n  long long x11 = 1, x21 = 0;\n  while\
+    \ (b != 0) {\n    long long q = a / b, x11_cpy = x11, a_cpy = a;\n    x11 = x21,\
+    \ x21 = x11_cpy - q * x21;\n    a = b, b = a_cpy - q * b;\n  }\n  return std::make_pair(x11,\
+    \ a);\n}\n\nnamespace detail {\n\ntemplate <typename ModIntT>\nclass modular_inverse\
+    \ {\n  std::vector<ModIntT> ivs{ModIntT()};\n\n  enum : int { LIM = 1 << 20 };\n\
+    \npublic:\n  modular_inverse() {}\n  ModIntT operator()(int k) {\n    // assume\
+    \ `ModIntT::mod()` is prime.\n    if (k > LIM) return ModIntT(k).inv();\n    //\
+    \ preprocess modular inverse from 1 to `k`\n    if (int n = static_cast<int>(ivs.size());\
+    \ n <= k) {\n      int nn = n;\n      while (nn <= k) nn <<= 1;\n      ivs.resize(nn);\n\
+    \      ModIntT v(1);\n      for (int i = n; i != nn; ++i) ivs[i] = v, v *= ModIntT(i);\n\
+    \      v = v.inv();\n      for (int i = nn - 1; i >= n; --i) ivs[i] *= v, v *=\
+    \ ModIntT(i);\n    }\n    return ivs[k];\n  }\n};\n\n} // namespace detail\n\n\
+    LIB_END\n\n\n#line 1 \"math/radix2_ntt.hpp\"\n\n\n\n#line 5 \"math/radix2_ntt.hpp\"\
     \n\n#include <algorithm>\n#include <array>\n#include <cassert>\n#include <type_traits>\n\
-    #include <vector>\n\nLIB_BEGIN\n\nnamespace detail {\n\ntemplate <typename IntT>\n\
-    constexpr std::enable_if_t<std::is_integral_v<IntT>, int> bsf(IntT v) {\n  if\
-    \ (static_cast<std::make_signed_t<IntT>>(v) <= 0) return -1;\n  int res = 0;\n\
-    \  for (; (v & 1) == 0; ++res) v >>= 1;\n  return res;\n}\n\ntemplate <typename\
-    \ ModIntT>\nconstexpr ModIntT quadratic_nonresidue_prime() {\n  auto mod = ModIntT::mod();\n\
-    \  for (int i = 2;; ++i)\n    if (ModIntT(i).pow(mod >> 1) == mod - 1) return\
-    \ ModIntT(i);\n}\n\ntemplate <typename ModIntT>\nconstexpr ModIntT gen_of_sylow_2_subgroup()\
-    \ {\n  auto mod = ModIntT::mod();\n  return quadratic_nonresidue_prime<ModIntT>().pow(mod\
-    \ >> bsf(mod - 1));\n}\n\ntemplate <typename ModIntT>\nconstexpr std::array<ModIntT,\
-    \ bsf(ModIntT::mod() - 1) - 1> root() {\n  std::array<ModIntT, bsf(ModIntT::mod()\
-    \ - 1) - 1> rt; // order(`rt[i]`) = 2^(i + 2).\n  rt.back() = gen_of_sylow_2_subgroup<ModIntT>();\n\
-    \  for (int i = bsf(ModIntT::mod() - 1) - 3; i >= 0; --i) rt[i] = rt[i + 1] *\
-    \ rt[i + 1];\n  return rt;\n}\n\ntemplate <typename ModIntT>\nconstexpr std::array<ModIntT,\
+    #line 11 \"math/radix2_ntt.hpp\"\n\nLIB_BEGIN\n\nnamespace detail {\n\ntemplate\
+    \ <typename IntT>\nconstexpr std::enable_if_t<std::is_integral_v<IntT>, int> bsf(IntT\
+    \ v) {\n  if (static_cast<std::make_signed_t<IntT>>(v) <= 0) return -1;\n  int\
+    \ res = 0;\n  for (; (v & 1) == 0; ++res) v >>= 1;\n  return res;\n}\n\ntemplate\
+    \ <typename ModIntT>\nconstexpr ModIntT quadratic_nonresidue_prime() {\n  auto\
+    \ mod = ModIntT::mod();\n  for (int i = 2;; ++i)\n    if (ModIntT(i).pow(mod >>\
+    \ 1) == mod - 1) return ModIntT(i);\n}\n\ntemplate <typename ModIntT>\nconstexpr\
+    \ ModIntT gen_of_sylow_2_subgroup() {\n  auto mod = ModIntT::mod();\n  return\
+    \ quadratic_nonresidue_prime<ModIntT>().pow(mod >> bsf(mod - 1));\n}\n\ntemplate\
+    \ <typename ModIntT>\nconstexpr std::array<ModIntT, bsf(ModIntT::mod() - 1) -\
+    \ 1> root() {\n  std::array<ModIntT, bsf(ModIntT::mod() - 1) - 1> rt; // order(`rt[i]`)\
+    \ = 2^(i + 2).\n  rt.back() = gen_of_sylow_2_subgroup<ModIntT>();\n  for (int\
+    \ i = bsf(ModIntT::mod() - 1) - 3; i >= 0; --i) rt[i] = rt[i + 1] * rt[i + 1];\n\
+    \  return rt;\n}\n\ntemplate <typename ModIntT>\nconstexpr std::array<ModIntT,\
     \ bsf(ModIntT::mod() - 1) - 1> iroot() {\n  std::array<ModIntT, bsf(ModIntT::mod()\
     \ - 1) - 1> irt;\n  irt.back() = gen_of_sylow_2_subgroup<ModIntT>().inv();\n \
     \ for (int i = bsf(ModIntT::mod() - 1) - 3; i >= 0; --i) irt[i] = irt[i + 1] *\
@@ -157,21 +183,13 @@ data:
     \ i = 0; i != 2 << sft; ++i)\n          c0[i] = c0[i] * bc_[sft - 1][i] + c1[i]\
     \ * ac_[sft - 1][i];\n        idft(c0);\n        for (int i = 0; i != (2 << sft)\
     \ - 1; ++i) c_[n_ + 1 + i] += c0[i];\n      }\n  }\n  return c_[n_++];\n}\n\n\
-    LIB_END\n\n\n#line 7 \"math/formal_power_series.hpp\"\n\n#line 9 \"math/formal_power_series.hpp\"\
-    \n#include <memory>\n#include <optional>\n#line 12 \"math/formal_power_series.hpp\"\
-    \n\nLIB_BEGIN\n\nnamespace detail {\n\ntemplate <typename ModIntT>\nclass modular_inverse\
-    \ {\n  std::vector<ModIntT> ivs{ModIntT()};\n\npublic:\n  modular_inverse() {}\n\
-    \  ModIntT operator()(int k) {\n    // preprocess modular inverse from 1 to k\n\
-    \    if (int n = static_cast<int>(ivs.size()); n <= k) {\n      int nn = n;\n\
-    \      while (nn <= k) nn <<= 1;\n      ivs.resize(nn);\n      ModIntT v(1);\n\
-    \      for (int i = n; i != nn; ++i) ivs[i] = v, v *= ModIntT(i);\n      v = v.inv();\n\
-    \      for (int i = nn - 1; i >= n; --i) ivs[i] *= v, v *= ModIntT(i);\n    }\n\
-    \    return ivs[k];\n  }\n};\n\n} // namespace detail\n\ntemplate <typename ModIntT>\n\
-    class formal_power_series {\n  using F = std::function<ModIntT(int)>;\n  F h_;\n\
-    \n  static typename detail::modular_inverse<ModIntT> invs;\n\npublic:\n  formal_power_series()\
-    \ : h_([](int) { return ModIntT(); }) {}\n  explicit formal_power_series(F f)\n\
-    \      : h_([f, cache = std::make_shared<std::vector<ModIntT>>()](int k) {\n \
-    \         for (int i = static_cast<int>(cache->size()); i <= k; ++i) cache->emplace_back(f(i));\n\
+    LIB_END\n\n\n#line 8 \"math/formal_power_series.hpp\"\n\n#line 10 \"math/formal_power_series.hpp\"\
+    \n#include <memory>\n#include <optional>\n#line 13 \"math/formal_power_series.hpp\"\
+    \n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nclass formal_power_series {\n  using\
+    \ F = std::function<ModIntT(int)>;\n  F h_;\n\n  static typename detail::modular_inverse<ModIntT>\
+    \ invs;\n\npublic:\n  formal_power_series() : h_([](int) { return ModIntT(); })\
+    \ {}\n  explicit formal_power_series(F f)\n      : h_([f, cache = std::make_shared<std::vector<ModIntT>>()](int\
+    \ k) {\n          for (int i = static_cast<int>(cache->size()); i <= k; ++i) cache->emplace_back(f(i));\n\
     \          return ModIntT(cache->at(k));\n        }) {}\n  explicit formal_power_series(const\
     \ std::vector<ModIntT> &coeff)\n      : h_([cache = std::make_shared<std::vector<ModIntT>>(coeff)](int\
     \ k) {\n          return k < static_cast<int>(cache->size()) ? ModIntT(cache->at(k))\
@@ -246,8 +264,8 @@ data:
     \ k) -= hj * invs(k);\n              }\n            }\n        }\n      }\n  \
     \    return cache->at(i) += h(i);\n    });\n    return res.exp();\n  }\n};\n\n\
     template <typename ModIntT>\nusing fps = formal_power_series<ModIntT>;\n\ntemplate\
-    \ <typename ModIntT>\ndetail::modular_inverse<ModIntT> fps<ModIntT>::invs;\n\n\
-    LIB_END\n\n\n#line 1 \"modint/montgomery_modint.hpp\"\n\n\n\n#line 5 \"modint/montgomery_modint.hpp\"\
+    \ <typename ModIntT>\ntypename detail::modular_inverse<ModIntT> fps<ModIntT>::invs;\n\
+    \nLIB_END\n\n\n#line 1 \"modint/montgomery_modint.hpp\"\n\n\n\n#line 5 \"modint/montgomery_modint.hpp\"\
     \n\n#ifdef LIB_DEBUG\n  #include <stdexcept>\n#endif\n#include <cstdint>\n#include\
     \ <iostream>\n#line 12 \"modint/montgomery_modint.hpp\"\n\nLIB_BEGIN\n\ntemplate\
     \ <std::uint32_t ModT>\nclass montgomery_modint30 {\n  using i32 = std::int32_t;\n\
@@ -324,6 +342,7 @@ data:
   dependsOn:
   - math/formal_power_series.hpp
   - common.hpp
+  - math/extended_gcd.hpp
   - math/radix2_ntt.hpp
   - math/relaxed_convolution.hpp
   - modint/montgomery_modint.hpp
@@ -331,7 +350,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
   requiredBy: []
-  timestamp: '2022-04-25 00:35:22+08:00'
+  timestamp: '2022-04-25 23:36:30+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp

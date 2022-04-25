@@ -3,7 +3,7 @@ data:
   libraryCategories:
   - name: .
     pages:
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: common.hpp
       title: common.hpp
   - name: datastructure
@@ -22,19 +22,22 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/czt.hpp
       title: Chirp Z-transform (Bluestein's algorithm)
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
+      path: math/extended_gcd.hpp
+      title: Extended Euclidean Algorithm
+    - icon: ':question:'
       path: math/formal_power_series.hpp
       title: Formal Power Series
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/radix2_ntt.hpp
       title: Radix-2 NTT
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/relaxed_convolution.hpp
       title: Relaxed Convolution
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/semi_relaxed_convolution.hpp
       title: Semi-Relaxed Convolution
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/truncated_formal_power_series.hpp
       title: Truncated Formal Power Series
   - name: modint
@@ -42,15 +45,25 @@ data:
     - icon: ':heavy_check_mark:'
       path: modint/long_montgomery_modint.hpp
       title: Long Montgomery ModInt
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: modint/montgomery_modint.hpp
       title: Montgomery ModInt
+  - name: remote_test/yosupo/math
+    pages:
+    - icon: ':warning:'
+      path: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
+      title: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
   verificationCategories:
   - name: remote_test/aizu/datastructure
     pages:
     - icon: ':heavy_check_mark:'
       path: remote_test/aizu/datastructure/weighted_union_find.0.test.cpp
       title: remote_test/aizu/datastructure/weighted_union_find.0.test.cpp
+  - name: remote_test/aizu/number_theory
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: remote_test/aizu/number_theory/extended_Euclidean_algorithm.0.test.cpp
+      title: remote_test/aizu/number_theory/extended_Euclidean_algorithm.0.test.cpp
   - name: remote_test/yosupo/datastructure
     pages:
     - icon: ':heavy_check_mark:'
@@ -86,12 +99,12 @@ data:
       path: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
       title: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
     - icon: ':heavy_check_mark:'
-      path: remote_test/yosupo/math/inv_of_formal_power_series.3.test.cpp
-      title: remote_test/yosupo/math/inv_of_formal_power_series.3.test.cpp
-    - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
       title: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
+      path: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
+      title: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
+    - icon: ':x:'
       path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
       title: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
 layout: toppage

@@ -1,19 +1,16 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':heavy_check_mark:'
-    path: math/truncated_formal_power_series.hpp
-    title: Truncated Formal Power Series
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
@@ -28,12 +25,11 @@ data:
     - https://judge.yosupo.jp/problem/inv_of_formal_power_series
   bundledCode: "#line 1 \"remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp\"\
     \n#define PROBLEM \"https://judge.yosupo.jp/problem/inv_of_formal_power_series\"\
-    \n\n#line 1 \"math/truncated_formal_power_series.hpp\"\n\n\n\n#line 1 \"common.hpp\"\
-    \n\n\n\n#define LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END\
-    \ }\n#define LIB ::lib::\n\n\n#line 1 \"math/radix2_ntt.hpp\"\n\n\n\n#line 5 \"\
-    math/radix2_ntt.hpp\"\n\n#include <algorithm>\n#include <array>\n#include <cassert>\n\
-    #include <type_traits>\n#include <vector>\n\nLIB_BEGIN\n\nnamespace detail {\n\
-    \ntemplate <typename IntT>\nconstexpr std::enable_if_t<std::is_integral_v<IntT>,\
+    \n\n#line 1 \"math/radix2_ntt.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\n#define\
+    \ LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END }\n#define LIB\
+    \ ::lib::\n\n\n#line 5 \"math/radix2_ntt.hpp\"\n\n#include <algorithm>\n#include\
+    \ <array>\n#include <cassert>\n#include <type_traits>\n#include <vector>\n\nLIB_BEGIN\n\
+    \nnamespace detail {\n\ntemplate <typename IntT>\nconstexpr std::enable_if_t<std::is_integral_v<IntT>,\
     \ int> bsf(IntT v) {\n  if (static_cast<std::make_signed_t<IntT>>(v) <= 0) return\
     \ -1;\n  int res = 0;\n  for (; (v & 1) == 0; ++res) v >>= 1;\n  return res;\n\
     }\n\ntemplate <typename ModIntT>\nconstexpr ModIntT quadratic_nonresidue_prime()\
@@ -103,73 +99,10 @@ data:
     \  auto it = dft_a.begin() + n;\n  std::copy_n(dft_a.cbegin(), n, it);\n  idft_n(it,\
     \ n);\n  ModIntT r(n == 1 ? ModIntT(-1) : rt[detail::bsf(n) - 1]), v(1);\n  for\
     \ (int i = 0; i != n; ++i) it[i] *= v, v *= r;\n  dft_n(it, n);\n}\n\nLIB_END\n\
-    \n\n#line 6 \"math/truncated_formal_power_series.hpp\"\n\n#line 9 \"math/truncated_formal_power_series.hpp\"\
-    \n#include <iostream>\n#include <iterator>\n#line 13 \"math/truncated_formal_power_series.hpp\"\
-    \n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nclass truncated_formal_power_series\
-    \ : public std::vector<ModIntT> {\n  static_assert(std::is_same_v<typename std::vector<ModIntT>::value_type,\
-    \ ModIntT>);\n\npublic:\n  using std::vector<ModIntT>::vector;\n\n  enum : int\
-    \ { NEGATIVE_INFINITY = -1 };\n\n  // leading coefficient\n  ModIntT lc() const\
-    \ {\n    int d = deg();\n    return d == NEGATIVE_INFINITY ? ModIntT() : this->operator[](d);\n\
-    \  }\n  // degree\n  int deg() const {\n    // treat formal power series like\
-    \ polynomials\n    int n = static_cast<int>(this->size());\n    while (n >= 0\
-    \ && !this->operator[](n).is_zero()) --n;\n    return n == -1 ? NEGATIVE_INFINITY\
-    \ : n;\n  }\n  // order\n  int ord() const;\n  bool is_zero() const { return deg()\
-    \ == NEGATIVE_INFINITY; }\n  void shrink() { this->resize(deg() + 1); }\n  truncated_formal_power_series\
-    \ operator-() {\n    truncated_formal_power_series res(*this);\n    for (auto\
-    \ &&i : res) i = -i;\n    return res;\n  }\n\n  truncated_formal_power_series\
-    \ &operator+=(const truncated_formal_power_series &rhs) {\n    if (this->size()\
-    \ < rhs.size()) this->resize(rhs.size());\n    for (int i = 0, e = static_cast<int>(rhs.size());\
-    \ i != e; ++i) this->operator[](i) += rhs[i];\n    return *this;\n  }\n  truncated_formal_power_series\
-    \ &operator-=(const truncated_formal_power_series &rhs) {\n    if (this->size()\
-    \ < rhs.size()) this->resize(rhs.size());\n    for (int i = 0, e = static_cast<int>(rhs.size());\
-    \ i != e; ++i) this->operator[](i) -= rhs[i];\n    return *this;\n  }\n  truncated_formal_power_series\
-    \ &operator*=(const truncated_formal_power_series &rhs);\n  truncated_formal_power_series\
-    \ inv(int n) const;\n  truncated_formal_power_series log(int n) const;\n  truncated_formal_power_series\
-    \ exp(int n) const;\n  truncated_formal_power_series div(const truncated_formal_power_series\
-    \ &rhs, int n) const;\n\n  friend truncated_formal_power_series operator+(const\
-    \ truncated_formal_power_series &lhs,\n                                      \
-    \           const truncated_formal_power_series &rhs) {\n    return truncated_formal_power_series(lhs)\
-    \ += rhs;\n  }\n  friend truncated_formal_power_series operator-(const truncated_formal_power_series\
-    \ &lhs,\n                                                 const truncated_formal_power_series\
-    \ &rhs) {\n    return truncated_formal_power_series(lhs) -= rhs;\n  }\n  friend\
-    \ truncated_formal_power_series operator*(const truncated_formal_power_series\
-    \ &lhs,\n                                                 const truncated_formal_power_series\
-    \ &rhs) {\n    return truncated_formal_power_series(lhs) *= rhs;\n  }\n\n  friend\
-    \ std::istream &operator>>(std::istream &lhs, truncated_formal_power_series &rhs)\
-    \ {\n    for (auto &&i : rhs) lhs >> i;\n    return lhs;\n  }\n  friend std::ostream\
-    \ &operator<<(std::ostream &lhs, const truncated_formal_power_series &rhs) {\n\
-    \    int s = 0, e = static_cast<int>(rhs.size());\n    lhs << '[';\n    for (auto\
-    \ &&i : rhs) {\n      lhs << i;\n      if (s >= 1) lhs << 'x';\n      if (s >\
-    \ 1) lhs << \"^(\" << s << ')';\n      if (++s != e) lhs << \" + \";\n    }\n\
-    \    return lhs << ']';\n  }\n};\n\ntemplate <typename IterT>\ntruncated_formal_power_series(IterT,\
-    \ IterT)\n    -> truncated_formal_power_series<typename std::iterator_traits<IterT>::value_type>;\n\
-    \ntemplate <typename ModIntT>\nusing tfps = truncated_formal_power_series<ModIntT>;\n\
-    \ntemplate <typename ModIntT>\ntfps<ModIntT> &tfps<ModIntT>::operator*=(const\
-    \ tfps<ModIntT> &rhs) {\n  // 6E\n  int n = static_cast<int>(this->size()), m\
-    \ = static_cast<int>(rhs.size());\n  if (n == 0 || m == 0) {\n    this->clear();\n\
-    \    return *this;\n  }\n  if (std::min(n, m) <= 32) {\n    tfps<ModIntT> res(n\
-    \ + m - 1);\n    for (int i = 0; i != n; ++i)\n      for (int j = 0; j != m; ++j)\
-    \ res[i + j] += this->operator[](i) * rhs[j];\n    return this->operator=(res);\n\
-    \  }\n  int len = ntt_len(n + m - 1);\n  tfps<ModIntT> rhs_cpy(len);\n  std::copy_n(rhs.cbegin(),\
-    \ m, rhs_cpy.begin());\n  this->resize(len);\n  dft_n(this->begin(), len), dft_n(rhs_cpy.begin(),\
-    \ len);\n  for (int i = 0; i != len; ++i) this->operator[](i) *= rhs_cpy[i];\n\
-    \  idft_n(this->begin(), len);\n  this->resize(n + m - 1);\n  return *this;\n\
-    }\n\ntemplate <typename ModIntT>\ntfps<ModIntT> tfps<ModIntT>::inv(int n) const\
-    \ {\n  // 10E\n  assert(n >= 0);\n  if (n == 0) return tfps<ModIntT>{};\n  assert(!this->front().is_zero());\n\
-    \  if (n == 1) return tfps<ModIntT>{this->front().inv()};\n  int len = ntt_len(n);\n\
-    \  tfps<ModIntT> res(len), temp0(len), temp1(len), cpy(len);\n  std::copy(this->cbegin(),\
-    \ this->cend(), cpy.begin());\n  res.front() = this->front().inv();\n  for (int\
-    \ i = 2; i <= len; i <<= 1) {\n    std::copy_n(cpy.cbegin(), i, temp0.begin());\n\
-    \    dft_n(temp0.begin(), i); // 2E\n    std::copy_n(res.cbegin(), i, temp1.begin());\n\
-    \    dft_n(temp1.begin(), i); // 2E\n    for (int j = 0; j != i; ++j) temp0[j]\
-    \ *= temp1[j];\n    idft_n(temp0.begin(), i); // 2E\n    std::fill_n(temp0.begin(),\
-    \ i >> 1, ModIntT());\n    dft_n(temp0.begin(), i); // 2E\n    for (int j = 0;\
-    \ j != i; ++j) temp0[j] *= temp1[j];\n    idft_n(temp0.begin(), i); // 2E\n  \
-    \  for (int j = i >> 1; j != i; ++j) res[j] = -temp0[j];\n  }\n  res.resize(n);\n\
-    \  return res;\n}\n\nLIB_END\n\n\n#line 1 \"modint/montgomery_modint.hpp\"\n\n\
-    \n\n#line 5 \"modint/montgomery_modint.hpp\"\n\n#ifdef LIB_DEBUG\n  #include <stdexcept>\n\
-    #endif\n#include <cstdint>\n#line 12 \"modint/montgomery_modint.hpp\"\n\nLIB_BEGIN\n\
-    \ntemplate <std::uint32_t ModT>\nclass montgomery_modint30 {\n  using i32 = std::int32_t;\n\
+    \n\n#line 1 \"modint/montgomery_modint.hpp\"\n\n\n\n#line 5 \"modint/montgomery_modint.hpp\"\
+    \n\n#ifdef LIB_DEBUG\n  #include <stdexcept>\n#endif\n#include <cstdint>\n#include\
+    \ <iostream>\n#line 12 \"modint/montgomery_modint.hpp\"\n\nLIB_BEGIN\n\ntemplate\
+    \ <std::uint32_t ModT>\nclass montgomery_modint30 {\n  using i32 = std::int32_t;\n\
     \  using u32 = std::uint32_t;\n  using u64 = std::uint64_t;\n\n  u32 v_{};\n\n\
     \  static constexpr u32 get_r() {\n    u32 t = 2, iv = MOD * (t - MOD * MOD);\n\
     \    iv *= t - MOD * iv, iv *= t - MOD * iv;\n    return iv * (MOD * iv - t);\n\
@@ -224,32 +157,54 @@ data:
     \ is;\n  }\n  friend std::ostream &operator<<(std::ostream &os, const montgomery_modint30\
     \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t ModT>\n\
     using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 5 \"remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp\"\
-    \n\n#line 8 \"remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp\"\n\
-    \nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"\
-    out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
-    \  int n;\n  std::cin >> n;\n  using mint = lib::mm30<998244353>;\n  lib::tfps<mint>\
-    \ a;\n  std::copy_n(std::istream_iterator<mint>(std::cin), n, std::back_inserter(a));\n\
-    \  auto ia = a.inv(n);\n  std::copy(ia.cbegin(), ia.cend(), std::ostream_iterator<mint>(std::cout,\
-    \ \" \"));\n  return 0;\n}\n"
+    \n\n#line 7 \"remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp\"\n\
+    #include <iterator>\n#line 9 \"remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp\"\
+    \n\ntemplate <typename ModIntT>\nstd::vector<ModIntT> inv_helper_func(std::vector<ModIntT>\
+    \ Q) {\n  int n = static_cast<int>(Q.size());\n  if (n == 1) return std::vector<ModIntT>{Q.front().inv()};\n\
+    \  // `Q`(x) * `Q`(-x) = `V`(x^2)\n  // We could restore 1/`V`(x^2) by taking\
+    \ first `n`/2 terms of 1/`V`(x).\n  // `Q`(x)^(-1) = `Q`(-x)/`V`(x^2)\n  Q.resize(n\
+    \ << 1);\n  lib::dft(Q);\n  std::vector<ModIntT> V(n);\n  for (int i = 0; i !=\
+    \ n << 1; i += 2) V[i >> 1] = Q[i] * Q[i + 1];\n  lib::idft(V);\n  V.resize(n\
+    \ >> 1);\n  auto S = inv_helper_func(V);\n  S.resize(n);\n  lib::dft(S);\n  std::vector<ModIntT>\
+    \ res(n << 1);\n  for (int i = 0; i != n << 1; ++i) res[i] = Q[i ^ 1] * S[i >>\
+    \ 1];\n  lib::idft(res);\n  res.resize(n);\n  return res;\n}\n\ntemplate <typename\
+    \ ModIntT>\nstd::vector<ModIntT> inv(std::vector<ModIntT> x) {\n  int n = static_cast<int>(x.size()),\
+    \ len = lib::ntt_len(n);\n  x.resize(len);\n  auto res = inv_helper_func(x);\n\
+    \  res.resize(n);\n  return res;\n}\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"\
+    in\", \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
+    \  std::cin.tie(nullptr);\n  int n;\n  std::cin >> n;\n  using mint = lib::mm30<998244353>;\n\
+    \  std::vector<mint> a;\n  std::copy_n(std::istream_iterator<mint>(std::cin),\
+    \ n, std::back_inserter(a));\n  auto ia = inv(a);\n  std::copy(ia.cbegin(), ia.cend(),\
+    \ std::ostream_iterator<mint>(std::cout, \" \"));\n  return 0;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/inv_of_formal_power_series\"\
-    \n\n#include \"math/truncated_formal_power_series.hpp\"\n#include \"modint/montgomery_modint.hpp\"\
-    \n\n#include <iostream>\n#include <iterator>\n\nint main() {\n#ifdef LOCAL\n \
-    \ std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n\
-    #endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n  int n;\n\
-    \  std::cin >> n;\n  using mint = lib::mm30<998244353>;\n  lib::tfps<mint> a;\n\
-    \  std::copy_n(std::istream_iterator<mint>(std::cin), n, std::back_inserter(a));\n\
-    \  auto ia = a.inv(n);\n  std::copy(ia.cbegin(), ia.cend(), std::ostream_iterator<mint>(std::cout,\
-    \ \" \"));\n  return 0;\n}"
+    \n\n#include \"math/radix2_ntt.hpp\"\n#include \"modint/montgomery_modint.hpp\"\
+    \n\n#include <iostream>\n#include <iterator>\n#include <vector>\n\ntemplate <typename\
+    \ ModIntT>\nstd::vector<ModIntT> inv_helper_func(std::vector<ModIntT> Q) {\n \
+    \ int n = static_cast<int>(Q.size());\n  if (n == 1) return std::vector<ModIntT>{Q.front().inv()};\n\
+    \  // `Q`(x) * `Q`(-x) = `V`(x^2)\n  // We could restore 1/`V`(x^2) by taking\
+    \ first `n`/2 terms of 1/`V`(x).\n  // `Q`(x)^(-1) = `Q`(-x)/`V`(x^2)\n  Q.resize(n\
+    \ << 1);\n  lib::dft(Q);\n  std::vector<ModIntT> V(n);\n  for (int i = 0; i !=\
+    \ n << 1; i += 2) V[i >> 1] = Q[i] * Q[i + 1];\n  lib::idft(V);\n  V.resize(n\
+    \ >> 1);\n  auto S = inv_helper_func(V);\n  S.resize(n);\n  lib::dft(S);\n  std::vector<ModIntT>\
+    \ res(n << 1);\n  for (int i = 0; i != n << 1; ++i) res[i] = Q[i ^ 1] * S[i >>\
+    \ 1];\n  lib::idft(res);\n  res.resize(n);\n  return res;\n}\n\ntemplate <typename\
+    \ ModIntT>\nstd::vector<ModIntT> inv(std::vector<ModIntT> x) {\n  int n = static_cast<int>(x.size()),\
+    \ len = lib::ntt_len(n);\n  x.resize(len);\n  auto res = inv_helper_func(x);\n\
+    \  res.resize(n);\n  return res;\n}\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"\
+    in\", \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
+    \  std::cin.tie(nullptr);\n  int n;\n  std::cin >> n;\n  using mint = lib::mm30<998244353>;\n\
+    \  std::vector<mint> a;\n  std::copy_n(std::istream_iterator<mint>(std::cin),\
+    \ n, std::back_inserter(a));\n  auto ia = inv(a);\n  std::copy(ia.cbegin(), ia.cend(),\
+    \ std::ostream_iterator<mint>(std::cout, \" \"));\n  return 0;\n}"
   dependsOn:
-  - math/truncated_formal_power_series.hpp
-  - common.hpp
   - math/radix2_ntt.hpp
+  - common.hpp
   - modint/montgomery_modint.hpp
   - common.hpp
   isVerificationFile: true
   path: remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
   requiredBy: []
-  timestamp: '2022-04-25 00:35:22+08:00'
+  timestamp: '2022-04-25 23:36:30+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp

@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
   _extendedRequiredBy:
@@ -11,18 +11,21 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/czt.hpp
     title: Chirp Z-transform (Bluestein's algorithm)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/formal_power_series.hpp
     title: Formal Power Series
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/relaxed_convolution.hpp
     title: Relaxed Convolution
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series
+  - icon: ':warning:'
+    path: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
+    title: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod.0.test.cpp
@@ -52,17 +55,17 @@ data:
     path: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
     title: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
   - icon: ':heavy_check_mark:'
-    path: remote_test/yosupo/math/inv_of_formal_power_series.3.test.cpp
-    title: remote_test/yosupo/math/inv_of_formal_power_series.3.test.cpp
-  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
+    path: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
+    title: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
+  - icon: ':x:'
     path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/radix2_ntt.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\
@@ -218,6 +221,7 @@ data:
   isVerificationFile: false
   path: math/radix2_ntt.hpp
   requiredBy:
+  - remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
   - math/semi_relaxed_convolution.hpp
   - math/relaxed_convolution.hpp
   - math/convolution.hpp
@@ -225,9 +229,10 @@ data:
   - math/czt.hpp
   - math/formal_power_series.hpp
   timestamp: '2022-04-25 00:35:22+08:00'
-  verificationStatus: LIBRARY_ALL_AC
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
   - remote_test/yosupo/math/convolution_mod.1.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
@@ -235,7 +240,6 @@ data:
   - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
   - remote_test/yosupo/math/convolution_mod.3.test.cpp
   - remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
-  - remote_test/yosupo/math/inv_of_formal_power_series.3.test.cpp
   - remote_test/yosupo/math/convolution_mod.0.test.cpp
   - remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
   - remote_test/yosupo/math/convolution_mod.2.test.cpp

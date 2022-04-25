@@ -26,19 +26,18 @@ data:
   _extendedVerifiedWith: []
   _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':warning:'
   attributes:
-    '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/convolution_mod
     links:
-    - https://judge.yosupo.jp/problem/convolution_mod
-  bundledCode: "#line 1 \"remote_test/yosupo/math/convolution_mod.1.test.cpp\"\n#define\
-    \ PROBLEM \"https://judge.yosupo.jp/problem/convolution_mod\"\n\n#line 1 \"math/truncated_formal_power_series.hpp\"\
-    \n\n\n\n#line 1 \"common.hpp\"\n\n\n\n#define LIB_DEBUG\n\n#define LIB_BEGIN namespace\
-    \ lib {\n#define LIB_END }\n#define LIB ::lib::\n\n\n#line 1 \"math/extended_gcd.hpp\"\
-    \n\n\n\n#line 5 \"math/extended_gcd.hpp\"\n\n#include <tuple>\n#include <utility>\n\
-    #include <vector>\n\nLIB_BEGIN\n\n// Input:  integer `a` and `b`.\n// Output:\
-    \ (x, y, z) such that `a`x + `b`y = z = gcd(`a`, `b`).\n[[deprecated]] std::tuple<long\
+    - https://judge.yosupo.jp/problem/exp_of_formal_power_series
+  bundledCode: "#line 1 \"remote_test/yosupo/math/exp_of_formal_power_series.0.test\
+    \ copy.cpp\"\n#define PROBLEM \"https://judge.yosupo.jp/problem/exp_of_formal_power_series\"\
+    \n\n#line 1 \"math/truncated_formal_power_series.hpp\"\n\n\n\n#line 1 \"common.hpp\"\
+    \n\n\n\n#define LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END\
+    \ }\n#define LIB ::lib::\n\n\n#line 1 \"math/extended_gcd.hpp\"\n\n\n\n#line 5\
+    \ \"math/extended_gcd.hpp\"\n\n#include <tuple>\n#include <utility>\n#include\
+    \ <vector>\n\nLIB_BEGIN\n\n// Input:  integer `a` and `b`.\n// Output: (x, y,\
+    \ z) such that `a`x + `b`y = z = gcd(`a`, `b`).\n[[deprecated]] std::tuple<long\
     \ long, long long, long long> ext_gcd(long long a, long long b) {\n  long long\
     \ x11 = 1, x12 = 0, x21 = 0, x22 = 1;\n  while (b != 0) {\n    long long q = a\
     \ / b, x11_cpy = x11, x12_cpy = x12, a_cpy = a;\n    x11 = x21, x21 = x11_cpy\
@@ -306,24 +305,22 @@ data:
     \ {\n    i32 x;\n    is >> x;\n    rhs = montgomery_modint30(x);\n    return is;\n\
     \  }\n  friend std::ostream &operator<<(std::ostream &os, const montgomery_modint30\
     \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t ModT>\n\
-    using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 5 \"remote_test/yosupo/math/convolution_mod.1.test.cpp\"\
-    \n\n#line 8 \"remote_test/yosupo/math/convolution_mod.1.test.cpp\"\n\nint main()\
-    \ {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\"\
-    , \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
-    \  int n, m;\n  std::cin >> n >> m;\n  using mint = lib::mm30<998244353>;\n  lib::tfps<mint>\
-    \ a, b;\n  std::copy_n(std::istream_iterator<mint>(std::cin), n, std::back_inserter(a));\n\
-    \  std::copy_n(std::istream_iterator<mint>(std::cin), m, std::back_inserter(b));\n\
-    \  auto ab = a * b;\n  std::copy(ab.cbegin(), ab.cend(), std::ostream_iterator<mint>(std::cout,\
-    \ \" \"));\n  return 0;\n}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/convolution_mod\"\n\n#include\
-    \ \"math/truncated_formal_power_series.hpp\"\n#include \"modint/montgomery_modint.hpp\"\
+    using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 5 \"remote_test/yosupo/math/exp_of_formal_power_series.0.test\
+    \ copy.cpp\"\n\n#line 8 \"remote_test/yosupo/math/exp_of_formal_power_series.0.test\
+    \ copy.cpp\"\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin),\
+    \ std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
+    \  std::cin.tie(nullptr);\n  int n;\n  std::cin >> n;\n  using mint = lib::mm30<998244353>;\n\
+    \  lib::tfps<mint> a;\n  std::copy_n(std::istream_iterator<mint>(std::cin), n,\
+    \ std::back_inserter(a));\n  auto ia = a.exp(n);\n  std::copy(ia.cbegin(), ia.cend(),\
+    \ std::ostream_iterator<mint>(std::cout, \" \"));\n  return 0;\n}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/exp_of_formal_power_series\"\
+    \n\n#include \"math/truncated_formal_power_series.hpp\"\n#include \"modint/montgomery_modint.hpp\"\
     \n\n#include <iostream>\n#include <iterator>\n\nint main() {\n#ifdef LOCAL\n \
     \ std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n\
-    #endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n  int n,\
-    \ m;\n  std::cin >> n >> m;\n  using mint = lib::mm30<998244353>;\n  lib::tfps<mint>\
-    \ a, b;\n  std::copy_n(std::istream_iterator<mint>(std::cin), n, std::back_inserter(a));\n\
-    \  std::copy_n(std::istream_iterator<mint>(std::cin), m, std::back_inserter(b));\n\
-    \  auto ab = a * b;\n  std::copy(ab.cbegin(), ab.cend(), std::ostream_iterator<mint>(std::cout,\
+    #endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n  int n;\n\
+    \  std::cin >> n;\n  using mint = lib::mm30<998244353>;\n  lib::tfps<mint> a;\n\
+    \  std::copy_n(std::istream_iterator<mint>(std::cin), n, std::back_inserter(a));\n\
+    \  auto ia = a.exp(n);\n  std::copy(ia.cbegin(), ia.cend(), std::ostream_iterator<mint>(std::cout,\
     \ \" \"));\n  return 0;\n}"
   dependsOn:
   - math/truncated_formal_power_series.hpp
@@ -333,16 +330,16 @@ data:
   - math/semi_relaxed_convolution.hpp
   - modint/montgomery_modint.hpp
   - common.hpp
-  isVerificationFile: true
-  path: remote_test/yosupo/math/convolution_mod.1.test.cpp
+  isVerificationFile: false
+  path: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
   requiredBy: []
   timestamp: '2022-04-25 23:36:30+08:00'
-  verificationStatus: TEST_ACCEPTED
+  verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
-documentation_of: remote_test/yosupo/math/convolution_mod.1.test.cpp
+documentation_of: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
 layout: document
 redirect_from:
-- /verify/remote_test/yosupo/math/convolution_mod.1.test.cpp
-- /verify/remote_test/yosupo/math/convolution_mod.1.test.cpp.html
-title: remote_test/yosupo/math/convolution_mod.1.test.cpp
+- /library/remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
+- /library/remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp.html
+title: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
 ---
