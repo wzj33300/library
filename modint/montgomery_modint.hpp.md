@@ -10,6 +10,9 @@ data:
     title: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
+    path: remote_test/aizu/number_theory/binary_pow.0.test.cpp
+    title: remote_test/aizu/number_theory/binary_pow.0.test.cpp
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod.0.test.cpp
     title: remote_test/yosupo/math/convolution_mod.0.test.cpp
   - icon: ':heavy_check_mark:'
@@ -39,7 +42,7 @@ data:
   - icon: ':x:'
     path: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
     title: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
   _isVerificationFailed: true
@@ -174,6 +177,7 @@ data:
   timestamp: '2022-04-23 22:52:36+08:00'
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
+  - remote_test/aizu/number_theory/binary_pow.0.test.cpp
   - remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
   - remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp

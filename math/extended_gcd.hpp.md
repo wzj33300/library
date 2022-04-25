@@ -5,7 +5,7 @@ data:
     path: common.hpp
     title: common.hpp
   _extendedRequiredBy:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/formal_power_series.hpp
     title: Formal Power Series
   - icon: ':question:'
@@ -18,6 +18,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/aizu/number_theory/extended_Euclidean_algorithm.0.test.cpp
     title: remote_test/aizu/number_theory/extended_Euclidean_algorithm.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/aizu/number_theory/extended_euclidean_algorithm.0.test.cpp
+    title: remote_test/aizu/number_theory/extended_euclidean_algorithm.0.test.cpp
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod.1.test.cpp
     title: remote_test/yosupo/math/convolution_mod.1.test.cpp
@@ -36,7 +39,7 @@ data:
   - icon: ':x:'
     path: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
     title: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
   _isVerificationFailed: true
@@ -104,6 +107,7 @@ data:
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - remote_test/aizu/number_theory/extended_Euclidean_algorithm.0.test.cpp
+  - remote_test/aizu/number_theory/extended_euclidean_algorithm.0.test.cpp
   - remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
   - remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp

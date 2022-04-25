@@ -20,13 +20,13 @@ data:
   - icon: ':question:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/formal_power_series.hpp
     title: Formal Power Series
   - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/relaxed_convolution.hpp
     title: Relaxed Convolution
   - icon: ':question:'
@@ -52,8 +52,14 @@ data:
     path: remote_test/aizu/datastructure/weighted_union_find.0.test.cpp
     title: remote_test/aizu/datastructure/weighted_union_find.0.test.cpp
   - icon: ':heavy_check_mark:'
+    path: remote_test/aizu/number_theory/binary_pow.0.test.cpp
+    title: remote_test/aizu/number_theory/binary_pow.0.test.cpp
+  - icon: ':heavy_check_mark:'
     path: remote_test/aizu/number_theory/extended_Euclidean_algorithm.0.test.cpp
     title: remote_test/aizu/number_theory/extended_Euclidean_algorithm.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/aizu/number_theory/extended_euclidean_algorithm.0.test.cpp
+    title: remote_test/aizu/number_theory/extended_euclidean_algorithm.0.test.cpp
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/datastructure/union_find.0.test.cpp
     title: remote_test/yosupo/datastructure/union_find.0.test.cpp
@@ -123,10 +129,10 @@ data:
   - icon: ':x:'
     path: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
     title: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
   _isVerificationFailed: true
@@ -190,6 +196,8 @@ data:
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - remote_test/aizu/number_theory/extended_Euclidean_algorithm.0.test.cpp
+  - remote_test/aizu/number_theory/binary_pow.0.test.cpp
+  - remote_test/aizu/number_theory/extended_euclidean_algorithm.0.test.cpp
   - remote_test/aizu/datastructure/weighted_union_find.0.test.cpp
   - remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
   - remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp

@@ -10,7 +10,7 @@ data:
   - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/relaxed_convolution.hpp
     title: Relaxed Convolution
   - icon: ':question:'
