@@ -11,9 +11,6 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series
-  - icon: ':warning:'
-    path: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
-    title: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod.1.test.cpp
@@ -187,7 +184,6 @@ data:
   isVerificationFile: false
   path: math/semi_relaxed_convolution.hpp
   requiredBy:
-  - remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
   - math/truncated_formal_power_series.hpp
   timestamp: '2022-04-25 00:35:22+08:00'
   verificationStatus: LIBRARY_ALL_AC

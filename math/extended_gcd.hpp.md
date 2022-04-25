@@ -11,9 +11,6 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series
-  - icon: ':warning:'
-    path: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
-    title: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: remote_test/aizu/number_theory/extended_Euclidean_algorithm.0.test.cpp
@@ -100,7 +97,6 @@ data:
   isVerificationFile: false
   path: math/extended_gcd.hpp
   requiredBy:
-  - remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
   - math/truncated_formal_power_series.hpp
   - math/formal_power_series.hpp
   timestamp: '2022-04-25 23:36:30+08:00'

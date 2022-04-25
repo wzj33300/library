@@ -4,10 +4,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  _extendedRequiredBy:
-  - icon: ':warning:'
-    path: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
-    title: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
+  _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: remote_test/aizu/number_theory/binary_pow.0.test.cpp
@@ -172,8 +169,7 @@ data:
   - common.hpp
   isVerificationFile: false
   path: modint/montgomery_modint.hpp
-  requiredBy:
-  - remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
+  requiredBy: []
   timestamp: '2022-04-23 22:52:36+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:

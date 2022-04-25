@@ -23,9 +23,6 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series
-  - icon: ':warning:'
-    path: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
-    title: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod.0.test.cpp
@@ -221,7 +218,6 @@ data:
   isVerificationFile: false
   path: math/radix2_ntt.hpp
   requiredBy:
-  - remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
   - math/semi_relaxed_convolution.hpp
   - math/relaxed_convolution.hpp
   - math/convolution.hpp

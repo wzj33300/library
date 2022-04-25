@@ -41,12 +41,6 @@ data:
   - icon: ':heavy_check_mark:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
-  - icon: ':warning:'
-    path: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
-    title: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
-  - icon: ':warning:'
-    path: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
-    title: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: remote_test/aizu/datastructure/weighted_union_find.0.test.cpp
@@ -177,8 +171,6 @@ data:
   isVerificationFile: false
   path: common.hpp
   requiredBy:
-  - remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
-  - remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
   - math/semi_relaxed_convolution.hpp
   - math/extended_gcd.hpp
   - math/radix2_ntt.hpp

@@ -48,11 +48,6 @@ data:
     - icon: ':heavy_check_mark:'
       path: modint/montgomery_modint.hpp
       title: Montgomery ModInt
-  - name: remote_test/yosupo/math
-    pages:
-    - icon: ':warning:'
-      path: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
-      title: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
   verificationCategories:
   - name: remote_test/aizu/datastructure
     pages:

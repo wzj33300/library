@@ -336,7 +336,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/convolution_mod.1.test.cpp
   requiredBy: []
-  timestamp: '2022-04-26 00:57:18+08:00'
+  timestamp: '2022-04-26 01:17:42+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/convolution_mod.1.test.cpp

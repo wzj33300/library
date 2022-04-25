@@ -13,10 +13,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution
-  _extendedRequiredBy:
-  - icon: ':warning:'
-    path: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
-    title: remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
+  _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod.1.test.cpp
@@ -339,9 +336,8 @@ data:
   - math/semi_relaxed_convolution.hpp
   isVerificationFile: false
   path: math/truncated_formal_power_series.hpp
-  requiredBy:
-  - remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
-  timestamp: '2022-04-26 00:57:18+08:00'
+  requiredBy: []
+  timestamp: '2022-04-26 01:17:42+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
