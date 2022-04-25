@@ -1,16 +1,16 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution
   _extendedRequiredBy:
@@ -24,12 +24,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
     title: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
     title: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/truncated_formal_power_series.hpp\"\n\n\n\n#line 1\
@@ -177,7 +177,7 @@ data:
     \ };\n\n  // leading coefficient\n  ModIntT lc() const {\n    int d = deg();\n\
     \    return d == NEGATIVE_INFINITY ? ModIntT() : this->operator[](d);\n  }\n \
     \ // degree\n  int deg() const {\n    // treat formal power series like polynomials\n\
-    \    int n = static_cast<int>(this->size());\n    while (n >= 0 && this->operator[](n).is_zero())\
+    \    int n = static_cast<int>(this->size()) - 1;\n    while (n >= 0 && this->operator[](n).is_zero())\
     \ --n;\n    return n == -1 ? NEGATIVE_INFINITY : n;\n  }\n  // order\n  int ord()\
     \ const;\n  bool is_zero() const { return deg() == NEGATIVE_INFINITY; }\n  void\
     \ shrink() { this->resize(deg() + 1); }\n  truncated_formal_power_series operator-()\
@@ -260,7 +260,7 @@ data:
     \ };\n\n  // leading coefficient\n  ModIntT lc() const {\n    int d = deg();\n\
     \    return d == NEGATIVE_INFINITY ? ModIntT() : this->operator[](d);\n  }\n \
     \ // degree\n  int deg() const {\n    // treat formal power series like polynomials\n\
-    \    int n = static_cast<int>(this->size());\n    while (n >= 0 && this->operator[](n).is_zero())\
+    \    int n = static_cast<int>(this->size()) - 1;\n    while (n >= 0 && this->operator[](n).is_zero())\
     \ --n;\n    return n == -1 ? NEGATIVE_INFINITY : n;\n  }\n  // order\n  int ord()\
     \ const;\n  bool is_zero() const { return deg() == NEGATIVE_INFINITY; }\n  void\
     \ shrink() { this->resize(deg() + 1); }\n  truncated_formal_power_series operator-()\
@@ -341,8 +341,8 @@ data:
   path: math/truncated_formal_power_series.hpp
   requiredBy:
   - remote_test/yosupo/math/exp_of_formal_power_series.0.test copy.cpp
-  timestamp: '2022-04-25 23:36:30+08:00'
-  verificationStatus: LIBRARY_SOME_WA
+  timestamp: '2022-04-26 00:57:18+08:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp

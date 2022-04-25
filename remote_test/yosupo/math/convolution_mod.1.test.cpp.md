@@ -1,25 +1,25 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
@@ -178,7 +178,7 @@ data:
     \ };\n\n  // leading coefficient\n  ModIntT lc() const {\n    int d = deg();\n\
     \    return d == NEGATIVE_INFINITY ? ModIntT() : this->operator[](d);\n  }\n \
     \ // degree\n  int deg() const {\n    // treat formal power series like polynomials\n\
-    \    int n = static_cast<int>(this->size());\n    while (n >= 0 && this->operator[](n).is_zero())\
+    \    int n = static_cast<int>(this->size()) - 1;\n    while (n >= 0 && this->operator[](n).is_zero())\
     \ --n;\n    return n == -1 ? NEGATIVE_INFINITY : n;\n  }\n  // order\n  int ord()\
     \ const;\n  bool is_zero() const { return deg() == NEGATIVE_INFINITY; }\n  void\
     \ shrink() { this->resize(deg() + 1); }\n  truncated_formal_power_series operator-()\
@@ -336,7 +336,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/convolution_mod.1.test.cpp
   requiredBy: []
-  timestamp: '2022-04-25 23:36:30+08:00'
+  timestamp: '2022-04-26 00:57:18+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/convolution_mod.1.test.cpp

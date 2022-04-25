@@ -3,7 +3,7 @@ data:
   libraryCategories:
   - name: .
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: common.hpp
       title: common.hpp
   - name: datastructure
@@ -22,22 +22,22 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/czt.hpp
       title: Chirp Z-transform (Bluestein's algorithm)
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/extended_gcd.hpp
       title: Extended Euclidean Algorithm
     - icon: ':heavy_check_mark:'
       path: math/formal_power_series.hpp
       title: Formal Power Series
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/radix2_ntt.hpp
       title: Radix-2 NTT
     - icon: ':heavy_check_mark:'
       path: math/relaxed_convolution.hpp
       title: Relaxed Convolution
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/semi_relaxed_convolution.hpp
       title: Semi-Relaxed Convolution
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/truncated_formal_power_series.hpp
       title: Truncated Formal Power Series
   - name: modint
@@ -45,7 +45,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: modint/long_montgomery_modint.hpp
       title: Long Montgomery ModInt
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: modint/montgomery_modint.hpp
       title: Montgomery ModInt
   - name: remote_test/yosupo/math
@@ -107,7 +107,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
       title: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
       title: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
     - icon: ':heavy_check_mark:'
