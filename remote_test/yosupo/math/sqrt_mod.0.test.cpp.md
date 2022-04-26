@@ -1,23 +1,23 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/sqrt_mod.hpp
     title: Square Roots in Finite Fields
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modint/runtime_montgomery_modint.hpp
     title: Runtime Montgomery ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/sqrt_mod
@@ -104,25 +104,24 @@ data:
     \ runtime_montgomery_modint30<IdT>::SMOD;\n\ntemplate <int IdT>\nusing rmm30 =\
     \ runtime_montgomery_modint30<IdT>;\n\nLIB_END\n\n\n#line 5 \"remote_test/yosupo/math/sqrt_mod.0.test.cpp\"\
     \n\n#include <cassert>\n#line 8 \"remote_test/yosupo/math/sqrt_mod.0.test.cpp\"\
-    \n#include <iterator>\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"\
-    r\", stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
-    \  std::cin.tie(nullptr);\n  int t;\n  std::cin >> t;\n  while (t--) {\n    int\
-    \ k, p;\n    std::cin >> k >> p;\n    if (p == 2) {\n      std::cout << k << '\\\
-    n';\n    } else {\n      bool ok = lib::rmm30<-1>::set_mod(p);\n      assert(ok);\n\
-    \      auto res = lib::sqrt_mod_prime<lib::rmm30<-1>>(k);\n      if (res.empty())\
-    \ {\n        std::cout << \"-1\\n\";\n      } else {\n        std::cout << res.front()\
-    \ << '\\n';\n      }\n    }\n  }\n  return 0;\n}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/sqrt_mod\"\n\n#include\
-    \ \"math/sqrt_mod.hpp\"\n#include \"modint/runtime_montgomery_modint.hpp\"\n\n\
-    #include <cassert>\n#include <iostream>\n#include <iterator>\n\nint main() {\n\
-    #ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\", \"w\"\
-    , stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
+    \n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"\
+    out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
     \  int t;\n  std::cin >> t;\n  while (t--) {\n    int k, p;\n    std::cin >> k\
     \ >> p;\n    if (p == 2) {\n      std::cout << k << '\\n';\n    } else {\n   \
     \   bool ok = lib::rmm30<-1>::set_mod(p);\n      assert(ok);\n      auto res =\
     \ lib::sqrt_mod_prime<lib::rmm30<-1>>(k);\n      if (res.empty()) {\n        std::cout\
     \ << \"-1\\n\";\n      } else {\n        std::cout << res.front() << '\\n';\n\
-    \      }\n    }\n  }\n  return 0;\n}"
+    \      }\n    }\n  }\n  return 0;\n}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/sqrt_mod\"\n\n#include\
+    \ \"math/sqrt_mod.hpp\"\n#include \"modint/runtime_montgomery_modint.hpp\"\n\n\
+    #include <cassert>\n#include <iostream>\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"\
+    in\", \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
+    \  std::cin.tie(nullptr);\n  int t;\n  std::cin >> t;\n  while (t--) {\n    int\
+    \ k, p;\n    std::cin >> k >> p;\n    if (p == 2) {\n      std::cout << k << '\\\
+    n';\n    } else {\n      bool ok = lib::rmm30<-1>::set_mod(p);\n      assert(ok);\n\
+    \      auto res = lib::sqrt_mod_prime<lib::rmm30<-1>>(k);\n      if (res.empty())\
+    \ {\n        std::cout << \"-1\\n\";\n      } else {\n        std::cout << res.front()\
+    \ << '\\n';\n      }\n    }\n  }\n  return 0;\n}"
   dependsOn:
   - math/sqrt_mod.hpp
   - common.hpp
@@ -131,8 +130,8 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/sqrt_mod.0.test.cpp
   requiredBy: []
-  timestamp: '2022-04-26 20:45:46+08:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2022-04-26 21:07:24+08:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/sqrt_mod.0.test.cpp
 layout: document

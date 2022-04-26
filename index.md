@@ -3,7 +3,7 @@ data:
   libraryCategories:
   - name: .
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: common.hpp
       title: common.hpp
   - name: datastructure
@@ -22,25 +22,25 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/czt.hpp
       title: Chirp Z-transform (Bluestein's algorithm)
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/extended_gcd.hpp
       title: Extended Euclidean Algorithm
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/formal_power_series.hpp
       title: Formal Power Series
     - icon: ':heavy_check_mark:'
       path: math/integer_factorization.hpp
       title: Integer Factorization (Pollard's rho algorithm)
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/radix2_ntt.hpp
       title: Radix-2 NTT
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/relaxed_convolution.hpp
       title: Relaxed Convolution
     - icon: ':heavy_check_mark:'
       path: math/semi_relaxed_convolution.hpp
       title: Semi-Relaxed Convolution
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: math/sqrt_mod.hpp
       title: Square Roots in Finite Fields
     - icon: ':heavy_check_mark:'
@@ -51,13 +51,13 @@ data:
     - icon: ':heavy_check_mark:'
       path: modint/long_montgomery_modint.hpp
       title: Long Montgomery ModInt
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: modint/montgomery_modint.hpp
       title: Montgomery ModInt
     - icon: ':heavy_check_mark:'
       path: modint/runtime_long_montgomery_modint.hpp
       title: Runtime Long Montgomery ModInt
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: modint/runtime_montgomery_modint.hpp
       title: Runtime Montgomery ModInt
   verificationCategories:
@@ -129,10 +129,10 @@ data:
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
       title: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
       title: remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/sqrt_mod.0.test.cpp
       title: remote_test/yosupo/math/sqrt_mod.0.test.cpp
 layout: toppage

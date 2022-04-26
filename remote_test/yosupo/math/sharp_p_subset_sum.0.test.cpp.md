@@ -1,32 +1,32 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/formal_power_series.hpp
     title: Formal Power Series
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/relaxed_convolution.hpp
     title: Relaxed Convolution
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/sharp_p_subset_sum
@@ -324,7 +324,7 @@ data:
     \ is;\n  }\n  friend std::ostream &operator<<(std::ostream &os, const montgomery_modint30\
     \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t ModT>\n\
     using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 5 \"remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp\"\
-    \n\n#line 7 \"remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp\"\n\nint main()\
+    \n\n#line 8 \"remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp\"\n\nint main()\
     \ {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\"\
     , \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
     \  int n, t;\n  std::cin >> n >> t;\n  using mint = lib::mm30<998244353>;\n  std::vector<mint>\
@@ -333,8 +333,8 @@ data:
     \ << res[i] << ' ';\n  return 0;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/sharp_p_subset_sum\"\n\n\
     #include \"math/formal_power_series.hpp\"\n#include \"modint/montgomery_modint.hpp\"\
-    \n\n#include <iostream>\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\",\
-    \ \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
+    \n\n#include <iostream>\n#include <vector>\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"\
+    in\", \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
     \  std::cin.tie(nullptr);\n  int n, t;\n  std::cin >> n >> t;\n  using mint =\
     \ lib::mm30<998244353>;\n  std::vector<mint> a(t + 1);\n  for (int k; n--;) {\n\
     \    std::cin >> k;\n    a[k] += 1;\n  }\n  lib::fps<mint> f(a), res(f.Exp_m());\n\
@@ -350,8 +350,8 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
   requiredBy: []
-  timestamp: '2022-04-26 19:23:58+08:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2022-04-26 21:07:24+08:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
 layout: document
