@@ -237,7 +237,7 @@ data:
     \  });\n  auto &&multiplier = src.await(n).get_multiplier();\n  return tfps<ModIntT>(multiplier.cbegin(),\
     \ multiplier.cend());\n}\n\ntemplate <typename ModIntT>\ntfps<ModIntT> tfps<ModIntT>::exp(int\
     \ n) const {\n  if (n <= 0) return tfps<ModIntT>{};\n  auto &&d = deriv();\n \
-    \ std::vector dv(d.cbegin(), d.cend());\n  semi_relaxed_convolution src(dv, [this](int\
+    \ std::vector dv(d.cbegin(), d.cend());\n  semi_relaxed_convolution src(dv, [](int\
     \ n, const std::vector<ModIntT> &c) {\n    return n == 0 ? ModIntT(1) : c[n -\
     \ 1] * invs(n);\n  });\n  auto &&multiplier = src.await(n).get_multiplier();\n\
     \  return tfps<ModIntT>(multiplier.cbegin(), multiplier.cend());\n}\n\ntemplate\
@@ -320,7 +320,7 @@ data:
     \  });\n  auto &&multiplier = src.await(n).get_multiplier();\n  return tfps<ModIntT>(multiplier.cbegin(),\
     \ multiplier.cend());\n}\n\ntemplate <typename ModIntT>\ntfps<ModIntT> tfps<ModIntT>::exp(int\
     \ n) const {\n  if (n <= 0) return tfps<ModIntT>{};\n  auto &&d = deriv();\n \
-    \ std::vector dv(d.cbegin(), d.cend());\n  semi_relaxed_convolution src(dv, [this](int\
+    \ std::vector dv(d.cbegin(), d.cend());\n  semi_relaxed_convolution src(dv, [](int\
     \ n, const std::vector<ModIntT> &c) {\n    return n == 0 ? ModIntT(1) : c[n -\
     \ 1] * invs(n);\n  });\n  auto &&multiplier = src.await(n).get_multiplier();\n\
     \  return tfps<ModIntT>(multiplier.cbegin(), multiplier.cend());\n}\n\ntemplate\
@@ -340,7 +340,7 @@ data:
   isVerificationFile: false
   path: math/truncated_formal_power_series.hpp
   requiredBy: []
-  timestamp: '2022-04-26 01:17:42+08:00'
+  timestamp: '2022-04-26 12:54:33+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
