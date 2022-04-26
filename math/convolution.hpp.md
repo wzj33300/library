@@ -36,8 +36,8 @@ data:
     \n  u64 v_{};\n\n  static constexpr u64 get_r() {\n    u64 t = 2, iv = MOD * (t\
     \ - MOD * MOD);\n    iv *= t - MOD * iv, iv *= t - MOD * iv, iv *= t - MOD * iv;\n\
     \    return iv * (t - MOD * iv);\n  }\n  static constexpr u64 get_r2() {\n   \
-    \ u64 iv = -u64(MOD) % MOD;\n    for (int i = 0; i != 64; ++i)\n      if ((iv\
-    \ <<= 1) >= MOD) iv -= MOD;\n    return iv;\n  }\n  static constexpr u64 mul_high(u64\
+    \ u64 iv = -MOD % MOD;\n    for (int i = 0; i != 64; ++i)\n      if ((iv <<= 1)\
+    \ >= MOD) iv -= MOD;\n    return iv;\n  }\n  static constexpr u64 mul_high(u64\
     \ x, u64 y) {\n    u64 a = x >> 32, b = static_cast<u32>(x), c = y >> 32, d =\
     \ static_cast<u32>(y), ad = a * d,\n        bc = b * c;\n    return a * c + (ad\
     \ >> 32) + (bc >> 32) +\n           (((ad & 0xFFFFFFFF) + (bc & 0xFFFFFFFF) +\
@@ -225,7 +225,7 @@ data:
   isVerificationFile: false
   path: math/convolution.hpp
   requiredBy: []
-  timestamp: '2022-04-26 19:23:58+08:00'
+  timestamp: '2022-04-26 20:45:46+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp

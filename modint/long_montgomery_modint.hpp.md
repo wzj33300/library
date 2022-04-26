@@ -32,9 +32,9 @@ data:
     \  using u64 = std::uint64_t;\n\n  u64 v_{};\n\n  static constexpr u64 get_r()\
     \ {\n    u64 t = 2, iv = MOD * (t - MOD * MOD);\n    iv *= t - MOD * iv, iv *=\
     \ t - MOD * iv, iv *= t - MOD * iv;\n    return iv * (t - MOD * iv);\n  }\n  static\
-    \ constexpr u64 get_r2() {\n    u64 iv = -u64(MOD) % MOD;\n    for (int i = 0;\
-    \ i != 64; ++i)\n      if ((iv <<= 1) >= MOD) iv -= MOD;\n    return iv;\n  }\n\
-    \  static constexpr u64 mul_high(u64 x, u64 y) {\n    u64 a = x >> 32, b = static_cast<u32>(x),\
+    \ constexpr u64 get_r2() {\n    u64 iv = -MOD % MOD;\n    for (int i = 0; i !=\
+    \ 64; ++i)\n      if ((iv <<= 1) >= MOD) iv -= MOD;\n    return iv;\n  }\n  static\
+    \ constexpr u64 mul_high(u64 x, u64 y) {\n    u64 a = x >> 32, b = static_cast<u32>(x),\
     \ c = y >> 32, d = static_cast<u32>(y), ad = a * d,\n        bc = b * c;\n   \
     \ return a * c + (ad >> 32) + (bc >> 32) +\n           (((ad & 0xFFFFFFFF) + (bc\
     \ & 0xFFFFFFFF) + (b * d >> 32)) >> 32);\n  }\n  static constexpr u64 redc_mul(u64\
@@ -95,7 +95,7 @@ data:
     \  using i64 = std::int64_t;\n  using u64 = std::uint64_t;\n\n  u64 v_{};\n\n\
     \  static constexpr u64 get_r() {\n    u64 t = 2, iv = MOD * (t - MOD * MOD);\n\
     \    iv *= t - MOD * iv, iv *= t - MOD * iv, iv *= t - MOD * iv;\n    return iv\
-    \ * (t - MOD * iv);\n  }\n  static constexpr u64 get_r2() {\n    u64 iv = -u64(MOD)\
+    \ * (t - MOD * iv);\n  }\n  static constexpr u64 get_r2() {\n    u64 iv = -MOD\
     \ % MOD;\n    for (int i = 0; i != 64; ++i)\n      if ((iv <<= 1) >= MOD) iv -=\
     \ MOD;\n    return iv;\n  }\n  static constexpr u64 mul_high(u64 x, u64 y) {\n\
     \    u64 a = x >> 32, b = static_cast<u32>(x), c = y >> 32, d = static_cast<u32>(y),\
@@ -158,7 +158,7 @@ data:
   path: modint/long_montgomery_modint.hpp
   requiredBy:
   - math/convolution.hpp
-  timestamp: '2022-04-23 22:52:36+08:00'
+  timestamp: '2022-04-26 20:45:46+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
@@ -168,3 +168,7 @@ documentation_of: modint/long_montgomery_modint.hpp
 layout: document
 title: Long Montgomery ModInt
 ---
+
+## Reference
+
+1. [Nyaan's Library](https://nyaannyaan.github.io/library/modint/montgomery-modint.hpp).

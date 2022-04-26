@@ -28,7 +28,7 @@ data:
     \ false;\n    MOD = m, MOD2 = MOD << 1;\n    {\n      // compute R\n      u32\
     \ t = 2, iv = MOD * (t - MOD * MOD);\n      iv *= t - MOD * iv, iv *= t - MOD\
     \ * iv;\n      R = iv * (MOD * iv - t);\n    }\n    // compute R2\n    R2   =\
-    \ -static_cast<u64>(MOD) % MOD;\n    SMOD = static_cast<u32>(MOD);\n    return\
+    \ -static_cast<u64>(MOD) % MOD;\n    SMOD = static_cast<i32>(MOD);\n    return\
     \ true;\n  }\n  static u32 mod() { return MOD; }\n  static i32 smod() { return\
     \ SMOD; }\n  runtime_montgomery_modint30() {}\n  template <typename IntT, std::enable_if_t<std::is_integral_v<IntT>,\
     \ int> = 0>\n  runtime_montgomery_modint30(IntT v) : v_(redc(static_cast<u64>(v\
@@ -92,7 +92,7 @@ data:
     \ 0) return false;\n    MOD = m, MOD2 = MOD << 1;\n    {\n      // compute R\n\
     \      u32 t = 2, iv = MOD * (t - MOD * MOD);\n      iv *= t - MOD * iv, iv *=\
     \ t - MOD * iv;\n      R = iv * (MOD * iv - t);\n    }\n    // compute R2\n  \
-    \  R2   = -static_cast<u64>(MOD) % MOD;\n    SMOD = static_cast<u32>(MOD);\n \
+    \  R2   = -static_cast<u64>(MOD) % MOD;\n    SMOD = static_cast<i32>(MOD);\n \
     \   return true;\n  }\n  static u32 mod() { return MOD; }\n  static i32 smod()\
     \ { return SMOD; }\n  runtime_montgomery_modint30() {}\n  template <typename IntT,\
     \ std::enable_if_t<std::is_integral_v<IntT>, int> = 0>\n  runtime_montgomery_modint30(IntT\
@@ -150,7 +150,7 @@ data:
   isVerificationFile: false
   path: modint/runtime_montgomery_modint.hpp
   requiredBy: []
-  timestamp: '2022-04-26 12:50:49+08:00'
+  timestamp: '2022-04-26 20:45:46+08:00'
   verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - remote_test/yosupo/math/sqrt_mod.0.test.cpp
@@ -158,3 +158,7 @@ documentation_of: modint/runtime_montgomery_modint.hpp
 layout: document
 title: Runtime Montgomery ModInt
 ---
+
+## Reference
+
+1. [Nyaan's Library](https://nyaannyaan.github.io/library/modint/montgomery-modint.hpp).
