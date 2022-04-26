@@ -24,19 +24,19 @@ data:
     title: Montgomery ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/inv_of_formal_power_series
+    PROBLEM: https://judge.yosupo.jp/problem/sharp_p_subset_sum
     links:
-    - https://judge.yosupo.jp/problem/inv_of_formal_power_series
-  bundledCode: "#line 1 \"remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp\"\
-    \n#define PROBLEM \"https://judge.yosupo.jp/problem/inv_of_formal_power_series\"\
-    \n\n#line 1 \"math/formal_power_series.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\
-    \n\n#define LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END }\n\
-    #define LIB ::lib::\n\n\n#line 1 \"math/extended_gcd.hpp\"\n\n\n\n#line 5 \"math/extended_gcd.hpp\"\
+    - https://judge.yosupo.jp/problem/sharp_p_subset_sum
+  bundledCode: "#line 1 \"remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp\"\n\
+    #define PROBLEM \"https://judge.yosupo.jp/problem/sharp_p_subset_sum\"\n\n#line\
+    \ 1 \"math/formal_power_series.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\n#define\
+    \ LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END }\n#define LIB\
+    \ ::lib::\n\n\n#line 1 \"math/extended_gcd.hpp\"\n\n\n\n#line 5 \"math/extended_gcd.hpp\"\
     \n\n#include <tuple>\n#include <utility>\n#include <vector>\n\nLIB_BEGIN\n\n//\
     \ Input:  integer `a` and `b`.\n// Output: (x, y, z) such that `a`x + `b`y = z\
     \ = gcd(`a`, `b`).\n[[deprecated]] std::tuple<long long, long long, long long>\
@@ -323,23 +323,22 @@ data:
     \ &rhs) {\n    i32 x;\n    is >> x;\n    rhs = montgomery_modint30(x);\n    return\
     \ is;\n  }\n  friend std::ostream &operator<<(std::ostream &os, const montgomery_modint30\
     \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t ModT>\n\
-    using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 5 \"remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp\"\
-    \n\n#line 7 \"remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp\"\n\
-    #include <iterator>\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\"\
-    , stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
-    \  std::cin.tie(nullptr);\n  int n;\n  std::cin >> n;\n  using mint = lib::mm30<998244353>;\n\
-    \  lib::fps<mint> f([it = std::istream_iterator<mint>(std::cin)](int) mutable\
-    \ { return *it++; });\n  auto iv = f.inv();\n  for (int i = 0; i != n; ++i) std::cout\
-    \ << iv[i] << ' ';\n  return 0;\n}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/inv_of_formal_power_series\"\
-    \n\n#include \"math/formal_power_series.hpp\"\n#include \"modint/montgomery_modint.hpp\"\
-    \n\n#include <iostream>\n#include <iterator>\n\nint main() {\n#ifdef LOCAL\n \
-    \ std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n\
-    #endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n  int n;\n\
-    \  std::cin >> n;\n  using mint = lib::mm30<998244353>;\n  lib::fps<mint> f([it\
-    \ = std::istream_iterator<mint>(std::cin)](int) mutable { return *it++; });\n\
-    \  auto iv = f.inv();\n  for (int i = 0; i != n; ++i) std::cout << iv[i] << '\
-    \ ';\n  return 0;\n}"
+    using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 5 \"remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp\"\
+    \n\n#line 7 \"remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp\"\n\nint main()\
+    \ {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\"\
+    , \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
+    \  int n, t;\n  std::cin >> n >> t;\n  using mint = lib::mm30<998244353>;\n  std::vector<mint>\
+    \ a(t + 1);\n  for (int k; n--;) {\n    std::cin >> k;\n    a[k] += 1;\n  }\n\
+    \  lib::fps<mint> f(a), res(f.Exp_m());\n  for (int i = 1; i <= t; ++i) std::cout\
+    \ << res[i] << ' ';\n  return 0;\n}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/sharp_p_subset_sum\"\n\n\
+    #include \"math/formal_power_series.hpp\"\n#include \"modint/montgomery_modint.hpp\"\
+    \n\n#include <iostream>\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\",\
+    \ \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
+    \  std::cin.tie(nullptr);\n  int n, t;\n  std::cin >> n >> t;\n  using mint =\
+    \ lib::mm30<998244353>;\n  std::vector<mint> a(t + 1);\n  for (int k; n--;) {\n\
+    \    std::cin >> k;\n    a[k] += 1;\n  }\n  lib::fps<mint> f(a), res(f.Exp_m());\n\
+    \  for (int i = 1; i <= t; ++i) std::cout << res[i] << ' ';\n  return 0;\n}"
   dependsOn:
   - math/formal_power_series.hpp
   - common.hpp
@@ -349,15 +348,15 @@ data:
   - modint/montgomery_modint.hpp
   - common.hpp
   isVerificationFile: true
-  path: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
+  path: remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
   requiredBy: []
   timestamp: '2022-04-26 19:23:58+08:00'
-  verificationStatus: TEST_ACCEPTED
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
-documentation_of: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
+documentation_of: remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
 layout: document
 redirect_from:
-- /verify/remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
-- /verify/remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp.html
-title: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
+- /verify/remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
+- /verify/remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp.html
+title: remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
 ---

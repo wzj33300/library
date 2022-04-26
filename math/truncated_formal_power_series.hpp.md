@@ -1,16 +1,16 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution
   _extendedRequiredBy: []
@@ -21,15 +21,15 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
     title: remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
     title: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
     title: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/truncated_formal_power_series.hpp\"\n\n\n\n#line 1\
@@ -218,37 +218,39 @@ data:
     \ << '^' << s;\n      // clang-format on\n      if (++s != e) lhs << \" + \";\n\
     \    }\n    return lhs << ']';\n  }\n};\n\ntemplate <typename IterT>\ntruncated_formal_power_series(IterT,\
     \ IterT)\n    -> truncated_formal_power_series<typename std::iterator_traits<IterT>::value_type>;\n\
-    \ntemplate <typename ModIntT>\nusing tfps = truncated_formal_power_series<ModIntT>;\n\
-    \ntemplate <typename ModIntT>\ntypename detail::modular_inverse<ModIntT> tfps<ModIntT>::invs;\n\
-    \ntemplate <typename ModIntT>\ntfps<ModIntT> &tfps<ModIntT>::operator*=(const\
-    \ tfps<ModIntT> &rhs) {\n  // 6E\n  int n = static_cast<int>(this->size()), m\
-    \ = static_cast<int>(rhs.size());\n  if (n == 0 || m == 0) {\n    this->clear();\n\
-    \    return *this;\n  }\n  if (std::min(n, m) <= 32) {\n    tfps<ModIntT> res(n\
-    \ + m - 1);\n    for (int i = 0; i != n; ++i)\n      for (int j = 0; j != m; ++j)\
-    \ res[i + j] += this->operator[](i) * rhs[j];\n    return this->operator=(res);\n\
-    \  }\n  int len = ntt_len(n + m - 1);\n  tfps<ModIntT> rhs_cpy(len);\n  std::copy_n(rhs.cbegin(),\
-    \ m, rhs_cpy.begin());\n  this->resize(len);\n  dft_n(this->begin(), len), dft_n(rhs_cpy.begin(),\
-    \ len);\n  for (int i = 0; i != len; ++i) this->operator[](i) *= rhs_cpy[i];\n\
-    \  idft_n(this->begin(), len);\n  this->resize(n + m - 1);\n  return *this;\n\
-    }\n\ntemplate <typename ModIntT>\ntfps<ModIntT> tfps<ModIntT>::inv(int n) const\
-    \ {\n  if (n <= 0) return tfps<ModIntT>{};\n  const std::vector a(this->cbegin(),\
-    \ this->cend());\n  semi_relaxed_convolution src(a, [iv = a.front().inv()](int\
-    \ n, const std::vector<ModIntT> &c) {\n    return n == 0 ? iv : -c[n] * iv;\n\
-    \  });\n  auto &&multiplier = src.await(n).get_multiplier();\n  return tfps<ModIntT>(multiplier.cbegin(),\
-    \ multiplier.cend());\n}\n\ntemplate <typename ModIntT>\ntfps<ModIntT> tfps<ModIntT>::exp(int\
-    \ n) const {\n  if (n <= 0) return tfps<ModIntT>{};\n  auto &&d = deriv();\n \
-    \ std::vector dv(d.cbegin(), d.cend());\n  semi_relaxed_convolution src(dv, [](int\
-    \ n, const std::vector<ModIntT> &c) {\n    return n == 0 ? ModIntT(1) : c[n -\
-    \ 1] * invs(n);\n  });\n  auto &&multiplier = src.await(n).get_multiplier();\n\
-    \  return tfps<ModIntT>(multiplier.cbegin(), multiplier.cend());\n}\n\ntemplate\
-    \ <typename ModIntT>\ntfps<ModIntT> tfps<ModIntT>::div(const truncated_formal_power_series\
-    \ &rhs, int n) const {\n  assert(!rhs.is_zero());\n  if (n <= 0) return tfps<ModIntT>{};\n\
+    \ntemplate <typename ModIntT>\ntypename detail::modular_inverse<ModIntT> truncated_formal_power_series<ModIntT>::invs;\n\
+    \ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT> &truncated_formal_power_series<ModIntT>::operator*=(\n\
+    \    const truncated_formal_power_series<ModIntT> &rhs) {\n  // 6E\n  int n =\
+    \ static_cast<int>(this->size()), m = static_cast<int>(rhs.size());\n  if (n ==\
+    \ 0 || m == 0) {\n    this->clear();\n    return *this;\n  }\n  if (std::min(n,\
+    \ m) <= 32) {\n    truncated_formal_power_series<ModIntT> res(n + m - 1);\n  \
+    \  for (int i = 0; i != n; ++i)\n      for (int j = 0; j != m; ++j) res[i + j]\
+    \ += this->operator[](i) * rhs[j];\n    return this->operator=(res);\n  }\n  int\
+    \ len = ntt_len(n + m - 1);\n  truncated_formal_power_series<ModIntT> rhs_cpy(len);\n\
+    \  std::copy_n(rhs.cbegin(), m, rhs_cpy.begin());\n  this->resize(len);\n  dft_n(this->begin(),\
+    \ len), dft_n(rhs_cpy.begin(), len);\n  for (int i = 0; i != len; ++i) this->operator[](i)\
+    \ *= rhs_cpy[i];\n  idft_n(this->begin(), len);\n  this->resize(n + m - 1);\n\
+    \  return *this;\n}\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT>\
+    \ truncated_formal_power_series<ModIntT>::inv(int n) const {\n  if (n <= 0) return\
+    \ {};\n  const std::vector a(this->cbegin(), this->cend());\n  semi_relaxed_convolution\
+    \ src(a, [iv = a.front().inv()](int n, const std::vector<ModIntT> &c) {\n    return\
+    \ n == 0 ? iv : -c[n] * iv;\n  });\n  auto &&multiplier = src.await(n).get_multiplier();\n\
+    \  return truncated_formal_power_series<ModIntT>(multiplier.cbegin(), multiplier.cend());\n\
+    }\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT> truncated_formal_power_series<ModIntT>::exp(int\
+    \ n) const {\n  if (n <= 0) return {};\n  auto &&d = deriv();\n  std::vector dv(d.cbegin(),\
+    \ d.cend());\n  semi_relaxed_convolution src(dv, [](int n, const std::vector<ModIntT>\
+    \ &c) {\n    return n == 0 ? ModIntT(1) : c[n - 1] * invs(n);\n  });\n  auto &&multiplier\
+    \ = src.await(n).get_multiplier();\n  return truncated_formal_power_series<ModIntT>(multiplier.cbegin(),\
+    \ multiplier.cend());\n}\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT>\n\
+    truncated_formal_power_series<ModIntT>::div(const truncated_formal_power_series\
+    \ &rhs, int n) const {\n  assert(!rhs.is_zero());\n  if (n <= 0) return {};\n\
     \  const std::vector a(rhs.cbegin(), rhs.cend());\n  semi_relaxed_convolution\
     \ src(\n      a, [this, iv = a.front().inv()](int n, const std::vector<ModIntT>\
     \ &c) {\n        return ((n < static_cast<int>(this->size()) ? this->operator[](n)\
     \ : ModIntT()) - c[n]) * iv;\n      });\n  auto &&multiplier = src.await(n).get_multiplier();\n\
-    \  return tfps<ModIntT>(multiplier.cbegin(), multiplier.cend());\n}\n\nLIB_END\n\
-    \n\n"
+    \  return truncated_formal_power_series<ModIntT>(multiplier.cbegin(), multiplier.cend());\n\
+    }\n\ntemplate <typename ModIntT>\nusing tfps = truncated_formal_power_series<ModIntT>;\n\
+    \nLIB_END\n\n\n"
   code: "#ifndef TRUNCATED_FORMAL_POWER_SERIES_HPP\n#define TRUNCATED_FORMAL_POWER_SERIES_HPP\n\
     \n#include \"../common.hpp\"\n#include \"extended_gcd.hpp\"\n#include \"radix2_ntt.hpp\"\
     \n#include \"semi_relaxed_convolution.hpp\"\n\n#include <algorithm>\n#include\
@@ -301,37 +303,39 @@ data:
     \ << '^' << s;\n      // clang-format on\n      if (++s != e) lhs << \" + \";\n\
     \    }\n    return lhs << ']';\n  }\n};\n\ntemplate <typename IterT>\ntruncated_formal_power_series(IterT,\
     \ IterT)\n    -> truncated_formal_power_series<typename std::iterator_traits<IterT>::value_type>;\n\
-    \ntemplate <typename ModIntT>\nusing tfps = truncated_formal_power_series<ModIntT>;\n\
-    \ntemplate <typename ModIntT>\ntypename detail::modular_inverse<ModIntT> tfps<ModIntT>::invs;\n\
-    \ntemplate <typename ModIntT>\ntfps<ModIntT> &tfps<ModIntT>::operator*=(const\
-    \ tfps<ModIntT> &rhs) {\n  // 6E\n  int n = static_cast<int>(this->size()), m\
-    \ = static_cast<int>(rhs.size());\n  if (n == 0 || m == 0) {\n    this->clear();\n\
-    \    return *this;\n  }\n  if (std::min(n, m) <= 32) {\n    tfps<ModIntT> res(n\
-    \ + m - 1);\n    for (int i = 0; i != n; ++i)\n      for (int j = 0; j != m; ++j)\
-    \ res[i + j] += this->operator[](i) * rhs[j];\n    return this->operator=(res);\n\
-    \  }\n  int len = ntt_len(n + m - 1);\n  tfps<ModIntT> rhs_cpy(len);\n  std::copy_n(rhs.cbegin(),\
-    \ m, rhs_cpy.begin());\n  this->resize(len);\n  dft_n(this->begin(), len), dft_n(rhs_cpy.begin(),\
-    \ len);\n  for (int i = 0; i != len; ++i) this->operator[](i) *= rhs_cpy[i];\n\
-    \  idft_n(this->begin(), len);\n  this->resize(n + m - 1);\n  return *this;\n\
-    }\n\ntemplate <typename ModIntT>\ntfps<ModIntT> tfps<ModIntT>::inv(int n) const\
-    \ {\n  if (n <= 0) return tfps<ModIntT>{};\n  const std::vector a(this->cbegin(),\
-    \ this->cend());\n  semi_relaxed_convolution src(a, [iv = a.front().inv()](int\
-    \ n, const std::vector<ModIntT> &c) {\n    return n == 0 ? iv : -c[n] * iv;\n\
-    \  });\n  auto &&multiplier = src.await(n).get_multiplier();\n  return tfps<ModIntT>(multiplier.cbegin(),\
-    \ multiplier.cend());\n}\n\ntemplate <typename ModIntT>\ntfps<ModIntT> tfps<ModIntT>::exp(int\
-    \ n) const {\n  if (n <= 0) return tfps<ModIntT>{};\n  auto &&d = deriv();\n \
-    \ std::vector dv(d.cbegin(), d.cend());\n  semi_relaxed_convolution src(dv, [](int\
-    \ n, const std::vector<ModIntT> &c) {\n    return n == 0 ? ModIntT(1) : c[n -\
-    \ 1] * invs(n);\n  });\n  auto &&multiplier = src.await(n).get_multiplier();\n\
-    \  return tfps<ModIntT>(multiplier.cbegin(), multiplier.cend());\n}\n\ntemplate\
-    \ <typename ModIntT>\ntfps<ModIntT> tfps<ModIntT>::div(const truncated_formal_power_series\
-    \ &rhs, int n) const {\n  assert(!rhs.is_zero());\n  if (n <= 0) return tfps<ModIntT>{};\n\
+    \ntemplate <typename ModIntT>\ntypename detail::modular_inverse<ModIntT> truncated_formal_power_series<ModIntT>::invs;\n\
+    \ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT> &truncated_formal_power_series<ModIntT>::operator*=(\n\
+    \    const truncated_formal_power_series<ModIntT> &rhs) {\n  // 6E\n  int n =\
+    \ static_cast<int>(this->size()), m = static_cast<int>(rhs.size());\n  if (n ==\
+    \ 0 || m == 0) {\n    this->clear();\n    return *this;\n  }\n  if (std::min(n,\
+    \ m) <= 32) {\n    truncated_formal_power_series<ModIntT> res(n + m - 1);\n  \
+    \  for (int i = 0; i != n; ++i)\n      for (int j = 0; j != m; ++j) res[i + j]\
+    \ += this->operator[](i) * rhs[j];\n    return this->operator=(res);\n  }\n  int\
+    \ len = ntt_len(n + m - 1);\n  truncated_formal_power_series<ModIntT> rhs_cpy(len);\n\
+    \  std::copy_n(rhs.cbegin(), m, rhs_cpy.begin());\n  this->resize(len);\n  dft_n(this->begin(),\
+    \ len), dft_n(rhs_cpy.begin(), len);\n  for (int i = 0; i != len; ++i) this->operator[](i)\
+    \ *= rhs_cpy[i];\n  idft_n(this->begin(), len);\n  this->resize(n + m - 1);\n\
+    \  return *this;\n}\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT>\
+    \ truncated_formal_power_series<ModIntT>::inv(int n) const {\n  if (n <= 0) return\
+    \ {};\n  const std::vector a(this->cbegin(), this->cend());\n  semi_relaxed_convolution\
+    \ src(a, [iv = a.front().inv()](int n, const std::vector<ModIntT> &c) {\n    return\
+    \ n == 0 ? iv : -c[n] * iv;\n  });\n  auto &&multiplier = src.await(n).get_multiplier();\n\
+    \  return truncated_formal_power_series<ModIntT>(multiplier.cbegin(), multiplier.cend());\n\
+    }\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT> truncated_formal_power_series<ModIntT>::exp(int\
+    \ n) const {\n  if (n <= 0) return {};\n  auto &&d = deriv();\n  std::vector dv(d.cbegin(),\
+    \ d.cend());\n  semi_relaxed_convolution src(dv, [](int n, const std::vector<ModIntT>\
+    \ &c) {\n    return n == 0 ? ModIntT(1) : c[n - 1] * invs(n);\n  });\n  auto &&multiplier\
+    \ = src.await(n).get_multiplier();\n  return truncated_formal_power_series<ModIntT>(multiplier.cbegin(),\
+    \ multiplier.cend());\n}\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT>\n\
+    truncated_formal_power_series<ModIntT>::div(const truncated_formal_power_series\
+    \ &rhs, int n) const {\n  assert(!rhs.is_zero());\n  if (n <= 0) return {};\n\
     \  const std::vector a(rhs.cbegin(), rhs.cend());\n  semi_relaxed_convolution\
     \ src(\n      a, [this, iv = a.front().inv()](int n, const std::vector<ModIntT>\
     \ &c) {\n        return ((n < static_cast<int>(this->size()) ? this->operator[](n)\
     \ : ModIntT()) - c[n]) * iv;\n      });\n  auto &&multiplier = src.await(n).get_multiplier();\n\
-    \  return tfps<ModIntT>(multiplier.cbegin(), multiplier.cend());\n}\n\nLIB_END\n\
-    \n#endif"
+    \  return truncated_formal_power_series<ModIntT>(multiplier.cbegin(), multiplier.cend());\n\
+    }\n\ntemplate <typename ModIntT>\nusing tfps = truncated_formal_power_series<ModIntT>;\n\
+    \nLIB_END\n\n#endif"
   dependsOn:
   - common.hpp
   - math/extended_gcd.hpp
@@ -340,8 +344,8 @@ data:
   isVerificationFile: false
   path: math/truncated_formal_power_series.hpp
   requiredBy: []
-  timestamp: '2022-04-26 12:54:33+08:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2022-04-26 19:23:58+08:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp

@@ -1,14 +1,14 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
   _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/formal_power_series.hpp
     title: Formal Power Series
   _extendedVerifiedWith:
@@ -21,15 +21,21 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
     title: remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
+    path: remote_test/yosupo/math/partition_function.0.test.cpp
+    title: remote_test/yosupo/math/partition_function.0.test.cpp
+  - icon: ':x:'
     path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
-  _isVerificationFailed: false
+  - icon: ':x:'
+    path: remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
+    title: remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/relaxed_convolution.hpp\"\n\n\n\n#line 1 \"common.hpp\"\
@@ -220,13 +226,15 @@ data:
   requiredBy:
   - math/formal_power_series.hpp
   timestamp: '2022-04-25 00:35:22+08:00'
-  verificationStatus: LIBRARY_ALL_AC
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/convolution_mod.3.test.cpp
   - remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/partition_function.0.test.cpp
   - remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
 documentation_of: math/relaxed_convolution.hpp
 layout: document
 title: Relaxed Convolution

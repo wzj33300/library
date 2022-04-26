@@ -1,16 +1,16 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
   - icon: ':heavy_check_mark:'
     path: math/convolution.hpp
     title: Convolution
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
   - icon: ':heavy_check_mark:'
@@ -171,14 +171,14 @@ data:
     \n\n#line 7 \"math/convolution.hpp\"\n\n#line 12 \"math/convolution.hpp\"\n\n\
     LIB_BEGIN\n\ntemplate <typename ModIntT>\nstd::vector<ModIntT> convolution(const\
     \ std::vector<ModIntT> &lhs, const std::vector<ModIntT> &rhs) {\n  int n = static_cast<int>(lhs.size()),\
-    \ m = static_cast<int>(rhs.size());\n  if (n == 0 || m == 0) return std::vector<ModIntT>{};\n\
-    \  if (std::min(n, m) <= 32) {\n    std::vector<ModIntT> res(n + m - 1);\n   \
-    \ for (int i = 0; i != n; ++i)\n      for (int j = 0; j != m; ++j) res[i + j]\
-    \ += lhs[i] * rhs[j];\n    return res;\n  }\n  int len = ntt_len(n + m - 1);\n\
-    \  std::vector<ModIntT> lhs_cpy(len), rhs_cpy(len);\n  std::copy_n(lhs.cbegin(),\
-    \ n, lhs_cpy.begin());\n  std::copy_n(rhs.cbegin(), m, rhs_cpy.begin());\n  dft_n(lhs_cpy.begin(),\
-    \ len), dft_n(rhs_cpy.begin(), len);\n  for (int i = 0; i != len; ++i) lhs_cpy[i]\
-    \ *= rhs_cpy[i];\n  idft_n(lhs_cpy.begin(), len);\n  lhs_cpy.resize(n + m - 1);\n\
+    \ m = static_cast<int>(rhs.size());\n  if (n == 0 || m == 0) return {};\n  if\
+    \ (std::min(n, m) <= 32) {\n    std::vector<ModIntT> res(n + m - 1);\n    for\
+    \ (int i = 0; i != n; ++i)\n      for (int j = 0; j != m; ++j) res[i + j] += lhs[i]\
+    \ * rhs[j];\n    return res;\n  }\n  int len = ntt_len(n + m - 1);\n  std::vector<ModIntT>\
+    \ lhs_cpy(len), rhs_cpy(len);\n  std::copy_n(lhs.cbegin(), n, lhs_cpy.begin());\n\
+    \  std::copy_n(rhs.cbegin(), m, rhs_cpy.begin());\n  dft_n(lhs_cpy.begin(), len),\
+    \ dft_n(rhs_cpy.begin(), len);\n  for (int i = 0; i != len; ++i) lhs_cpy[i] *=\
+    \ rhs_cpy[i];\n  idft_n(lhs_cpy.begin(), len);\n  lhs_cpy.resize(n + m - 1);\n\
     \  return lhs_cpy;\n}\n\ntemplate <typename IntT>\nstd::enable_if_t<std::is_integral_v<IntT>\
     \ && sizeof(IntT) <= sizeof(std::int32_t),\n                 std::vector<IntT>>\n\
     convolution_mod(const std::vector<IntT> &lhs, const std::vector<IntT> &rhs, const\
@@ -223,7 +223,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
   requiredBy: []
-  timestamp: '2022-04-25 00:35:22+08:00'
+  timestamp: '2022-04-26 19:23:58+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp

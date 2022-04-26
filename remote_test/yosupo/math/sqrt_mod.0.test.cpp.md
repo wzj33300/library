@@ -1,23 +1,23 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/sqrt_mod.hpp
     title: Square Roots in Finite Fields
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: modint/runtime_montgomery_modint.hpp
     title: Runtime Montgomery ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/sqrt_mod
@@ -29,30 +29,29 @@ data:
     \ lib {\n#define LIB_END }\n#define LIB ::lib::\n\n\n#line 5 \"math/sqrt_mod.hpp\"\
     \n\n#include <random>\n#include <type_traits>\n#include <vector>\n\nLIB_BEGIN\n\
     \ntemplate <typename ModIntT>\nstd::vector<ModIntT> sqrt_mod_prime(ModIntT a)\
-    \ {\n  // Bostan-Mori's algorithm\n  if (a.is_zero()) return std::vector<ModIntT>{a};\n\
-    \  const auto p = ModIntT::mod();\n  if (a.pow(p >> 1) == -1) return std::vector<ModIntT>{};\n\
-    \  if ((p & 3) == 3) {\n    ModIntT b(a.pow((p + 1) >> 2));\n    return std::vector<ModIntT>{b,\
-    \ -b};\n  }\n  std::mt19937 gen(std::random_device{}());\n  std::uniform_int_distribution<std::remove_cv_t<decltype(p)>>\
+    \ {\n  // Bostan-Mori's algorithm\n  if (a.is_zero()) return {a};\n  const auto\
+    \ p = ModIntT::mod();\n  if (a.pow(p >> 1) == -1) return {};\n  if ((p & 3) ==\
+    \ 3) {\n    ModIntT b(a.pow((p + 1) >> 2));\n    return {b, -b};\n  }\n  std::mt19937\
+    \ gen(std::random_device{}());\n  std::uniform_int_distribution<std::remove_cv_t<decltype(p)>>\
     \ dis(2, p - 1);\n  ModIntT t;\n  do { t = dis(gen); } while ((t * t - 4 * a).pow(p\
     \ >> 1) != -1);\n  ModIntT k0(1), k1, k2(-t), k3(a);\n  for (auto e = (p + 1)\
     \ >> 1;;) {\n    // clang-format off\n    if (e & 1) k0 = k1 - k0 * k2, k1 *=\
     \ k3;\n    else k1 = k0 * k3 - k1 * k2;\n    // clang-format on\n    if ((e >>=\
-    \ 1) == 0) return std::vector<ModIntT>{k0, -k0};\n    k2 = k3 + k3 - k2 * k2,\
-    \ k3 *= k3;\n  }\n}\n\nLIB_END\n\n\n#line 1 \"modint/runtime_montgomery_modint.hpp\"\
-    \n\n\n\n#line 5 \"modint/runtime_montgomery_modint.hpp\"\n\n#ifdef LIB_DEBUG\n\
-    \  #include <stdexcept>\n#endif\n#include <cstdint>\n#include <iostream>\n#line\
-    \ 12 \"modint/runtime_montgomery_modint.hpp\"\n\nLIB_BEGIN\n\ntemplate <int /*\
-    \ IdT */>\nclass runtime_montgomery_modint30 {\n  using i32 = std::int32_t;\n\
-    \  using u32 = std::uint32_t;\n  using u64 = std::uint64_t;\n\n  u32 v_{};\n\n\
-    \  static u32 redc(u64 x) { return (x + static_cast<u64>(static_cast<u32>(x) *\
-    \ R) * MOD) >> 32; }\n  static u32 norm(u32 x) { return x - (MOD & -((MOD - 1\
-    \ - x) >> 31)); }\n\n  static u32 MOD, MOD2, R, R2;\n  static i32 SMOD;\n\npublic:\n\
-    \  static bool set_mod(u32 m) {\n    if ((m & 1) == 0 || m == 1 || m >> 30 !=\
-    \ 0) return false;\n    MOD = m, MOD2 = MOD << 1;\n    {\n      // compute R\n\
-    \      u32 t = 2, iv = MOD * (t - MOD * MOD);\n      iv *= t - MOD * iv, iv *=\
-    \ t - MOD * iv;\n      R = iv * (MOD * iv - t);\n    }\n    // compute R2\n  \
-    \  R2   = -static_cast<u64>(MOD) % MOD;\n    SMOD = static_cast<u32>(MOD);\n \
-    \   return true;\n  }\n  static u32 mod() { return MOD; }\n  static i32 smod()\
+    \ 1) == 0) return {k0, -k0};\n    k2 = k3 + k3 - k2 * k2, k3 *= k3;\n  }\n}\n\n\
+    LIB_END\n\n\n#line 1 \"modint/runtime_montgomery_modint.hpp\"\n\n\n\n#line 5 \"\
+    modint/runtime_montgomery_modint.hpp\"\n\n#ifdef LIB_DEBUG\n  #include <stdexcept>\n\
+    #endif\n#include <cstdint>\n#include <iostream>\n#line 12 \"modint/runtime_montgomery_modint.hpp\"\
+    \n\nLIB_BEGIN\n\ntemplate <int /* IdT */>\nclass runtime_montgomery_modint30 {\n\
+    \  using i32 = std::int32_t;\n  using u32 = std::uint32_t;\n  using u64 = std::uint64_t;\n\
+    \n  u32 v_{};\n\n  static u32 redc(u64 x) { return (x + static_cast<u64>(static_cast<u32>(x)\
+    \ * R) * MOD) >> 32; }\n  static u32 norm(u32 x) { return x - (MOD & -((MOD -\
+    \ 1 - x) >> 31)); }\n\n  static u32 MOD, MOD2, R, R2;\n  static i32 SMOD;\n\n\
+    public:\n  static bool set_mod(u32 m) {\n    if ((m & 1) == 0 || m == 1 || m >>\
+    \ 30 != 0) return false;\n    MOD = m, MOD2 = MOD << 1;\n    {\n      // compute\
+    \ R\n      u32 t = 2, iv = MOD * (t - MOD * MOD);\n      iv *= t - MOD * iv, iv\
+    \ *= t - MOD * iv;\n      R = iv * (MOD * iv - t);\n    }\n    // compute R2\n\
+    \    R2   = -static_cast<u64>(MOD) % MOD;\n    SMOD = static_cast<u32>(MOD);\n\
+    \    return true;\n  }\n  static u32 mod() { return MOD; }\n  static i32 smod()\
     \ { return SMOD; }\n  runtime_montgomery_modint30() {}\n  template <typename IntT,\
     \ std::enable_if_t<std::is_integral_v<IntT>, int> = 0>\n  runtime_montgomery_modint30(IntT\
     \ v) : v_(redc(static_cast<u64>(v % SMOD + SMOD) * R2)) {}\n  u32 val() const\
@@ -132,8 +131,8 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/sqrt_mod.0.test.cpp
   requiredBy: []
-  timestamp: '2022-04-26 12:50:49+08:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2022-04-26 19:23:58+08:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/sqrt_mod.0.test.cpp
 layout: document

@@ -1,25 +1,25 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/formal_power_series.hpp
     title: Formal Power Series
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/relaxed_convolution.hpp
     title: Relaxed Convolution
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
@@ -243,10 +243,10 @@ data:
     \ &c) mutable {\n          if (i == 0) t0 = h0(0) * (iv = h1(0).inv());\n    \
     \      return i == 0 ? t0 : (h0(i) - h1(i) * t0 - c[i]) * iv;\n        },\n  \
     \      [h = rhs.h_](int i) { return h(i); });\n    return formal_power_series([rc](int\
-    \ i) { return rc->next(), rc->get_multiplicand()[i]; });\n  }\n  /*-------------------\
-    \ P\xF3lya operators begin -------------------*/\n  // SEQUENCE(SEQ)\n  formal_power_series\
-    \ Q() const {\n    // `h_(0) != 0` is not allowed.\n    return formal_power_series([h\
-    \ = h_](int i) { return i == 0 ? ModIntT(1) : -h(i); }).inv();\n  }\n  // MULTISET(MSET)\n\
+    \ i) { return rc->next(), rc->get_multiplicand()[i]; });\n  }\n  // P\xF3lya operator\
+    \ Q = SEQUENCE(SEQ)\n  formal_power_series Q() const {\n    // `h_(0) != 0` is\
+    \ not allowed.\n    return formal_power_series([h = h_](int i) { return i == 0\
+    \ ? ModIntT(1) : -h(i); }).inv();\n  }\n  // P\xF3lya operator Exp = MULTISET(MSET)\n\
     \  formal_power_series Exp() const {\n    // `h_(0) != 0` is not allowed.\n  \
     \  formal_power_series res([h = h_, cache = std::make_shared<std::vector<ModIntT>>()](int\
     \ i) {\n      if (i == 0) return ModIntT();\n      if ((i & (i - 1)) == 0) {\n\
@@ -254,18 +254,19 @@ data:
     \     ModIntT hj(h(j));\n          for (int k = 2; j * k < i << 1; ++k)\n    \
     \        if (j * k >= i) cache->at(j * k) += hj * invs(k);\n        }\n      }\n\
     \      return cache->at(i) += h(i);\n    });\n    return res.exp();\n  }\n  //\
-    \ POWERSET(PSET)\n  formal_power_series Exp_m() const {\n    // `h_(0) != 0` is\
-    \ not allowed.\n    formal_power_series res([h = h_, cache = std::make_shared<std::vector<ModIntT>>()](int\
-    \ i) {\n      if (i == 0) return ModIntT();\n      if ((i & (i - 1)) == 0) {\n\
-    \        cache->resize(i << 1);\n        for (int j = 1; j < i; ++j) {\n     \
-    \     ModIntT hj(h(j));\n          for (int k = 2; j * k < i << 1; ++k)\n    \
-    \        if (j * k >= i) {\n              if (k & 1) {\n                cache->at(j\
-    \ * k) += hj * invs(k);\n              } else {\n                cache->at(j *\
-    \ k) -= hj * invs(k);\n              }\n            }\n        }\n      }\n  \
-    \    return cache->at(i) += h(i);\n    });\n    return res.exp();\n  }\n};\n\n\
-    template <typename ModIntT>\nusing fps = formal_power_series<ModIntT>;\n\ntemplate\
-    \ <typename ModIntT>\ntypename detail::modular_inverse<ModIntT> fps<ModIntT>::invs;\n\
-    \nLIB_END\n\n\n#line 1 \"modint/montgomery_modint.hpp\"\n\n\n\n#line 5 \"modint/montgomery_modint.hpp\"\
+    \ P\xF3lya operator Exp(modified) = POWERSET(PSET)\n  formal_power_series Exp_m()\
+    \ const {\n    // `h_(0) != 0` is not allowed.\n    formal_power_series res([h\
+    \ = h_, cache = std::make_shared<std::vector<ModIntT>>()](int i) {\n      if (i\
+    \ == 0) return ModIntT();\n      if ((i & (i - 1)) == 0) {\n        cache->resize(i\
+    \ << 1);\n        for (int j = 1; j < i; ++j) {\n          ModIntT hj(h(j));\n\
+    \          for (int k = 2; j * k < i << 1; ++k)\n            if (j * k >= i) {\n\
+    \              if (k & 1) {\n                cache->at(j * k) += hj * invs(k);\n\
+    \              } else {\n                cache->at(j * k) -= hj * invs(k);\n \
+    \             }\n            }\n        }\n      }\n      return cache->at(i)\
+    \ += h(i);\n    });\n    return res.exp();\n  }\n};\n\ntemplate <typename ModIntT>\n\
+    typename detail::modular_inverse<ModIntT> formal_power_series<ModIntT>::invs;\n\
+    \ntemplate <typename ModIntT>\nusing fps = formal_power_series<ModIntT>;\n\nLIB_END\n\
+    \n\n#line 1 \"modint/montgomery_modint.hpp\"\n\n\n\n#line 5 \"modint/montgomery_modint.hpp\"\
     \n\n#ifdef LIB_DEBUG\n  #include <stdexcept>\n#endif\n#include <cstdint>\n#include\
     \ <iostream>\n#line 12 \"modint/montgomery_modint.hpp\"\n\nLIB_BEGIN\n\ntemplate\
     \ <std::uint32_t ModT>\nclass montgomery_modint30 {\n  using i32 = std::int32_t;\n\
@@ -350,7 +351,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
   requiredBy: []
-  timestamp: '2022-04-25 23:36:30+08:00'
+  timestamp: '2022-04-26 19:23:58+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp

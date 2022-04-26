@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
   _extendedRequiredBy: []
@@ -96,8 +96,8 @@ data:
     \ = `a[0]` + `a[1]`x + ..., constant `c`, and integer `n`.\n// Output: [A(1),\
     \ A(c), A(c^2), ..., A(c^(n - 1))].\ntemplate <typename ModIntT>\nstd::vector<ModIntT>\
     \ czt(const std::vector<ModIntT> &a, const ModIntT &c, int n) {\n  assert(n >=\
-    \ 0);\n  if (n == 0) return std::vector<ModIntT>{};\n  int m = static_cast<int>(a.size());\n\
-    \  while (m > 0 && a[m - 1].is_zero()) --m;\n  if (m == 0) return std::vector<ModIntT>(n);\n\
+    \ 0);\n  if (n == 0) return {};\n  int m = static_cast<int>(a.size());\n  while\
+    \ (m > 0 && a[m - 1].is_zero()) --m;\n  if (m == 0) return std::vector<ModIntT>(n);\n\
     \  if (c.is_zero()) {\n    std::vector<ModIntT> res(n, a.front());\n    res.front()\
     \ = std::accumulate(a.begin(), a.begin() + m, ModIntT());\n    return res;\n \
     \ }\n  const int sz = n + m - 1, len = ntt_len(sz), nm_max = std::max(n, m);\n\
@@ -116,9 +116,9 @@ data:
     \ + `a[1]`x + ..., constant `c`, and integer `n`.\n// Output: [A(1), A(c), A(c^2),\
     \ ..., A(c^(n - 1))].\ntemplate <typename ModIntT>\nstd::vector<ModIntT> czt(const\
     \ std::vector<ModIntT> &a, const ModIntT &c, int n) {\n  assert(n >= 0);\n  if\
-    \ (n == 0) return std::vector<ModIntT>{};\n  int m = static_cast<int>(a.size());\n\
-    \  while (m > 0 && a[m - 1].is_zero()) --m;\n  if (m == 0) return std::vector<ModIntT>(n);\n\
-    \  if (c.is_zero()) {\n    std::vector<ModIntT> res(n, a.front());\n    res.front()\
+    \ (n == 0) return {};\n  int m = static_cast<int>(a.size());\n  while (m > 0 &&\
+    \ a[m - 1].is_zero()) --m;\n  if (m == 0) return std::vector<ModIntT>(n);\n  if\
+    \ (c.is_zero()) {\n    std::vector<ModIntT> res(n, a.front());\n    res.front()\
     \ = std::accumulate(a.begin(), a.begin() + m, ModIntT());\n    return res;\n \
     \ }\n  const int sz = n + m - 1, len = ntt_len(sz), nm_max = std::max(n, m);\n\
     \  std::vector<ModIntT> a_cpy(len), c_binom{1, 1}, ic_binom{1, 1};\n  c_binom.resize(len);\n\
@@ -136,7 +136,7 @@ data:
   isVerificationFile: false
   path: math/czt.hpp
   requiredBy: []
-  timestamp: '2022-04-25 00:35:22+08:00'
+  timestamp: '2022-04-26 19:23:58+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod.2.test.cpp

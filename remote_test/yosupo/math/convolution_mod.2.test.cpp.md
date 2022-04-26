@@ -1,19 +1,19 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
   - icon: ':heavy_check_mark:'
     path: math/czt.hpp
     title: Chirp Z-transform (Bluestein's algorithm)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
@@ -107,8 +107,8 @@ data:
     \ = `a[0]` + `a[1]`x + ..., constant `c`, and integer `n`.\n// Output: [A(1),\
     \ A(c), A(c^2), ..., A(c^(n - 1))].\ntemplate <typename ModIntT>\nstd::vector<ModIntT>\
     \ czt(const std::vector<ModIntT> &a, const ModIntT &c, int n) {\n  assert(n >=\
-    \ 0);\n  if (n == 0) return std::vector<ModIntT>{};\n  int m = static_cast<int>(a.size());\n\
-    \  while (m > 0 && a[m - 1].is_zero()) --m;\n  if (m == 0) return std::vector<ModIntT>(n);\n\
+    \ 0);\n  if (n == 0) return {};\n  int m = static_cast<int>(a.size());\n  while\
+    \ (m > 0 && a[m - 1].is_zero()) --m;\n  if (m == 0) return std::vector<ModIntT>(n);\n\
     \  if (c.is_zero()) {\n    std::vector<ModIntT> res(n, a.front());\n    res.front()\
     \ = std::accumulate(a.begin(), a.begin() + m, ModIntT());\n    return res;\n \
     \ }\n  const int sz = n + m - 1, len = ntt_len(sz), nm_max = std::max(n, m);\n\
@@ -213,7 +213,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/convolution_mod.2.test.cpp
   requiredBy: []
-  timestamp: '2022-04-25 00:35:22+08:00'
+  timestamp: '2022-04-26 19:23:58+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/convolution_mod.2.test.cpp
