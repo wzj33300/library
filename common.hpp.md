@@ -33,6 +33,9 @@ data:
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution
   - icon: ':heavy_check_mark:'
+    path: math/sqrt_mod.hpp
+    title: Square Roots in Finite Fields
+  - icon: ':heavy_check_mark:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series
   - icon: ':heavy_check_mark:'
@@ -41,6 +44,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
+  - icon: ':heavy_check_mark:'
+    path: modint/runtime_montgomery_modint.hpp
+    title: Runtime Montgomery ModInt
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: remote_test/aizu/datastructure/weighted_union_find.0.test.cpp
@@ -94,6 +100,12 @@ data:
     path: remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
   - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
+    title: remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
+    title: remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
   - icon: ':heavy_check_mark:'
@@ -129,6 +141,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/sqrt_mod.0.test.cpp
+    title: remote_test/yosupo/math/sqrt_mod.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/sqrt_mod.0.test.cpp
+    title: remote_test/yosupo/math/sqrt_mod.0.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -171,6 +189,7 @@ data:
   isVerificationFile: false
   path: common.hpp
   requiredBy:
+  - math/sqrt_mod.hpp
   - math/semi_relaxed_convolution.hpp
   - math/extended_gcd.hpp
   - math/radix2_ntt.hpp
@@ -181,6 +200,7 @@ data:
   - math/czt.hpp
   - math/formal_power_series.hpp
   - modint/montgomery_modint.hpp
+  - modint/runtime_montgomery_modint.hpp
   - modint/long_montgomery_modint.hpp
   - datastructure/weighted_disjoint_set.hpp
   - datastructure/disjoint_set.hpp
@@ -195,6 +215,8 @@ data:
   - remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
   - remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
+  - remote_test/yosupo/math/sqrt_mod.0.test.cpp
+  - remote_test/yosupo/math/sqrt_mod.0.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
   - remote_test/yosupo/math/convolution_mod.1.test.cpp
@@ -213,6 +235,8 @@ data:
   - remote_test/yosupo/math/convolution_mod.0.test.cpp
   - remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
   - remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
+  - remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/convolution_mod.2.test.cpp
   - remote_test/yosupo/math/convolution_mod.2.test.cpp
   - remote_test/yosupo/datastructure/union_find.0.test.cpp
