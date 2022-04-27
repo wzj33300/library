@@ -1,17 +1,38 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  _extendedRequiredBy: []
+  _extendedRequiredBy:
+  - icon: ':x:'
+    path: math/truncated_formal_power_series.hpp
+    title: Truncated Formal Power Series
   _extendedVerifiedWith:
+  - icon: ':x:'
+    path: remote_test/yosupo/math/convolution_mod.1.test.cpp
+    title: remote_test/yosupo/math/convolution_mod.1.test.cpp
+  - icon: ':x:'
+    path: remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
+    title: remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
+  - icon: ':x:'
+    path: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
+    title: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
+  - icon: ':x:'
+    path: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
+    title: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
+  - icon: ':x:'
+    path: remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
+    title: remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/sqrt_mod.0.test.cpp
     title: remote_test/yosupo/math/sqrt_mod.0.test.cpp
-  _isVerificationFailed: false
+  - icon: ':x:'
+    path: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
+    title: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/sqrt_mod.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\n\
@@ -45,12 +66,28 @@ data:
   - common.hpp
   isVerificationFile: false
   path: math/sqrt_mod.hpp
-  requiredBy: []
+  requiredBy:
+  - math/truncated_formal_power_series.hpp
   timestamp: '2022-04-26 19:23:58+08:00'
-  verificationStatus: LIBRARY_ALL_AC
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
+  - remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/sqrt_mod.0.test.cpp
+  - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
+  - remote_test/yosupo/math/convolution_mod.1.test.cpp
+  - remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
+  - remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
 documentation_of: math/sqrt_mod.hpp
 layout: document
 title: Square Roots in Finite Fields
 ---
+
+## A Simple and Fast Algorithm
+
+I think this algorithm is identical to Bostan-Mori's algorithm. I omit the details here.
+
+## Reference
+
+1. A. Menezes, P. van Oorschot, and S. Vanstone. [Handbook of Applied Cryptography](http://cacr.uwaterloo.ca/hac/), 1996.
+2. A. Bostan, and R. Mori. [A Simple and Fast Algorithm for Computing the N-th Term of a Linearly Recurrent Sequence](https://arxiv.org/abs/2008.08822v1), 2020.
