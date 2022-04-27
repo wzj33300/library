@@ -276,16 +276,16 @@ data:
     \ zs = static_cast<long long>(o) * e; // count zeros\n  if (o == NEGATIVE_INFINITY\
     \ || zs >= n) return truncated_formal_power_series<ModIntT>(n);\n  const int nn\
     \ = n - static_cast<int>(zs);\n  const ModIntT c(this->operator[](o)), ic(c.inv()),\
-    \ ce(c.pow(e)), me(e);\n  truncated_formal_power_series<ModIntT> cpy(this->begin()\
-    \ + o, this->end()); // optimize?\n  for (auto &&i : cpy) i *= ic;\n  cpy = cpy.log(nn);\n\
+    \ ce(c.pow(e)), me(e);\n  truncated_formal_power_series<ModIntT> cpy(this->cbegin()\
+    \ + o, this->cend()); // optimize?\n  for (auto &&i : cpy) i *= ic;\n  cpy = cpy.log(nn);\n\
     \  for (auto &&i : cpy) i *= me;\n  cpy = cpy.exp(nn);\n  for (auto &&i : cpy)\
     \ i *= ce;\n  cpy.insert(cpy.begin(), zs, ModIntT());\n  return cpy;\n}\n\ntemplate\
     \ <typename ModIntT>\nstd::optional<truncated_formal_power_series<ModIntT>>\n\
     truncated_formal_power_series<ModIntT>::sqrt_hint(int n, ModIntT c) const {\n\
     \  if (this->empty()) return {};\n  const int o = ord();\n  if (o == NEGATIVE_INFINITY)\
     \ return truncated_formal_power_series<ModIntT>(n);\n  if ((o & 1) || c * c !=\
-    \ this->operator[](o)) return {};\n  truncated_formal_power_series<ModIntT> cpy(this->begin()\
-    \ + o, this->end());\n  const ModIntT iv(cpy.front().inv());\n  for (auto &&i\
+    \ this->operator[](o)) return {};\n  truncated_formal_power_series<ModIntT> cpy(this->cbegin()\
+    \ + o, this->cend());\n  const ModIntT iv(cpy.front().inv());\n  for (auto &&i\
     \ : cpy) i *= iv;\n  cpy = cpy.pow(n - (o >> 1), static_cast<int>(ModIntT(2).inv()));\n\
     \  for (auto &&i : cpy) i *= c;\n  cpy.insert(cpy.begin(), o >> 1, ModIntT());\n\
     \  return cpy;\n}\n\ntemplate <typename ModIntT>\nstd::optional<truncated_formal_power_series<ModIntT>>\n\
@@ -382,7 +382,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
   requiredBy: []
-  timestamp: '2022-04-27 23:44:28+08:00'
+  timestamp: '2022-04-28 00:11:12+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
