@@ -10,7 +10,7 @@ data:
   - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution
   - icon: ':question:'
@@ -18,16 +18,16 @@ data:
     title: Square Roots in Finite Fields
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod.1.test.cpp
     title: remote_test/yosupo/math/convolution_mod.1.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
     title: remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
     title: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
     title: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
   - icon: ':x:'
@@ -38,7 +38,7 @@ data:
     title: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/truncated_formal_power_series.hpp\"\n\n\n\n#line 1\
@@ -284,12 +284,12 @@ data:
     \ + o, this->end()); // optimize?\n  for (auto &&i : cpy) i *= ic;\n  cpy = cpy.log(nn);\n\
     \  for (auto &&i : cpy) i *= me;\n  cpy = cpy.exp(nn);\n  cpy.insert(cpy.begin(),\
     \ zs, ModIntT());\n  return cpy;\n}\n\ntemplate <typename ModIntT>\nstd::optional<truncated_formal_power_series<ModIntT>>\n\
-    truncated_formal_power_series<ModIntT>::sqrt_hint(int n, ModIntT c = ModIntT(1))\
-    \ const {\n  if (this->empty()) return {};\n  const int o = ord();\n  if (o ==\
-    \ NEGATIVE_INFINITY) return truncated_formal_power_series<ModIntT>(n);\n  if ((o\
-    \ & 1) || c * c != this->operator[](o)) return {};\n  truncated_formal_power_series<ModIntT>\
-    \ cpy(this->begin() + o, this->end());\n  const ModIntT iv(cpy.front().inv());\n\
-    \  for (auto &&i : cpy) i *= iv;\n  cpy = cpy.pow(n - (o >> 1), static_cast<int>(ModIntT(2).inv()));\n\
+    truncated_formal_power_series<ModIntT>::sqrt_hint(int n, ModIntT c) const {\n\
+    \  if (this->empty()) return {};\n  const int o = ord();\n  if (o == NEGATIVE_INFINITY)\
+    \ return truncated_formal_power_series<ModIntT>(n);\n  if ((o & 1) || c * c !=\
+    \ this->operator[](o)) return {};\n  truncated_formal_power_series<ModIntT> cpy(this->begin()\
+    \ + o, this->end());\n  const ModIntT iv(cpy.front().inv());\n  for (auto &&i\
+    \ : cpy) i *= iv;\n  cpy = cpy.pow(n - (o >> 1), static_cast<int>(ModIntT(2).inv()));\n\
     \  for (auto &&i : cpy) i *= c;\n  cpy.insert(cpy.begin(), o >> 1, ModIntT());\n\
     \  return cpy;\n}\n\ntemplate <typename ModIntT>\nstd::optional<truncated_formal_power_series<ModIntT>>\n\
     truncated_formal_power_series<ModIntT>::sqrt(int n) const {\n  if (this->empty())\
@@ -396,12 +396,12 @@ data:
     \ + o, this->end()); // optimize?\n  for (auto &&i : cpy) i *= ic;\n  cpy = cpy.log(nn);\n\
     \  for (auto &&i : cpy) i *= me;\n  cpy = cpy.exp(nn);\n  cpy.insert(cpy.begin(),\
     \ zs, ModIntT());\n  return cpy;\n}\n\ntemplate <typename ModIntT>\nstd::optional<truncated_formal_power_series<ModIntT>>\n\
-    truncated_formal_power_series<ModIntT>::sqrt_hint(int n, ModIntT c = ModIntT(1))\
-    \ const {\n  if (this->empty()) return {};\n  const int o = ord();\n  if (o ==\
-    \ NEGATIVE_INFINITY) return truncated_formal_power_series<ModIntT>(n);\n  if ((o\
-    \ & 1) || c * c != this->operator[](o)) return {};\n  truncated_formal_power_series<ModIntT>\
-    \ cpy(this->begin() + o, this->end());\n  const ModIntT iv(cpy.front().inv());\n\
-    \  for (auto &&i : cpy) i *= iv;\n  cpy = cpy.pow(n - (o >> 1), static_cast<int>(ModIntT(2).inv()));\n\
+    truncated_formal_power_series<ModIntT>::sqrt_hint(int n, ModIntT c) const {\n\
+    \  if (this->empty()) return {};\n  const int o = ord();\n  if (o == NEGATIVE_INFINITY)\
+    \ return truncated_formal_power_series<ModIntT>(n);\n  if ((o & 1) || c * c !=\
+    \ this->operator[](o)) return {};\n  truncated_formal_power_series<ModIntT> cpy(this->begin()\
+    \ + o, this->end());\n  const ModIntT iv(cpy.front().inv());\n  for (auto &&i\
+    \ : cpy) i *= iv;\n  cpy = cpy.pow(n - (o >> 1), static_cast<int>(ModIntT(2).inv()));\n\
     \  for (auto &&i : cpy) i *= c;\n  cpy.insert(cpy.begin(), o >> 1, ModIntT());\n\
     \  return cpy;\n}\n\ntemplate <typename ModIntT>\nstd::optional<truncated_formal_power_series<ModIntT>>\n\
     truncated_formal_power_series<ModIntT>::sqrt(int n) const {\n  if (this->empty())\
@@ -419,8 +419,8 @@ data:
   isVerificationFile: false
   path: math/truncated_formal_power_series.hpp
   requiredBy: []
-  timestamp: '2022-04-27 23:20:46+08:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2022-04-27 23:30:25+08:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
