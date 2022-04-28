@@ -248,53 +248,52 @@ data:
     \    const truncated_formal_power_series<ModIntT> &rhs) {\n  // 6E\n  int n =\
     \ static_cast<int>(this->size()), m = static_cast<int>(rhs.size());\n  if (n ==\
     \ 0 || m == 0) {\n    this->clear();\n    return *this;\n  }\n  if (std::min(n,\
-    \ m) <= 32) {\n    truncated_formal_power_series<ModIntT> res(n + m - 1);\n  \
-    \  for (int i = 0; i != n; ++i)\n      for (int j = 0; j != m; ++j) res[i + j]\
-    \ += this->operator[](i) * rhs[j];\n    return this->operator=(res);\n  }\n  int\
-    \ len = ntt_len(n + m - 1);\n  truncated_formal_power_series<ModIntT> rhs_cpy(len);\n\
-    \  std::copy_n(rhs.cbegin(), m, rhs_cpy.begin());\n  this->resize(len);\n  dft_n(this->begin(),\
-    \ len), dft_n(rhs_cpy.begin(), len);\n  for (int i = 0; i != len; ++i) this->operator[](i)\
-    \ *= rhs_cpy[i];\n  idft_n(this->begin(), len);\n  this->resize(n + m - 1);\n\
-    \  return *this;\n}\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT>\
-    \ truncated_formal_power_series<ModIntT>::inv(int n) const {\n  if (n <= 0) return\
-    \ {};\n  const std::vector a(this->cbegin(), this->cend());\n  semi_relaxed_convolution\
-    \ src(a, [iv = a.front().inv()](int n, const std::vector<ModIntT> &c) {\n    return\
-    \ n == 0 ? iv : -c[n] * iv;\n  });\n  auto &&multiplier = src.await(n).get_multiplier();\n\
-    \  return truncated_formal_power_series<ModIntT>(multiplier.cbegin(), multiplier.cend());\n\
-    }\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT> truncated_formal_power_series<ModIntT>::exp(int\
-    \ n) const {\n  if (n <= 0) return {};\n  auto &&d = deriv();\n  std::vector dv(d.cbegin(),\
-    \ d.cend());\n  semi_relaxed_convolution src(dv, [](int n, const std::vector<ModIntT>\
-    \ &c) {\n    return n == 0 ? ModIntT(1) : c[n - 1] * invs(n);\n  });\n  auto &&multiplier\
-    \ = src.await(n).get_multiplier();\n  return truncated_formal_power_series<ModIntT>(multiplier.cbegin(),\
-    \ multiplier.cend());\n}\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT>\n\
-    truncated_formal_power_series<ModIntT>::div(const truncated_formal_power_series\
-    \ &rhs, int n) const {\n  assert(!rhs.is_zero());\n  if (n <= 0) return {};\n\
-    \  const std::vector a(rhs.cbegin(), rhs.cend());\n  semi_relaxed_convolution\
-    \ src(\n      a, [this, iv = a.front().inv()](int n, const std::vector<ModIntT>\
-    \ &c) {\n        return ((n < static_cast<int>(this->size()) ? this->operator[](n)\
-    \ : ModIntT()) - c[n]) * iv;\n      });\n  auto &&multiplier = src.await(n).get_multiplier();\n\
-    \  return truncated_formal_power_series<ModIntT>(multiplier.cbegin(), multiplier.cend());\n\
-    }\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT> truncated_formal_power_series<ModIntT>::pow(int\
-    \ n,\n                                                                       \
-    \            int e) const {\n  const int o        = ord();\n  const long long\
-    \ zs = static_cast<long long>(o) * e; // count zeros\n  if (o == NEGATIVE_INFINITY\
-    \ || zs >= n) return truncated_formal_power_series<ModIntT>(n);\n  const int nn\
-    \ = n - static_cast<int>(zs);\n  const ModIntT c(this->operator[](o)), ic(c.inv()),\
-    \ ce(c.pow(e)), me(e);\n  truncated_formal_power_series<ModIntT> cpy(this->cbegin()\
+    \ m) <= 32) {\n    truncated_formal_power_series res(n + m - 1);\n    for (int\
+    \ i = 0; i != n; ++i)\n      for (int j = 0; j != m; ++j) res[i + j] += this->operator[](i)\
+    \ * rhs[j];\n    return this->operator=(res);\n  }\n  int len = ntt_len(n + m\
+    \ - 1);\n  truncated_formal_power_series rhs_cpy(len);\n  std::copy_n(rhs.cbegin(),\
+    \ m, rhs_cpy.begin());\n  this->resize(len);\n  dft_n(this->begin(), len), dft_n(rhs_cpy.begin(),\
+    \ len);\n  for (int i = 0; i != len; ++i) this->operator[](i) *= rhs_cpy[i];\n\
+    \  idft_n(this->begin(), len);\n  this->resize(n + m - 1);\n  return *this;\n\
+    }\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT> truncated_formal_power_series<ModIntT>::inv(int\
+    \ n) const {\n  if (n <= 0) return {};\n  const std::vector a(this->cbegin(),\
+    \ this->cend());\n  semi_relaxed_convolution src(a, [iv = a.front().inv()](int\
+    \ n, const std::vector<ModIntT> &c) {\n    return n == 0 ? iv : -c[n] * iv;\n\
+    \  });\n  auto &&multiplier = src.await(n).get_multiplier();\n  return truncated_formal_power_series(multiplier.cbegin(),\
+    \ multiplier.cend());\n}\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT>\
+    \ truncated_formal_power_series<ModIntT>::exp(int n) const {\n  if (n <= 0) return\
+    \ {};\n  auto &&d = deriv();\n  std::vector dv(d.cbegin(), d.cend());\n  semi_relaxed_convolution\
+    \ src(dv, [](int n, const std::vector<ModIntT> &c) {\n    return n == 0 ? ModIntT(1)\
+    \ : c[n - 1] * invs(n);\n  });\n  auto &&multiplier = src.await(n).get_multiplier();\n\
+    \  return truncated_formal_power_series(multiplier.cbegin(), multiplier.cend());\n\
+    }\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT>\ntruncated_formal_power_series<ModIntT>::div(const\
+    \ truncated_formal_power_series &rhs, int n) const {\n  assert(!rhs.is_zero());\n\
+    \  if (n <= 0) return {};\n  const std::vector a(rhs.cbegin(), rhs.cend());\n\
+    \  semi_relaxed_convolution src(\n      a, [this, iv = a.front().inv()](int n,\
+    \ const std::vector<ModIntT> &c) {\n        return ((n < static_cast<int>(this->size())\
+    \ ? this->operator[](n) : ModIntT()) - c[n]) * iv;\n      });\n  auto &&multiplier\
+    \ = src.await(n).get_multiplier();\n  return truncated_formal_power_series(multiplier.cbegin(),\
+    \ multiplier.cend());\n}\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT>\
+    \ truncated_formal_power_series<ModIntT>::pow(int n,\n                       \
+    \                                                            int e) const {\n\
+    \  const int o        = ord();\n  const long long zs = static_cast<long long>(o)\
+    \ * e; // count zeros\n  if (o == NEGATIVE_INFINITY || zs >= n) return truncated_formal_power_series(n);\n\
+    \  const int nn = n - static_cast<int>(zs);\n  const ModIntT c(this->operator[](o)),\
+    \ ic(c.inv()), ce(c.pow(e)), me(e);\n  truncated_formal_power_series cpy(this->cbegin()\
     \ + o, this->cend()); // optimize?\n  for (auto &&i : cpy) i *= ic;\n  cpy = cpy.log(nn);\n\
     \  for (auto &&i : cpy) i *= me;\n  cpy = cpy.exp(nn);\n  for (auto &&i : cpy)\
     \ i *= ce;\n  cpy.insert(cpy.begin(), zs, ModIntT());\n  return cpy;\n}\n\ntemplate\
     \ <typename ModIntT>\nstd::optional<truncated_formal_power_series<ModIntT>>\n\
     truncated_formal_power_series<ModIntT>::sqrt_hint(int n, ModIntT c) const {\n\
     \  if (this->empty()) return {};\n  const int o = ord();\n  if (o == NEGATIVE_INFINITY)\
-    \ return truncated_formal_power_series<ModIntT>(n);\n  if ((o & 1) || c * c !=\
-    \ this->operator[](o)) return {};\n  truncated_formal_power_series<ModIntT> cpy(this->cbegin()\
-    \ + o, this->cend());\n  const ModIntT iv(cpy.front().inv());\n  for (auto &&i\
-    \ : cpy) i *= iv;\n  cpy = cpy.pow(n - (o >> 1), static_cast<int>(ModIntT(2).inv()));\n\
-    \  for (auto &&i : cpy) i *= c;\n  cpy.insert(cpy.begin(), o >> 1, ModIntT());\n\
-    \  return cpy;\n}\n\ntemplate <typename ModIntT>\nstd::optional<truncated_formal_power_series<ModIntT>>\n\
+    \ return truncated_formal_power_series(n);\n  if ((o & 1) || c * c != this->operator[](o))\
+    \ return {};\n  truncated_formal_power_series cpy(this->cbegin() + o, this->cend());\n\
+    \  const ModIntT iv(cpy.front().inv());\n  for (auto &&i : cpy) i *= iv;\n  cpy\
+    \ = cpy.pow(n - (o >> 1), static_cast<int>(ModIntT(2).inv()));\n  for (auto &&i\
+    \ : cpy) i *= c;\n  cpy.insert(cpy.begin(), o >> 1, ModIntT());\n  return cpy;\n\
+    }\n\ntemplate <typename ModIntT>\nstd::optional<truncated_formal_power_series<ModIntT>>\n\
     truncated_formal_power_series<ModIntT>::sqrt(int n) const {\n  if (this->empty())\
-    \ return {};\n  const int o = ord();\n  if (o == NEGATIVE_INFINITY) return truncated_formal_power_series<ModIntT>(n);\n\
+    \ return {};\n  const int o = ord();\n  if (o == NEGATIVE_INFINITY) return truncated_formal_power_series(n);\n\
     \  if (o & 1) return {};\n  auto res = sqrt_mod_prime(this->operator[](o));\n\
     \  if (res.empty()) return {};\n  return sqrt_hint(n, res.front());\n}\n\ntemplate\
     \ <typename ModIntT>\nusing tfps = truncated_formal_power_series<ModIntT>;\n\n\
@@ -361,53 +360,52 @@ data:
     \    const truncated_formal_power_series<ModIntT> &rhs) {\n  // 6E\n  int n =\
     \ static_cast<int>(this->size()), m = static_cast<int>(rhs.size());\n  if (n ==\
     \ 0 || m == 0) {\n    this->clear();\n    return *this;\n  }\n  if (std::min(n,\
-    \ m) <= 32) {\n    truncated_formal_power_series<ModIntT> res(n + m - 1);\n  \
-    \  for (int i = 0; i != n; ++i)\n      for (int j = 0; j != m; ++j) res[i + j]\
-    \ += this->operator[](i) * rhs[j];\n    return this->operator=(res);\n  }\n  int\
-    \ len = ntt_len(n + m - 1);\n  truncated_formal_power_series<ModIntT> rhs_cpy(len);\n\
-    \  std::copy_n(rhs.cbegin(), m, rhs_cpy.begin());\n  this->resize(len);\n  dft_n(this->begin(),\
-    \ len), dft_n(rhs_cpy.begin(), len);\n  for (int i = 0; i != len; ++i) this->operator[](i)\
-    \ *= rhs_cpy[i];\n  idft_n(this->begin(), len);\n  this->resize(n + m - 1);\n\
-    \  return *this;\n}\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT>\
-    \ truncated_formal_power_series<ModIntT>::inv(int n) const {\n  if (n <= 0) return\
-    \ {};\n  const std::vector a(this->cbegin(), this->cend());\n  semi_relaxed_convolution\
-    \ src(a, [iv = a.front().inv()](int n, const std::vector<ModIntT> &c) {\n    return\
-    \ n == 0 ? iv : -c[n] * iv;\n  });\n  auto &&multiplier = src.await(n).get_multiplier();\n\
-    \  return truncated_formal_power_series<ModIntT>(multiplier.cbegin(), multiplier.cend());\n\
-    }\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT> truncated_formal_power_series<ModIntT>::exp(int\
-    \ n) const {\n  if (n <= 0) return {};\n  auto &&d = deriv();\n  std::vector dv(d.cbegin(),\
-    \ d.cend());\n  semi_relaxed_convolution src(dv, [](int n, const std::vector<ModIntT>\
-    \ &c) {\n    return n == 0 ? ModIntT(1) : c[n - 1] * invs(n);\n  });\n  auto &&multiplier\
-    \ = src.await(n).get_multiplier();\n  return truncated_formal_power_series<ModIntT>(multiplier.cbegin(),\
-    \ multiplier.cend());\n}\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT>\n\
-    truncated_formal_power_series<ModIntT>::div(const truncated_formal_power_series\
-    \ &rhs, int n) const {\n  assert(!rhs.is_zero());\n  if (n <= 0) return {};\n\
-    \  const std::vector a(rhs.cbegin(), rhs.cend());\n  semi_relaxed_convolution\
-    \ src(\n      a, [this, iv = a.front().inv()](int n, const std::vector<ModIntT>\
-    \ &c) {\n        return ((n < static_cast<int>(this->size()) ? this->operator[](n)\
-    \ : ModIntT()) - c[n]) * iv;\n      });\n  auto &&multiplier = src.await(n).get_multiplier();\n\
-    \  return truncated_formal_power_series<ModIntT>(multiplier.cbegin(), multiplier.cend());\n\
-    }\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT> truncated_formal_power_series<ModIntT>::pow(int\
-    \ n,\n                                                                       \
-    \            int e) const {\n  const int o        = ord();\n  const long long\
-    \ zs = static_cast<long long>(o) * e; // count zeros\n  if (o == NEGATIVE_INFINITY\
-    \ || zs >= n) return truncated_formal_power_series<ModIntT>(n);\n  const int nn\
-    \ = n - static_cast<int>(zs);\n  const ModIntT c(this->operator[](o)), ic(c.inv()),\
-    \ ce(c.pow(e)), me(e);\n  truncated_formal_power_series<ModIntT> cpy(this->cbegin()\
+    \ m) <= 32) {\n    truncated_formal_power_series res(n + m - 1);\n    for (int\
+    \ i = 0; i != n; ++i)\n      for (int j = 0; j != m; ++j) res[i + j] += this->operator[](i)\
+    \ * rhs[j];\n    return this->operator=(res);\n  }\n  int len = ntt_len(n + m\
+    \ - 1);\n  truncated_formal_power_series rhs_cpy(len);\n  std::copy_n(rhs.cbegin(),\
+    \ m, rhs_cpy.begin());\n  this->resize(len);\n  dft_n(this->begin(), len), dft_n(rhs_cpy.begin(),\
+    \ len);\n  for (int i = 0; i != len; ++i) this->operator[](i) *= rhs_cpy[i];\n\
+    \  idft_n(this->begin(), len);\n  this->resize(n + m - 1);\n  return *this;\n\
+    }\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT> truncated_formal_power_series<ModIntT>::inv(int\
+    \ n) const {\n  if (n <= 0) return {};\n  const std::vector a(this->cbegin(),\
+    \ this->cend());\n  semi_relaxed_convolution src(a, [iv = a.front().inv()](int\
+    \ n, const std::vector<ModIntT> &c) {\n    return n == 0 ? iv : -c[n] * iv;\n\
+    \  });\n  auto &&multiplier = src.await(n).get_multiplier();\n  return truncated_formal_power_series(multiplier.cbegin(),\
+    \ multiplier.cend());\n}\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT>\
+    \ truncated_formal_power_series<ModIntT>::exp(int n) const {\n  if (n <= 0) return\
+    \ {};\n  auto &&d = deriv();\n  std::vector dv(d.cbegin(), d.cend());\n  semi_relaxed_convolution\
+    \ src(dv, [](int n, const std::vector<ModIntT> &c) {\n    return n == 0 ? ModIntT(1)\
+    \ : c[n - 1] * invs(n);\n  });\n  auto &&multiplier = src.await(n).get_multiplier();\n\
+    \  return truncated_formal_power_series(multiplier.cbegin(), multiplier.cend());\n\
+    }\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT>\ntruncated_formal_power_series<ModIntT>::div(const\
+    \ truncated_formal_power_series &rhs, int n) const {\n  assert(!rhs.is_zero());\n\
+    \  if (n <= 0) return {};\n  const std::vector a(rhs.cbegin(), rhs.cend());\n\
+    \  semi_relaxed_convolution src(\n      a, [this, iv = a.front().inv()](int n,\
+    \ const std::vector<ModIntT> &c) {\n        return ((n < static_cast<int>(this->size())\
+    \ ? this->operator[](n) : ModIntT()) - c[n]) * iv;\n      });\n  auto &&multiplier\
+    \ = src.await(n).get_multiplier();\n  return truncated_formal_power_series(multiplier.cbegin(),\
+    \ multiplier.cend());\n}\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT>\
+    \ truncated_formal_power_series<ModIntT>::pow(int n,\n                       \
+    \                                                            int e) const {\n\
+    \  const int o        = ord();\n  const long long zs = static_cast<long long>(o)\
+    \ * e; // count zeros\n  if (o == NEGATIVE_INFINITY || zs >= n) return truncated_formal_power_series(n);\n\
+    \  const int nn = n - static_cast<int>(zs);\n  const ModIntT c(this->operator[](o)),\
+    \ ic(c.inv()), ce(c.pow(e)), me(e);\n  truncated_formal_power_series cpy(this->cbegin()\
     \ + o, this->cend()); // optimize?\n  for (auto &&i : cpy) i *= ic;\n  cpy = cpy.log(nn);\n\
     \  for (auto &&i : cpy) i *= me;\n  cpy = cpy.exp(nn);\n  for (auto &&i : cpy)\
     \ i *= ce;\n  cpy.insert(cpy.begin(), zs, ModIntT());\n  return cpy;\n}\n\ntemplate\
     \ <typename ModIntT>\nstd::optional<truncated_formal_power_series<ModIntT>>\n\
     truncated_formal_power_series<ModIntT>::sqrt_hint(int n, ModIntT c) const {\n\
     \  if (this->empty()) return {};\n  const int o = ord();\n  if (o == NEGATIVE_INFINITY)\
-    \ return truncated_formal_power_series<ModIntT>(n);\n  if ((o & 1) || c * c !=\
-    \ this->operator[](o)) return {};\n  truncated_formal_power_series<ModIntT> cpy(this->cbegin()\
-    \ + o, this->cend());\n  const ModIntT iv(cpy.front().inv());\n  for (auto &&i\
-    \ : cpy) i *= iv;\n  cpy = cpy.pow(n - (o >> 1), static_cast<int>(ModIntT(2).inv()));\n\
-    \  for (auto &&i : cpy) i *= c;\n  cpy.insert(cpy.begin(), o >> 1, ModIntT());\n\
-    \  return cpy;\n}\n\ntemplate <typename ModIntT>\nstd::optional<truncated_formal_power_series<ModIntT>>\n\
+    \ return truncated_formal_power_series(n);\n  if ((o & 1) || c * c != this->operator[](o))\
+    \ return {};\n  truncated_formal_power_series cpy(this->cbegin() + o, this->cend());\n\
+    \  const ModIntT iv(cpy.front().inv());\n  for (auto &&i : cpy) i *= iv;\n  cpy\
+    \ = cpy.pow(n - (o >> 1), static_cast<int>(ModIntT(2).inv()));\n  for (auto &&i\
+    \ : cpy) i *= c;\n  cpy.insert(cpy.begin(), o >> 1, ModIntT());\n  return cpy;\n\
+    }\n\ntemplate <typename ModIntT>\nstd::optional<truncated_formal_power_series<ModIntT>>\n\
     truncated_formal_power_series<ModIntT>::sqrt(int n) const {\n  if (this->empty())\
-    \ return {};\n  const int o = ord();\n  if (o == NEGATIVE_INFINITY) return truncated_formal_power_series<ModIntT>(n);\n\
+    \ return {};\n  const int o = ord();\n  if (o == NEGATIVE_INFINITY) return truncated_formal_power_series(n);\n\
     \  if (o & 1) return {};\n  auto res = sqrt_mod_prime(this->operator[](o));\n\
     \  if (res.empty()) return {};\n  return sqrt_hint(n, res.front());\n}\n\ntemplate\
     \ <typename ModIntT>\nusing tfps = truncated_formal_power_series<ModIntT>;\n\n\
@@ -421,7 +419,7 @@ data:
   isVerificationFile: false
   path: math/truncated_formal_power_series.hpp
   requiredBy: []
-  timestamp: '2022-04-28 00:11:12+08:00'
+  timestamp: '2022-04-28 09:57:37+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
