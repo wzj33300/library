@@ -1,17 +1,17 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/string/z_algorithm.0.test.cpp
     title: remote_test/yosupo/string/z_algorithm.0.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 1 \"string/z_function.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\
@@ -45,7 +45,7 @@ data:
   path: string/z_function.hpp
   requiredBy: []
   timestamp: '2022-05-01 23:45:11+08:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/string/z_algorithm.0.test.cpp
 documentation_of: string/z_function.hpp

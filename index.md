@@ -3,11 +3,14 @@ data:
   libraryCategories:
   - name: .
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: common.hpp
       title: common.hpp
   - name: datastructure
     pages:
+    - icon: ':heavy_check_mark:'
+      path: datastructure/cartesian_tree.hpp
+      title: Cartesian Tree
     - icon: ':heavy_check_mark:'
       path: datastructure/disjoint_set.hpp
       title: Disjoint Set
@@ -22,19 +25,19 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/czt.hpp
       title: Chirp Z-transform (Bluestein's algorithm)
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/extended_gcd.hpp
       title: Extended Euclidean Algorithm
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/formal_power_series.hpp
       title: Formal Power Series
     - icon: ':heavy_check_mark:'
       path: math/integer_factorization.hpp
       title: Integer Factorization (Pollard's rho algorithm)
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/radix2_ntt.hpp
       title: Radix-2 NTT
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/relaxed_convolution.hpp
       title: Relaxed Convolution
     - icon: ':heavy_check_mark:'
@@ -54,7 +57,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: modint/long_montgomery_modint.hpp
       title: Long Montgomery ModInt
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: modint/montgomery_modint.hpp
       title: Montgomery ModInt
     - icon: ':heavy_check_mark:'
@@ -65,7 +68,7 @@ data:
       title: Runtime Montgomery ModInt
   - name: string
     pages:
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: string/z_function.hpp
       title: Z Function
   verificationCategories:
@@ -87,6 +90,9 @@ data:
       title: remote_test/aizu/number_theory/extended_euclidean_algorithm.0.test.cpp
   - name: remote_test/yosupo/datastructure
     pages:
+    - icon: ':heavy_check_mark:'
+      path: remote_test/yosupo/datastructure/cartesian_tree.0.test.cpp
+      title: remote_test/yosupo/datastructure/cartesian_tree.0.test.cpp
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/datastructure/union_find.0.test.cpp
       title: remote_test/yosupo/datastructure/union_find.0.test.cpp
@@ -143,7 +149,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
       title: remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
       title: remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
     - icon: ':heavy_check_mark:'
@@ -154,7 +160,7 @@ data:
       title: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
   - name: remote_test/yosupo/string
     pages:
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/string/z_algorithm.0.test.cpp
       title: remote_test/yosupo/string/z_algorithm.0.test.cpp
 layout: toppage
