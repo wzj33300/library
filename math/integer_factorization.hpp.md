@@ -27,27 +27,27 @@ data:
     \  #include <stdexcept>\n#endif\n#include <cstdint>\n#include <iostream>\n#include\
     \ <type_traits>\n\nLIB_BEGIN\n\ntemplate <int /* IdT */>\nclass runtime_montgomery_modint63\
     \ {\n  using u32 = std::uint32_t;\n  using i64 = std::int64_t;\n  using u64 =\
-    \ std::uint64_t;\n\n  u64 v_{};\n\n  static u64 get_r2() {}\n  static u64 mul_high(u64\
-    \ x, u64 y) {\n    u64 a = x >> 32, b = static_cast<u32>(x), c = y >> 32, d =\
-    \ static_cast<u32>(y), ad = a * d,\n        bc = b * c;\n    return a * c + (ad\
-    \ >> 32) + (bc >> 32) +\n           (((ad & 0xFFFFFFFF) + (bc & 0xFFFFFFFF) +\
-    \ (b * d >> 32)) >> 32);\n  }\n  static u64 redc_mul(u64 x, u64 y) {\n    u64\
-    \ res = mul_high(x, y) - mul_high(x * y * R, MOD);\n    return res + (MOD & -(res\
-    \ >> 63));\n  }\n  static u64 norm(i64 x) { return x + (MOD & -(x < 0)); }\n\n\
-    \  static u64 MOD, R, R2;\n  static i64 SMOD;\n\npublic:\n  static bool set_mod(u64\
-    \ m) {\n    if ((m & 1) == 0 || m == 1 || m >> 63 != 0) return false;\n    MOD\
-    \ = m;\n    {\n      // compute R\n      u64 t = 2, iv = MOD * (t - MOD * MOD);\n\
-    \      iv *= t - MOD * iv, iv *= t - MOD * iv, iv *= t - MOD * iv;\n      R =\
-    \ iv * (t - MOD * iv);\n    }\n    {\n      // compute R2\n      R2 = -MOD % MOD;\n\
-    \      for (int i = 0; i != 64; ++i)\n        if ((R2 <<= 1) >= MOD) R2 -= MOD;\n\
-    \    }\n    SMOD = static_cast<i64>(MOD);\n    return true;\n  }\n  static u64\
-    \ mod() { return MOD; }\n  static i64 smod() { return SMOD; }\n  runtime_montgomery_modint63()\
-    \ {}\n  template <typename IntT, std::enable_if_t<std::is_integral_v<IntT>, int>\
-    \ = 0>\n  runtime_montgomery_modint63(IntT v) : v_(redc_mul(norm(v % SMOD), R2))\
-    \ {}\n  u64 val() const {\n    u64 res = -mul_high(v_ * R, MOD);\n    return res\
-    \ + (MOD & -(res >> 63));\n  }\n  i64 sval() const { return val(); }\n  bool is_zero()\
-    \ const { return v_ == 0; }\n  template <typename IntT, std::enable_if_t<std::is_integral_v<IntT>,\
-    \ int> = 0>\n  explicit operator IntT() const {\n    return static_cast<IntT>(val());\n\
+    \ std::uint64_t;\n\n  u64 v_{};\n\n  static u64 mul_high(u64 x, u64 y) {\n   \
+    \ u64 a = x >> 32, b = static_cast<u32>(x), c = y >> 32, d = static_cast<u32>(y),\
+    \ ad = a * d,\n        bc = b * c;\n    return a * c + (ad >> 32) + (bc >> 32)\
+    \ +\n           (((ad & 0xFFFFFFFF) + (bc & 0xFFFFFFFF) + (b * d >> 32)) >> 32);\n\
+    \  }\n  static u64 redc_mul(u64 x, u64 y) {\n    u64 res = mul_high(x, y) - mul_high(x\
+    \ * y * R, MOD);\n    return res + (MOD & -(res >> 63));\n  }\n  static u64 norm(i64\
+    \ x) { return x + (MOD & -(x < 0)); }\n\n  static u64 MOD, R, R2;\n  static i64\
+    \ SMOD;\n\npublic:\n  static bool set_mod(u64 m) {\n    if ((m & 1) == 0 || m\
+    \ == 1 || m >> 63 != 0) return false;\n    MOD = m;\n    {\n      // compute R\n\
+    \      u64 t = 2, iv = MOD * (t - MOD * MOD);\n      iv *= t - MOD * iv, iv *=\
+    \ t - MOD * iv, iv *= t - MOD * iv;\n      R = iv * (t - MOD * iv);\n    }\n \
+    \   {\n      // compute R2\n      R2 = -MOD % MOD;\n      for (int i = 0; i !=\
+    \ 64; ++i)\n        if ((R2 <<= 1) >= MOD) R2 -= MOD;\n    }\n    SMOD = static_cast<i64>(MOD);\n\
+    \    return true;\n  }\n  static u64 mod() { return MOD; }\n  static i64 smod()\
+    \ { return SMOD; }\n  runtime_montgomery_modint63() {}\n  template <typename IntT,\
+    \ std::enable_if_t<std::is_integral_v<IntT>, int> = 0>\n  runtime_montgomery_modint63(IntT\
+    \ v) : v_(redc_mul(norm(v % SMOD), R2)) {}\n  u64 val() const {\n    u64 res =\
+    \ -mul_high(v_ * R, MOD);\n    return res + (MOD & -(res >> 63));\n  }\n  i64\
+    \ sval() const { return val(); }\n  bool is_zero() const { return v_ == 0; }\n\
+    \  template <typename IntT, std::enable_if_t<std::is_integral_v<IntT>, int> =\
+    \ 0>\n  explicit operator IntT() const {\n    return static_cast<IntT>(val());\n\
     \  }\n  runtime_montgomery_modint63 operator-() const {\n    runtime_montgomery_modint63\
     \ res;\n    res.v_ = (MOD & -(v_ != 0)) - v_;\n    return res;\n  }\n  runtime_montgomery_modint63\
     \ inv() const {\n    i64 x1 = 1, x3 = 0, a = sval(), b = SMOD;\n    while (b !=\
@@ -157,7 +157,7 @@ data:
   isVerificationFile: false
   path: math/integer_factorization.hpp
   requiredBy: []
-  timestamp: '2022-04-26 20:45:46+08:00'
+  timestamp: '2022-05-01 18:25:56+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/factorize.0.test.cpp

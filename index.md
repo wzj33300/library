@@ -46,6 +46,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/truncated_formal_power_series.hpp
       title: Truncated Formal Power Series
+    - icon: ':heavy_check_mark:'
+      path: math/truncated_fourier_transform.hpp
+      title: Truncated Fourier Transform
   - name: modint
     pages:
     - icon: ':heavy_check_mark:'
@@ -96,6 +99,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/convolution_mod.3.test.cpp
       title: remote_test/yosupo/math/convolution_mod.3.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: remote_test/yosupo/math/convolution_mod.4.test.cpp
+      title: remote_test/yosupo/math/convolution_mod.4.test.cpp
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
       title: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
