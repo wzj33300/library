@@ -48,7 +48,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/string/z_algorithm.0.test.cpp
   requiredBy: []
-  timestamp: '2022-05-01 23:42:20+08:00'
+  timestamp: '2022-05-01 23:45:11+08:00'
   verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: remote_test/yosupo/string/z_algorithm.0.test.cpp

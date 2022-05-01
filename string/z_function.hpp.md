@@ -27,7 +27,7 @@ data:
     \ + i - 1;\n    } else if ((z[i] = z[i - l]) >= r - i + 1) {\n      for (zi =\
     \ r - i + 1; zi + i < n && s[zi] == s[zi + i]; ++zi) {}\n      z[i] = zi, l =\
     \ i, r = zi + i - 1;\n    }\n  return z;\n}\n\nLIB_END\n\n\n"
-  code: "#ifndef Z_ALGORITHM_HPP\n#define Z_ALGORITHM_HPP\n\n#include \"../common.hpp\"\
+  code: "#ifndef Z_FUNCTION_HPP\n#define Z_FUNCTION_HPP\n\n#include \"../common.hpp\"\
     \n\n#include <vector>\n\nLIB_BEGIN\n\ntemplate <typename ContainerT>\nstd::vector<int>\
     \ z_function(ContainerT &&s) {\n  const int n = static_cast<int>(s.size());\n\
     \  std::vector<int> z(n, 0);\n  if (n == 0) return z;\n  if ((z[0] = n) == 1)\
@@ -44,7 +44,7 @@ data:
   isVerificationFile: false
   path: string/z_function.hpp
   requiredBy: []
-  timestamp: '2022-05-01 23:42:20+08:00'
+  timestamp: '2022-05-01 23:45:11+08:00'
   verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - remote_test/yosupo/string/z_algorithm.0.test.cpp
