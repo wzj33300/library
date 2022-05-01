@@ -1,19 +1,19 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/relaxed_convolution.hpp
     title: Relaxed Convolution
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
@@ -102,34 +102,35 @@ data:
     \  auto it = dft_a.begin() + n;\n  std::copy_n(dft_a.cbegin(), n, it);\n  idft_n(it,\
     \ n);\n  ModIntT r(n == 1 ? ModIntT(-1) : rt[detail::bsf(n) - 1]), v(1);\n  for\
     \ (int i = 0; i != n; ++i) it[i] *= v, v *= r;\n  dft_n(it, n);\n}\n\nLIB_END\n\
-    \n\n#line 6 \"math/relaxed_convolution.hpp\"\n\n#include <functional>\n#line 10\
-    \ \"math/relaxed_convolution.hpp\"\n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\n\
-    class relaxed_convolution {                       // O(n log^2 n) impl\n  std::vector<ModIntT>\
-    \ a_{}, b_{}, c_{};          // `a_ * b_` = `c_`\n  std::vector<std::vector<ModIntT>>\
-    \ ac_{}, bc_{}; // cached DFTs\n  std::function<ModIntT()> ha_{}, hb_{};     \
-    \     // handle for `a` and `b`\n  int n_{};                                 \
-    \      // counter\n\n  template <typename FnT>\n  static auto wrap(FnT &&f, int\
-    \ &n, const std::vector<ModIntT> &c, std::vector<ModIntT> &e) {\n    if constexpr\
-    \ (std::is_invocable_r_v<ModIntT, FnT, int, const std::vector<ModIntT> &>) {\n\
-    \      return std::bind(\n          [f](int n, const std::vector<ModIntT> &c,\
-    \ std::vector<ModIntT> &e) mutable {\n            return ModIntT(e.emplace_back(f(n,\
-    \ c)));\n          },\n          std::cref(n), std::cref(c), std::ref(e));\n \
-    \   } else if constexpr (std::is_invocable_r_v<ModIntT, FnT, int>) {\n      return\
-    \ std::bind(\n          [f](int n, std::vector<ModIntT> &e) mutable { return ModIntT(e.emplace_back(f(n)));\
-    \ },\n          std::cref(n), std::ref(e));\n    } else if constexpr (std::is_invocable_r_v<ModIntT,\
-    \ FnT>) {\n      return std::bind(\n          [f](std::vector<ModIntT> &e) mutable\
-    \ { return ModIntT(e.emplace_back(f())); },\n          std::ref(e));\n    } else\
+    \n\n#line 6 \"math/relaxed_convolution.hpp\"\n\n#include <functional>\n#line 9\
+    \ \"math/relaxed_convolution.hpp\"\n#include <utility>\n#line 11 \"math/relaxed_convolution.hpp\"\
+    \n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nclass relaxed_convolution {    \
+    \                   // O(n log^2 n) impl\n  std::vector<ModIntT> a_{}, b_{}, c_{};\
+    \          // `a_ * b_` = `c_`\n  std::vector<std::vector<ModIntT>> ac_{}, bc_{};\
+    \ // cached DFTs\n  std::function<ModIntT()> ha_{}, hb_{};          // handle\
+    \ for `a_` and `b_`\n  int n_{};                                       // counter\n\
+    \n  template <typename FnT>\n  static auto wrap(FnT &&f, int &n, const std::vector<ModIntT>\
+    \ &c, std::vector<ModIntT> &e) {\n    if constexpr (std::is_invocable_r_v<ModIntT,\
+    \ FnT, int, const std::vector<ModIntT> &>) {\n      return std::bind(\n      \
+    \    [f](int n, const std::vector<ModIntT> &c, std::vector<ModIntT> &e) mutable\
+    \ {\n            return ModIntT(e.emplace_back(f(n, c)));\n          },\n    \
+    \      std::cref(n), std::cref(c), std::ref(e));\n    } else if constexpr (std::is_invocable_r_v<ModIntT,\
+    \ FnT, int>) {\n      return std::bind(\n          [f](int n, std::vector<ModIntT>\
+    \ &e) mutable { return ModIntT(e.emplace_back(f(n))); },\n          std::cref(n),\
+    \ std::ref(e));\n    } else if constexpr (std::is_invocable_r_v<ModIntT, FnT>)\
+    \ {\n      return std::bind(\n          [f](std::vector<ModIntT> &e) mutable {\
+    \ return ModIntT(e.emplace_back(f())); },\n          std::ref(e));\n    } else\
     \ {\n      throw;\n    }\n  }\n\n  enum : int { BASE_CASE_SIZE = 32 };\n\n  static_assert((BASE_CASE_SIZE\
     \ & (BASE_CASE_SIZE - 1)) == 0);\n\npublic:\n  // `h0` multiplicand, `h1` multiplier\n\
     \  template <typename Fn0T, typename Fn1T>\n  relaxed_convolution(Fn0T &&h0, Fn1T\
-    \ &&h1)\n      : c_(4), ha_(wrap(h0, n_, c_, a_)), hb_(wrap(h1, n_, c_, b_)) {}\n\
-    \  const std::vector<ModIntT> &get_multiplier() const { return b_; }\n  const\
-    \ std::vector<ModIntT> &get_multiplicand() const { return a_; }\n  relaxed_convolution\
-    \ &await(int k) {\n    while (n_ < k) next();\n    return *this;\n  }\n  ModIntT\
-    \ at(int k) {\n    while (n_ <= k) next();\n    return c_[k];\n  }\n  ModIntT\
-    \ operator[](int k) { return at(k); }\n  ModIntT next();\n};\n\ntemplate <typename\
-    \ ModIntT>\nModIntT relaxed_convolution<ModIntT>::next() {\n  {\n    // enlarge\
-    \ space\n    int len = ntt_len(n_ << 1 | 1);\n    if (static_cast<int>(c_.size())\
+    \ &&h1)\n      : c_(4), ha_(wrap(std::forward<Fn0T>(h0), n_, c_, a_)),\n     \
+    \   hb_(wrap(std::forward<Fn1T>(h1), n_, c_, b_)) {}\n  const std::vector<ModIntT>\
+    \ &get_multiplier() const { return b_; }\n  const std::vector<ModIntT> &get_multiplicand()\
+    \ const { return a_; }\n  relaxed_convolution &await(int k) {\n    while (n_ <\
+    \ k) next();\n    return *this;\n  }\n  ModIntT at(int k) {\n    while (n_ <=\
+    \ k) next();\n    return c_[k];\n  }\n  ModIntT operator[](int k) { return at(k);\
+    \ }\n  ModIntT next();\n};\n\ntemplate <typename ModIntT>\nModIntT relaxed_convolution<ModIntT>::next()\
+    \ {\n  {\n    // enlarge space\n    int len = ntt_len(n_ << 1 | 1);\n    if (static_cast<int>(c_.size())\
     \ < len) c_.resize(len);\n  }\n  switch (n_) {\n  case 0: c_[0] = ha_() * hb_();\
     \ break;\n  case 1:\n    c_[1] = ha_() * b_.front() + a_.front() * hb_();\n  \
     \  c_[2] = a_[1] * b_[1];\n    break;\n  case 2:\n    c_[2] += ha_() * b_.front()\
@@ -243,7 +244,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/convolution_mod.3.test.cpp
   requiredBy: []
-  timestamp: '2022-04-25 00:35:22+08:00'
+  timestamp: '2022-05-01 23:18:47+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/convolution_mod.3.test.cpp
