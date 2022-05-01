@@ -97,9 +97,58 @@ data:
     \ntemplate <typename ContainerT>\nvoid tft(ContainerT &&a) {\n  using Container\
     \          = std::remove_cv_t<std::remove_reference_t<ContainerT>>;\n  using T\
     \                  = typename Container::value_type;\n  static constexpr auto\
-    \ rt = detail::root<T>();\n  static std::vector<T> root(1);\n  const int n   =\
-    \ static_cast<int>(a.size());\n  const int len = ntt_len(n);\n  if (int s = static_cast<int>(root.size());\
-    \ s << 1 < len) {\n    root.resize(len >> 1);\n    for (int i = detail::bsf(s),\
+    \ rt = detail::root<T>();\n  static std::vector<T> root(1);\n  const int n = static_cast<int>(a.size());\n\
+    \  if ((n & (n - 1)) == 0) return dft(a);\n  const int len = ntt_len(n);\n  if\
+    \ (int s = static_cast<int>(root.size()); s << 1 < len) {\n    root.resize(len\
+    \ >> 1);\n    for (int i = detail::bsf(s), j; 1 << i < len >> 1; ++i) {\n    \
+    \  root[j = 1 << i] = rt[i];\n      for (int k = j + 1; k < j << 1; ++k) root[k]\
+    \ = root[k - j] * root[j];\n    }\n  }\n  a.resize(len);\n  for (int j = 0, l\
+    \ = len >> 1; j != l; ++j) {\n    T u(a[j]), v(a[j + l]);\n    a[j] = u + v, a[j\
+    \ + l] = u - v;\n  }\n  for (int i = len >> 1; i >= 2; i >>= 1) {\n    for (int\
+    \ j = 0, l = i >> 1; j != l; ++j) {\n      T u(a[j]), v(a[j + l]);\n      a[j]\
+    \ = u + v, a[j + l] = u - v;\n    }\n    for (int j = i, l = i >> 1, m = 1; j\
+    \ < n && j != len; j += i, ++m)\n      for (int k = j; k != j + l; ++k) {\n  \
+    \      T u(a[k]), v(a[k + l] * root[m]);\n        a[k] = u + v, a[k + l] = u -\
+    \ v;\n      }\n  }\n  a.resize(n);\n}\n\ntemplate <typename ContainerT>\nvoid\
+    \ itft(ContainerT &&a) {\n  using Container           = std::remove_cv_t<std::remove_reference_t<ContainerT>>;\n\
+    \  using T                   = typename Container::value_type;\n  static constexpr\
+    \ auto rt  = detail::root<T>();\n  static constexpr auto irt = detail::iroot<T>();\n\
+    \  static std::vector<T> root{T(1)}, iroot{T(1)};\n  const int n = static_cast<int>(a.size());\n\
+    \  if ((n & (n - 1)) == 0) return idft(std::forward<ContainerT>(a));\n  const\
+    \ int len = ntt_len(n);\n  if (int s = static_cast<int>(root.size()); s << 1 <\
+    \ len) {\n    root.resize(len >> 1);\n    iroot.resize(len >> 1);\n    for (int\
+    \ i = detail::bsf(s), j; 1 << i < len >> 1; ++i) {\n      root[j = 1 << i] = rt[i],\
+    \ iroot[j] = irt[i];\n      for (int k = j + 1; k < j << 1; ++k)\n        root[k]\
+    \ = root[k - j] * root[j], iroot[k] = iroot[k - j] * iroot[j];\n    }\n  }\n \
+    \ a.resize(len);\n  struct itft_rec {\n    itft_rec(Container &a) : a_(a), i2_(T(2).inv())\
+    \ {}\n    // [`head`, `tail`), [`tail`, `last`)\n    void run(int head, int tail,\
+    \ int last) {\n      if (head >= tail) return;\n      if (int mid = (last - head)\
+    \ / 2 + head, len = mid - head; mid <= tail) {\n        // pull up [`head`, `mid`)\n\
+    \        T i2p(1);\n        for (int i = 1; i != len; i <<= 1, i2p *= i2_)\n \
+    \         for (int j = head, m = head / (i << 1); j != mid; j += i << 1, ++m)\n\
+    \            for (int k = j; k != j + i; ++k) {\n              T u(a_[k]), v(a_[k\
+    \ + i]);\n              a_[k] = u + v, a_[k + i] = (u - v) * iroot[m];\n     \
+    \       }\n        for (int i = head; i != mid; ++i) a_[i] *= i2p;\n        //\
+    \ push down [`tail`, `last`)\n        T r(root[head / (len << 1)] * 2);\n    \
+    \    for (int i = tail; i != last; ++i) a_[i] = a_[i - len] - a_[i] * r;\n   \
+    \     run(mid, tail, last);\n        // pull up [`head`, `last`)\n        r =\
+    \ iroot[head / (len << 1)] * i2_;\n        for (int i = head; i != mid; ++i) {\n\
+    \          T u(a_[i]), v(a_[i + len]);\n          a_[i] = (u + v) * i2_, a_[i\
+    \ + len] = (u - v) * r;\n        }\n      } else {\n        T r(root[head / (len\
+    \ << 1)]);\n        // push down [`tail`, `mid`)\n        for (int i = tail; i\
+    \ != mid; ++i) a_[i] += a_[i + len] * r;\n        run(head, tail, mid);\n    \
+    \    // pull up [`head`, `mid`)\n        for (int i = head; i != mid; ++i) a_[i]\
+    \ -= a_[i + len] * r;\n      }\n    }\n    Container &a_;\n    const T i2_;\n\
+    \  } rec(a);\n  rec.run(0, n, len);\n  a.resize(n);\n}\n\nLIB_END\n\n\n"
+  code: "#ifndef TRUNCATED_FOURIER_TRANSFORM_HPP\n#define TRUNCATED_FOURIER_TRANSFORM_HPP\n\
+    \n#include \"../common.hpp\"\n#include \"radix2_ntt.hpp\"\n\n#include <type_traits>\n\
+    #include <utility>\n#include <vector>\n\nLIB_BEGIN\n\ntemplate <typename ContainerT>\n\
+    void tft(ContainerT &&a) {\n  using Container          = std::remove_cv_t<std::remove_reference_t<ContainerT>>;\n\
+    \  using T                  = typename Container::value_type;\n  static constexpr\
+    \ auto rt = detail::root<T>();\n  static std::vector<T> root(1);\n  const int\
+    \ n = static_cast<int>(a.size());\n  if ((n & (n - 1)) == 0) return dft(a);\n\
+    \  const int len = ntt_len(n);\n  if (int s = static_cast<int>(root.size()); s\
+    \ << 1 < len) {\n    root.resize(len >> 1);\n    for (int i = detail::bsf(s),\
     \ j; 1 << i < len >> 1; ++i) {\n      root[j = 1 << i] = rt[i];\n      for (int\
     \ k = j + 1; k < j << 1; ++k) root[k] = root[k - j] * root[j];\n    }\n  }\n \
     \ a.resize(len);\n  for (int j = 0, l = len >> 1; j != l; ++j) {\n    T u(a[j]),\
@@ -139,54 +188,6 @@ data:
     \ != mid; ++i) a_[i] += a_[i + len] * r;\n        run(head, tail, mid);\n    \
     \    // pull up [`head`, `mid`)\n        for (int i = head; i != mid; ++i) a_[i]\
     \ -= a_[i + len] * r;\n      }\n    }\n    Container &a_;\n    const T i2_;\n\
-    \  } rec(a);\n  rec.run(0, n, len);\n  a.resize(n);\n}\n\nLIB_END\n\n\n"
-  code: "#ifndef TRUNCATED_FOURIER_TRANSFORM_HPP\n#define TRUNCATED_FOURIER_TRANSFORM_HPP\n\
-    \n#include \"../common.hpp\"\n#include \"radix2_ntt.hpp\"\n\n#include <type_traits>\n\
-    #include <utility>\n#include <vector>\n\nLIB_BEGIN\n\ntemplate <typename ContainerT>\n\
-    void tft(ContainerT &&a) {\n  using Container          = std::remove_cv_t<std::remove_reference_t<ContainerT>>;\n\
-    \  using T                  = typename Container::value_type;\n  static constexpr\
-    \ auto rt = detail::root<T>();\n  static std::vector<T> root(1);\n  const int\
-    \ n   = static_cast<int>(a.size());\n  const int len = ntt_len(n);\n  if (int\
-    \ s = static_cast<int>(root.size()); s << 1 < len) {\n    root.resize(len >> 1);\n\
-    \    for (int i = detail::bsf(s), j; 1 << i < len >> 1; ++i) {\n      root[j =\
-    \ 1 << i] = rt[i];\n      for (int k = j + 1; k < j << 1; ++k) root[k] = root[k\
-    \ - j] * root[j];\n    }\n  }\n  a.resize(len);\n  for (int j = 0, l = len >>\
-    \ 1; j != l; ++j) {\n    T u(a[j]), v(a[j + l]);\n    a[j] = u + v, a[j + l] =\
-    \ u - v;\n  }\n  for (int i = len >> 1; i >= 2; i >>= 1) {\n    for (int j = 0,\
-    \ l = i >> 1; j != l; ++j) {\n      T u(a[j]), v(a[j + l]);\n      a[j] = u +\
-    \ v, a[j + l] = u - v;\n    }\n    for (int j = i, l = i >> 1, m = 1; j < n &&\
-    \ j != len; j += i, ++m)\n      for (int k = j; k != j + l; ++k) {\n        T\
-    \ u(a[k]), v(a[k + l] * root[m]);\n        a[k] = u + v, a[k + l] = u - v;\n \
-    \     }\n  }\n  a.resize(n);\n}\n\ntemplate <typename ContainerT>\nvoid itft(ContainerT\
-    \ &&a) {\n  using Container           = std::remove_cv_t<std::remove_reference_t<ContainerT>>;\n\
-    \  using T                   = typename Container::value_type;\n  static constexpr\
-    \ auto rt  = detail::root<T>();\n  static constexpr auto irt = detail::iroot<T>();\n\
-    \  static std::vector<T> root{T(1)}, iroot{T(1)};\n  const int n = static_cast<int>(a.size());\n\
-    \  if ((n & (n - 1)) == 0) return idft(std::forward<ContainerT>(a));\n  const\
-    \ int len = ntt_len(n);\n  if (int s = static_cast<int>(root.size()); s << 1 <\
-    \ len) {\n    root.resize(len >> 1);\n    iroot.resize(len >> 1);\n    for (int\
-    \ i = detail::bsf(s), j; 1 << i < len >> 1; ++i) {\n      root[j = 1 << i] = rt[i],\
-    \ iroot[j] = irt[i];\n      for (int k = j + 1; k < j << 1; ++k)\n        root[k]\
-    \ = root[k - j] * root[j], iroot[k] = iroot[k - j] * iroot[j];\n    }\n  }\n \
-    \ a.resize(len);\n  struct itft_rec {\n    itft_rec(Container &a) : a_(a), i2_(T(2).inv())\
-    \ {}\n    // [`head`, `tail`), [`tail`, `last`)\n    void run(int head, int tail,\
-    \ int last) {\n      if (head >= tail) return;\n      if (int mid = (last - head)\
-    \ / 2 + head, len = mid - head; mid <= tail) {\n        // pull up [`head`, `mid`)\n\
-    \        T i2p(1);\n        for (int i = 1; i != len; i <<= 1, i2p *= i2_)\n \
-    \         for (int j = head, m = head / (i << 1); j != mid; j += i << 1, ++m)\n\
-    \            for (int k = j; k != j + i; ++k) {\n              T u(a_[k]), v(a_[k\
-    \ + i]);\n              a_[k] = u + v, a_[k + i] = (u - v) * iroot[m];\n     \
-    \       }\n        for (int i = head; i != mid; ++i) a_[i] *= i2p;\n        //\
-    \ push down [`tail`, `last`)\n        T r(root[head / (len << 1)] * 2);\n    \
-    \    for (int i = tail; i != last; ++i) a_[i] = a_[i - len] - a_[i] * r;\n   \
-    \     run(mid, tail, last);\n        // pull up [`head`, `last`)\n        r =\
-    \ iroot[head / (len << 1)] * i2_;\n        for (int i = head; i != mid; ++i) {\n\
-    \          T u(a_[i]), v(a_[i + len]);\n          a_[i] = (u + v) * i2_, a_[i\
-    \ + len] = (u - v) * r;\n        }\n      } else {\n        T r(root[head / (len\
-    \ << 1)]);\n        // push down [`tail`, `mid`)\n        for (int i = tail; i\
-    \ != mid; ++i) a_[i] += a_[i + len] * r;\n        run(head, tail, mid);\n    \
-    \    // pull up [`head`, `mid`)\n        for (int i = head; i != mid; ++i) a_[i]\
-    \ -= a_[i + len] * r;\n      }\n    }\n    Container &a_;\n    const T i2_;\n\
     \  } rec(a);\n  rec.run(0, n, len);\n  a.resize(n);\n}\n\nLIB_END\n\n#endif"
   dependsOn:
   - common.hpp
@@ -194,7 +195,7 @@ data:
   isVerificationFile: false
   path: math/truncated_fourier_transform.hpp
   requiredBy: []
-  timestamp: '2022-05-01 18:34:19+08:00'
+  timestamp: '2022-05-01 18:42:34+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod.4.test.cpp
