@@ -63,6 +63,11 @@ data:
     - icon: ':heavy_check_mark:'
       path: modint/runtime_montgomery_modint.hpp
       title: Runtime Montgomery ModInt
+  - name: string
+    pages:
+    - icon: ':x:'
+      path: string/z_function.hpp
+      title: Z Function
   verificationCategories:
   - name: remote_test/aizu/datastructure
     pages:
@@ -123,16 +128,16 @@ data:
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
       title: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
       title: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
       title: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/partition_function.0.test.cpp
       title: remote_test/yosupo/math/partition_function.0.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
       title: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
     - icon: ':heavy_check_mark:'
@@ -147,6 +152,11 @@ data:
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
       title: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
+  - name: remote_test/yosupo/string
+    pages:
+    - icon: ':x:'
+      path: remote_test/yosupo/string/z_algorithm.0.test.cpp
+      title: remote_test/yosupo/string/z_algorithm.0.test.cpp
 layout: toppage
 ---
 [![License](https://img.shields.io/github/license/hly1204/library)](https://github.com/hly1204/library/blob/master/LICENSE) ![Standard](https://img.shields.io/badge/C%2B%2B-17-green)

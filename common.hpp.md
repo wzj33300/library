@@ -59,6 +59,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: modint/runtime_montgomery_modint.hpp
     title: Runtime Montgomery ModInt
+  - icon: ':x:'
+    path: string/z_function.hpp
+    title: Z Function
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: remote_test/aizu/datastructure/weighted_union_find.0.test.cpp
@@ -147,10 +150,10 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
     title: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
   - icon: ':heavy_check_mark:'
@@ -159,16 +162,16 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
     title: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/partition_function.0.test.cpp
     title: remote_test/yosupo/math/partition_function.0.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/partition_function.0.test.cpp
     title: remote_test/yosupo/math/partition_function.0.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
   - icon: ':heavy_check_mark:'
@@ -195,6 +198,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
+  - icon: ':x:'
+    path: remote_test/yosupo/string/z_algorithm.0.test.cpp
+    title: remote_test/yosupo/string/z_algorithm.0.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
   _verificationStatusIcon: ':question:'
@@ -256,6 +262,7 @@ data:
   - modint/montgomery_modint.hpp
   - modint/runtime_montgomery_modint.hpp
   - modint/runtime_long_montgomery_modint.hpp
+  - string/z_function.hpp
   timestamp: '2022-04-20 11:49:11+08:00'
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
@@ -304,6 +311,7 @@ data:
   - remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
   - remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/string/z_algorithm.0.test.cpp
 documentation_of: common.hpp
 layout: document
 redirect_from:
