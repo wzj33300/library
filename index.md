@@ -46,6 +46,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/semi_relaxed_convolution.hpp
       title: Semi-Relaxed Convolution
+    - icon: ':warning:'
+      path: math/shift_sample_points_single.hpp
+      title: Shift Sample Points (Single)
     - icon: ':heavy_check_mark:'
       path: math/sqrt_mod.hpp
       title: Square Roots in Finite Fields
