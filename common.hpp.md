@@ -20,7 +20,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/czt.hpp
     title: Chirp Z-transform (Bluestein's algorithm)
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm
   - icon: ':heavy_check_mark:'
@@ -35,28 +35,28 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/polynomial.hpp
     title: Polynomial
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
   - icon: ':heavy_check_mark:'
     path: math/relaxed_convolution.hpp
     title: Relaxed Convolution
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/sqrt_mod.hpp
     title: Square Roots in Finite Fields
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/truncated_fourier_transform.hpp
     title: Truncated Fourier Transform
   - icon: ':heavy_check_mark:'
     path: modint/long_montgomery_modint.hpp
     title: Long Montgomery ModInt
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   - icon: ':heavy_check_mark:'
@@ -75,9 +75,6 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/aizu/number_theory/binary_pow.0.test.cpp
     title: remote_test/aizu/number_theory/binary_pow.0.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: remote_test/aizu/number_theory/extended_Euclidean_algorithm.0.test.cpp
-    title: remote_test/aizu/number_theory/extended_Euclidean_algorithm.0.test.cpp
   - icon: ':heavy_check_mark:'
     path: remote_test/aizu/number_theory/extended_euclidean_algorithm.0.test.cpp
     title: remote_test/aizu/number_theory/extended_euclidean_algorithm.0.test.cpp
@@ -201,18 +198,18 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/sqrt_mod.0.test.cpp
     title: remote_test/yosupo/math/sqrt_mod.0.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/string/z_algorithm.0.test.cpp
     title: remote_test/yosupo/string/z_algorithm.0.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: '#line 1 "common.hpp"
@@ -275,11 +272,10 @@ data:
   - modint/runtime_long_montgomery_modint.hpp
   - string/z_function.hpp
   timestamp: '2022-04-20 11:49:11+08:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/aizu/number_theory/extended_euclidean_algorithm.0.test.cpp
   - remote_test/aizu/number_theory/binary_pow.0.test.cpp
-  - remote_test/aizu/number_theory/extended_Euclidean_algorithm.0.test.cpp
   - remote_test/aizu/datastructure/weighted_union_find.0.test.cpp
   - remote_test/yosupo/datastructure/union_find.0.test.cpp
   - remote_test/yosupo/datastructure/cartesian_tree.0.test.cpp

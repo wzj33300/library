@@ -3,7 +3,7 @@ data:
   libraryCategories:
   - name: .
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: common.hpp
       title: common.hpp
   - name: datastructure
@@ -25,7 +25,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/czt.hpp
       title: Chirp Z-transform (Bluestein's algorithm)
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/extended_gcd.hpp
       title: Extended Euclidean Algorithm
     - icon: ':heavy_check_mark:'
@@ -37,22 +37,22 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/polynomial.hpp
       title: Polynomial
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/radix2_ntt.hpp
       title: Radix-2 NTT
     - icon: ':heavy_check_mark:'
       path: math/relaxed_convolution.hpp
       title: Relaxed Convolution
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/semi_relaxed_convolution.hpp
       title: Semi-Relaxed Convolution
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/sqrt_mod.hpp
       title: Square Roots in Finite Fields
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/truncated_formal_power_series.hpp
       title: Truncated Formal Power Series
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/truncated_fourier_transform.hpp
       title: Truncated Fourier Transform
   - name: modint
@@ -60,7 +60,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: modint/long_montgomery_modint.hpp
       title: Long Montgomery ModInt
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: modint/montgomery_modint.hpp
       title: Montgomery ModInt
     - icon: ':heavy_check_mark:'
@@ -85,9 +85,6 @@ data:
     - icon: ':heavy_check_mark:'
       path: remote_test/aizu/number_theory/binary_pow.0.test.cpp
       title: remote_test/aizu/number_theory/binary_pow.0.test.cpp
-    - icon: ':heavy_check_mark:'
-      path: remote_test/aizu/number_theory/extended_Euclidean_algorithm.0.test.cpp
-      title: remote_test/aizu/number_theory/extended_Euclidean_algorithm.0.test.cpp
     - icon: ':heavy_check_mark:'
       path: remote_test/aizu/number_theory/extended_euclidean_algorithm.0.test.cpp
       title: remote_test/aizu/number_theory/extended_euclidean_algorithm.0.test.cpp
@@ -158,7 +155,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/sqrt_mod.0.test.cpp
       title: remote_test/yosupo/math/sqrt_mod.0.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
       title: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
   - name: remote_test/yosupo/string
