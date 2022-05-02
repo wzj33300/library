@@ -1,13 +1,13 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
   - icon: ':heavy_check_mark:'
@@ -378,3 +378,7 @@ documentation_of: math/formal_power_series.hpp
 layout: document
 title: Formal Power Series
 ---
+
+I got wrong answer when I was testing my library locally. Check [Wandbox](https://wandbox.org/permlink/smgnVZ0lcZvk6ZYJ). It seems okay when compiling with Clang.
+
+The reason I found was the lambda expression in `main` function, but I don't know why.

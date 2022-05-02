@@ -3,7 +3,7 @@ data:
   libraryCategories:
   - name: .
     pages:
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: common.hpp
       title: common.hpp
   - name: datastructure
@@ -25,7 +25,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/czt.hpp
       title: Chirp Z-transform (Bluestein's algorithm)
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/extended_gcd.hpp
       title: Extended Euclidean Algorithm
     - icon: ':heavy_check_mark:'
@@ -35,21 +35,24 @@ data:
       path: math/integer_factorization.hpp
       title: Integer Factorization (Pollard's rho algorithm)
     - icon: ':heavy_check_mark:'
+      path: math/polynomial.hpp
+      title: Polynomial
+    - icon: ':question:'
       path: math/radix2_ntt.hpp
       title: Radix-2 NTT
     - icon: ':heavy_check_mark:'
       path: math/relaxed_convolution.hpp
       title: Relaxed Convolution
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/semi_relaxed_convolution.hpp
       title: Semi-Relaxed Convolution
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/sqrt_mod.hpp
       title: Square Roots in Finite Fields
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/truncated_formal_power_series.hpp
       title: Truncated Formal Power Series
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/truncated_fourier_transform.hpp
       title: Truncated Fourier Transform
   - name: modint
@@ -57,7 +60,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: modint/long_montgomery_modint.hpp
       title: Long Montgomery ModInt
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: modint/montgomery_modint.hpp
       title: Montgomery ModInt
     - icon: ':heavy_check_mark:'
@@ -111,11 +114,11 @@ data:
       path: remote_test/yosupo/math/convolution_mod.3.test.cpp
       title: remote_test/yosupo/math/convolution_mod.3.test.cpp
     - icon: ':heavy_check_mark:'
-      path: remote_test/yosupo/math/convolution_mod.4.test.cpp
-      title: remote_test/yosupo/math/convolution_mod.4.test.cpp
-    - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
       title: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: remote_test/yosupo/math/division_of_polynomials.0.test.cpp
+      title: remote_test/yosupo/math/division_of_polynomials.0.test.cpp
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
       title: remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
@@ -155,7 +158,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/sqrt_mod.0.test.cpp
       title: remote_test/yosupo/math/sqrt_mod.0.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
       title: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
   - name: remote_test/yosupo/string

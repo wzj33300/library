@@ -20,7 +20,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/czt.hpp
     title: Chirp Z-transform (Bluestein's algorithm)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm
   - icon: ':heavy_check_mark:'
@@ -33,27 +33,30 @@ data:
     path: math/integer_factorization.hpp
     title: Integer Factorization (Pollard's rho algorithm)
   - icon: ':heavy_check_mark:'
+    path: math/polynomial.hpp
+    title: Polynomial
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT
   - icon: ':heavy_check_mark:'
     path: math/relaxed_convolution.hpp
     title: Relaxed Convolution
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/sqrt_mod.hpp
     title: Square Roots in Finite Fields
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_fourier_transform.hpp
     title: Truncated Fourier Transform
   - icon: ':heavy_check_mark:'
     path: modint/long_montgomery_modint.hpp
     title: Long Montgomery ModInt
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   - icon: ':heavy_check_mark:'
@@ -109,17 +112,17 @@ data:
     path: remote_test/yosupo/math/convolution_mod.3.test.cpp
     title: remote_test/yosupo/math/convolution_mod.3.test.cpp
   - icon: ':heavy_check_mark:'
-    path: remote_test/yosupo/math/convolution_mod.4.test.cpp
-    title: remote_test/yosupo/math/convolution_mod.4.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: remote_test/yosupo/math/convolution_mod.4.test.cpp
-    title: remote_test/yosupo/math/convolution_mod.4.test.cpp
-  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
     title: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
     title: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/division_of_polynomials.0.test.cpp
+    title: remote_test/yosupo/math/division_of_polynomials.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/division_of_polynomials.0.test.cpp
+    title: remote_test/yosupo/math/division_of_polynomials.0.test.cpp
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
@@ -198,18 +201,18 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/sqrt_mod.0.test.cpp
     title: remote_test/yosupo/math/sqrt_mod.0.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/string/z_algorithm.0.test.cpp
     title: remote_test/yosupo/string/z_algorithm.0.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: '#line 1 "common.hpp"
@@ -256,6 +259,7 @@ data:
   - math/formal_power_series.hpp
   - math/relaxed_convolution.hpp
   - math/semi_relaxed_convolution.hpp
+  - math/polynomial.hpp
   - math/convolution.hpp
   - math/convolution.hpp
   - math/radix2_ntt.hpp
@@ -271,7 +275,7 @@ data:
   - modint/runtime_long_montgomery_modint.hpp
   - string/z_function.hpp
   timestamp: '2022-04-20 11:49:11+08:00'
-  verificationStatus: LIBRARY_ALL_AC
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - remote_test/aizu/number_theory/extended_euclidean_algorithm.0.test.cpp
   - remote_test/aizu/number_theory/binary_pow.0.test.cpp
@@ -303,10 +307,10 @@ data:
   - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
   - remote_test/yosupo/math/sqrt_mod.0.test.cpp
   - remote_test/yosupo/math/sqrt_mod.0.test.cpp
+  - remote_test/yosupo/math/division_of_polynomials.0.test.cpp
+  - remote_test/yosupo/math/division_of_polynomials.0.test.cpp
   - remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
   - remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
-  - remote_test/yosupo/math/convolution_mod.4.test.cpp
-  - remote_test/yosupo/math/convolution_mod.4.test.cpp
   - remote_test/yosupo/math/factorize.0.test.cpp
   - remote_test/yosupo/math/factorize.0.test.cpp
   - remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
