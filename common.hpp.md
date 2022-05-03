@@ -38,6 +38,10 @@ data:
     path: math/integer_factorization.hpp
     title: Integer Factorization (Pollard's rho algorithm) (in $\mathbb{Z}$)
   - icon: ':heavy_check_mark:'
+    path: math/multivariate_convolution.hpp
+    title: Multivariate Convolution (in $\mathbb{F} _ p \lbrack z_1, \dots, z_d \rbrack
+      \left/ \left( z_1^{l_1}, \dots, z_d^{l_d} \right)\right.$ for FFT prime $p$)
+  - icon: ':heavy_check_mark:'
     path: math/polynomial.hpp
     title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
@@ -63,7 +67,8 @@ data:
       \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/truncated_fourier_transform.hpp
-    title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$)
+    title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$ for
+      FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: modint/long_montgomery_modint.hpp
     title: Long Montgomery ModInt
@@ -180,6 +185,12 @@ data:
     path: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
     title: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
   - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/multivariate_convolution.0.test.cpp
+    title: remote_test/yosupo/math/multivariate_convolution.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/multivariate_convolution.0.test.cpp
+    title: remote_test/yosupo/math/multivariate_convolution.0.test.cpp
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/partition_function.0.test.cpp
     title: remote_test/yosupo/math/partition_function.0.test.cpp
   - icon: ':heavy_check_mark:'
@@ -269,6 +280,7 @@ data:
   - math/formal_power_series.hpp
   - math/relaxed_convolution.hpp
   - math/semi_relaxed_convolution.hpp
+  - math/multivariate_convolution.hpp
   - math/polynomial.hpp
   - math/convolution.hpp
   - math/radix2_ntt.hpp
@@ -314,6 +326,8 @@ data:
   - remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
+  - remote_test/yosupo/math/multivariate_convolution.0.test.cpp
+  - remote_test/yosupo/math/multivariate_convolution.0.test.cpp
   - remote_test/yosupo/math/sqrt_mod.0.test.cpp
   - remote_test/yosupo/math/sqrt_mod.0.test.cpp
   - remote_test/yosupo/math/division_of_polynomials.0.test.cpp

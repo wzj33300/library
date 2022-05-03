@@ -23,7 +23,8 @@ data:
       \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/truncated_fourier_transform.hpp
-    title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$)
+    title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$ for
+      FFT prime $p$)
   _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'

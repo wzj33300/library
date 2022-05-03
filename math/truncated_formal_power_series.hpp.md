@@ -19,7 +19,8 @@ data:
     title: Square Roots (in $\mathbb{F} _ p$)
   - icon: ':heavy_check_mark:'
     path: math/truncated_fourier_transform.hpp
-    title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$)
+    title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$ for
+      FFT prime $p$)
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
     path: math/polynomial.hpp

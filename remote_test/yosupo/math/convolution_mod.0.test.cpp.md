@@ -15,7 +15,8 @@ data:
     title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/truncated_fourier_transform.hpp
-    title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$)
+    title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$ for
+      FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
