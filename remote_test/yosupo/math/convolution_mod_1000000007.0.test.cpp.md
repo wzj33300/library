@@ -9,16 +9,16 @@ data:
     title: common.hpp
   - icon: ':heavy_check_mark:'
     path: math/convolution.hpp
-    title: Convolution
+    title: Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$)
+  - icon: ':heavy_check_mark:'
+    path: math/convolution_mod.hpp
+    title: Convolution (in $\mathbb{Z} m / \mathbb{Z} \lbrack z \rbrack$)
   - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
-    title: Radix-2 NTT
+    title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/truncated_fourier_transform.hpp
-    title: Truncated Fourier Transform
-  - icon: ':heavy_check_mark:'
-    path: modint/long_montgomery_modint.hpp
-    title: Long Montgomery ModInt
+    title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$)
   - icon: ':heavy_check_mark:'
     path: modint/long_montgomery_modint.hpp
     title: Long Montgomery ModInt
@@ -34,10 +34,10 @@ data:
     - https://judge.yosupo.jp/problem/convolution_mod_1000000007
   bundledCode: "#line 1 \"remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp\"\
     \n#define PROBLEM \"https://judge.yosupo.jp/problem/convolution_mod_1000000007\"\
-    \n\n#line 1 \"math/convolution.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\n#define\
-    \ LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END }\n#define LIB\
-    \ ::lib::\n\n\n#line 1 \"modint/long_montgomery_modint.hpp\"\n\n\n\n#line 5 \"\
-    modint/long_montgomery_modint.hpp\"\n\n#ifdef LIB_DEBUG\n  #include <stdexcept>\n\
+    \n\n#line 1 \"math/convolution_mod.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\n\
+    #define LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END }\n#define\
+    \ LIB ::lib::\n\n\n#line 1 \"modint/long_montgomery_modint.hpp\"\n\n\n\n#line\
+    \ 5 \"modint/long_montgomery_modint.hpp\"\n\n#ifdef LIB_DEBUG\n  #include <stdexcept>\n\
     #endif\n#include <cstdint>\n#include <iostream>\n#include <type_traits>\n\nLIB_BEGIN\n\
     \ntemplate <std::uint64_t ModT>\nclass montgomery_modint63 {\n  using u32 = std::uint32_t;\n\
     \  using i64 = std::int64_t;\n  using u64 = std::uint64_t;\n\n  u64 v_{};\n\n\
@@ -99,22 +99,22 @@ data:
     \    return is;\n  }\n  friend std::ostream &operator<<(std::ostream &os, const\
     \ montgomery_modint63 &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate\
     \ <std::uint64_t ModT>\nusing mm63 = montgomery_modint63<ModT>;\n\nLIB_END\n\n\
-    \n#line 1 \"math/truncated_fourier_transform.hpp\"\n\n\n\n#line 1 \"math/radix2_ntt.hpp\"\
-    \n\n\n\n#line 5 \"math/radix2_ntt.hpp\"\n\n#include <algorithm>\n#include <array>\n\
-    #include <cassert>\n#line 10 \"math/radix2_ntt.hpp\"\n#include <vector>\n\nLIB_BEGIN\n\
-    \nnamespace detail {\n\ntemplate <typename IntT>\nconstexpr std::enable_if_t<std::is_integral_v<IntT>,\
-    \ int> bsf(IntT v) {\n  if (static_cast<std::make_signed_t<IntT>>(v) <= 0) return\
-    \ -1;\n  int res = 0;\n  for (; (v & 1) == 0; ++res) v >>= 1;\n  return res;\n\
-    }\n\ntemplate <typename ModIntT>\nconstexpr ModIntT quadratic_nonresidue_prime()\
-    \ {\n  auto mod = ModIntT::mod();\n  for (int i = 2;; ++i)\n    if (ModIntT(i).pow(mod\
-    \ >> 1) == mod - 1) return ModIntT(i);\n}\n\ntemplate <typename ModIntT>\nconstexpr\
-    \ ModIntT gen_of_sylow_2_subgroup() {\n  auto mod = ModIntT::mod();\n  return\
-    \ quadratic_nonresidue_prime<ModIntT>().pow(mod >> bsf(mod - 1));\n}\n\ntemplate\
-    \ <typename ModIntT>\nconstexpr std::array<ModIntT, bsf(ModIntT::mod() - 1) -\
-    \ 1> root() {\n  std::array<ModIntT, bsf(ModIntT::mod() - 1) - 1> rt; // order(`rt[i]`)\
-    \ = 2^(i + 2).\n  rt.back() = gen_of_sylow_2_subgroup<ModIntT>();\n  for (int\
-    \ i = bsf(ModIntT::mod() - 1) - 3; i >= 0; --i) rt[i] = rt[i + 1] * rt[i + 1];\n\
-    \  return rt;\n}\n\ntemplate <typename ModIntT>\nconstexpr std::array<ModIntT,\
+    \n#line 1 \"math/convolution.hpp\"\n\n\n\n#line 1 \"math/truncated_fourier_transform.hpp\"\
+    \n\n\n\n#line 1 \"math/radix2_ntt.hpp\"\n\n\n\n#line 5 \"math/radix2_ntt.hpp\"\
+    \n\n#include <algorithm>\n#include <array>\n#include <cassert>\n#line 10 \"math/radix2_ntt.hpp\"\
+    \n#include <vector>\n\nLIB_BEGIN\n\nnamespace detail {\n\ntemplate <typename IntT>\n\
+    constexpr std::enable_if_t<std::is_integral_v<IntT>, int> bsf(IntT v) {\n  if\
+    \ (static_cast<std::make_signed_t<IntT>>(v) <= 0) return -1;\n  int res = 0;\n\
+    \  for (; (v & 1) == 0; ++res) v >>= 1;\n  return res;\n}\n\ntemplate <typename\
+    \ ModIntT>\nconstexpr ModIntT quadratic_nonresidue_prime() {\n  auto mod = ModIntT::mod();\n\
+    \  for (int i = 2;; ++i)\n    if (ModIntT(i).pow(mod >> 1) == mod - 1) return\
+    \ ModIntT(i);\n}\n\ntemplate <typename ModIntT>\nconstexpr ModIntT gen_of_sylow_2_subgroup()\
+    \ {\n  auto mod = ModIntT::mod();\n  return quadratic_nonresidue_prime<ModIntT>().pow(mod\
+    \ >> bsf(mod - 1));\n}\n\ntemplate <typename ModIntT>\nconstexpr std::array<ModIntT,\
+    \ bsf(ModIntT::mod() - 1) - 1> root() {\n  std::array<ModIntT, bsf(ModIntT::mod()\
+    \ - 1) - 1> rt; // order(`rt[i]`) = 2^(i + 2).\n  rt.back() = gen_of_sylow_2_subgroup<ModIntT>();\n\
+    \  for (int i = bsf(ModIntT::mod() - 1) - 3; i >= 0; --i) rt[i] = rt[i + 1] *\
+    \ rt[i + 1];\n  return rt;\n}\n\ntemplate <typename ModIntT>\nconstexpr std::array<ModIntT,\
     \ bsf(ModIntT::mod() - 1) - 1> iroot() {\n  std::array<ModIntT, bsf(ModIntT::mod()\
     \ - 1) - 1> irt;\n  irt.back() = gen_of_sylow_2_subgroup<ModIntT>().inv();\n \
     \ for (int i = bsf(ModIntT::mod() - 1) - 3; i >= 0; --i) irt[i] = irt[i + 1] *\
@@ -219,9 +219,9 @@ data:
     \ != mid; ++i) a_[i] += a_[i + len] * r;\n        run(head, tail, mid);\n    \
     \    // pull up [`head`, `mid`)\n        for (int i = head; i != mid; ++i) a_[i]\
     \ -= a_[i + len] * r;\n      }\n    }\n    Container &a_;\n    const T i2_;\n\
-    \  } rec(a);\n  rec.run(0, n, len);\n  a.resize(n);\n}\n\nLIB_END\n\n\n#line 7\
-    \ \"math/convolution.hpp\"\n\n#line 12 \"math/convolution.hpp\"\n\nLIB_BEGIN\n\
-    \ntemplate <typename ModIntT>\nstd::vector<ModIntT> convolution(const std::vector<ModIntT>\
+    \  } rec(a);\n  rec.run(0, n, len);\n  a.resize(n);\n}\n\nLIB_END\n\n\n#line 6\
+    \ \"math/convolution.hpp\"\n\n#line 9 \"math/convolution.hpp\"\n\nLIB_BEGIN\n\n\
+    template <typename ModIntT>\nstd::vector<ModIntT> convolution(const std::vector<ModIntT>\
     \ &lhs, const std::vector<ModIntT> &rhs) {\n  int n = static_cast<int>(lhs.size()),\
     \ m = static_cast<int>(rhs.size());\n  if (n == 0 || m == 0) return {};\n  if\
     \ (std::min(n, m) <= 32) {\n    std::vector<ModIntT> res(n + m - 1);\n    for\
@@ -230,11 +230,12 @@ data:
     \ lhs_cpy(len), rhs_cpy(len);\n  std::copy_n(lhs.cbegin(), n, lhs_cpy.begin());\n\
     \  std::copy_n(rhs.cbegin(), m, rhs_cpy.begin());\n  tft(lhs_cpy), tft(rhs_cpy);\n\
     \  for (int i = 0; i != len; ++i) lhs_cpy[i] *= rhs_cpy[i];\n  itft(lhs_cpy);\n\
-    \  return lhs_cpy;\n}\n\ntemplate <typename IntT>\nstd::enable_if_t<std::is_integral_v<IntT>\
-    \ && sizeof(IntT) <= sizeof(std::int32_t),\n                 std::vector<IntT>>\n\
-    convolution_mod(const std::vector<IntT> &lhs, const std::vector<IntT> &rhs, const\
-    \ IntT modular) {\n  using mint0 = mm63<0x3F9A000000000001>;\n  using mint1 =\
-    \ mm63<0x3FC6000000000001>;\n  auto res0   = convolution(std::vector<mint0>(lhs.begin(),\
+    \  return lhs_cpy;\n}\n\nLIB_END\n\n\n#line 7 \"math/convolution_mod.hpp\"\n\n\
+    #line 11 \"math/convolution_mod.hpp\"\n\nLIB_BEGIN\n\ntemplate <typename IntT>\n\
+    std::enable_if_t<std::is_integral_v<IntT> && sizeof(IntT) <= sizeof(std::int32_t),\n\
+    \                 std::vector<IntT>>\nconvolution_mod(const std::vector<IntT>\
+    \ &lhs, const std::vector<IntT> &rhs, const IntT modular) {\n  using mint0 = mm63<0x3F9A000000000001>;\n\
+    \  using mint1 = mm63<0x3FC6000000000001>;\n  auto res0   = convolution(std::vector<mint0>(lhs.begin(),\
     \ lhs.end()),\n                          std::vector<mint0>(rhs.begin(), rhs.end()));\n\
     \  auto res1   = convolution(std::vector<mint1>(lhs.begin(), lhs.end()),\n   \
     \                       std::vector<mint1>(rhs.begin(), rhs.end()));\n  const\
@@ -244,10 +245,11 @@ data:
     \ mint0 im1_mod_m0(mint0(mint1::mod()).inv());\n  const IntT m1_mod_modular =\
     \ mint1::mod() % modular;\n  for (int i = 0; i != n; ++i) {\n    mint0 k1((res0[i]\
     \ - res1[i].val()) * im1_mod_m0);\n    res[i] = (k1.val() % modular * m1_mod_modular\
-    \ + res1[i].val()) % modular;\n  }\n  return res;\n}\n\nLIB_END\n\n\n#line 5 \"\
-    remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp\"\n\n#line 7 \"\
+    \ + res1[i].val()) % modular;\n  }\n  return res;\n}\n\nLIB_END\n\n\n#line 4 \"\
+    remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp\"\n\n#line 6 \"\
     remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp\"\n#include <iterator>\n\
-    \nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"\
+    #line 8 \"remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp\"\n\n\
+    int main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"\
     out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
     \  int n, m;\n  std::cin >> n >> m;\n  std::vector<int> a, b;\n  std::copy_n(std::istream_iterator<int>(std::cin),\
     \ n, std::back_inserter(a));\n  std::copy_n(std::istream_iterator<int>(std::cin),\
@@ -255,27 +257,26 @@ data:
     \  std::copy(ab.begin(), ab.end(), std::ostream_iterator<int>(std::cout, \" \"\
     ));\n  return 0;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/convolution_mod_1000000007\"\
-    \n\n#include \"math/convolution.hpp\"\n#include \"modint/long_montgomery_modint.hpp\"\
-    \n\n#include <iostream>\n#include <iterator>\n\nint main() {\n#ifdef LOCAL\n \
-    \ std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n\
-    #endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n  int n,\
-    \ m;\n  std::cin >> n >> m;\n  std::vector<int> a, b;\n  std::copy_n(std::istream_iterator<int>(std::cin),\
-    \ n, std::back_inserter(a));\n  std::copy_n(std::istream_iterator<int>(std::cin),\
-    \ m, std::back_inserter(b));\n  auto ab = lib::convolution_mod(a, b, 1000000007);\n\
-    \  std::copy(ab.begin(), ab.end(), std::ostream_iterator<int>(std::cout, \" \"\
-    ));\n  return 0;\n}"
+    \n\n#include \"math/convolution_mod.hpp\"\n\n#include <iostream>\n#include <iterator>\n\
+    #include <vector>\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\"\
+    , stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
+    \  std::cin.tie(nullptr);\n  int n, m;\n  std::cin >> n >> m;\n  std::vector<int>\
+    \ a, b;\n  std::copy_n(std::istream_iterator<int>(std::cin), n, std::back_inserter(a));\n\
+    \  std::copy_n(std::istream_iterator<int>(std::cin), m, std::back_inserter(b));\n\
+    \  auto ab = lib::convolution_mod(a, b, 1000000007);\n  std::copy(ab.begin(),\
+    \ ab.end(), std::ostream_iterator<int>(std::cout, \" \"));\n  return 0;\n}"
   dependsOn:
-  - math/convolution.hpp
+  - math/convolution_mod.hpp
   - common.hpp
   - modint/long_montgomery_modint.hpp
   - common.hpp
+  - math/convolution.hpp
   - math/truncated_fourier_transform.hpp
   - math/radix2_ntt.hpp
-  - modint/long_montgomery_modint.hpp
   isVerificationFile: true
   path: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
   requiredBy: []
-  timestamp: '2022-05-02 17:03:23+08:00'
+  timestamp: '2022-05-03 14:22:27+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp

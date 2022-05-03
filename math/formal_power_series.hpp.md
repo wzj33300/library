@@ -6,13 +6,14 @@ data:
     title: common.hpp
   - icon: ':heavy_check_mark:'
     path: math/extended_gcd.hpp
-    title: Extended Euclidean Algorithm
+    title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
   - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
-    title: Radix-2 NTT
+    title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/relaxed_convolution.hpp
-    title: Relaxed Convolution
+    title: Relaxed Convolution (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack \rbrack$
+      for FFT prime $p$)
   _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
@@ -376,7 +377,8 @@ data:
   - remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
 documentation_of: math/formal_power_series.hpp
 layout: document
-title: Formal Power Series
+title: Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack \rbrack$
+  for FFT prime $p$)
 ---
 
 I got wrong answer when I was testing my library locally. Check [Wandbox](https://wandbox.org/permlink/smgnVZ0lcZvk6ZYJ). It seems okay when compiling with Clang.

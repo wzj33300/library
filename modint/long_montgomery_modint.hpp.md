@@ -6,15 +6,9 @@ data:
     title: common.hpp
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
-    path: math/convolution.hpp
-    title: Convolution
+    path: math/convolution_mod.hpp
+    title: Convolution (in $\mathbb{Z} m / \mathbb{Z} \lbrack z \rbrack$)
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: remote_test/yosupo/math/convolution_mod.0.test.cpp
-    title: remote_test/yosupo/math/convolution_mod.0.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
-    title: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
     title: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
@@ -157,13 +151,11 @@ data:
   isVerificationFile: false
   path: modint/long_montgomery_modint.hpp
   requiredBy:
-  - math/convolution.hpp
+  - math/convolution_mod.hpp
   timestamp: '2022-04-26 20:45:46+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
-  - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
-  - remote_test/yosupo/math/convolution_mod.0.test.cpp
 documentation_of: modint/long_montgomery_modint.hpp
 layout: document
 title: Long Montgomery ModInt

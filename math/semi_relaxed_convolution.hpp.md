@@ -6,14 +6,15 @@ data:
     title: common.hpp
   - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
-    title: Radix-2 NTT
+    title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
     path: math/polynomial.hpp
-    title: Polynomial
+    title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/truncated_formal_power_series.hpp
-    title: Truncated Formal Power Series
+    title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
+      \rbrack$ for FFT prime $p$)
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod.1.test.cpp
@@ -213,5 +214,6 @@ data:
   - remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
 documentation_of: math/semi_relaxed_convolution.hpp
 layout: document
-title: Semi-Relaxed Convolution
+title: Semi-Relaxed Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime
+  $p$)
 ---

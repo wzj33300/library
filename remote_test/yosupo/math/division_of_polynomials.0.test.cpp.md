@@ -9,25 +9,27 @@ data:
     title: common.hpp
   - icon: ':heavy_check_mark:'
     path: math/extended_gcd.hpp
-    title: Extended Euclidean Algorithm
+    title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
   - icon: ':heavy_check_mark:'
     path: math/polynomial.hpp
-    title: Polynomial
+    title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
-    title: Radix-2 NTT
+    title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/semi_relaxed_convolution.hpp
-    title: Semi-Relaxed Convolution
+    title: Semi-Relaxed Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT
+      prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/sqrt_mod.hpp
-    title: Square Roots in Finite Fields
+    title: Square Roots (in $\mathbb{F} _ p$)
   - icon: ':heavy_check_mark:'
     path: math/truncated_formal_power_series.hpp
-    title: Truncated Formal Power Series
+    title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
+      \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/truncated_fourier_transform.hpp
-    title: Truncated Fourier Transform
+    title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$)
   - icon: ':heavy_check_mark:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt

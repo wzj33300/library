@@ -7,13 +7,15 @@ data:
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
     path: math/formal_power_series.hpp
-    title: Formal Power Series
+    title: Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack \rbrack$
+      for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/polynomial.hpp
-    title: Polynomial
+    title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/truncated_formal_power_series.hpp
-    title: Truncated Formal Power Series
+    title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
+      \rbrack$ for FFT prime $p$)
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: remote_test/aizu/number_theory/extended_euclidean_algorithm.0.test.cpp
@@ -137,5 +139,5 @@ data:
   - remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
 documentation_of: math/extended_gcd.hpp
 layout: document
-title: Extended Euclidean Algorithm
+title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
 ---

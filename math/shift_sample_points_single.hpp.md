@@ -43,7 +43,7 @@ data:
   verifiedWith: []
 documentation_of: math/shift_sample_points_single.hpp
 layout: document
-title: Shift Sample Points (Single)
+title: Shift Sample Points (Single) (in $\mathbb{F} _ p \lbrack z \rbrack$)
 ---
 
 ## Lagrange Interpolation Formula

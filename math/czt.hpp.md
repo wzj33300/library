@@ -6,7 +6,7 @@ data:
     title: common.hpp
   - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
-    title: Radix-2 NTT
+    title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
@@ -142,5 +142,6 @@ data:
   - remote_test/yosupo/math/convolution_mod.2.test.cpp
 documentation_of: math/czt.hpp
 layout: document
-title: Chirp Z-transform (Bluestein's algorithm)
+title: Chirp Z-transform (Bluestein's algorithm) (in $\mathbb{F} _ p \lbrack z \rbrack$
+  for FFT prime $p$)
 ---

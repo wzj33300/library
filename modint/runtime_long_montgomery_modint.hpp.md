@@ -7,7 +7,7 @@ data:
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
     path: math/integer_factorization.hpp
-    title: Integer Factorization (Pollard's rho algorithm)
+    title: Integer Factorization (Pollard's rho algorithm) (in $\mathbb{Z}$)
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/factorize.0.test.cpp

@@ -163,5 +163,5 @@ data:
   - remote_test/yosupo/math/factorize.0.test.cpp
 documentation_of: math/integer_factorization.hpp
 layout: document
-title: Integer Factorization (Pollard's rho algorithm)
+title: Integer Factorization (Pollard's rho algorithm) (in $\mathbb{Z}$)
 ---

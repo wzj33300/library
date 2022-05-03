@@ -7,28 +7,36 @@ data:
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
     path: math/convolution.hpp
-    title: Convolution
+    title: Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$)
+  - icon: ':heavy_check_mark:'
+    path: math/convolution_mod.hpp
+    title: Convolution (in $\mathbb{Z} m / \mathbb{Z} \lbrack z \rbrack$)
   - icon: ':heavy_check_mark:'
     path: math/czt.hpp
-    title: Chirp Z-transform (Bluestein's algorithm)
+    title: Chirp Z-transform (Bluestein's algorithm) (in $\mathbb{F} _ p \lbrack z
+      \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/formal_power_series.hpp
-    title: Formal Power Series
+    title: Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack \rbrack$
+      for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/polynomial.hpp
-    title: Polynomial
+    title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/relaxed_convolution.hpp
-    title: Relaxed Convolution
+    title: Relaxed Convolution (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack \rbrack$
+      for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/semi_relaxed_convolution.hpp
-    title: Semi-Relaxed Convolution
+    title: Semi-Relaxed Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT
+      prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/truncated_formal_power_series.hpp
-    title: Truncated Formal Power Series
+    title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
+      \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/truncated_fourier_transform.hpp
-    title: Truncated Fourier Transform
+    title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$)
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod.0.test.cpp
@@ -242,6 +250,7 @@ data:
   isVerificationFile: false
   path: math/radix2_ntt.hpp
   requiredBy:
+  - math/convolution_mod.hpp
   - math/czt.hpp
   - math/formal_power_series.hpp
   - math/relaxed_convolution.hpp
@@ -273,5 +282,5 @@ data:
   - remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
 documentation_of: math/radix2_ntt.hpp
 layout: document
-title: Radix-2 NTT
+title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
 ---

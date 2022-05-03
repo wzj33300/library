@@ -6,7 +6,7 @@ data:
     title: common.hpp
   - icon: ':heavy_check_mark:'
     path: math/extended_gcd.hpp
-    title: Extended Euclidean Algorithm
+    title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
   _isVerificationFailed: false

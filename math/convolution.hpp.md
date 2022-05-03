@@ -5,18 +5,15 @@ data:
     path: common.hpp
     title: common.hpp
   - icon: ':heavy_check_mark:'
-    path: common.hpp
-    title: common.hpp
-  - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
-    title: Radix-2 NTT
+    title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/truncated_fourier_transform.hpp
-    title: Truncated Fourier Transform
+    title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$)
+  _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
-    path: modint/long_montgomery_modint.hpp
-    title: Long Montgomery ModInt
-  _extendedRequiredBy: []
+    path: math/convolution_mod.hpp
+    title: Convolution (in $\mathbb{Z} m / \mathbb{Z} \lbrack z \rbrack$)
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod.0.test.cpp
@@ -31,85 +28,22 @@ data:
     links: []
   bundledCode: "#line 1 \"math/convolution.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\
     \n\n#define LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END }\n\
-    #define LIB ::lib::\n\n\n#line 1 \"modint/long_montgomery_modint.hpp\"\n\n\n\n\
-    #line 5 \"modint/long_montgomery_modint.hpp\"\n\n#ifdef LIB_DEBUG\n  #include\
-    \ <stdexcept>\n#endif\n#include <cstdint>\n#include <iostream>\n#include <type_traits>\n\
-    \nLIB_BEGIN\n\ntemplate <std::uint64_t ModT>\nclass montgomery_modint63 {\n  using\
-    \ u32 = std::uint32_t;\n  using i64 = std::int64_t;\n  using u64 = std::uint64_t;\n\
-    \n  u64 v_{};\n\n  static constexpr u64 get_r() {\n    u64 t = 2, iv = MOD * (t\
-    \ - MOD * MOD);\n    iv *= t - MOD * iv, iv *= t - MOD * iv, iv *= t - MOD * iv;\n\
-    \    return iv * (t - MOD * iv);\n  }\n  static constexpr u64 get_r2() {\n   \
-    \ u64 iv = -MOD % MOD;\n    for (int i = 0; i != 64; ++i)\n      if ((iv <<= 1)\
-    \ >= MOD) iv -= MOD;\n    return iv;\n  }\n  static constexpr u64 mul_high(u64\
-    \ x, u64 y) {\n    u64 a = x >> 32, b = static_cast<u32>(x), c = y >> 32, d =\
-    \ static_cast<u32>(y), ad = a * d,\n        bc = b * c;\n    return a * c + (ad\
-    \ >> 32) + (bc >> 32) +\n           (((ad & 0xFFFFFFFF) + (bc & 0xFFFFFFFF) +\
-    \ (b * d >> 32)) >> 32);\n  }\n  static constexpr u64 redc_mul(u64 x, u64 y) {\n\
-    \    u64 res = mul_high(x, y) - mul_high(x * y * R, MOD);\n    return res + (MOD\
-    \ & -(res >> 63));\n  }\n  static constexpr u64 norm(i64 x) { return x + (MOD\
-    \ & -(x < 0)); }\n\n  static constexpr u64 MOD  = ModT;\n  static constexpr u64\
-    \ R    = get_r();\n  static constexpr u64 R2   = get_r2();\n  static constexpr\
-    \ i64 SMOD = static_cast<i64>(MOD);\n\n  static_assert(MOD & 1);\n  static_assert(R\
-    \ * MOD == 1);\n  static_assert((MOD >> 63) == 0);\n  static_assert(MOD != 1);\n\
-    \npublic:\n  static constexpr u64 mod() { return MOD; }\n  static constexpr i64\
-    \ smod() { return SMOD; }\n  constexpr montgomery_modint63() {}\n  template <typename\
-    \ IntT, std::enable_if_t<std::is_integral_v<IntT>, int> = 0>\n  constexpr montgomery_modint63(IntT\
-    \ v) : v_(redc_mul(norm(v % SMOD), R2)) {}\n  constexpr u64 val() const {\n  \
-    \  u64 res = -mul_high(v_ * R, MOD);\n    return res + (MOD & -(res >> 63));\n\
-    \  }\n  constexpr i64 sval() const { return val(); }\n  constexpr bool is_zero()\
-    \ const { return v_ == 0; }\n  template <typename IntT, std::enable_if_t<std::is_integral_v<IntT>,\
-    \ int> = 0>\n  explicit constexpr operator IntT() const {\n    return static_cast<IntT>(val());\n\
-    \  }\n  constexpr montgomery_modint63 operator-() const {\n    montgomery_modint63\
-    \ res;\n    res.v_ = (MOD & -(v_ != 0)) - v_;\n    return res;\n  }\n  constexpr\
-    \ montgomery_modint63 inv() const {\n    i64 x1 = 1, x3 = 0, a = sval(), b = SMOD;\n\
-    \    while (b != 0) {\n      i64 q = a / b, x1_old = x1, a_old = a;\n      x1\
-    \ = x3, x3 = x1_old - x3 * q, a = b, b = a_old - b * q;\n    }\n#ifdef LIB_DEBUG\n\
-    \    if (a != 1) throw std::runtime_error(\"modular inverse error\");\n#endif\n\
-    \    return montgomery_modint63(x1);\n  }\n  constexpr montgomery_modint63 &operator+=(const\
-    \ montgomery_modint63 &rhs) {\n    v_ += rhs.v_ - MOD, v_ += MOD & -(v_ >> 63);\n\
-    \    return *this;\n  }\n  constexpr montgomery_modint63 &operator-=(const montgomery_modint63\
-    \ &rhs) {\n    v_ -= rhs.v_, v_ += MOD & -(v_ >> 63);\n    return *this;\n  }\n\
-    \  constexpr montgomery_modint63 &operator*=(const montgomery_modint63 &rhs) {\n\
-    \    v_ = redc_mul(v_, rhs.v_);\n    return *this;\n  }\n  constexpr montgomery_modint63\
-    \ &operator/=(const montgomery_modint63 &rhs) {\n    return operator*=(rhs.inv());\n\
-    \  }\n  constexpr montgomery_modint63 pow(u64 e) const {\n    for (montgomery_modint63\
-    \ res(1), x(*this);; x *= x) {\n      if (e & 1) res *= x;\n      if ((e >>= 1)\
-    \ == 0) return res;\n    }\n  }\n  constexpr void swap(montgomery_modint63 &rhs)\
-    \ {\n    auto v = v_;\n    v_ = rhs.v_, rhs.v_ = v;\n  }\n  friend constexpr montgomery_modint63\
-    \ operator+(const montgomery_modint63 &lhs,\n                                \
-    \                 const montgomery_modint63 &rhs) {\n    return montgomery_modint63(lhs)\
-    \ += rhs;\n  }\n  friend constexpr montgomery_modint63 operator-(const montgomery_modint63\
-    \ &lhs,\n                                                 const montgomery_modint63\
-    \ &rhs) {\n    return montgomery_modint63(lhs) -= rhs;\n  }\n  friend constexpr\
-    \ montgomery_modint63 operator*(const montgomery_modint63 &lhs,\n            \
-    \                                     const montgomery_modint63 &rhs) {\n    return\
-    \ montgomery_modint63(lhs) *= rhs;\n  }\n  friend constexpr montgomery_modint63\
-    \ operator/(const montgomery_modint63 &lhs,\n                                \
-    \                 const montgomery_modint63 &rhs) {\n    return montgomery_modint63(lhs)\
-    \ /= rhs;\n  }\n  friend constexpr bool operator==(const montgomery_modint63 &lhs,\
-    \ const montgomery_modint63 &rhs) {\n    return lhs.v_ == rhs.v_;\n  }\n  friend\
-    \ constexpr bool operator!=(const montgomery_modint63 &lhs, const montgomery_modint63\
-    \ &rhs) {\n    return lhs.v_ != rhs.v_;\n  }\n  friend std::istream &operator>>(std::istream\
-    \ &is, montgomery_modint63 &rhs) {\n    i64 x;\n    is >> x;\n    rhs = montgomery_modint63(x);\n\
-    \    return is;\n  }\n  friend std::ostream &operator<<(std::ostream &os, const\
-    \ montgomery_modint63 &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate\
-    \ <std::uint64_t ModT>\nusing mm63 = montgomery_modint63<ModT>;\n\nLIB_END\n\n\
-    \n#line 1 \"math/truncated_fourier_transform.hpp\"\n\n\n\n#line 1 \"math/radix2_ntt.hpp\"\
-    \n\n\n\n#line 5 \"math/radix2_ntt.hpp\"\n\n#include <algorithm>\n#include <array>\n\
-    #include <cassert>\n#line 10 \"math/radix2_ntt.hpp\"\n#include <vector>\n\nLIB_BEGIN\n\
-    \nnamespace detail {\n\ntemplate <typename IntT>\nconstexpr std::enable_if_t<std::is_integral_v<IntT>,\
-    \ int> bsf(IntT v) {\n  if (static_cast<std::make_signed_t<IntT>>(v) <= 0) return\
-    \ -1;\n  int res = 0;\n  for (; (v & 1) == 0; ++res) v >>= 1;\n  return res;\n\
-    }\n\ntemplate <typename ModIntT>\nconstexpr ModIntT quadratic_nonresidue_prime()\
-    \ {\n  auto mod = ModIntT::mod();\n  for (int i = 2;; ++i)\n    if (ModIntT(i).pow(mod\
-    \ >> 1) == mod - 1) return ModIntT(i);\n}\n\ntemplate <typename ModIntT>\nconstexpr\
-    \ ModIntT gen_of_sylow_2_subgroup() {\n  auto mod = ModIntT::mod();\n  return\
-    \ quadratic_nonresidue_prime<ModIntT>().pow(mod >> bsf(mod - 1));\n}\n\ntemplate\
-    \ <typename ModIntT>\nconstexpr std::array<ModIntT, bsf(ModIntT::mod() - 1) -\
-    \ 1> root() {\n  std::array<ModIntT, bsf(ModIntT::mod() - 1) - 1> rt; // order(`rt[i]`)\
-    \ = 2^(i + 2).\n  rt.back() = gen_of_sylow_2_subgroup<ModIntT>();\n  for (int\
-    \ i = bsf(ModIntT::mod() - 1) - 3; i >= 0; --i) rt[i] = rt[i + 1] * rt[i + 1];\n\
-    \  return rt;\n}\n\ntemplate <typename ModIntT>\nconstexpr std::array<ModIntT,\
+    #define LIB ::lib::\n\n\n#line 1 \"math/truncated_fourier_transform.hpp\"\n\n\n\
+    \n#line 1 \"math/radix2_ntt.hpp\"\n\n\n\n#line 5 \"math/radix2_ntt.hpp\"\n\n#include\
+    \ <algorithm>\n#include <array>\n#include <cassert>\n#include <type_traits>\n\
+    #include <vector>\n\nLIB_BEGIN\n\nnamespace detail {\n\ntemplate <typename IntT>\n\
+    constexpr std::enable_if_t<std::is_integral_v<IntT>, int> bsf(IntT v) {\n  if\
+    \ (static_cast<std::make_signed_t<IntT>>(v) <= 0) return -1;\n  int res = 0;\n\
+    \  for (; (v & 1) == 0; ++res) v >>= 1;\n  return res;\n}\n\ntemplate <typename\
+    \ ModIntT>\nconstexpr ModIntT quadratic_nonresidue_prime() {\n  auto mod = ModIntT::mod();\n\
+    \  for (int i = 2;; ++i)\n    if (ModIntT(i).pow(mod >> 1) == mod - 1) return\
+    \ ModIntT(i);\n}\n\ntemplate <typename ModIntT>\nconstexpr ModIntT gen_of_sylow_2_subgroup()\
+    \ {\n  auto mod = ModIntT::mod();\n  return quadratic_nonresidue_prime<ModIntT>().pow(mod\
+    \ >> bsf(mod - 1));\n}\n\ntemplate <typename ModIntT>\nconstexpr std::array<ModIntT,\
+    \ bsf(ModIntT::mod() - 1) - 1> root() {\n  std::array<ModIntT, bsf(ModIntT::mod()\
+    \ - 1) - 1> rt; // order(`rt[i]`) = 2^(i + 2).\n  rt.back() = gen_of_sylow_2_subgroup<ModIntT>();\n\
+    \  for (int i = bsf(ModIntT::mod() - 1) - 3; i >= 0; --i) rt[i] = rt[i + 1] *\
+    \ rt[i + 1];\n  return rt;\n}\n\ntemplate <typename ModIntT>\nconstexpr std::array<ModIntT,\
     \ bsf(ModIntT::mod() - 1) - 1> iroot() {\n  std::array<ModIntT, bsf(ModIntT::mod()\
     \ - 1) - 1> irt;\n  irt.back() = gen_of_sylow_2_subgroup<ModIntT>().inv();\n \
     \ for (int i = bsf(ModIntT::mod() - 1) - 3; i >= 0; --i) irt[i] = irt[i + 1] *\
@@ -214,9 +148,9 @@ data:
     \ != mid; ++i) a_[i] += a_[i + len] * r;\n        run(head, tail, mid);\n    \
     \    // pull up [`head`, `mid`)\n        for (int i = head; i != mid; ++i) a_[i]\
     \ -= a_[i + len] * r;\n      }\n    }\n    Container &a_;\n    const T i2_;\n\
-    \  } rec(a);\n  rec.run(0, n, len);\n  a.resize(n);\n}\n\nLIB_END\n\n\n#line 7\
-    \ \"math/convolution.hpp\"\n\n#line 12 \"math/convolution.hpp\"\n\nLIB_BEGIN\n\
-    \ntemplate <typename ModIntT>\nstd::vector<ModIntT> convolution(const std::vector<ModIntT>\
+    \  } rec(a);\n  rec.run(0, n, len);\n  a.resize(n);\n}\n\nLIB_END\n\n\n#line 6\
+    \ \"math/convolution.hpp\"\n\n#line 9 \"math/convolution.hpp\"\n\nLIB_BEGIN\n\n\
+    template <typename ModIntT>\nstd::vector<ModIntT> convolution(const std::vector<ModIntT>\
     \ &lhs, const std::vector<ModIntT> &rhs) {\n  int n = static_cast<int>(lhs.size()),\
     \ m = static_cast<int>(rhs.size());\n  if (n == 0 || m == 0) return {};\n  if\
     \ (std::min(n, m) <= 32) {\n    std::vector<ModIntT> res(n + m - 1);\n    for\
@@ -225,24 +159,9 @@ data:
     \ lhs_cpy(len), rhs_cpy(len);\n  std::copy_n(lhs.cbegin(), n, lhs_cpy.begin());\n\
     \  std::copy_n(rhs.cbegin(), m, rhs_cpy.begin());\n  tft(lhs_cpy), tft(rhs_cpy);\n\
     \  for (int i = 0; i != len; ++i) lhs_cpy[i] *= rhs_cpy[i];\n  itft(lhs_cpy);\n\
-    \  return lhs_cpy;\n}\n\ntemplate <typename IntT>\nstd::enable_if_t<std::is_integral_v<IntT>\
-    \ && sizeof(IntT) <= sizeof(std::int32_t),\n                 std::vector<IntT>>\n\
-    convolution_mod(const std::vector<IntT> &lhs, const std::vector<IntT> &rhs, const\
-    \ IntT modular) {\n  using mint0 = mm63<0x3F9A000000000001>;\n  using mint1 =\
-    \ mm63<0x3FC6000000000001>;\n  auto res0   = convolution(std::vector<mint0>(lhs.begin(),\
-    \ lhs.end()),\n                          std::vector<mint0>(rhs.begin(), rhs.end()));\n\
-    \  auto res1   = convolution(std::vector<mint1>(lhs.begin(), lhs.end()),\n   \
-    \                       std::vector<mint1>(rhs.begin(), rhs.end()));\n  const\
-    \ int n = res0.size();\n  std::vector<IntT> res(n);\n  //    a mod m_0 = a_0,\
-    \ a mod m_1 = a_1\n  // -> a_0 + k_0m_0 = a_1 + k_1m_1\n  // -> a_0 - a_1 \u2261\
-    \ k_1m_1 (mod m_0)\n  // -> k_1 \u2261 (a_0 - a_1) / m_1 (mod m_0)\n  static constexpr\
-    \ mint0 im1_mod_m0(mint0(mint1::mod()).inv());\n  const IntT m1_mod_modular =\
-    \ mint1::mod() % modular;\n  for (int i = 0; i != n; ++i) {\n    mint0 k1((res0[i]\
-    \ - res1[i].val()) * im1_mod_m0);\n    res[i] = (k1.val() % modular * m1_mod_modular\
-    \ + res1[i].val()) % modular;\n  }\n  return res;\n}\n\nLIB_END\n\n\n"
+    \  return lhs_cpy;\n}\n\nLIB_END\n\n\n"
   code: "#ifndef CONVOLUTION_HPP\n#define CONVOLUTION_HPP\n\n#include \"../common.hpp\"\
-    \n#include \"../modint/long_montgomery_modint.hpp\"\n#include \"truncated_fourier_transform.hpp\"\
-    \n\n#include <algorithm>\n#include <cstdint>\n#include <type_traits>\n#include\
+    \n#include \"truncated_fourier_transform.hpp\"\n\n#include <algorithm>\n#include\
     \ <vector>\n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nstd::vector<ModIntT> convolution(const\
     \ std::vector<ModIntT> &lhs, const std::vector<ModIntT> &rhs) {\n  int n = static_cast<int>(lhs.size()),\
     \ m = static_cast<int>(rhs.size());\n  if (n == 0 || m == 0) return {};\n  if\
@@ -252,36 +171,21 @@ data:
     \ lhs_cpy(len), rhs_cpy(len);\n  std::copy_n(lhs.cbegin(), n, lhs_cpy.begin());\n\
     \  std::copy_n(rhs.cbegin(), m, rhs_cpy.begin());\n  tft(lhs_cpy), tft(rhs_cpy);\n\
     \  for (int i = 0; i != len; ++i) lhs_cpy[i] *= rhs_cpy[i];\n  itft(lhs_cpy);\n\
-    \  return lhs_cpy;\n}\n\ntemplate <typename IntT>\nstd::enable_if_t<std::is_integral_v<IntT>\
-    \ && sizeof(IntT) <= sizeof(std::int32_t),\n                 std::vector<IntT>>\n\
-    convolution_mod(const std::vector<IntT> &lhs, const std::vector<IntT> &rhs, const\
-    \ IntT modular) {\n  using mint0 = mm63<0x3F9A000000000001>;\n  using mint1 =\
-    \ mm63<0x3FC6000000000001>;\n  auto res0   = convolution(std::vector<mint0>(lhs.begin(),\
-    \ lhs.end()),\n                          std::vector<mint0>(rhs.begin(), rhs.end()));\n\
-    \  auto res1   = convolution(std::vector<mint1>(lhs.begin(), lhs.end()),\n   \
-    \                       std::vector<mint1>(rhs.begin(), rhs.end()));\n  const\
-    \ int n = res0.size();\n  std::vector<IntT> res(n);\n  //    a mod m_0 = a_0,\
-    \ a mod m_1 = a_1\n  // -> a_0 + k_0m_0 = a_1 + k_1m_1\n  // -> a_0 - a_1 \u2261\
-    \ k_1m_1 (mod m_0)\n  // -> k_1 \u2261 (a_0 - a_1) / m_1 (mod m_0)\n  static constexpr\
-    \ mint0 im1_mod_m0(mint0(mint1::mod()).inv());\n  const IntT m1_mod_modular =\
-    \ mint1::mod() % modular;\n  for (int i = 0; i != n; ++i) {\n    mint0 k1((res0[i]\
-    \ - res1[i].val()) * im1_mod_m0);\n    res[i] = (k1.val() % modular * m1_mod_modular\
-    \ + res1[i].val()) % modular;\n  }\n  return res;\n}\n\nLIB_END\n\n#endif"
+    \  return lhs_cpy;\n}\n\nLIB_END\n\n#endif"
   dependsOn:
-  - common.hpp
-  - modint/long_montgomery_modint.hpp
   - common.hpp
   - math/truncated_fourier_transform.hpp
   - math/radix2_ntt.hpp
   isVerificationFile: false
   path: math/convolution.hpp
-  requiredBy: []
-  timestamp: '2022-05-02 17:03:23+08:00'
+  requiredBy:
+  - math/convolution_mod.hpp
+  timestamp: '2022-05-03 14:22:27+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
   - remote_test/yosupo/math/convolution_mod.0.test.cpp
 documentation_of: math/convolution.hpp
 layout: document
-title: Convolution
+title: Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$)
 ---

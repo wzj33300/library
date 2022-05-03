@@ -6,22 +6,24 @@ data:
     title: common.hpp
   - icon: ':heavy_check_mark:'
     path: math/extended_gcd.hpp
-    title: Extended Euclidean Algorithm
+    title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
   - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
-    title: Radix-2 NTT
+    title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/semi_relaxed_convolution.hpp
-    title: Semi-Relaxed Convolution
+    title: Semi-Relaxed Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT
+      prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/sqrt_mod.hpp
-    title: Square Roots in Finite Fields
+    title: Square Roots (in $\mathbb{F} _ p$)
   - icon: ':heavy_check_mark:'
     path: math/truncated_formal_power_series.hpp
-    title: Truncated Formal Power Series
+    title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
+      \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/truncated_fourier_transform.hpp
-    title: Truncated Fourier Transform
+    title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$)
   _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
@@ -425,5 +427,20 @@ data:
   - remote_test/yosupo/math/division_of_polynomials.0.test.cpp
 documentation_of: math/polynomial.hpp
 layout: document
-title: Polynomial
+title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
 ---
+
+## The Ring of Reversed Formal Laurent Series $R\left(\left( z^{-1} \right)\right)$
+
+Bernstein showed that division in $R \lbrack z \rbrack$ is division in $R\left(\left( z^{-1} \right)\right)$.
+
+**Problem**: Given polynomial $a, b \in R \lbrack z \rbrack$, find $q, r \in R \lbrack z \rbrack$ such that $a = qb + r$ and $\deg r \lt \deg b$.
+
+Recall what we do for computing such $q, r$ if both $a, b$ are positive integers. We compute $ab^{-1}$ in $\mathbb{Q}$ (which means we do the computation of $b^{-1}$ in $\mathbb{Q}$) and apply the floor function to $ab^{-1}$ to make the result in $\mathbb{Z}$.
+
+We could do this to polynomials similarly. I omit the details.
+
+## Reference
+
+1. V. Shoup. [A Computational Introduction to Number Theory and Algebra (Version 2)](https://www.shoup.net/ntb/).
+2. D. J. Bernstein. [Scaled remainder trees](https://cr.yp.to/papers.html#scaledmod).

@@ -6,11 +6,12 @@ data:
     title: common.hpp
   - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
-    title: Radix-2 NTT
+    title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
     path: math/formal_power_series.hpp
-    title: Formal Power Series
+    title: Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack \rbrack$
+      for FFT prime $p$)
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod.3.test.cpp
@@ -238,5 +239,6 @@ data:
   - remote_test/yosupo/math/convolution_mod.3.test.cpp
 documentation_of: math/relaxed_convolution.hpp
 layout: document
-title: Relaxed Convolution
+title: Relaxed Convolution (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack \rbrack$
+  for FFT prime $p$)
 ---

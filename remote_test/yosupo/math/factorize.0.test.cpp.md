@@ -9,7 +9,7 @@ data:
     title: common.hpp
   - icon: ':heavy_check_mark:'
     path: math/integer_factorization.hpp
-    title: Integer Factorization (Pollard's rho algorithm)
+    title: Integer Factorization (Pollard's rho algorithm) (in $\mathbb{Z}$)
   - icon: ':heavy_check_mark:'
     path: modint/runtime_long_montgomery_modint.hpp
     title: Runtime Long Montgomery ModInt

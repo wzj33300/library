@@ -9,7 +9,7 @@ data:
     title: common.hpp
   - icon: ':heavy_check_mark:'
     path: math/sqrt_mod.hpp
-    title: Square Roots in Finite Fields
+    title: Square Roots (in $\mathbb{F} _ p$)
   - icon: ':heavy_check_mark:'
     path: modint/runtime_montgomery_modint.hpp
     title: Runtime Montgomery ModInt

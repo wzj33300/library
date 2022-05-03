@@ -7,10 +7,11 @@ data:
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
     path: math/polynomial.hpp
-    title: Polynomial
+    title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/truncated_formal_power_series.hpp
-    title: Truncated Formal Power Series
+    title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
+      \rbrack$ for FFT prime $p$)
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod.1.test.cpp
@@ -88,7 +89,7 @@ data:
   - remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
 documentation_of: math/sqrt_mod.hpp
 layout: document
-title: Square Roots in Finite Fields
+title: Square Roots (in $\mathbb{F} _ p$)
 ---
 
 ## A Simple and Fast Algorithm

@@ -13,49 +13,57 @@ data:
     title: Weighted Disjoint Set
   - icon: ':heavy_check_mark:'
     path: math/convolution.hpp
-    title: Convolution
+    title: Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$)
   - icon: ':heavy_check_mark:'
-    path: math/convolution.hpp
-    title: Convolution
+    path: math/convolution_mod.hpp
+    title: Convolution (in $\mathbb{Z} m / \mathbb{Z} \lbrack z \rbrack$)
+  - icon: ':heavy_check_mark:'
+    path: math/convolution_mod.hpp
+    title: Convolution (in $\mathbb{Z} m / \mathbb{Z} \lbrack z \rbrack$)
   - icon: ':heavy_check_mark:'
     path: math/czt.hpp
-    title: Chirp Z-transform (Bluestein's algorithm)
+    title: Chirp Z-transform (Bluestein's algorithm) (in $\mathbb{F} _ p \lbrack z
+      \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/extended_gcd.hpp
-    title: Extended Euclidean Algorithm
+    title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
   - icon: ':heavy_check_mark:'
     path: math/formal_power_series.hpp
-    title: Formal Power Series
+    title: Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack \rbrack$
+      for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/integer_factorization.hpp
-    title: Integer Factorization (Pollard's rho algorithm)
+    title: Integer Factorization (Pollard's rho algorithm) (in $\mathbb{Z}$)
   - icon: ':heavy_check_mark:'
     path: math/integer_factorization.hpp
-    title: Integer Factorization (Pollard's rho algorithm)
+    title: Integer Factorization (Pollard's rho algorithm) (in $\mathbb{Z}$)
   - icon: ':heavy_check_mark:'
     path: math/polynomial.hpp
-    title: Polynomial
+    title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
-    title: Radix-2 NTT
+    title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/relaxed_convolution.hpp
-    title: Relaxed Convolution
+    title: Relaxed Convolution (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack \rbrack$
+      for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/semi_relaxed_convolution.hpp
-    title: Semi-Relaxed Convolution
+    title: Semi-Relaxed Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT
+      prime $p$)
   - icon: ':warning:'
     path: math/shift_sample_points_single.hpp
-    title: Shift Sample Points (Single)
+    title: Shift Sample Points (Single) (in $\mathbb{F} _ p \lbrack z \rbrack$)
   - icon: ':heavy_check_mark:'
     path: math/sqrt_mod.hpp
-    title: Square Roots in Finite Fields
+    title: Square Roots (in $\mathbb{F} _ p$)
   - icon: ':heavy_check_mark:'
     path: math/truncated_formal_power_series.hpp
-    title: Truncated Formal Power Series
+    title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
+      \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/truncated_fourier_transform.hpp
-    title: Truncated Fourier Transform
+    title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$)
   - icon: ':heavy_check_mark:'
     path: modint/long_montgomery_modint.hpp
     title: Long Montgomery ModInt
@@ -255,12 +263,13 @@ data:
   - datastructure/disjoint_set.hpp
   - datastructure/cartesian_tree.hpp
   - datastructure/weighted_disjoint_set.hpp
+  - math/convolution_mod.hpp
+  - math/convolution_mod.hpp
   - math/czt.hpp
   - math/formal_power_series.hpp
   - math/relaxed_convolution.hpp
   - math/semi_relaxed_convolution.hpp
   - math/polynomial.hpp
-  - math/convolution.hpp
   - math/convolution.hpp
   - math/radix2_ntt.hpp
   - math/sqrt_mod.hpp
