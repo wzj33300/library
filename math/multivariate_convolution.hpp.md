@@ -148,42 +148,42 @@ data:
     \n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nstd::vector<ModIntT> multivariate_convolution(const\
     \ std::vector<ModIntT> &lhs,\n                                              const\
     \ std::vector<ModIntT> &rhs,\n                                              const\
-    \ std::vector<int> n) {\n  const int d   = std::max(1, static_cast<int>(n.size()));\n\
-    \  const int len = static_cast<int>(lhs.size());\n  assert(rhs.size() == len);\n\
-    \  std::vector<int> base(d - 1);\n  if (d > 1) base.front() = n.front();\n  for\
-    \ (int i = 1; i < d - 1; ++i) base[i] = base[i - 1] * n[i];\n  auto chi_mod =\
-    \ [&base, d](int i) {\n    int x = 0;\n    for (int v : base) x += i / v;\n  \
-    \  return x % d;\n  };\n  std::vector<int> chi(len);\n  for (int i = 0; i != len;\
-    \ ++i) chi[i] = chi_mod(i);\n  std::vector<std::vector<ModIntT>> a(d, std::vector<ModIntT>(len\
-    \ << 1)),\n      b(d, std::vector<ModIntT>(len << 1)), ab(d, std::vector<ModIntT>(len\
-    \ << 1));\n  for (int i = 0; i != len; ++i) a[chi[i]][i] = lhs[i], b[chi[i]][i]\
-    \ = rhs[i];\n  for (auto &&i : a) tft(i);\n  for (auto &&i : b) tft(i);\n  for\
-    \ (int i = 0; i != d; ++i)\n    for (int j = 0; j != d; ++j)\n      for (int k\
-    \ = 0, l = i + j < d ? i + j : i + j - d; k != len << 1; ++k)\n        ab[l][k]\
-    \ += a[i][k] * b[j][k];\n  for (auto &&i : ab) itft(i);\n  std::vector<ModIntT>\
-    \ res(len);\n  for (int i = 0; i != len; ++i) res[i] = ab[chi[i]][i];\n  return\
-    \ res;\n}\n\nLIB_END\n\n\n"
+    \ std::vector<int> n) {\n  const int d  = std::max(1, static_cast<int>(n.size()));\n\
+    \  const int ls = static_cast<int>(lhs.size());\n  assert(rhs.size() == ls);\n\
+    \  const int len = (ls << 1) - 1; // slower than using `ls << 1`.\n  std::vector<int>\
+    \ base(d - 1);\n  if (d > 1) base.front() = n.front();\n  for (int i = 1; i <\
+    \ d - 1; ++i) base[i] = base[i - 1] * n[i];\n  auto chi_mod = [&base, d](int i)\
+    \ {\n    int x = 0;\n    for (int v : base) x += i / v;\n    return x % d;\n \
+    \ };\n  std::vector<int> chi(ls);\n  for (int i = 0; i != ls; ++i) chi[i] = chi_mod(i);\n\
+    \  std::vector<std::vector<ModIntT>> a(d, std::vector<ModIntT>(len)),\n      b(d,\
+    \ std::vector<ModIntT>(len)), ab(d, std::vector<ModIntT>(len));\n  for (int i\
+    \ = 0; i != ls; ++i) a[chi[i]][i] = lhs[i], b[chi[i]][i] = rhs[i];\n  for (auto\
+    \ &&i : a) tft(i);\n  for (auto &&i : b) tft(i);\n  for (int i = 0; i != d; ++i)\n\
+    \    for (int j = 0; j != d; ++j)\n      for (int k = 0, l = i + j < d ? i + j\
+    \ : i + j - d; k != len; ++k)\n        ab[l][k] += a[i][k] * b[j][k];\n  for (auto\
+    \ &&i : ab) itft(i);\n  std::vector<ModIntT> res(ls);\n  for (int i = 0; i !=\
+    \ ls; ++i) res[i] = ab[chi[i]][i];\n  return res;\n}\n\nLIB_END\n\n\n"
   code: "#ifndef MULTIVARIATE_CONVOLUTION_HPP\n#define MULTIVARIATE_CONVOLUTION_HPP\n\
     \n#include \"../common.hpp\"\n#include \"truncated_fourier_transform.hpp\"\n\n\
     #include <algorithm>\n#include <cassert>\n#include <vector>\n\nLIB_BEGIN\n\ntemplate\
     \ <typename ModIntT>\nstd::vector<ModIntT> multivariate_convolution(const std::vector<ModIntT>\
     \ &lhs,\n                                              const std::vector<ModIntT>\
     \ &rhs,\n                                              const std::vector<int>\
-    \ n) {\n  const int d   = std::max(1, static_cast<int>(n.size()));\n  const int\
-    \ len = static_cast<int>(lhs.size());\n  assert(rhs.size() == len);\n  std::vector<int>\
-    \ base(d - 1);\n  if (d > 1) base.front() = n.front();\n  for (int i = 1; i <\
-    \ d - 1; ++i) base[i] = base[i - 1] * n[i];\n  auto chi_mod = [&base, d](int i)\
-    \ {\n    int x = 0;\n    for (int v : base) x += i / v;\n    return x % d;\n \
-    \ };\n  std::vector<int> chi(len);\n  for (int i = 0; i != len; ++i) chi[i] =\
-    \ chi_mod(i);\n  std::vector<std::vector<ModIntT>> a(d, std::vector<ModIntT>(len\
-    \ << 1)),\n      b(d, std::vector<ModIntT>(len << 1)), ab(d, std::vector<ModIntT>(len\
-    \ << 1));\n  for (int i = 0; i != len; ++i) a[chi[i]][i] = lhs[i], b[chi[i]][i]\
-    \ = rhs[i];\n  for (auto &&i : a) tft(i);\n  for (auto &&i : b) tft(i);\n  for\
-    \ (int i = 0; i != d; ++i)\n    for (int j = 0; j != d; ++j)\n      for (int k\
-    \ = 0, l = i + j < d ? i + j : i + j - d; k != len << 1; ++k)\n        ab[l][k]\
-    \ += a[i][k] * b[j][k];\n  for (auto &&i : ab) itft(i);\n  std::vector<ModIntT>\
-    \ res(len);\n  for (int i = 0; i != len; ++i) res[i] = ab[chi[i]][i];\n  return\
-    \ res;\n}\n\nLIB_END\n\n#endif"
+    \ n) {\n  const int d  = std::max(1, static_cast<int>(n.size()));\n  const int\
+    \ ls = static_cast<int>(lhs.size());\n  assert(rhs.size() == ls);\n  const int\
+    \ len = (ls << 1) - 1; // slower than using `ls << 1`.\n  std::vector<int> base(d\
+    \ - 1);\n  if (d > 1) base.front() = n.front();\n  for (int i = 1; i < d - 1;\
+    \ ++i) base[i] = base[i - 1] * n[i];\n  auto chi_mod = [&base, d](int i) {\n \
+    \   int x = 0;\n    for (int v : base) x += i / v;\n    return x % d;\n  };\n\
+    \  std::vector<int> chi(ls);\n  for (int i = 0; i != ls; ++i) chi[i] = chi_mod(i);\n\
+    \  std::vector<std::vector<ModIntT>> a(d, std::vector<ModIntT>(len)),\n      b(d,\
+    \ std::vector<ModIntT>(len)), ab(d, std::vector<ModIntT>(len));\n  for (int i\
+    \ = 0; i != ls; ++i) a[chi[i]][i] = lhs[i], b[chi[i]][i] = rhs[i];\n  for (auto\
+    \ &&i : a) tft(i);\n  for (auto &&i : b) tft(i);\n  for (int i = 0; i != d; ++i)\n\
+    \    for (int j = 0; j != d; ++j)\n      for (int k = 0, l = i + j < d ? i + j\
+    \ : i + j - d; k != len; ++k)\n        ab[l][k] += a[i][k] * b[j][k];\n  for (auto\
+    \ &&i : ab) itft(i);\n  std::vector<ModIntT> res(ls);\n  for (int i = 0; i !=\
+    \ ls; ++i) res[i] = ab[chi[i]][i];\n  return res;\n}\n\nLIB_END\n\n#endif"
   dependsOn:
   - common.hpp
   - math/truncated_fourier_transform.hpp
@@ -191,7 +191,7 @@ data:
   isVerificationFile: false
   path: math/multivariate_convolution.hpp
   requiredBy: []
-  timestamp: '2022-05-04 01:22:53+08:00'
+  timestamp: '2022-05-04 10:10:18+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/multivariate_convolution.0.test.cpp

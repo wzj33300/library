@@ -188,5 +188,5 @@ data:
   - remote_test/yosupo/math/convolution_mod.0.test.cpp
 documentation_of: math/convolution.hpp
 layout: document
-title: Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$)
+title: Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
 ---
