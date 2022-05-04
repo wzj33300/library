@@ -33,9 +33,9 @@ data:
     title: Montgomery ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/inv_of_formal_power_series
@@ -293,17 +293,16 @@ data:
     \    }\n    return lhs << ']';\n  }\n};\n\ntemplate <typename IterT>\ntruncated_formal_power_series(IterT,\
     \ IterT)\n    -> truncated_formal_power_series<typename std::iterator_traits<IterT>::value_type>;\n\
     \ntemplate <typename ModIntT>\ntypename detail::modular_inverse<ModIntT> truncated_formal_power_series<ModIntT>::invs;\n\
-    \ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT> &truncated_formal_power_series<ModIntT>::operator*=(\n\
-    \    const truncated_formal_power_series<ModIntT> &rhs) {\n  // 6E\n  int n =\
-    \ static_cast<int>(this->size()), m = static_cast<int>(rhs.size());\n  if (n ==\
-    \ 0 || m == 0) {\n    this->clear();\n    return *this;\n  }\n  if (std::min(n,\
-    \ m) <= 32) {\n    truncated_formal_power_series res(n + m - 1);\n    for (int\
-    \ i = 0; i != n; ++i)\n      for (int j = 0; j != m; ++j) res[i + j] += this->operator[](i)\
-    \ * rhs[j];\n    return this->operator=(res);\n  }\n  int len = n + m - 1;\n \
-    \ truncated_formal_power_series rhs_cpy(len);\n  std::copy_n(rhs.cbegin(), m,\
-    \ rhs_cpy.begin());\n  this->resize(len);\n  tft(*this), tft(rhs_cpy);\n  for\
-    \ (int i = 0; i != len; ++i) this->operator[](i) *= rhs_cpy[i];\n  itft(*this);\n\
-    \  return *this;\n}\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT>\
+    \ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT> &\ntruncated_formal_power_series<ModIntT>::operator*=(const\
+    \ truncated_formal_power_series &rhs) {\n  // 6E\n  int n = static_cast<int>(this->size()),\
+    \ m = static_cast<int>(rhs.size());\n  if (n == 0 || m == 0) {\n    this->clear();\n\
+    \    return *this;\n  }\n  if (std::min(n, m) <= 32) {\n    truncated_formal_power_series\
+    \ res(n + m - 1);\n    for (int i = 0; i != n; ++i)\n      for (int j = 0; j !=\
+    \ m; ++j) res[i + j] += this->operator[](i) * rhs[j];\n    return this->operator=(res);\n\
+    \  }\n  int len = n + m - 1;\n  truncated_formal_power_series rhs_cpy(len);\n\
+    \  std::copy_n(rhs.cbegin(), m, rhs_cpy.begin());\n  this->resize(len);\n  tft(*this),\
+    \ tft(rhs_cpy);\n  for (int i = 0; i != len; ++i) this->operator[](i) *= rhs_cpy[i];\n\
+    \  itft(*this);\n  return *this;\n}\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT>\
     \ truncated_formal_power_series<ModIntT>::inv(int n) const {\n  if (n <= 0) return\
     \ {};\n  const std::vector a(this->cbegin(), this->cend());\n  semi_relaxed_convolution\
     \ src(a, [iv = a.front().inv()](int n, const std::vector<ModIntT> &c) {\n    return\
@@ -432,8 +431,8 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
   requiredBy: []
-  timestamp: '2022-05-04 19:31:16+08:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2022-05-04 20:34:26+08:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
 layout: document
