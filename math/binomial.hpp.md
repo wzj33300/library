@@ -1,20 +1,20 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/taylor_shift.hpp
     title: Polynomial Taylor Shift (in $\mathbb{F} _ p$ for FFT prime $p$)
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
     title: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/binomial.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\n\
@@ -25,7 +25,7 @@ data:
     \ factorial_{ModIntT(1)}, invfactorial_{ModIntT(1)};\n\npublic:\n  explicit binomial(int\
     \ n) { preprocess(n); }\n  binomial() {}\n  void preprocess(int n) const {\n \
     \   if (int nn = static_cast<int>(factorial_.size()); nn <= n) {\n      int k\
-    \ = nn;\n      while (k <= n) k <<= n;\n      factorial_.resize(k);\n      invfactorial_.resize(k);\n\
+    \ = nn;\n      while (k <= n) k <<= 1;\n      factorial_.resize(k);\n      invfactorial_.resize(k);\n\
     \      for (int i = nn; i != k; ++i) factorial_[i] = factorial_[i - 1] * i;\n\
     \      invfactorial_.back() = factorial_.back().inv();\n      for (int i = k -\
     \ 2; i >= nn; --i) invfactorial_[i] = invfactorial_[i + 1] * (i + 1);\n    }\n\
@@ -41,7 +41,7 @@ data:
     \ {\n  mutable std::vector<ModIntT> factorial_{ModIntT(1)}, invfactorial_{ModIntT(1)};\n\
     \npublic:\n  explicit binomial(int n) { preprocess(n); }\n  binomial() {}\n  void\
     \ preprocess(int n) const {\n    if (int nn = static_cast<int>(factorial_.size());\
-    \ nn <= n) {\n      int k = nn;\n      while (k <= n) k <<= n;\n      factorial_.resize(k);\n\
+    \ nn <= n) {\n      int k = nn;\n      while (k <= n) k <<= 1;\n      factorial_.resize(k);\n\
     \      invfactorial_.resize(k);\n      for (int i = nn; i != k; ++i) factorial_[i]\
     \ = factorial_[i - 1] * i;\n      invfactorial_.back() = factorial_.back().inv();\n\
     \      for (int i = k - 2; i >= nn; --i) invfactorial_[i] = invfactorial_[i +\
@@ -58,8 +58,8 @@ data:
   path: math/binomial.hpp
   requiredBy:
   - math/taylor_shift.hpp
-  timestamp: '2022-05-04 19:31:16+08:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2022-05-04 20:52:40+08:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
 documentation_of: math/binomial.hpp
