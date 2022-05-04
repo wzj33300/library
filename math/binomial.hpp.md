@@ -58,7 +58,7 @@ data:
   path: math/binomial.hpp
   requiredBy:
   - math/taylor_shift.hpp
-  timestamp: '2022-05-04 20:52:40+08:00'
+  timestamp: '2022-05-04 20:56:17+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
