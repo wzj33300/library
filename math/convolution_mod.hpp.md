@@ -216,22 +216,25 @@ data:
     \    // pull up [`head`, `mid`)\n        for (int i = head; i != mid; ++i) a_[i]\
     \ -= a_[i + len] * r;\n      }\n    }\n    Container &a_;\n    const T i2_;\n\
     \  } rec(a);\n  rec.run(0, n, len);\n  a.resize(n);\n}\n\nLIB_END\n\n\n#line 6\
-    \ \"math/convolution.hpp\"\n\n#line 9 \"math/convolution.hpp\"\n\nLIB_BEGIN\n\n\
-    template <typename ModIntT>\nstd::vector<ModIntT> convolution(const std::vector<ModIntT>\
-    \ &lhs, const std::vector<ModIntT> &rhs) {\n  int n = static_cast<int>(lhs.size()),\
-    \ m = static_cast<int>(rhs.size());\n  if (n == 0 || m == 0) return {};\n  if\
-    \ (std::min(n, m) <= 32) {\n    std::vector<ModIntT> res(n + m - 1);\n    for\
-    \ (int i = 0; i != n; ++i)\n      for (int j = 0; j != m; ++j) res[i + j] += lhs[i]\
-    \ * rhs[j];\n    return res;\n  }\n  int len = n + m - 1;\n  std::vector<ModIntT>\
-    \ lhs_cpy(len), rhs_cpy(len);\n  std::copy_n(lhs.cbegin(), n, lhs_cpy.begin());\n\
-    \  std::copy_n(rhs.cbegin(), m, rhs_cpy.begin());\n  tft(lhs_cpy), tft(rhs_cpy);\n\
-    \  for (int i = 0; i != len; ++i) lhs_cpy[i] *= rhs_cpy[i];\n  itft(lhs_cpy);\n\
-    \  return lhs_cpy;\n}\n\nLIB_END\n\n\n#line 7 \"math/convolution_mod.hpp\"\n\n\
-    #line 11 \"math/convolution_mod.hpp\"\n\nLIB_BEGIN\n\ntemplate <typename IntT>\n\
-    std::enable_if_t<std::is_integral_v<IntT> && sizeof(IntT) <= sizeof(std::int32_t),\n\
-    \                 std::vector<IntT>>\nconvolution_mod(const std::vector<IntT>\
-    \ &lhs, const std::vector<IntT> &rhs, const IntT modular) {\n  using mint0 = mm63<0x3F9A000000000001>;\n\
-    \  using mint1 = mm63<0x3FC6000000000001>;\n  auto res0   = convolution(std::vector<mint0>(lhs.begin(),\
+    \ \"math/convolution.hpp\"\n\n#line 8 \"math/convolution.hpp\"\n#include <memory>\n\
+    #line 10 \"math/convolution.hpp\"\n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\n\
+    std::vector<ModIntT> convolution(const std::vector<ModIntT> &lhs, const std::vector<ModIntT>\
+    \ &rhs) {\n  int n = static_cast<int>(lhs.size()), m = static_cast<int>(rhs.size());\n\
+    \  if (n == 0 || m == 0) return {};\n  if (std::min(n, m) <= 32) {\n    std::vector<ModIntT>\
+    \ res(n + m - 1);\n    for (int i = 0; i != n; ++i)\n      for (int j = 0; j !=\
+    \ m; ++j) res[i + j] += lhs[i] * rhs[j];\n    return res;\n  }\n  int len = n\
+    \ + m - 1;\n  std::vector<ModIntT> lhs_cpy(len);\n  std::copy_n(lhs.cbegin(),\
+    \ n, lhs_cpy.begin());\n  tft(lhs_cpy);\n  if (std::addressof(lhs) != std::addressof(rhs))\
+    \ {\n    std::vector<ModIntT> rhs_cpy(len);\n    std::copy_n(rhs.cbegin(), m,\
+    \ rhs_cpy.begin());\n    tft(rhs_cpy);\n    for (int i = 0; i != len; ++i) lhs_cpy[i]\
+    \ *= rhs_cpy[i];\n  } else {\n    for (int i = 0; i != len; ++i) lhs_cpy[i] *=\
+    \ lhs_cpy[i];\n  }\n  itft(lhs_cpy);\n  return lhs_cpy;\n}\n\nLIB_END\n\n\n#line\
+    \ 7 \"math/convolution_mod.hpp\"\n\n#line 11 \"math/convolution_mod.hpp\"\n\n\
+    LIB_BEGIN\n\ntemplate <typename IntT>\nstd::enable_if_t<std::is_integral_v<IntT>\
+    \ && sizeof(IntT) <= sizeof(std::int32_t),\n                 std::vector<IntT>>\n\
+    convolution_mod(const std::vector<IntT> &lhs, const std::vector<IntT> &rhs, const\
+    \ IntT modular) {\n  using mint0 = mm63<0x3F9A000000000001>;\n  using mint1 =\
+    \ mm63<0x3FC6000000000001>;\n  auto res0   = convolution(std::vector<mint0>(lhs.begin(),\
     \ lhs.end()),\n                          std::vector<mint0>(rhs.begin(), rhs.end()));\n\
     \  auto res1   = convolution(std::vector<mint1>(lhs.begin(), lhs.end()),\n   \
     \                       std::vector<mint1>(rhs.begin(), rhs.end()));\n  const\
@@ -270,7 +273,7 @@ data:
   isVerificationFile: false
   path: math/convolution_mod.hpp
   requiredBy: []
-  timestamp: '2022-05-03 14:22:27+08:00'
+  timestamp: '2022-05-04 12:04:29+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
