@@ -1,34 +1,34 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT
       prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/sqrt_mod.hpp
     title: Square Roots (in $\mathbb{F} _ p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
       \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_fourier_transform.hpp
     title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$ for
       FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
@@ -402,7 +402,7 @@ data:
     \  }\n  friend std::ostream &operator<<(std::ostream &os, const montgomery_modint30\
     \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t ModT>\n\
     using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 5 \"remote_test/yosupo/math/convolution_mod.1.test.cpp\"\
-    \n\n#line 8 \"remote_test/yosupo/math/convolution_mod.1.test.cpp\"\n\nint main()\
+    \n\n#line 9 \"remote_test/yosupo/math/convolution_mod.1.test.cpp\"\n\nint main()\
     \ {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\"\
     , \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
     \  int n, m;\n  std::cin >> n >> m;\n  using mint = lib::mm30<998244353>;\n  lib::tfps<mint>\
@@ -412,10 +412,10 @@ data:
     \ \" \"));\n  return 0;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/convolution_mod\"\n\n#include\
     \ \"math/truncated_formal_power_series.hpp\"\n#include \"modint/montgomery_modint.hpp\"\
-    \n\n#include <iostream>\n#include <iterator>\n\nint main() {\n#ifdef LOCAL\n \
-    \ std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n\
-    #endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n  int n,\
-    \ m;\n  std::cin >> n >> m;\n  using mint = lib::mm30<998244353>;\n  lib::tfps<mint>\
+    \n\n#include <algorithm>\n#include <iostream>\n#include <iterator>\n\nint main()\
+    \ {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\"\
+    , \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
+    \  int n, m;\n  std::cin >> n >> m;\n  using mint = lib::mm30<998244353>;\n  lib::tfps<mint>\
     \ a, b;\n  std::copy_n(std::istream_iterator<mint>(std::cin), n, std::back_inserter(a));\n\
     \  std::copy_n(std::istream_iterator<mint>(std::cin), m, std::back_inserter(b));\n\
     \  auto ab = a * b;\n  std::copy(ab.cbegin(), ab.cend(), std::ostream_iterator<mint>(std::cout,\
@@ -433,7 +433,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/convolution_mod.1.test.cpp
   requiredBy: []
-  timestamp: '2022-05-02 17:03:23+08:00'
+  timestamp: '2022-05-04 19:31:16+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/convolution_mod.1.test.cpp

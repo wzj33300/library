@@ -1,16 +1,16 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
@@ -157,8 +157,8 @@ data:
     \ is;\n  }\n  friend std::ostream &operator<<(std::ostream &os, const montgomery_modint30\
     \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t ModT>\n\
     using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 5 \"remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp\"\
-    \n\n#line 7 \"remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp\"\n\
-    #include <iterator>\n#line 9 \"remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp\"\
+    \n\n#line 8 \"remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp\"\n\
+    #include <iterator>\n#line 10 \"remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp\"\
     \n\ntemplate <typename ModIntT>\nstd::vector<ModIntT> inv_helper_func(std::vector<ModIntT>\
     \ Q) {\n  int n = static_cast<int>(Q.size());\n  if (n == 1) return std::vector<ModIntT>{Q.front().inv()};\n\
     \  // `Q`(x) * `Q`(-x) = `V`(x^2)\n  // We could restore 1/`V`(x^2) by taking\
@@ -178,9 +178,9 @@ data:
     \ std::ostream_iterator<mint>(std::cout, \" \"));\n  return 0;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/inv_of_formal_power_series\"\
     \n\n#include \"math/radix2_ntt.hpp\"\n#include \"modint/montgomery_modint.hpp\"\
-    \n\n#include <iostream>\n#include <iterator>\n#include <vector>\n\ntemplate <typename\
-    \ ModIntT>\nstd::vector<ModIntT> inv_helper_func(std::vector<ModIntT> Q) {\n \
-    \ int n = static_cast<int>(Q.size());\n  if (n == 1) return std::vector<ModIntT>{Q.front().inv()};\n\
+    \n\n#include <algorithm>\n#include <iostream>\n#include <iterator>\n#include <vector>\n\
+    \ntemplate <typename ModIntT>\nstd::vector<ModIntT> inv_helper_func(std::vector<ModIntT>\
+    \ Q) {\n  int n = static_cast<int>(Q.size());\n  if (n == 1) return std::vector<ModIntT>{Q.front().inv()};\n\
     \  // `Q`(x) * `Q`(-x) = `V`(x^2)\n  // We could restore 1/`V`(x^2) by taking\
     \ first `n`/2 terms of 1/`V`(x).\n  // `Q`(x)^(-1) = `Q`(-x)/`V`(x^2)\n  Q.resize(n\
     \ << 1);\n  lib::dft(Q);\n  std::vector<ModIntT> V(n);\n  for (int i = 0; i !=\
@@ -204,7 +204,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
   requiredBy: []
-  timestamp: '2022-04-25 23:36:30+08:00'
+  timestamp: '2022-05-04 19:31:16+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp

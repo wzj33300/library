@@ -1,23 +1,23 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
   - icon: ':heavy_check_mark:'
     path: math/convolution.hpp
     title: Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_fourier_transform.hpp
     title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$ for
       FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
@@ -225,7 +225,7 @@ data:
     \ is;\n  }\n  friend std::ostream &operator<<(std::ostream &os, const montgomery_modint30\
     \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t ModT>\n\
     using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 5 \"remote_test/yosupo/math/convolution_mod.0.test.cpp\"\
-    \n\n#line 7 \"remote_test/yosupo/math/convolution_mod.0.test.cpp\"\n#include <iterator>\n\
+    \n\n#line 8 \"remote_test/yosupo/math/convolution_mod.0.test.cpp\"\n#include <iterator>\n\
     \nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"\
     out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
     \  int n, m;\n  std::cin >> n >> m;\n  using mint = lib::mm30<998244353>;\n  std::vector<mint>\
@@ -235,13 +235,14 @@ data:
     \ \" \"));\n  return 0;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/convolution_mod\"\n\n#include\
     \ \"math/convolution.hpp\"\n#include \"modint/montgomery_modint.hpp\"\n\n#include\
-    \ <iostream>\n#include <iterator>\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"\
-    in\", \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
-    \  std::cin.tie(nullptr);\n  int n, m;\n  std::cin >> n >> m;\n  using mint =\
-    \ lib::mm30<998244353>;\n  std::vector<mint> a, b;\n  std::copy_n(std::istream_iterator<mint>(std::cin),\
-    \ n, std::back_inserter(a));\n  std::copy_n(std::istream_iterator<mint>(std::cin),\
-    \ m, std::back_inserter(b));\n  auto ab = lib::convolution(a, b);\n  std::copy(ab.begin(),\
-    \ ab.end(), std::ostream_iterator<mint>(std::cout, \" \"));\n  return 0;\n}"
+    \ <algorithm>\n#include <iostream>\n#include <iterator>\n\nint main() {\n#ifdef\
+    \ LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n\
+    #endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n  int n,\
+    \ m;\n  std::cin >> n >> m;\n  using mint = lib::mm30<998244353>;\n  std::vector<mint>\
+    \ a, b;\n  std::copy_n(std::istream_iterator<mint>(std::cin), n, std::back_inserter(a));\n\
+    \  std::copy_n(std::istream_iterator<mint>(std::cin), m, std::back_inserter(b));\n\
+    \  auto ab = lib::convolution(a, b);\n  std::copy(ab.begin(), ab.end(), std::ostream_iterator<mint>(std::cout,\
+    \ \" \"));\n  return 0;\n}"
   dependsOn:
   - math/convolution.hpp
   - common.hpp
@@ -252,7 +253,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/convolution_mod.0.test.cpp
   requiredBy: []
-  timestamp: '2022-05-04 12:04:29+08:00'
+  timestamp: '2022-05-04 19:31:16+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/convolution_mod.0.test.cpp

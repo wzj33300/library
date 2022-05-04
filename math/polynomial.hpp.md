@@ -1,27 +1,27 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT
       prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/sqrt_mod.hpp
     title: Square Roots (in $\mathbb{F} _ p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
       \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_fourier_transform.hpp
     title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$ for
       FFT prime $p$)
@@ -30,9 +30,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/division_of_polynomials.0.test.cpp
     title: remote_test/yosupo/math/division_of_polynomials.0.test.cpp
-  _isVerificationFailed: false
+  - icon: ':x:'
+    path: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
+    title: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/polynomial.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\
@@ -423,9 +426,10 @@ data:
   path: math/polynomial.hpp
   requiredBy: []
   timestamp: '2022-05-02 17:03:23+08:00'
-  verificationStatus: LIBRARY_ALL_AC
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - remote_test/yosupo/math/division_of_polynomials.0.test.cpp
+  - remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
 documentation_of: math/polynomial.hpp
 layout: document
 title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)

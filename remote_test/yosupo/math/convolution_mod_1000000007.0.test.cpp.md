@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
   - icon: ':heavy_check_mark:'
@@ -13,10 +13,10 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/convolution_mod.hpp
     title: Convolution (in $\mathbb{Z} m / \mathbb{Z} \lbrack z \rbrack$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_fourier_transform.hpp
     title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$ for
       FFT prime $p$)
@@ -250,9 +250,9 @@ data:
     \ mint1::mod() % modular;\n  for (int i = 0; i != n; ++i) {\n    mint0 k1((res0[i]\
     \ - res1[i].val()) * im1_mod_m0);\n    res[i] = (k1.val() % modular * m1_mod_modular\
     \ + res1[i].val()) % modular;\n  }\n  return res;\n}\n\nLIB_END\n\n\n#line 4 \"\
-    remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp\"\n\n#line 6 \"\
+    remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp\"\n\n#line 7 \"\
     remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp\"\n#include <iterator>\n\
-    #line 8 \"remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp\"\n\n\
+    #line 9 \"remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp\"\n\n\
     int main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"\
     out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
     \  int n, m;\n  std::cin >> n >> m;\n  std::vector<int> a, b;\n  std::copy_n(std::istream_iterator<int>(std::cin),\
@@ -261,9 +261,9 @@ data:
     \  std::copy(ab.begin(), ab.end(), std::ostream_iterator<int>(std::cout, \" \"\
     ));\n  return 0;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/convolution_mod_1000000007\"\
-    \n\n#include \"math/convolution_mod.hpp\"\n\n#include <iostream>\n#include <iterator>\n\
-    #include <vector>\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\"\
-    , stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
+    \n\n#include \"math/convolution_mod.hpp\"\n\n#include <algorithm>\n#include <iostream>\n\
+    #include <iterator>\n#include <vector>\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"\
+    in\", \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
     \  std::cin.tie(nullptr);\n  int n, m;\n  std::cin >> n >> m;\n  std::vector<int>\
     \ a, b;\n  std::copy_n(std::istream_iterator<int>(std::cin), n, std::back_inserter(a));\n\
     \  std::copy_n(std::istream_iterator<int>(std::cin), m, std::back_inserter(b));\n\
@@ -280,7 +280,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
   requiredBy: []
-  timestamp: '2022-05-04 12:04:29+08:00'
+  timestamp: '2022-05-04 19:31:16+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp

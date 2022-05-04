@@ -7,9 +7,15 @@ data:
   - icon: ':question:'
     path: common.hpp
     title: common.hpp
+  - icon: ':x:'
+    path: math/binomial.hpp
+    title: Binomial Coefficient (in $\mathbb{F} _ p$)
   - icon: ':question:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
+  - icon: ':question:'
+    path: math/polynomial.hpp
+    title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
@@ -20,6 +26,9 @@ data:
   - icon: ':question:'
     path: math/sqrt_mod.hpp
     title: Square Roots (in $\mathbb{F} _ p$)
+  - icon: ':x:'
+    path: math/taylor_shift.hpp
+    title: Polynomial Taylor Shift (in $\mathbb{F} _ p$ for FFT prime $p$)
   - icon: ':question:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
@@ -38,34 +47,34 @@ data:
   _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/inv_of_formal_power_series
+    PROBLEM: https://judge.yosupo.jp/problem/polynomial_taylor_shift
     links:
-    - https://judge.yosupo.jp/problem/inv_of_formal_power_series
-  bundledCode: "#line 1 \"remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp\"\
-    \n#define PROBLEM \"https://judge.yosupo.jp/problem/inv_of_formal_power_series\"\
-    \n\n#line 1 \"math/truncated_formal_power_series.hpp\"\n\n\n\n#line 1 \"common.hpp\"\
-    \n\n\n\n#define LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END\
-    \ }\n#define LIB ::lib::\n\n\n#line 1 \"math/extended_gcd.hpp\"\n\n\n\n#line 5\
-    \ \"math/extended_gcd.hpp\"\n\n#include <tuple>\n#include <utility>\n#include\
-    \ <vector>\n\nLIB_BEGIN\n\n// Input:  integer `a` and `b`.\n// Output: (x, y,\
-    \ z) such that `a`x + `b`y = z = gcd(`a`, `b`).\n[[deprecated]] std::tuple<long\
-    \ long, long long, long long> ext_gcd(long long a, long long b) {\n  long long\
-    \ x11 = 1, x12 = 0, x21 = 0, x22 = 1;\n  while (b != 0) {\n    long long q = a\
-    \ / b, x11_cpy = x11, x12_cpy = x12, a_cpy = a;\n    x11 = x21, x21 = x11_cpy\
-    \ - q * x21;\n    x12 = x22, x22 = x12_cpy - q * x22;\n    a = b, b = a_cpy -\
-    \ q * b;\n  }\n  return std::make_tuple(x11, x12, a);\n}\n\n// Input:  integer\
-    \ `a` and `b`.\n// Output: (x, gcd(`a`, `b`)) such that `a`x \u2261 gcd(`a`, `b`)\
-    \ (mod `b`).\nstd::pair<long long, long long> inv_gcd(long long a, long long b)\
-    \ {\n  long long x11 = 1, x21 = 0;\n  while (b != 0) {\n    long long q = a /\
-    \ b, x11_cpy = x11, a_cpy = a;\n    x11 = x21, x21 = x11_cpy - q * x21;\n    a\
-    \ = b, b = a_cpy - q * b;\n  }\n  return std::make_pair(x11, a);\n}\n\nnamespace\
-    \ detail {\n\ntemplate <typename ModIntT>\nclass modular_inverse {\n  std::vector<ModIntT>\
-    \ ivs{ModIntT()};\n\n  enum : int { LIM = 1 << 20 };\n\npublic:\n  modular_inverse()\
-    \ {}\n  ModIntT operator()(int k) {\n    // assume `ModIntT::mod()` is prime.\n\
-    \    if (k > LIM) return ModIntT(k).inv();\n    // preprocess modular inverse\
-    \ from 1 to `k`\n    if (int n = static_cast<int>(ivs.size()); n <= k) {\n   \
-    \   int nn = n;\n      while (nn <= k) nn <<= 1;\n      ivs.resize(nn);\n    \
-    \  ModIntT v(1);\n      for (int i = n; i != nn; ++i) ivs[i] = v, v *= ModIntT(i);\n\
+    - https://judge.yosupo.jp/problem/polynomial_taylor_shift
+  bundledCode: "#line 1 \"remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp\"\
+    \n#define PROBLEM \"https://judge.yosupo.jp/problem/polynomial_taylor_shift\"\n\
+    \n#line 1 \"math/polynomial.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\n#define\
+    \ LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END }\n#define LIB\
+    \ ::lib::\n\n\n#line 1 \"math/truncated_formal_power_series.hpp\"\n\n\n\n#line\
+    \ 1 \"math/extended_gcd.hpp\"\n\n\n\n#line 5 \"math/extended_gcd.hpp\"\n\n#include\
+    \ <tuple>\n#include <utility>\n#include <vector>\n\nLIB_BEGIN\n\n// Input:  integer\
+    \ `a` and `b`.\n// Output: (x, y, z) such that `a`x + `b`y = z = gcd(`a`, `b`).\n\
+    [[deprecated]] std::tuple<long long, long long, long long> ext_gcd(long long a,\
+    \ long long b) {\n  long long x11 = 1, x12 = 0, x21 = 0, x22 = 1;\n  while (b\
+    \ != 0) {\n    long long q = a / b, x11_cpy = x11, x12_cpy = x12, a_cpy = a;\n\
+    \    x11 = x21, x21 = x11_cpy - q * x21;\n    x12 = x22, x22 = x12_cpy - q * x22;\n\
+    \    a = b, b = a_cpy - q * b;\n  }\n  return std::make_tuple(x11, x12, a);\n\
+    }\n\n// Input:  integer `a` and `b`.\n// Output: (x, gcd(`a`, `b`)) such that\
+    \ `a`x \u2261 gcd(`a`, `b`) (mod `b`).\nstd::pair<long long, long long> inv_gcd(long\
+    \ long a, long long b) {\n  long long x11 = 1, x21 = 0;\n  while (b != 0) {\n\
+    \    long long q = a / b, x11_cpy = x11, a_cpy = a;\n    x11 = x21, x21 = x11_cpy\
+    \ - q * x21;\n    a = b, b = a_cpy - q * b;\n  }\n  return std::make_pair(x11,\
+    \ a);\n}\n\nnamespace detail {\n\ntemplate <typename ModIntT>\nclass modular_inverse\
+    \ {\n  std::vector<ModIntT> ivs{ModIntT()};\n\n  enum : int { LIM = 1 << 20 };\n\
+    \npublic:\n  modular_inverse() {}\n  ModIntT operator()(int k) {\n    // assume\
+    \ `ModIntT::mod()` is prime.\n    if (k > LIM) return ModIntT(k).inv();\n    //\
+    \ preprocess modular inverse from 1 to `k`\n    if (int n = static_cast<int>(ivs.size());\
+    \ n <= k) {\n      int nn = n;\n      while (nn <= k) nn <<= 1;\n      ivs.resize(nn);\n\
+    \      ModIntT v(1);\n      for (int i = n; i != nn; ++i) ivs[i] = v, v *= ModIntT(i);\n\
     \      v = v.inv();\n      for (int i = nn - 1; i >= n; --i) ivs[i] *= v, v *=\
     \ ModIntT(i);\n    }\n    return ivs[k];\n  }\n};\n\n} // namespace detail\n\n\
     LIB_END\n\n\n#line 1 \"math/semi_relaxed_convolution.hpp\"\n\n\n\n#line 1 \"math/radix2_ntt.hpp\"\
@@ -345,7 +354,67 @@ data:
     \  if (o & 1) return {};\n  auto res = sqrt_mod_prime(this->operator[](o));\n\
     \  if (res.empty()) return {};\n  return sqrt_hint(n, res.front());\n}\n\ntemplate\
     \ <typename ModIntT>\nusing tfps = truncated_formal_power_series<ModIntT>;\n\n\
-    LIB_END\n\n\n#line 1 \"modint/montgomery_modint.hpp\"\n\n\n\n#line 5 \"modint/montgomery_modint.hpp\"\
+    LIB_END\n\n\n#line 6 \"math/polynomial.hpp\"\n\n#line 12 \"math/polynomial.hpp\"\
+    \n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nclass polynomial : public truncated_formal_power_series<ModIntT>\
+    \ {\n  using MyBase = truncated_formal_power_series<ModIntT>;\n  static_assert(std::is_same_v<typename\
+    \ MyBase::value_type, ModIntT>);\n\npublic:\n  using truncated_formal_power_series<ModIntT>::truncated_formal_power_series;\n\
+    \n  explicit polynomial(const MyBase &rhs) : MyBase(rhs) {}\n  polynomial operator-()\
+    \ { return MyBase::operator-(); }\n  polynomial &operator+=(const polynomial &rhs)\
+    \ {\n    MyBase::operator+=(rhs);\n    this->shrink();\n    return *this;\n  }\n\
+    \  polynomial &operator-=(const polynomial &rhs) {\n    MyBase::operator-=(rhs);\n\
+    \    this->shrink();\n    return *this;\n  }\n  polynomial &operator*=(const polynomial\
+    \ &rhs) {\n    MyBase::operator*=(rhs);\n    this->shrink();\n    return *this;\n\
+    \  }\n  polynomial &operator/=(const polynomial &rhs) {\n    const int n = this->deg(),\
+    \ m = rhs.deg();\n    assert(m != MyBase::NEGATIVE_INFINITY);\n    if (n < m)\
+    \ {\n      this->clear();\n      return *this;\n    }\n    auto irev_rhs = polynomial(rhs.crbegin()\
+    \ + (rhs.size() - m - 1), rhs.crend()).inv(n - m + 1);\n    auto lhsirhs  = *this\
+    \ * polynomial(irev_rhs.crbegin(), irev_rhs.crend());\n    this->resize(n - m\
+    \ + 1);\n    std::copy(lhsirhs.cbegin() + n, lhsirhs.cend(), this->begin());\n\
+    \    return *this;\n  }\n  polynomial &operator%=(const polynomial &rhs) {\n \
+    \   return this->operator=(div_with_rem(rhs).second);\n  }\n  std::pair<polynomial,\
+    \ polynomial> div_with_rem(const polynomial &rhs) {\n    const int n = this->deg(),\
+    \ m = rhs.deg();\n    if (n < m) return std::make_pair(polynomial(), *this);\n\
+    \    auto q    = *this / rhs;\n    auto qrhs = q * rhs;\n    polynomial r(m);\n\
+    \    for (int i = 0; i != m; ++i) r[i] = this->operator[](i) - qrhs[i];\n    r.shrink();\n\
+    \    return std::make_pair(q, r);\n  }\n\n  friend polynomial operator+(const\
+    \ polynomial &lhs, const polynomial &rhs) {\n    return polynomial(lhs) += rhs;\n\
+    \  }\n  friend polynomial operator-(const polynomial &lhs, const polynomial &rhs)\
+    \ {\n    return polynomial(lhs) -= rhs;\n  }\n  friend polynomial operator*(const\
+    \ polynomial &lhs, const polynomial &rhs) {\n    return polynomial(lhs) *= rhs;\n\
+    \  }\n  friend polynomial operator/(const polynomial &lhs, const polynomial &rhs)\
+    \ {\n    return polynomial(lhs) /= rhs;\n  }\n  friend polynomial operator%(const\
+    \ polynomial &lhs, const polynomial &rhs) {\n    return polynomial(lhs) %= rhs;\n\
+    \  }\n  friend std::istream &operator>>(std::istream &lhs, polynomial &rhs) {\n\
+    \    for (auto &&i : rhs) lhs >> i;\n    return lhs;\n  }\n  friend std::ostream\
+    \ &operator<<(std::ostream &lhs, const polynomial &rhs) {\n    return lhs << MyBase(rhs.begin(),\
+    \ rhs.end()); // debug only\n  }\n};\n\ntemplate <typename IterT>\npolynomial(IterT,\
+    \ IterT) -> polynomial<typename std::iterator_traits<IterT>::value_type>;\n\n\
+    LIB_END\n\n\n#line 1 \"math/taylor_shift.hpp\"\n\n\n\n#line 1 \"math/binomial.hpp\"\
+    \n\n\n\n#line 5 \"math/binomial.hpp\"\n\n#line 7 \"math/binomial.hpp\"\n\nLIB_BEGIN\n\
+    \n// helper class for precomputation of factorials and multiplicative inverse\
+    \ of them.\ntemplate <typename ModIntT>\nclass binomial {\n  mutable std::vector<ModIntT>\
+    \ factorial_{ModIntT(1)}, invfactorial_{ModIntT(1)};\n\npublic:\n  explicit binomial(int\
+    \ n) { preprocess(n); }\n  binomial() {}\n  void preprocess(int n) const {\n \
+    \   if (int nn = static_cast<int>(factorial_.size()); nn <= n) {\n      int k\
+    \ = nn;\n      while (k <= n) k <<= n;\n      factorial_.resize(k);\n      invfactorial_.resize(k);\n\
+    \      for (int i = nn; i != k; ++i) factorial_[i] = factorial_[i - 1] * i;\n\
+    \      invfactorial_.back() = factorial_.back().inv();\n      for (int i = k -\
+    \ 2; i >= nn; --i) invfactorial_[i] = invfactorial_[i + 1] * (i + 1);\n    }\n\
+    \  }\n  // binomial coefficient `n`C`m`\n  ModIntT binom(int n, int m) const {\n\
+    \    return n < m ? ModIntT()\n                 : (preprocess(n), factorial_[n]\
+    \ * invfactorial_[m] * invfactorial_[n - m]);\n  }\n  ModIntT inv(int n) const\
+    \ { return preprocess(n), factorial_[n - 1] * invfactorial_[n]; }\n  ModIntT factorial(int\
+    \ n) const { return preprocess(n), factorial_[n]; }\n  ModIntT inv_factorial(int\
+    \ n) const { return preprocess(n), invfactorial_[n]; }\n};\n\nLIB_END\n\n\n#line\
+    \ 6 \"math/taylor_shift.hpp\"\n\n#line 8 \"math/taylor_shift.hpp\"\n\nLIB_BEGIN\n\
+    \ntemplate <typename PolyT>\nPolyT taylor_shift(const PolyT &a, typename PolyT::value_type\
+    \ c) {\n  using T     = typename PolyT::value_type;\n  const int n = static_cast<int>(a.size());\n\
+    \  binomial<T> b(n);\n  PolyT rev_a_cpy(n), pc(n);\n  for (int i = 0; i != n;\
+    \ ++i) rev_a_cpy[n - 1 - i] = a[i] * b.factorial(i);\n  T cc(1);\n  for (int i\
+    \ = 0; i != n; ++i) pc[i] = cc * b.inv_factorial(i), cc *= c;\n  (rev_a_cpy *=\
+    \ pc).resize(n);\n  std::reverse(rev_a_cpy.begin(), rev_a_cpy.end());\n  for (int\
+    \ i = 0; i != n; ++i) rev_a_cpy[i] *= b.inv_factorial(i);\n  return rev_a_cpy;\n\
+    }\n\nLIB_END\n\n\n#line 1 \"modint/montgomery_modint.hpp\"\n\n\n\n#line 5 \"modint/montgomery_modint.hpp\"\
     \n\n#ifdef LIB_DEBUG\n  #include <stdexcept>\n#endif\n#include <cstdint>\n#line\
     \ 12 \"modint/montgomery_modint.hpp\"\n\nLIB_BEGIN\n\ntemplate <std::uint32_t\
     \ ModT>\nclass montgomery_modint30 {\n  using i32 = std::int32_t;\n  using u32\
@@ -402,43 +471,46 @@ data:
     \ {\n    i32 x;\n    is >> x;\n    rhs = montgomery_modint30(x);\n    return is;\n\
     \  }\n  friend std::ostream &operator<<(std::ostream &os, const montgomery_modint30\
     \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t ModT>\n\
-    using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 5 \"remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp\"\
-    \n\n#line 9 \"remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp\"\n\
-    \nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"\
+    using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 6 \"remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp\"\
+    \n\n#line 10 \"remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp\"\n\n\
+    int main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"\
     out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
-    \  int n;\n  std::cin >> n;\n  using mint = lib::mm30<998244353>;\n  lib::tfps<mint>\
-    \ a;\n  std::copy_n(std::istream_iterator<mint>(std::cin), n, std::back_inserter(a));\n\
-    \  auto ia = a.inv(n);\n  std::copy(ia.cbegin(), ia.cend(), std::ostream_iterator<mint>(std::cout,\
-    \ \" \"));\n  return 0;\n}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/inv_of_formal_power_series\"\
-    \n\n#include \"math/truncated_formal_power_series.hpp\"\n#include \"modint/montgomery_modint.hpp\"\
-    \n\n#include <algorithm>\n#include <iostream>\n#include <iterator>\n\nint main()\
-    \ {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\"\
-    , \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
-    \  int n;\n  std::cin >> n;\n  using mint = lib::mm30<998244353>;\n  lib::tfps<mint>\
-    \ a;\n  std::copy_n(std::istream_iterator<mint>(std::cin), n, std::back_inserter(a));\n\
-    \  auto ia = a.inv(n);\n  std::copy(ia.cbegin(), ia.cend(), std::ostream_iterator<mint>(std::cout,\
-    \ \" \"));\n  return 0;\n}"
+    \  using mint = lib::mm30<998244353>;\n  int n;\n  mint c;\n  std::cin >> n >>\
+    \ c;\n  lib::polynomial<mint> f;\n  std::copy_n(std::istream_iterator<mint>(std::cin),\
+    \ n, std::back_inserter(f));\n  auto fc = lib::taylor_shift(f, c);\n  std::copy(fc.cbegin(),\
+    \ fc.cend(), std::ostream_iterator<mint>(std::cout, \" \"));\n  return 0;\n}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/polynomial_taylor_shift\"\
+    \n\n#include \"math/polynomial.hpp\"\n#include \"math/taylor_shift.hpp\"\n#include\
+    \ \"modint/montgomery_modint.hpp\"\n\n#include <algorithm>\n#include <iostream>\n\
+    #include <iterator>\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\"\
+    , stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
+    \  std::cin.tie(nullptr);\n  using mint = lib::mm30<998244353>;\n  int n;\n  mint\
+    \ c;\n  std::cin >> n >> c;\n  lib::polynomial<mint> f;\n  std::copy_n(std::istream_iterator<mint>(std::cin),\
+    \ n, std::back_inserter(f));\n  auto fc = lib::taylor_shift(f, c);\n  std::copy(fc.cbegin(),\
+    \ fc.cend(), std::ostream_iterator<mint>(std::cout, \" \"));\n  return 0;\n}"
   dependsOn:
-  - math/truncated_formal_power_series.hpp
+  - math/polynomial.hpp
   - common.hpp
+  - math/truncated_formal_power_series.hpp
   - math/extended_gcd.hpp
   - math/semi_relaxed_convolution.hpp
   - math/radix2_ntt.hpp
   - math/sqrt_mod.hpp
   - math/truncated_fourier_transform.hpp
+  - math/taylor_shift.hpp
+  - math/binomial.hpp
   - modint/montgomery_modint.hpp
   - common.hpp
   isVerificationFile: true
-  path: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
+  path: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
   requiredBy: []
   timestamp: '2022-05-04 19:31:16+08:00'
   verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
-documentation_of: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
+documentation_of: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
 layout: document
 redirect_from:
-- /verify/remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
-- /verify/remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp.html
-title: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
+- /verify/remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
+- /verify/remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp.html
+title: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
 ---

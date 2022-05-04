@@ -1,31 +1,31 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/multivariate_convolution.hpp
     title: Multivariate Convolution (in $\mathbb{F} _ p \lbrack z_1, \dots, z_d \rbrack
       \left/ \left( z_1^{l_1}, \dots, z_d^{l_d} \right)\right.$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_fourier_transform.hpp
     title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$ for
       FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/multivariate_convolution
@@ -233,8 +233,8 @@ data:
     \ is;\n  }\n  friend std::ostream &operator<<(std::ostream &os, const montgomery_modint30\
     \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t ModT>\n\
     using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 5 \"remote_test/yosupo/math/multivariate_convolution.0.test.cpp\"\
-    \n\n#line 7 \"remote_test/yosupo/math/multivariate_convolution.0.test.cpp\"\n\
-    #include <iterator>\n#line 9 \"remote_test/yosupo/math/multivariate_convolution.0.test.cpp\"\
+    \n\n#line 8 \"remote_test/yosupo/math/multivariate_convolution.0.test.cpp\"\n\
+    #include <iterator>\n#line 10 \"remote_test/yosupo/math/multivariate_convolution.0.test.cpp\"\
     \n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"\
     out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
     \  int d, N = 1;\n  std::cin >> d;\n  std::vector<int> n(d);\n  for (auto &&i\
@@ -246,9 +246,9 @@ data:
     \ \"));\n  return 0;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/multivariate_convolution\"\
     \n\n#include \"math/multivariate_convolution.hpp\"\n#include \"modint/montgomery_modint.hpp\"\
-    \n\n#include <iostream>\n#include <iterator>\n#include <vector>\n\nint main()\
-    \ {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\"\
-    , \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
+    \n\n#include <algorithm>\n#include <iostream>\n#include <iterator>\n#include <vector>\n\
+    \nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"\
+    out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
     \  int d, N = 1;\n  std::cin >> d;\n  std::vector<int> n(d);\n  for (auto &&i\
     \ : n) {\n    std::cin >> i;\n    N *= i;\n  }\n  using mint = lib::mm30<998244353>;\n\
     \  std::vector<mint> a, b;\n  std::copy_n(std::istream_iterator<mint>(std::cin),\
@@ -266,8 +266,8 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/multivariate_convolution.0.test.cpp
   requiredBy: []
-  timestamp: '2022-05-04 10:10:18+08:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2022-05-04 19:31:16+08:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/multivariate_convolution.0.test.cpp
 layout: document
