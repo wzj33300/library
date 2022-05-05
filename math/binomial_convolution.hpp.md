@@ -484,14 +484,15 @@ data:
   isVerificationFile: false
   path: math/binomial_convolution.hpp
   requiredBy: []
-  timestamp: '2022-05-05 23:41:29+08:00'
+  timestamp: '2022-05-05 23:46:58+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
 documentation_of: math/binomial_convolution.hpp
 layout: document
-redirect_from:
-- /library/math/binomial_convolution.hpp
-- /library/math/binomial_convolution.hpp.html
-title: math/binomial_convolution.hpp
+title: Binomial Convolution (in $\mathbb{Z} / m \mathbb{Z}$)
 ---
+
+## Reference
+
+1. Elegia. [任意模数二项卷积](https://blog.csdn.net/EI_Captain/article/details/107456608).

@@ -7,7 +7,7 @@ data:
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
     path: math/binomial_convolution.hpp
-    title: math/binomial_convolution.hpp
+    title: Binomial Convolution (in $\mathbb{Z} / m \mathbb{Z}$)
   - icon: ':heavy_check_mark:'
     path: math/formal_power_series.hpp
     title: Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack \rbrack$

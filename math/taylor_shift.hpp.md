@@ -6,7 +6,7 @@ data:
     title: common.hpp
   - icon: ':heavy_check_mark:'
     path: math/binomial.hpp
-    title: Binomial Convolution (in $\mathbb{Z} / m \mathbb{Z}$)
+    title: Binomial Coefficient (in $\mathbb{F} _ p$)
   _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'

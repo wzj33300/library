@@ -9,7 +9,7 @@ data:
     title: common.hpp
   - icon: ':heavy_check_mark:'
     path: math/binomial_convolution.hpp
-    title: math/binomial_convolution.hpp
+    title: Binomial Convolution (in $\mathbb{Z} / m \mathbb{Z}$)
   - icon: ':heavy_check_mark:'
     path: math/convolution.hpp
     title: Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
@@ -398,7 +398,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
   requiredBy: []
-  timestamp: '2022-05-05 23:41:29+08:00'
+  timestamp: '2022-05-05 23:46:58+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp

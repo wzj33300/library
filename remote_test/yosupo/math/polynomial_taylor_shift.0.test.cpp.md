@@ -9,7 +9,7 @@ data:
     title: common.hpp
   - icon: ':heavy_check_mark:'
     path: math/binomial.hpp
-    title: Binomial Convolution (in $\mathbb{Z} / m \mathbb{Z}$)
+    title: Binomial Coefficient (in $\mathbb{F} _ p$)
   - icon: ':heavy_check_mark:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm (in $\mathbb{Z}$)

@@ -10,7 +10,7 @@ data:
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
     path: math/binomial_convolution.hpp
-    title: math/binomial_convolution.hpp
+    title: Binomial Convolution (in $\mathbb{Z} / m \mathbb{Z}$)
   - icon: ':heavy_check_mark:'
     path: math/convolution.hpp
     title: Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)

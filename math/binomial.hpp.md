@@ -64,9 +64,5 @@ data:
   - remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
 documentation_of: math/binomial.hpp
 layout: document
-title: Binomial Convolution (in $\mathbb{Z} / m \mathbb{Z}$)
+title: Binomial Coefficient (in $\mathbb{F} _ p$)
 ---
-
-## Reference
-
-1. Elegia. [任意模数二项卷积](https://blog.csdn.net/EI_Captain/article/details/107456608).

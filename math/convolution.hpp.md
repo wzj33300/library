@@ -14,7 +14,7 @@ data:
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
     path: math/binomial_convolution.hpp
-    title: math/binomial_convolution.hpp
+    title: Binomial Convolution (in $\mathbb{Z} / m \mathbb{Z}$)
   - icon: ':heavy_check_mark:'
     path: math/convolution_mod.hpp
     title: Convolution (in $\mathbb{Z} m / \mathbb{Z} \lbrack z \rbrack$)
