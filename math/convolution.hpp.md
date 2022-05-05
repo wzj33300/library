@@ -13,6 +13,9 @@ data:
       FFT prime $p$)
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
+    path: math/binomial_convolution.hpp
+    title: math/binomial_convolution.hpp
+  - icon: ':heavy_check_mark:'
     path: math/convolution_mod.hpp
     title: Convolution (in $\mathbb{Z} m / \mathbb{Z} \lbrack z \rbrack$)
   _extendedVerifiedWith:
@@ -22,6 +25,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
     title: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
+    title: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -185,10 +191,12 @@ data:
   path: math/convolution.hpp
   requiredBy:
   - math/convolution_mod.hpp
+  - math/binomial_convolution.hpp
   timestamp: '2022-05-04 12:04:29+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
+  - remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
   - remote_test/yosupo/math/convolution_mod.0.test.cpp
 documentation_of: math/convolution.hpp
 layout: document

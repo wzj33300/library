@@ -35,8 +35,8 @@ data:
     \ { return preprocess(n), factorial_[n - 1] * invfactorial_[n]; }\n  ModIntT factorial(int\
     \ n) const { return preprocess(n), factorial_[n]; }\n  ModIntT inv_factorial(int\
     \ n) const { return preprocess(n), invfactorial_[n]; }\n};\n\nLIB_END\n\n\n"
-  code: "#ifndef BINOMIAL_PRIME\n#define BINOMIAL_PRIME\n\n#include \"../common.hpp\"\
-    \n\n#include <vector>\n\nLIB_BEGIN\n\n// helper class for precomputation of factorials\
+  code: "#ifndef BINOMIAL_HPP\n#define BINOMIAL_HPP\n\n#include \"../common.hpp\"\n\
+    \n#include <vector>\n\nLIB_BEGIN\n\n// helper class for precomputation of factorials\
     \ and multiplicative inverse of them.\ntemplate <typename ModIntT>\nclass binomial\
     \ {\n  mutable std::vector<ModIntT> factorial_{ModIntT(1)}, invfactorial_{ModIntT(1)};\n\
     \npublic:\n  explicit binomial(int n) { preprocess(n); }\n  binomial() {}\n  void\
@@ -58,11 +58,15 @@ data:
   path: math/binomial.hpp
   requiredBy:
   - math/taylor_shift.hpp
-  timestamp: '2022-05-04 20:56:17+08:00'
+  timestamp: '2022-05-05 22:58:57+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
 documentation_of: math/binomial.hpp
 layout: document
-title: Binomial Coefficient (in $\mathbb{F} _ p$)
+title: Binomial Convolution (in $\mathbb{Z} / m \mathbb{Z}$)
 ---
+
+## Reference
+
+1. Elegia. [任意模数二项卷积](https://blog.csdn.net/EI_Captain/article/details/107456608).

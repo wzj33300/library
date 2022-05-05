@@ -21,7 +21,10 @@ data:
     pages:
     - icon: ':heavy_check_mark:'
       path: math/binomial.hpp
-      title: Binomial Coefficient (in $\mathbb{F} _ p$)
+      title: Binomial Convolution (in $\mathbb{Z} / m \mathbb{Z}$)
+    - icon: ':heavy_check_mark:'
+      path: math/binomial_convolution.hpp
+      title: math/binomial_convolution.hpp
     - icon: ':heavy_check_mark:'
       path: math/convolution.hpp
       title: Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
@@ -172,6 +175,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
       title: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
+      title: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
       title: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp

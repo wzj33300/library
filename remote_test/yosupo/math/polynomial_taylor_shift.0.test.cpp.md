@@ -9,7 +9,7 @@ data:
     title: common.hpp
   - icon: ':heavy_check_mark:'
     path: math/binomial.hpp
-    title: Binomial Coefficient (in $\mathbb{F} _ p$)
+    title: Binomial Convolution (in $\mathbb{Z} / m \mathbb{Z}$)
   - icon: ':heavy_check_mark:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
@@ -503,7 +503,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
   requiredBy: []
-  timestamp: '2022-05-04 20:56:17+08:00'
+  timestamp: '2022-05-05 22:58:57+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp

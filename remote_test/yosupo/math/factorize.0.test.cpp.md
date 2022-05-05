@@ -109,22 +109,22 @@ data:
     \ n); } while (g == 1);\n  }\n  return g == n ? rho<ModIntT>(n) : g;\n}\n\n} //\
     \ namespace detail\n\nbool is_prime(std::uint64_t n) {\n  // Miller-Rabin test\n\
     \  if (n <= 2) return n == 2;\n  if ((n & 1) == 0) return false;\n  if (n < 8)\
-    \ return true;\n  using mint = rmm63<-1>;\n  bool okay  = mint::set_mod(n);\n\
-    \  assert(okay);\n  int t           = 0;\n  std::uint64_t u = n - 1;\n  do { u\
-    \ >>= 1, ++t; } while ((u & 1) == 0);\n  for (int i : {2, 3, 5, 7, 11, 13, 17,\
-    \ 19, 23, 29, 31, 37}) {\n    if (n == i) return true;\n    mint x = mint(i).pow(u);\n\
-    \    for (int j = 0; j != t && x != 1; ++j) {\n      mint y = x * x;\n      if\
-    \ (x != -1 && y == 1) return false;\n      x = y;\n    }\n    if (x != 1) return\
-    \ false;\n  }\n  return true;\n}\n\nnamespace detail {\n\nvoid factorize_odd(std::uint64_t\
-    \ n, std::map<std::uint64_t, int> &mp) {\n  if (n < 2) return;\n  if (is_prime(n))\
-    \ {\n    ++mp[n];\n    return;\n  }\n  auto g = rho<rmm63>(n);\n  factorize_odd(n\
-    \ / g, mp), factorize_odd(g, mp);\n}\n\n} // namespace detail\n\nstd::map<std::uint64_t,\
-    \ int> factorization(std::uint64_t n) {\n  std::map<std::uint64_t, int> res;\n\
-    \  if (n < 2) return res;\n  int t = 0;\n  while ((n & 1) == 0) n >>= 1, ++t;\n\
-    \  if (t) res[2] = t;\n  detail::factorize_odd(n, res);\n  return res;\n}\n\n\
-    LIB_END\n\n\n#line 4 \"remote_test/yosupo/math/factorize.0.test.cpp\"\n\n#line\
-    \ 6 \"remote_test/yosupo/math/factorize.0.test.cpp\"\n#include <vector>\n\nint\
-    \ main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"\
+    \ return true;\n  using mint = rmm63<-1>;\n  {\n    bool okay = mint::set_mod(n);\n\
+    \    assert(okay);\n  }\n  int t           = 0;\n  std::uint64_t u = n - 1;\n\
+    \  do { u >>= 1, ++t; } while ((u & 1) == 0);\n  for (int i : {2, 3, 5, 7, 11,\
+    \ 13, 17, 19, 23, 29, 31, 37}) {\n    if (n == static_cast<std::uint64_t>(i))\
+    \ return true;\n    mint x = mint(i).pow(u);\n    for (int j = 0; j != t && x\
+    \ != 1; ++j) {\n      mint y = x * x;\n      if (x != -1 && y == 1) return false;\n\
+    \      x = y;\n    }\n    if (x != 1) return false;\n  }\n  return true;\n}\n\n\
+    namespace detail {\n\nvoid factorize_odd(std::uint64_t n, std::map<std::uint64_t,\
+    \ int> &mp) {\n  if (n < 2) return;\n  if (is_prime(n)) {\n    ++mp[n];\n    return;\n\
+    \  }\n  auto g = rho<rmm63>(n);\n  factorize_odd(n / g, mp), factorize_odd(g,\
+    \ mp);\n}\n\n} // namespace detail\n\nstd::map<std::uint64_t, int> factorization(std::uint64_t\
+    \ n) {\n  std::map<std::uint64_t, int> res;\n  if (n < 2) return res;\n  int t\
+    \ = 0;\n  while ((n & 1) == 0) n >>= 1, ++t;\n  if (t) res[2] = t;\n  detail::factorize_odd(n,\
+    \ res);\n  return res;\n}\n\nLIB_END\n\n\n#line 4 \"remote_test/yosupo/math/factorize.0.test.cpp\"\
+    \n\n#line 6 \"remote_test/yosupo/math/factorize.0.test.cpp\"\n#include <vector>\n\
+    \nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"\
     out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
     \  int Q;\n  std::cin >> Q;\n  while (Q--) {\n    long long a;\n    std::cin >>\
     \ a;\n    std::vector<long long> factor;\n    auto mp = lib::factorization(a);\n\
@@ -148,7 +148,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/factorize.0.test.cpp
   requiredBy: []
-  timestamp: '2022-05-01 18:25:56+08:00'
+  timestamp: '2022-05-05 22:58:57+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/factorize.0.test.cpp

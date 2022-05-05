@@ -13,7 +13,13 @@ data:
     title: Weighted Disjoint Set
   - icon: ':heavy_check_mark:'
     path: math/binomial.hpp
-    title: Binomial Coefficient (in $\mathbb{F} _ p$)
+    title: Binomial Convolution (in $\mathbb{Z} / m \mathbb{Z}$)
+  - icon: ':heavy_check_mark:'
+    path: math/binomial_convolution.hpp
+    title: math/binomial_convolution.hpp
+  - icon: ':heavy_check_mark:'
+    path: math/binomial_convolution.hpp
+    title: math/binomial_convolution.hpp
   - icon: ':heavy_check_mark:'
     path: math/convolution.hpp
     title: Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
@@ -209,6 +215,12 @@ data:
     path: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
     title: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
   - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
+    title: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
+    title: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
   - icon: ':heavy_check_mark:'
@@ -299,6 +311,8 @@ data:
   - math/radix2_ntt.hpp
   - math/sqrt_mod.hpp
   - math/shift_sample_points_single.hpp
+  - math/binomial_convolution.hpp
+  - math/binomial_convolution.hpp
   - math/truncated_fourier_transform.hpp
   - math/integer_factorization.hpp
   - math/integer_factorization.hpp
@@ -332,6 +346,8 @@ data:
   - remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
+  - remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
   - remote_test/yosupo/math/convolution_mod.0.test.cpp
   - remote_test/yosupo/math/convolution_mod.0.test.cpp
   - remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp

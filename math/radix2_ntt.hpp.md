@@ -6,6 +6,9 @@ data:
     title: common.hpp
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
+    path: math/binomial_convolution.hpp
+    title: math/binomial_convolution.hpp
+  - icon: ':heavy_check_mark:'
     path: math/convolution.hpp
     title: Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
@@ -91,6 +94,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
     title: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
+    title: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
@@ -269,6 +275,7 @@ data:
   - math/multivariate_convolution.hpp
   - math/polynomial.hpp
   - math/convolution.hpp
+  - math/binomial_convolution.hpp
   - math/truncated_fourier_transform.hpp
   - math/truncated_formal_power_series.hpp
   timestamp: '2022-04-25 00:35:22+08:00'
@@ -281,6 +288,7 @@ data:
   - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
   - remote_test/yosupo/math/convolution_mod.0.test.cpp
   - remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
