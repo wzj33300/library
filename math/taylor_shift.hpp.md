@@ -7,11 +7,20 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/binomial.hpp
     title: Binomial Coefficient (in $\mathbb{F} _ p$)
-  _extendedRequiredBy: []
+  _extendedRequiredBy:
+  - icon: ':heavy_check_mark:'
+    path: math/stirling_numbers.hpp
+    title: Stirling Numbers (in $\mathbb{F} _ p$ for FFT prime $p$)
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
     title: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
+    title: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
+    title: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -59,10 +68,13 @@ data:
   - math/binomial.hpp
   isVerificationFile: false
   path: math/taylor_shift.hpp
-  requiredBy: []
+  requiredBy:
+  - math/stirling_numbers.hpp
   timestamp: '2022-05-05 22:58:57+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
+  - remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
   - remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
 documentation_of: math/taylor_shift.hpp
 layout: document

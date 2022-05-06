@@ -47,6 +47,9 @@ data:
     path: math/integer_factorization.hpp
     title: Integer Factorization (Pollard's rho algorithm) (in $\mathbb{Z}$)
   - icon: ':heavy_check_mark:'
+    path: math/linear_sieve.hpp
+    title: Linear Sieve
+  - icon: ':heavy_check_mark:'
     path: math/multivariate_convolution.hpp
     title: Multivariate Convolution (in $\mathbb{F} _ p \lbrack z_1, \dots, z_d \rbrack
       \left/ \left( z_1^{l_1}, \dots, z_d^{l_d} \right)\right.$ for FFT prime $p$)
@@ -70,6 +73,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/sqrt_mod.hpp
     title: Square Roots (in $\mathbb{F} _ p$)
+  - icon: ':heavy_check_mark:'
+    path: math/stirling_numbers.hpp
+    title: Stirling Numbers (in $\mathbb{F} _ p$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/taylor_shift.hpp
     title: Polynomial Taylor Shift (in $\mathbb{F} _ p$ for FFT prime $p$)
@@ -251,6 +257,18 @@ data:
     path: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
   - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
+    title: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
+    title: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
+    title: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
+    title: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/string/z_algorithm.0.test.cpp
     title: remote_test/yosupo/string/z_algorithm.0.test.cpp
   _isVerificationFailed: false
@@ -309,6 +327,7 @@ data:
   - math/polynomial.hpp
   - math/convolution.hpp
   - math/radix2_ntt.hpp
+  - math/linear_sieve.hpp
   - math/sqrt_mod.hpp
   - math/shift_sample_points_single.hpp
   - math/binomial_convolution.hpp
@@ -319,6 +338,7 @@ data:
   - math/truncated_formal_power_series.hpp
   - math/binomial.hpp
   - math/extended_gcd.hpp
+  - math/stirling_numbers.hpp
   - modint/long_montgomery_modint.hpp
   - modint/montgomery_modint.hpp
   - modint/runtime_montgomery_modint.hpp
@@ -340,6 +360,8 @@ data:
   - remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/partition_function.0.test.cpp
   - remote_test/yosupo/math/partition_function.0.test.cpp
+  - remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
+  - remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
   - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
   - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
@@ -358,6 +380,8 @@ data:
   - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
   - remote_test/yosupo/math/multivariate_convolution.0.test.cpp
   - remote_test/yosupo/math/multivariate_convolution.0.test.cpp
+  - remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
+  - remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
   - remote_test/yosupo/math/sqrt_mod.0.test.cpp
   - remote_test/yosupo/math/sqrt_mod.0.test.cpp
   - remote_test/yosupo/math/division_of_polynomials.0.test.cpp

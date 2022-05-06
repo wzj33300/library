@@ -46,6 +46,9 @@ data:
       path: math/integer_factorization.hpp
       title: Integer Factorization (Pollard's rho algorithm) (in $\mathbb{Z}$)
     - icon: ':heavy_check_mark:'
+      path: math/linear_sieve.hpp
+      title: Linear Sieve
+    - icon: ':heavy_check_mark:'
       path: math/multivariate_convolution.hpp
       title: Multivariate Convolution (in $\mathbb{F} _ p \lbrack z_1, \dots, z_d
         \rbrack \left/ \left( z_1^{l_1}, \dots, z_d^{l_d} \right)\right.$ for FFT
@@ -70,6 +73,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/sqrt_mod.hpp
       title: Square Roots (in $\mathbb{F} _ p$)
+    - icon: ':heavy_check_mark:'
+      path: math/stirling_numbers.hpp
+      title: Stirling Numbers (in $\mathbb{F} _ p$ for FFT prime $p$)
     - icon: ':heavy_check_mark:'
       path: math/taylor_shift.hpp
       title: Polynomial Taylor Shift (in $\mathbb{F} _ p$ for FFT prime $p$)
@@ -193,6 +199,12 @@ data:
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
       title: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
+      title: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
+      title: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
   - name: remote_test/yosupo/string
     pages:
     - icon: ':heavy_check_mark:'

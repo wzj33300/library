@@ -65,6 +65,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
+    title: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
+    title: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -259,12 +265,14 @@ data:
   verifiedWith:
   - remote_test/yosupo/math/convolution_mod.1.test.cpp
   - remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
+  - remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
   - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
   - remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
   - remote_test/yosupo/math/convolution_mod.0.test.cpp
   - remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
   - remote_test/yosupo/math/multivariate_convolution.0.test.cpp
+  - remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
   - remote_test/yosupo/math/division_of_polynomials.0.test.cpp
   - remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
