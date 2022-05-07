@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
   - icon: ':heavy_check_mark:'
@@ -13,13 +13,13 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/convolution.hpp
     title: Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_fourier_transform.hpp
     title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$ for
       FFT prime $p$)
@@ -286,24 +286,25 @@ data:
     \        for (int i = pos; i <= maxnu; ++i) {\n          pp0_[i]  = pp0_[i - 1]\
     \ * p0;\n          ipp0_[i] = ipp0_[i - 1] * ip0;\n          pp1_[i]  = pp1_[i\
     \ - 1] * p1;\n          ipp1_[i] = ipp1_[i - 1] * ip1;\n        }\n      }\n \
-    \   }\n  };\n\n  std::vector<u32> convolution(const std::vector<u32> &a, const\
-    \ std::vector<u32> &b,\n                               const factor_info &info)\
-    \ const;\n  std::vector<u32> convolutionT(const std::vector<u32> &a, const std::vector<u32>\
-    \ &b,\n                                const factor_info &info) const;\n  const\
-    \ u32 modular_;\n  std::vector<factor_info> info_;\n\npublic:\n  explicit binomial_convolution(u32\
-    \ modular) : modular_(modular) {\n    for (u32 i = 2; static_cast<u64>(i) * i\
-    \ <= modular; ++i)\n      if (modular % i == 0) {\n        int e        = 0;\n\
-    \        const u32 mm = modular;\n        do { modular /= i, ++e; } while (modular\
-    \ % i == 0);\n        info_.emplace_back(i, e, mm / modular);\n      }\n    if\
-    \ (modular != 1) info_.emplace_back(modular, 1, modular);\n  }\n  u32 mod() const\
-    \ { return modular_; }\n  template <typename IntT>\n  std::enable_if_t<std::is_integral_v<IntT>,\
-    \ std::vector<IntT>>\n  operator()(const std::vector<IntT> &a, const std::vector<IntT>\
-    \ &b) const;\n\n  // apply Borel transform to `a` and then apply B(`a`)(D) to\
-    \ `b` where D = d/dx.\n  template <typename IntT>\n  std::enable_if_t<std::is_integral_v<IntT>,\
-    \ std::vector<IntT>>\n  bapply(const std::vector<IntT> &a, const std::vector<IntT>\
-    \ &b) const;\n};\n\nstd::vector<typename binomial_convolution::u32>\nbinomial_convolution::convolution(const\
+    \   }\n  };\n\n  static std::vector<u32> convolution(const std::vector<u32> &a,\
+    \ const std::vector<u32> &b,\n                                      const factor_info\
+    \ &info);\n  static std::vector<u32> convolutionT(const std::vector<u32> &a, const\
+    \ std::vector<u32> &b,\n                                       const factor_info\
+    \ &info);\n  const u32 modular_;\n  std::vector<factor_info> info_;\n\npublic:\n\
+    \  explicit binomial_convolution(u32 modular) : modular_(modular) {\n    for (u32\
+    \ i = 2; static_cast<u64>(i) * i <= modular; ++i)\n      if (modular % i == 0)\
+    \ {\n        int e        = 0;\n        const u32 mm = modular;\n        do {\
+    \ modular /= i, ++e; } while (modular % i == 0);\n        info_.emplace_back(i,\
+    \ e, mm / modular);\n      }\n    if (modular != 1) info_.emplace_back(modular,\
+    \ 1, modular);\n  }\n  u32 mod() const { return modular_; }\n  template <typename\
+    \ IntT>\n  std::enable_if_t<std::is_integral_v<IntT>, std::vector<IntT>>\n  operator()(const\
+    \ std::vector<IntT> &a, const std::vector<IntT> &b) const;\n\n  // apply Borel\
+    \ transform to `a` and then apply B(`a`)(D) to `b` where D = d/dx.\n  template\
+    \ <typename IntT>\n  std::enable_if_t<std::is_integral_v<IntT>, std::vector<IntT>>\n\
+    \  bapply(const std::vector<IntT> &a, const std::vector<IntT> &b) const;\n};\n\
+    \nstd::vector<typename binomial_convolution::u32>\nbinomial_convolution::convolution(const\
     \ std::vector<u32> &a, const std::vector<u32> &b,\n                          \
-    \        const factor_info &info) const {\n  const int n = static_cast<int>(a.size()),\
+    \        const factor_info &info) {\n  const int n = static_cast<int>(a.size()),\
     \ m = static_cast<int>(b.size()), len = n + m - 1;\n  info.preprocess(len);\n\
     \  std::vector<mint0> a0(len), b0(len);\n  std::vector<mint1> a1(len), b1(len);\n\
     \  const auto pe = info.pe_;\n  for (int i = 0; i != n; ++i) {\n    u64 a_hat\
@@ -322,7 +323,7 @@ data:
     \ info.pp1_[j]) * info.fact_[i] % pe;\n  }\n  return res;\n}\n\nstd::vector<typename\
     \ binomial_convolution::u32>\nbinomial_convolution::convolutionT(const std::vector<u32>\
     \ &a, const std::vector<u32> &b,\n                                   const factor_info\
-    \ &info) const {\n  const int n = static_cast<int>(a.size()), m = static_cast<int>(b.size()),\
+    \ &info) {\n  const int n = static_cast<int>(a.size()), m = static_cast<int>(b.size()),\
     \ len = n + m - 1;\n  info.preprocess(m);\n  std::vector<mint0> a0(len), b0(len);\n\
     \  std::vector<mint1> a1(len), b1(len);\n  const auto pe = info.pe_;\n  for (int\
     \ i = 0; i != n; ++i) {\n    u64 a_hat = static_cast<u64>(a[i]) * info.ifact_[i]\
@@ -398,7 +399,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
   requiredBy: []
-  timestamp: '2022-05-05 23:46:58+08:00'
+  timestamp: '2022-05-08 00:50:58+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
