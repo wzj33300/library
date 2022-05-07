@@ -1,47 +1,47 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT
       prime $p$)
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/sqrt_mod.hpp
     title: Square Roots (in $\mathbb{F} _ p$)
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
       \rbrack$ for FFT prime $p$)
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/truncated_fourier_transform.hpp
     title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$ for
       FFT prime $p$)
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/division_of_polynomials.0.test.cpp
     title: remote_test/yosupo/math/division_of_polynomials.0.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
     title: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
     title: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
     title: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/polynomial.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\
@@ -350,9 +350,9 @@ data:
     \ {\n  using MyBase = truncated_formal_power_series<ModIntT>;\n  static_assert(std::is_same_v<typename\
     \ MyBase::value_type, ModIntT>);\n\npublic:\n  using truncated_formal_power_series<ModIntT>::truncated_formal_power_series;\n\
     \n  explicit polynomial(const MyBase &rhs) : MyBase(rhs) {}\n  ModIntT operator()(ModIntT\
-    \ c) const {\n    ModIntT res;\n    for (int i = deg(); i >= 0; --i) res = res\
-    \ * c + this->operator[](i);\n    return res;\n  }\n  polynomial operator-() {\
-    \ return MyBase::operator-(); }\n  polynomial &operator+=(const polynomial &rhs)\
+    \ c) const {\n    ModIntT res;\n    for (int i = this->deg(); i >= 0; --i) res\
+    \ = res * c + this->operator[](i);\n    return res;\n  }\n  polynomial operator-()\
+    \ { return MyBase::operator-(); }\n  polynomial &operator+=(const polynomial &rhs)\
     \ {\n    MyBase::operator+=(rhs);\n    this->shrink();\n    return *this;\n  }\n\
     \  polynomial &operator-=(const polynomial &rhs) {\n    MyBase::operator-=(rhs);\n\
     \    this->shrink();\n    return *this;\n  }\n  polynomial &operator*=(const polynomial\
@@ -390,9 +390,9 @@ data:
     \ {\n  using MyBase = truncated_formal_power_series<ModIntT>;\n  static_assert(std::is_same_v<typename\
     \ MyBase::value_type, ModIntT>);\n\npublic:\n  using truncated_formal_power_series<ModIntT>::truncated_formal_power_series;\n\
     \n  explicit polynomial(const MyBase &rhs) : MyBase(rhs) {}\n  ModIntT operator()(ModIntT\
-    \ c) const {\n    ModIntT res;\n    for (int i = deg(); i >= 0; --i) res = res\
-    \ * c + this->operator[](i);\n    return res;\n  }\n  polynomial operator-() {\
-    \ return MyBase::operator-(); }\n  polynomial &operator+=(const polynomial &rhs)\
+    \ c) const {\n    ModIntT res;\n    for (int i = this->deg(); i >= 0; --i) res\
+    \ = res * c + this->operator[](i);\n    return res;\n  }\n  polynomial operator-()\
+    \ { return MyBase::operator-(); }\n  polynomial &operator+=(const polynomial &rhs)\
     \ {\n    MyBase::operator+=(rhs);\n    this->shrink();\n    return *this;\n  }\n\
     \  polynomial &operator-=(const polynomial &rhs) {\n    MyBase::operator-=(rhs);\n\
     \    this->shrink();\n    return *this;\n  }\n  polynomial &operator*=(const polynomial\
@@ -434,8 +434,8 @@ data:
   isVerificationFile: false
   path: math/polynomial.hpp
   requiredBy: []
-  timestamp: '2022-05-08 00:50:58+08:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2022-05-08 00:56:49+08:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
   - remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
