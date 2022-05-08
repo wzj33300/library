@@ -351,7 +351,7 @@ data:
     \n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nclass polynomial : public truncated_formal_power_series<ModIntT>\
     \ {\n  using MyBase = truncated_formal_power_series<ModIntT>;\n  static_assert(std::is_same_v<typename\
     \ MyBase::value_type, ModIntT>);\n\npublic:\n  using truncated_formal_power_series<ModIntT>::truncated_formal_power_series;\n\
-    \n  explicit polynomial(const MyBase &rhs) : MyBase(rhs) {}\n  ModIntT operator()(ModIntT\
+    \n  polynomial(const MyBase &rhs) : MyBase(rhs) {}\n  ModIntT operator()(ModIntT\
     \ c) const {\n    ModIntT res;\n    for (int i = this->deg(); i >= 0; --i) res\
     \ = res * c + this->operator[](i);\n    return res;\n  }\n  polynomial operator-()\
     \ { return MyBase::operator-(); }\n  polynomial &operator+=(const polynomial &rhs)\
@@ -478,7 +478,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/division_of_polynomials.0.test.cpp
   requiredBy: []
-  timestamp: '2022-05-08 00:56:49+08:00'
+  timestamp: '2022-05-08 14:05:16+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/division_of_polynomials.0.test.cpp

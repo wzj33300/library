@@ -186,6 +186,9 @@ data:
       path: remote_test/yosupo/math/partition_function.0.test.cpp
       title: remote_test/yosupo/math/partition_function.0.test.cpp
     - icon: ':heavy_check_mark:'
+      path: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
+      title: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
+    - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
       title: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
     - icon: ':heavy_check_mark:'

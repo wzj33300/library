@@ -355,7 +355,7 @@ data:
     \n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nclass polynomial : public truncated_formal_power_series<ModIntT>\
     \ {\n  using MyBase = truncated_formal_power_series<ModIntT>;\n  static_assert(std::is_same_v<typename\
     \ MyBase::value_type, ModIntT>);\n\npublic:\n  using truncated_formal_power_series<ModIntT>::truncated_formal_power_series;\n\
-    \n  explicit polynomial(const MyBase &rhs) : MyBase(rhs) {}\n  ModIntT operator()(ModIntT\
+    \n  polynomial(const MyBase &rhs) : MyBase(rhs) {}\n  ModIntT operator()(ModIntT\
     \ c) const {\n    ModIntT res;\n    for (int i = this->deg(); i >= 0; --i) res\
     \ = res * c + this->operator[](i);\n    return res;\n  }\n  polynomial operator-()\
     \ { return MyBase::operator-(); }\n  polynomial &operator+=(const polynomial &rhs)\
@@ -389,7 +389,7 @@ data:
     \ rhs.end()); // debug only (SLOW)\n  }\n};\n\ntemplate <typename IterT>\npolynomial(IterT,\
     \ IterT) -> polynomial<typename std::iterator_traits<IterT>::value_type>;\n\n\
     LIB_END\n\n\n#line 1 \"math/subproduct_tree.hpp\"\n\n\n\n#line 6 \"math/subproduct_tree.hpp\"\
-    \n\n#line 9 \"math/subproduct_tree.hpp\"\n\nLIB_BEGIN\n\ntemplate <typename PolyT>\n\
+    \n\n#line 10 \"math/subproduct_tree.hpp\"\n\nLIB_BEGIN\n\ntemplate <typename PolyT>\n\
     class subproduct_tree {\n  using T = typename PolyT::value_type;\n\n  struct poly_info\
     \ {\n    PolyT poly_, cached_dft_;\n    poly_info(PolyT &&poly, PolyT &&cached_dft)\n\
     \        : poly_(std::move(poly)), cached_dft_(std::move(cached_dft)) {}\n   \
@@ -422,9 +422,9 @@ data:
     \    auto t        = tree_.rbegin() + 1;\n    const auto te = tree_.rend();\n\
     \    for (; t != te; ++t) {\n      std::vector<PolyT> res;\n      const int ts\
     \ = static_cast<int>(t->size());\n      for (int i = 0, ie = static_cast<int>(resp.size());\
-    \ i != ie; ++i)\n        if ((i << 1 | 1) < ts) {\n          auto &l       = t->operator[](i\
-    \ << 1);\n          auto &r       = t->operator[](i << 1 | 1);\n          const\
-    \ int len = static_cast<int>(l.cached_dft_.size());\n          resp[i].resize(len);\n\
+    \ i != ie; ++i)\n        if ((i << 1 | 1) < ts) {\n          auto &l       = t->at(i\
+    \ << 1);\n          auto &r       = t->at(i << 1 | 1);\n          const int len\
+    \ = static_cast<int>(l.cached_dft_.size());\n          resp[i].resize(len);\n\
     \          dft(resp[i]);\n          auto respi_cpy = resp[i];\n          for (int\
     \ j = 0; j != len; ++j)\n            resp[i][j] *= r.cached_dft_[j], respi_cpy[j]\
     \ *= l.cached_dft_[j];\n          res.emplace_back(std::move(resp[i]));\n    \
@@ -435,8 +435,27 @@ data:
     \        } else {\n          res.emplace_back(std::move(resp[i]));\n        }\n\
     \      resp.swap(res);\n    }\n  }\n  std::vector<T> res(n);\n  for (int i = 0;\
     \ i != n; ++i) res[i] = resp[i].front();\n  return res;\n}\n\ntemplate <typename\
-    \ PolyT>\nstd::vector<typename PolyT::value_type>\nevaluation(const PolyT &a,\
-    \ const std::vector<typename PolyT::value_type> &x) {\n  return subproduct_tree<PolyT>(x).evaluate(a);\n\
+    \ PolyT>\nPolyT subproduct_tree<PolyT>::interpolate(const std::vector<T> &y) const\
+    \ {\n  assert(y.size() == tree_.front().size());\n  const int n = static_cast<int>(y.size());\n\
+    \  auto yp     = evaluate(tree_.back().front().poly_.deriv());\n  std::vector<T>\
+    \ iyp(yp.size());\n  {\n    T v(1);\n    for (int i = 0; i != n; ++i) iyp[i] =\
+    \ v, v *= yp[i];\n    v = v.inv();\n    for (int i = n - 1; i >= 0; --i) iyp[i]\
+    \ *= v, v *= yp[i];\n  }\n  std::vector<PolyT> resp;\n  resp.reserve(n);\n  for\
+    \ (int i = 0; i != n; ++i) resp.emplace_back(PolyT{y[i] * iyp[i]});\n  for (auto\
+    \ t = tree_.begin(); resp.size() != 1; ++t) {\n    assert(t->size() == resp.size());\n\
+    \    std::vector<PolyT> res;\n    for (int i = 0, ie = static_cast<int>(resp.size());\
+    \ i + 1 < ie; i += 2) {\n      auto &l = t->at(i).cached_dft_;\n      auto &r\
+    \ = t->at(i + 1).cached_dft_;\n      dft_doubling(resp[i]);\n      const int len\
+    \ = static_cast<int>(l.size());\n      while (static_cast<int>(resp[i + 1].size())\
+    \ < len) dft_doubling(resp[i + 1]);\n      auto &rr = res.emplace_back(len);\n\
+    \      for (int j = 0; j != len; ++j) rr[j] = resp[i][j] * r[j] + resp[i + 1][j]\
+    \ * l[j];\n    }\n    if (t->size() & 1) res.emplace_back(std::move(resp.back()));\n\
+    \    resp.swap(res);\n  }\n  idft(resp.front());\n  resp.front().shrink();\n \
+    \ return resp.front();\n}\n\ntemplate <typename PolyT>\nstd::vector<typename PolyT::value_type>\n\
+    evaluation(const PolyT &a, const std::vector<typename PolyT::value_type> &x) {\n\
+    \  return subproduct_tree<PolyT>(x).evaluate(a);\n}\n\ntemplate <template <typename>\
+    \ typename PolyT, typename ModIntT>\nPolyT<ModIntT> interpolation(const std::vector<ModIntT>\
+    \ &x, const std::vector<ModIntT> &y) {\n  return subproduct_tree<PolyT<ModIntT>>(x).interpolate(y);\n\
     }\n\nLIB_END\n\n\n#line 1 \"modint/montgomery_modint.hpp\"\n\n\n\n#line 5 \"modint/montgomery_modint.hpp\"\
     \n\n#ifdef LIB_DEBUG\n  #include <stdexcept>\n#endif\n#include <cstdint>\n#line\
     \ 12 \"modint/montgomery_modint.hpp\"\n\nLIB_BEGIN\n\ntemplate <std::uint32_t\
@@ -528,7 +547,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/multipoint_evaluation.0.test.cpp
   requiredBy: []
-  timestamp: '2022-05-08 11:17:35+08:00'
+  timestamp: '2022-05-08 14:05:16+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/multipoint_evaluation.0.test.cpp

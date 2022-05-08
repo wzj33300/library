@@ -225,6 +225,12 @@ data:
     path: remote_test/yosupo/math/partition_function.0.test.cpp
     title: remote_test/yosupo/math/partition_function.0.test.cpp
   - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
+    title: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
+    title: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
     title: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
   - icon: ':heavy_check_mark:'
@@ -395,6 +401,8 @@ data:
   - remote_test/yosupo/math/multivariate_convolution.0.test.cpp
   - remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
   - remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
+  - remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
+  - remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
   - remote_test/yosupo/math/sqrt_mod.0.test.cpp
   - remote_test/yosupo/math/sqrt_mod.0.test.cpp
   - remote_test/yosupo/math/division_of_polynomials.0.test.cpp

@@ -8,9 +8,6 @@ data:
     path: common.hpp
     title: common.hpp
   - icon: ':heavy_check_mark:'
-    path: math/binomial.hpp
-    title: Binomial Coefficient (in $\mathbb{F} _ p$)
-  - icon: ':heavy_check_mark:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
   - icon: ':heavy_check_mark:'
@@ -27,8 +24,9 @@ data:
     path: math/sqrt_mod.hpp
     title: Square Roots (in $\mathbb{F} _ p$)
   - icon: ':heavy_check_mark:'
-    path: math/taylor_shift.hpp
-    title: Polynomial Taylor Shift (in $\mathbb{F} _ p$ for FFT prime $p$)
+    path: math/subproduct_tree.hpp
+    title: Multipoint Evaluation and Interpolation (in $\mathbb{F} _ p$ for FFT prime
+      $p$)
   - icon: ':heavy_check_mark:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
@@ -47,12 +45,12 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/polynomial_taylor_shift
+    PROBLEM: https://judge.yosupo.jp/problem/polynomial_interpolation
     links:
-    - https://judge.yosupo.jp/problem/polynomial_taylor_shift
-  bundledCode: "#line 1 \"remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp\"\
-    \n#define PROBLEM \"https://judge.yosupo.jp/problem/polynomial_taylor_shift\"\n\
-    \n#line 1 \"math/polynomial.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\n#define\
+    - https://judge.yosupo.jp/problem/polynomial_interpolation
+  bundledCode: "#line 1 \"remote_test/yosupo/math/polynomial_interpolation.0.test.cpp\"\
+    \n#define PROBLEM \"https://judge.yosupo.jp/problem/polynomial_interpolation\"\
+    \n\n#line 1 \"math/polynomial.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\n#define\
     \ LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END }\n#define LIB\
     \ ::lib::\n\n\n#line 1 \"math/truncated_formal_power_series.hpp\"\n\n\n\n#line\
     \ 1 \"math/extended_gcd.hpp\"\n\n\n\n#line 5 \"math/extended_gcd.hpp\"\n\n#include\
@@ -390,31 +388,74 @@ data:
     \ &operator<<(std::ostream &lhs, const polynomial &rhs) {\n    return lhs << MyBase(rhs.begin(),\
     \ rhs.end()); // debug only (SLOW)\n  }\n};\n\ntemplate <typename IterT>\npolynomial(IterT,\
     \ IterT) -> polynomial<typename std::iterator_traits<IterT>::value_type>;\n\n\
-    LIB_END\n\n\n#line 1 \"math/taylor_shift.hpp\"\n\n\n\n#line 1 \"math/binomial.hpp\"\
-    \n\n\n\n#line 5 \"math/binomial.hpp\"\n\n#line 7 \"math/binomial.hpp\"\n\nLIB_BEGIN\n\
-    \n// helper class for precomputation of factorials and multiplicative inverse\
-    \ of them.\ntemplate <typename ModIntT>\nclass binomial {\n  mutable std::vector<ModIntT>\
-    \ factorial_{ModIntT(1)}, invfactorial_{ModIntT(1)};\n\npublic:\n  explicit binomial(int\
-    \ n) { preprocess(n); }\n  binomial() {}\n  void preprocess(int n) const {\n \
-    \   if (int nn = static_cast<int>(factorial_.size()); nn <= n) {\n      int k\
-    \ = nn;\n      while (k <= n) k <<= 1;\n      factorial_.resize(k);\n      invfactorial_.resize(k);\n\
-    \      for (int i = nn; i != k; ++i) factorial_[i] = factorial_[i - 1] * i;\n\
-    \      invfactorial_.back() = factorial_.back().inv();\n      for (int i = k -\
-    \ 2; i >= nn; --i) invfactorial_[i] = invfactorial_[i + 1] * (i + 1);\n    }\n\
-    \  }\n  // binomial coefficient `n`C`m`\n  ModIntT binom(int n, int m) const {\n\
-    \    return n < m ? ModIntT()\n                 : (preprocess(n), factorial_[n]\
-    \ * invfactorial_[m] * invfactorial_[n - m]);\n  }\n  ModIntT inv(int n) const\
-    \ { return preprocess(n), factorial_[n - 1] * invfactorial_[n]; }\n  ModIntT factorial(int\
-    \ n) const { return preprocess(n), factorial_[n]; }\n  ModIntT inv_factorial(int\
-    \ n) const { return preprocess(n), invfactorial_[n]; }\n};\n\nLIB_END\n\n\n#line\
-    \ 6 \"math/taylor_shift.hpp\"\n\n#line 8 \"math/taylor_shift.hpp\"\n\nLIB_BEGIN\n\
-    \ntemplate <typename PolyT>\nPolyT taylor_shift(const PolyT &a, typename PolyT::value_type\
-    \ c) {\n  using T     = typename PolyT::value_type;\n  const int n = static_cast<int>(a.size());\n\
-    \  binomial<T> b(n);\n  PolyT rev_a_cpy(n), pc(n);\n  for (int i = 0; i != n;\
-    \ ++i) rev_a_cpy[n - 1 - i] = a[i] * b.factorial(i);\n  T cc(1);\n  for (int i\
-    \ = 0; i != n; ++i) pc[i] = cc * b.inv_factorial(i), cc *= c;\n  (rev_a_cpy *=\
-    \ pc).resize(n);\n  std::reverse(rev_a_cpy.begin(), rev_a_cpy.end());\n  for (int\
-    \ i = 0; i != n; ++i) rev_a_cpy[i] *= b.inv_factorial(i);\n  return rev_a_cpy;\n\
+    LIB_END\n\n\n#line 1 \"math/subproduct_tree.hpp\"\n\n\n\n#line 6 \"math/subproduct_tree.hpp\"\
+    \n\n#line 10 \"math/subproduct_tree.hpp\"\n\nLIB_BEGIN\n\ntemplate <typename PolyT>\n\
+    class subproduct_tree {\n  using T = typename PolyT::value_type;\n\n  struct poly_info\
+    \ {\n    PolyT poly_, cached_dft_;\n    poly_info(PolyT &&poly, PolyT &&cached_dft)\n\
+    \        : poly_(std::move(poly)), cached_dft_(std::move(cached_dft)) {}\n   \
+    \ poly_info(const PolyT &poly, const PolyT &cached_dft) : poly_(poly), cached_dft_(cached_dft)\
+    \ {}\n    explicit poly_info(const poly_info &) = default;\n  };\n\n  std::vector<std::vector<poly_info>>\
+    \ tree_{};\n\npublic:\n  explicit subproduct_tree(const std::vector<T> &x) {\n\
+    \    if (x.empty()) return;\n    auto &l0 = tree_.emplace_back();\n    for (auto\
+    \ &&i : x) l0.emplace_back(PolyT{-i, T(1)}, PolyT{1 - i});\n    while (tree_.back().size()\
+    \ != 1) {\n      auto &a     = tree_.back();\n      const int n = static_cast<int>(a.size());\n\
+    \      std::vector<poly_info> b;\n      for (int i = 0; i + 1 < n; i += 2) {\n\
+    \        const auto &aif  = a[i].poly_;\n        auto &ais        = a[i].cached_dft_;\n\
+    \        const auto &ai1f = a[i + 1].poly_;\n        auto &ai1s       = a[i +\
+    \ 1].cached_dft_;\n        dft_doubling(aif, ais);\n        while (ai1s.size()\
+    \ < ais.size()) dft_doubling(ai1f, ai1s);\n        auto v = ais;\n        for\
+    \ (int j = 0, je = static_cast<int>(v.size()); j != je; ++j) v[j] *= ai1s[j];\n\
+    \        auto dv = v;\n        idft(v);\n        auto vs = aif.size() + ai1f.size()\
+    \ - 1;\n        if (v.size() < vs) v.front() -= v.emplace_back(1);\n        v.resize(vs);\n\
+    \        b.emplace_back(std::move(v), std::move(dv));\n      }\n      if (n &\
+    \ 1) b.emplace_back(a.back());\n      tree_.emplace_back(std::move(b));\n    }\n\
+    \  }\n  std::vector<T> evaluate(const PolyT &a) const;\n  PolyT interpolate(const\
+    \ std::vector<T> &y) const;\n};\n\ntemplate <typename PolyT>\nstd::vector<typename\
+    \ PolyT::value_type> subproduct_tree<PolyT>::evaluate(const PolyT &a) const {\n\
+    \  if (tree_.empty()) return {};\n  if (a.is_zero()) return std::vector<T>(tree_.front().size());\n\
+    \  const int n = static_cast<int>(tree_.front().size()), m = a.deg();\n  // Compute\
+    \ `a`/((x - `x.front()`)...(x - `x.back()`)) and\n  // take the coefficients of\
+    \ x^(-1), ..., x^(-`n`)\n  const auto irev_x =\n      PolyT(tree_.back().front().poly_.crbegin(),\
+    \ tree_.back().front().poly_.crend()).inv(m + 1);\n  auto aix = a * PolyT(irev_x.crbegin(),\
+    \ irev_x.crend());\n  if (m - n < -1) aix.resize(m + n);\n  aix.erase(aix.begin(),\
+    \ aix.begin() + m);\n  aix.resize(n);\n  std::vector<PolyT> resp{aix};\n  {\n\
+    \    auto t        = tree_.rbegin() + 1;\n    const auto te = tree_.rend();\n\
+    \    for (; t != te; ++t) {\n      std::vector<PolyT> res;\n      const int ts\
+    \ = static_cast<int>(t->size());\n      for (int i = 0, ie = static_cast<int>(resp.size());\
+    \ i != ie; ++i)\n        if ((i << 1 | 1) < ts) {\n          auto &l       = t->at(i\
+    \ << 1);\n          auto &r       = t->at(i << 1 | 1);\n          const int len\
+    \ = static_cast<int>(l.cached_dft_.size());\n          resp[i].resize(len);\n\
+    \          dft(resp[i]);\n          auto respi_cpy = resp[i];\n          for (int\
+    \ j = 0; j != len; ++j)\n            resp[i][j] *= r.cached_dft_[j], respi_cpy[j]\
+    \ *= l.cached_dft_[j];\n          res.emplace_back(std::move(resp[i]));\n    \
+    \      auto &rr = res.emplace_back(std::move(respi_cpy));\n          auto &lr\
+    \ = *(res.rbegin() + 1);\n          idft(lr), idft(rr);\n          lr.erase(lr.begin(),\
+    \ lr.begin() + r.poly_.deg());\n          lr.resize(l.poly_.deg());\n        \
+    \  rr.erase(rr.begin(), rr.begin() + l.poly_.deg());\n          rr.resize(r.poly_.deg());\n\
+    \        } else {\n          res.emplace_back(std::move(resp[i]));\n        }\n\
+    \      resp.swap(res);\n    }\n  }\n  std::vector<T> res(n);\n  for (int i = 0;\
+    \ i != n; ++i) res[i] = resp[i].front();\n  return res;\n}\n\ntemplate <typename\
+    \ PolyT>\nPolyT subproduct_tree<PolyT>::interpolate(const std::vector<T> &y) const\
+    \ {\n  assert(y.size() == tree_.front().size());\n  const int n = static_cast<int>(y.size());\n\
+    \  auto yp     = evaluate(tree_.back().front().poly_.deriv());\n  std::vector<T>\
+    \ iyp(yp.size());\n  {\n    T v(1);\n    for (int i = 0; i != n; ++i) iyp[i] =\
+    \ v, v *= yp[i];\n    v = v.inv();\n    for (int i = n - 1; i >= 0; --i) iyp[i]\
+    \ *= v, v *= yp[i];\n  }\n  std::vector<PolyT> resp;\n  resp.reserve(n);\n  for\
+    \ (int i = 0; i != n; ++i) resp.emplace_back(PolyT{y[i] * iyp[i]});\n  for (auto\
+    \ t = tree_.begin(); resp.size() != 1; ++t) {\n    assert(t->size() == resp.size());\n\
+    \    std::vector<PolyT> res;\n    for (int i = 0, ie = static_cast<int>(resp.size());\
+    \ i + 1 < ie; i += 2) {\n      auto &l = t->at(i).cached_dft_;\n      auto &r\
+    \ = t->at(i + 1).cached_dft_;\n      dft_doubling(resp[i]);\n      const int len\
+    \ = static_cast<int>(l.size());\n      while (static_cast<int>(resp[i + 1].size())\
+    \ < len) dft_doubling(resp[i + 1]);\n      auto &rr = res.emplace_back(len);\n\
+    \      for (int j = 0; j != len; ++j) rr[j] = resp[i][j] * r[j] + resp[i + 1][j]\
+    \ * l[j];\n    }\n    if (t->size() & 1) res.emplace_back(std::move(resp.back()));\n\
+    \    resp.swap(res);\n  }\n  idft(resp.front());\n  resp.front().shrink();\n \
+    \ return resp.front();\n}\n\ntemplate <typename PolyT>\nstd::vector<typename PolyT::value_type>\n\
+    evaluation(const PolyT &a, const std::vector<typename PolyT::value_type> &x) {\n\
+    \  return subproduct_tree<PolyT>(x).evaluate(a);\n}\n\ntemplate <template <typename>\
+    \ typename PolyT, typename ModIntT>\nPolyT<ModIntT> interpolation(const std::vector<ModIntT>\
+    \ &x, const std::vector<ModIntT> &y) {\n  return subproduct_tree<PolyT<ModIntT>>(x).interpolate(y);\n\
     }\n\nLIB_END\n\n\n#line 1 \"modint/montgomery_modint.hpp\"\n\n\n\n#line 5 \"modint/montgomery_modint.hpp\"\
     \n\n#ifdef LIB_DEBUG\n  #include <stdexcept>\n#endif\n#include <cstdint>\n#line\
     \ 12 \"modint/montgomery_modint.hpp\"\n\nLIB_BEGIN\n\ntemplate <std::uint32_t\
@@ -472,23 +513,27 @@ data:
     \ {\n    i32 x;\n    is >> x;\n    rhs = montgomery_modint30(x);\n    return is;\n\
     \  }\n  friend std::ostream &operator<<(std::ostream &os, const montgomery_modint30\
     \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t ModT>\n\
-    using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 6 \"remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp\"\
-    \n\n#line 10 \"remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp\"\n\n\
-    int main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"\
+    using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 6 \"remote_test/yosupo/math/polynomial_interpolation.0.test.cpp\"\
+    \n\n#line 11 \"remote_test/yosupo/math/polynomial_interpolation.0.test.cpp\"\n\
+    \nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"\
     out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
-    \  using mint = lib::mm30<998244353>;\n  int n;\n  mint c;\n  std::cin >> n >>\
-    \ c;\n  lib::polynomial<mint> f;\n  std::copy_n(std::istream_iterator<mint>(std::cin),\
-    \ n, std::back_inserter(f));\n  auto fc = lib::taylor_shift(f, c);\n  std::copy(fc.cbegin(),\
-    \ fc.cend(), std::ostream_iterator<mint>(std::cout, \" \"));\n  return 0;\n}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/polynomial_taylor_shift\"\
-    \n\n#include \"math/polynomial.hpp\"\n#include \"math/taylor_shift.hpp\"\n#include\
-    \ \"modint/montgomery_modint.hpp\"\n\n#include <algorithm>\n#include <iostream>\n\
-    #include <iterator>\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\"\
-    , stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
-    \  std::cin.tie(nullptr);\n  using mint = lib::mm30<998244353>;\n  int n;\n  mint\
-    \ c;\n  std::cin >> n >> c;\n  lib::polynomial<mint> f;\n  std::copy_n(std::istream_iterator<mint>(std::cin),\
-    \ n, std::back_inserter(f));\n  auto fc = lib::taylor_shift(f, c);\n  std::copy(fc.cbegin(),\
-    \ fc.cend(), std::ostream_iterator<mint>(std::cout, \" \"));\n  return 0;\n}"
+    \  int n;\n  std::cin >> n;\n  using mint = lib::mm30<998244353>;\n  std::vector<mint>\
+    \ x, y;\n  std::copy_n(std::istream_iterator<mint>(std::cin), n, std::back_inserter(x));\n\
+    \  std::copy_n(std::istream_iterator<mint>(std::cin), n, std::back_inserter(y));\n\
+    \  auto res = lib::interpolation<lib::polynomial>(x, y);\n  res.resize(n);\n \
+    \ std::copy(res.cbegin(), res.cend(), std::ostream_iterator<mint>(std::cout, \"\
+    \ \"));\n  return 0;\n}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/polynomial_interpolation\"\
+    \n\n#include \"math/polynomial.hpp\"\n#include \"math/subproduct_tree.hpp\"\n\
+    #include \"modint/montgomery_modint.hpp\"\n\n#include <algorithm>\n#include <iostream>\n\
+    #include <iterator>\n#include <vector>\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"\
+    in\", \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
+    \  std::cin.tie(nullptr);\n  int n;\n  std::cin >> n;\n  using mint = lib::mm30<998244353>;\n\
+    \  std::vector<mint> x, y;\n  std::copy_n(std::istream_iterator<mint>(std::cin),\
+    \ n, std::back_inserter(x));\n  std::copy_n(std::istream_iterator<mint>(std::cin),\
+    \ n, std::back_inserter(y));\n  auto res = lib::interpolation<lib::polynomial>(x,\
+    \ y);\n  res.resize(n);\n  std::copy(res.cbegin(), res.cend(), std::ostream_iterator<mint>(std::cout,\
+    \ \" \"));\n  return 0;\n}"
   dependsOn:
   - math/polynomial.hpp
   - common.hpp
@@ -498,20 +543,19 @@ data:
   - math/radix2_ntt.hpp
   - math/sqrt_mod.hpp
   - math/truncated_fourier_transform.hpp
-  - math/taylor_shift.hpp
-  - math/binomial.hpp
+  - math/subproduct_tree.hpp
   - modint/montgomery_modint.hpp
   - common.hpp
   isVerificationFile: true
-  path: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
+  path: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
   requiredBy: []
   timestamp: '2022-05-08 14:05:16+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
+documentation_of: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
 layout: document
 redirect_from:
-- /verify/remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
-- /verify/remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp.html
-title: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
+- /verify/remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
+- /verify/remote_test/yosupo/math/polynomial_interpolation.0.test.cpp.html
+title: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
 ---
