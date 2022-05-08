@@ -446,10 +446,11 @@ data:
     \    std::vector<PolyT> res;\n    for (int i = 0, ie = static_cast<int>(resp.size());\
     \ i + 1 < ie; i += 2) {\n      auto &l = t->at(i).cached_dft_;\n      auto &r\
     \ = t->at(i + 1).cached_dft_;\n      dft_doubling(resp[i]);\n      const int len\
-    \ = static_cast<int>(l.size());\n      while (static_cast<int>(resp[i + 1].size())\
-    \ < len) dft_doubling(resp[i + 1]);\n      auto &rr = res.emplace_back(len);\n\
-    \      for (int j = 0; j != len; ++j) rr[j] = resp[i][j] * r[j] + resp[i + 1][j]\
-    \ * l[j];\n    }\n    if (t->size() & 1) res.emplace_back(std::move(resp.back()));\n\
+    \ = static_cast<int>(l.size());\n      {\n        auto respi1 = resp[i + 1];\n\
+    \        idft(respi1);\n        while (static_cast<int>(resp[i + 1].size()) <\
+    \ len) dft_doubling(respi1, resp[i + 1]);\n      }\n      auto &rr = res.emplace_back(std::move(resp[i]));\n\
+    \      for (int j = 0; j != len; ++j) rr[j] = rr[j] * r[j] + resp[i + 1][j] *\
+    \ l[j];\n    }\n    if (t->size() & 1) res.emplace_back(std::move(resp.back()));\n\
     \    resp.swap(res);\n  }\n  idft(resp.front());\n  resp.front().shrink();\n \
     \ return resp.front();\n}\n\ntemplate <typename PolyT>\nstd::vector<typename PolyT::value_type>\n\
     evaluation(const PolyT &a, const std::vector<typename PolyT::value_type> &x) {\n\
@@ -549,7 +550,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
   requiredBy: []
-  timestamp: '2022-05-08 14:05:16+08:00'
+  timestamp: '2022-05-08 14:32:05+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
