@@ -102,6 +102,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: modint/runtime_long_montgomery_modint.hpp
       title: Runtime Long Montgomery ModInt
+    - icon: ':warning:'
+      path: modint/runtime_modint.hpp
+      title: Runtime ModInt
     - icon: ':heavy_check_mark:'
       path: modint/runtime_montgomery_modint.hpp
       title: Runtime Montgomery ModInt

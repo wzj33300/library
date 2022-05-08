@@ -100,6 +100,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: modint/runtime_long_montgomery_modint.hpp
     title: Runtime Long Montgomery ModInt
+  - icon: ':warning:'
+    path: modint/runtime_modint.hpp
+    title: Runtime ModInt
   - icon: ':heavy_check_mark:'
     path: modint/runtime_montgomery_modint.hpp
     title: Runtime Montgomery ModInt
@@ -358,6 +361,7 @@ data:
   - math/stirling_numbers.hpp
   - modint/long_montgomery_modint.hpp
   - modint/montgomery_modint.hpp
+  - modint/runtime_modint.hpp
   - modint/runtime_montgomery_modint.hpp
   - modint/runtime_long_montgomery_modint.hpp
   - string/z_function.hpp
