@@ -1,48 +1,48 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/polynomial.hpp
     title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT
       prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/sqrt_mod.hpp
     title: Square Roots (in $\mathbb{F} _ p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/subproduct_tree.hpp
     title: Multipoint Evaluation and Interpolation (in $\mathbb{F} _ p$ for FFT prime
       $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
       \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_fourier_transform.hpp
     title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$ for
       FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/polynomial_interpolation
@@ -396,13 +396,13 @@ data:
     \ poly_info(const PolyT &poly, const PolyT &cached_dft) : poly_(poly), cached_dft_(cached_dft)\
     \ {}\n    explicit poly_info(const poly_info &) = default;\n  };\n\n  std::vector<std::vector<poly_info>>\
     \ tree_{};\n\npublic:\n  explicit subproduct_tree(const std::vector<T> &x) {\n\
-    \    if (x.empty()) return;\n    auto &l0 = tree_.emplace_back();\n    for (auto\
+    \    if (x.empty()) return;\n    auto &&l0 = tree_.emplace_back();\n    for (auto\
     \ &&i : x) l0.emplace_back(PolyT{-i, T(1)}, PolyT{1 - i});\n    while (tree_.back().size()\
     \ != 1) {\n      auto &a     = tree_.back();\n      const int n = static_cast<int>(a.size());\n\
     \      std::vector<poly_info> b;\n      for (int i = 0; i + 1 < n; i += 2) {\n\
-    \        const auto &aif  = a[i].poly_;\n        auto &ais        = a[i].cached_dft_;\n\
-    \        const auto &ai1f = a[i + 1].poly_;\n        auto &ai1s       = a[i +\
-    \ 1].cached_dft_;\n        dft_doubling(aif, ais);\n        while (ai1s.size()\
+    \        const auto &&aif  = a[i].poly_;\n        auto &&ais        = a[i].cached_dft_;\n\
+    \        const auto &&ai1f = a[i + 1].poly_;\n        auto &&ai1s       = a[i\
+    \ + 1].cached_dft_;\n        dft_doubling(aif, ais);\n        while (ai1s.size()\
     \ < ais.size()) dft_doubling(ai1f, ai1s);\n        auto v = ais;\n        for\
     \ (int j = 0, je = static_cast<int>(v.size()); j != je; ++j) v[j] *= ai1s[j];\n\
     \        auto dv = v;\n        idft(v);\n        auto vs = aif.size() + ai1f.size()\
@@ -422,13 +422,13 @@ data:
     \    auto t        = tree_.rbegin() + 1;\n    const auto te = tree_.rend();\n\
     \    for (; t != te; ++t) {\n      std::vector<PolyT> res;\n      const int ts\
     \ = static_cast<int>(t->size());\n      for (int i = 0, ie = static_cast<int>(resp.size());\
-    \ i != ie; ++i)\n        if ((i << 1 | 1) < ts) {\n          auto &l       = t->at(i\
-    \ << 1);\n          auto &r       = t->at(i << 1 | 1);\n          const int len\
+    \ i != ie; ++i)\n        if ((i << 1 | 1) < ts) {\n          auto &&l      = t->at(i\
+    \ << 1);\n          auto &&r      = t->at(i << 1 | 1);\n          const int len\
     \ = static_cast<int>(l.cached_dft_.size());\n          resp[i].resize(len);\n\
     \          dft(resp[i]);\n          auto respi_cpy = resp[i];\n          for (int\
     \ j = 0; j != len; ++j)\n            resp[i][j] *= r.cached_dft_[j], respi_cpy[j]\
     \ *= l.cached_dft_[j];\n          res.emplace_back(std::move(resp[i]));\n    \
-    \      auto &rr = res.emplace_back(std::move(respi_cpy));\n          auto &lr\
+    \      auto &&rr = res.emplace_back(std::move(respi_cpy));\n          auto &&lr\
     \ = *(res.rbegin() + 1);\n          idft(lr), idft(rr);\n          lr.erase(lr.begin(),\
     \ lr.begin() + r.poly_.deg());\n          lr.resize(l.poly_.deg());\n        \
     \  rr.erase(rr.begin(), rr.begin() + l.poly_.deg());\n          rr.resize(r.poly_.deg());\n\
@@ -444,11 +444,11 @@ data:
     \ (int i = 0; i != n; ++i) resp.emplace_back(PolyT{y[i] * iyp[i]});\n  for (auto\
     \ t = tree_.begin(); resp.size() != 1; ++t) {\n    assert(t->size() == resp.size());\n\
     \    std::vector<PolyT> res;\n    for (int i = 0, ie = static_cast<int>(resp.size());\
-    \ i + 1 < ie; i += 2) {\n      auto &l = t->at(i).cached_dft_;\n      auto &r\
+    \ i + 1 < ie; i += 2) {\n      auto &&l = t->at(i).cached_dft_;\n      auto &&r\
     \ = t->at(i + 1).cached_dft_;\n      dft_doubling(resp[i]);\n      const int len\
     \ = static_cast<int>(l.size());\n      {\n        auto respi1 = resp[i + 1];\n\
     \        idft(respi1);\n        while (static_cast<int>(resp[i + 1].size()) <\
-    \ len) dft_doubling(respi1, resp[i + 1]);\n      }\n      auto &rr = res.emplace_back(std::move(resp[i]));\n\
+    \ len) dft_doubling(respi1, resp[i + 1]);\n      }\n      auto &&rr = res.emplace_back(std::move(resp[i]));\n\
     \      for (int j = 0; j != len; ++j) rr[j] = rr[j] * r[j] + resp[i + 1][j] *\
     \ l[j];\n    }\n    if (t->size() & 1) res.emplace_back(std::move(resp.back()));\n\
     \    resp.swap(res);\n  }\n  idft(resp.front());\n  resp.front().shrink();\n \
@@ -550,8 +550,8 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
   requiredBy: []
-  timestamp: '2022-05-08 14:32:05+08:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2022-05-08 14:50:29+08:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
 layout: document
