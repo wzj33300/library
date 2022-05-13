@@ -107,6 +107,9 @@ data:
     path: modint/runtime_montgomery_modint.hpp
     title: Runtime Montgomery ModInt
   - icon: ':heavy_check_mark:'
+    path: string/suffix_array.hpp
+    title: Suffix Array (SA-IS)
+  - icon: ':heavy_check_mark:'
     path: string/z_function.hpp
     title: Z Function
   _extendedVerifiedWith:
@@ -288,6 +291,9 @@ data:
     path: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
     title: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
   - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/string/suffix_array.0.test.cpp
+    title: remote_test/yosupo/string/suffix_array.0.test.cpp
+  - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/string/z_algorithm.0.test.cpp
     title: remote_test/yosupo/string/z_algorithm.0.test.cpp
   _isVerificationFailed: false
@@ -332,102 +338,104 @@ data:
   isVerificationFile: false
   path: common.hpp
   requiredBy:
-  - datastructure/disjoint_set.hpp
-  - datastructure/cartesian_tree.hpp
-  - datastructure/weighted_disjoint_set.hpp
-  - math/convolution_mod.hpp
-  - math/convolution_mod.hpp
-  - math/taylor_shift.hpp
-  - math/czt.hpp
-  - math/formal_power_series.hpp
-  - math/relaxed_convolution.hpp
-  - math/semi_relaxed_convolution.hpp
-  - math/multivariate_convolution.hpp
-  - math/subproduct_tree.hpp
-  - math/polynomial.hpp
-  - math/convolution.hpp
-  - math/radix2_ntt.hpp
-  - math/linear_sieve.hpp
-  - math/sqrt_mod.hpp
-  - math/shift_sample_points_single.hpp
-  - math/binomial_convolution.hpp
-  - math/binomial_convolution.hpp
-  - math/truncated_fourier_transform.hpp
-  - math/integer_factorization.hpp
-  - math/integer_factorization.hpp
-  - math/truncated_formal_power_series.hpp
-  - math/binomial.hpp
-  - math/extended_gcd.hpp
-  - math/stirling_numbers.hpp
-  - modint/long_montgomery_modint.hpp
-  - modint/montgomery_modint.hpp
   - modint/runtime_modint.hpp
   - modint/runtime_montgomery_modint.hpp
+  - modint/long_montgomery_modint.hpp
+  - modint/montgomery_modint.hpp
   - modint/runtime_long_montgomery_modint.hpp
+  - datastructure/disjoint_set.hpp
+  - datastructure/weighted_disjoint_set.hpp
+  - datastructure/cartesian_tree.hpp
+  - math/multivariate_convolution.hpp
+  - math/subproduct_tree.hpp
+  - math/formal_power_series.hpp
+  - math/truncated_formal_power_series.hpp
+  - math/convolution.hpp
+  - math/integer_factorization.hpp
+  - math/integer_factorization.hpp
+  - math/stirling_numbers.hpp
+  - math/extended_gcd.hpp
+  - math/semi_relaxed_convolution.hpp
+  - math/shift_sample_points_single.hpp
+  - math/relaxed_convolution.hpp
+  - math/binomial_convolution.hpp
+  - math/binomial_convolution.hpp
+  - math/czt.hpp
+  - math/truncated_fourier_transform.hpp
+  - math/sqrt_mod.hpp
+  - math/convolution_mod.hpp
+  - math/convolution_mod.hpp
+  - math/radix2_ntt.hpp
+  - math/polynomial.hpp
+  - math/linear_sieve.hpp
+  - math/taylor_shift.hpp
+  - math/binomial.hpp
+  - string/suffix_array.hpp
   - string/z_function.hpp
   timestamp: '2022-04-20 11:49:11+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - remote_test/aizu/number_theory/extended_euclidean_algorithm.0.test.cpp
-  - remote_test/aizu/number_theory/binary_pow.0.test.cpp
-  - remote_test/aizu/datastructure/weighted_union_find.0.test.cpp
   - remote_test/yosupo/datastructure/union_find.0.test.cpp
   - remote_test/yosupo/datastructure/cartesian_tree.0.test.cpp
-  - remote_test/yosupo/math/convolution_mod.2.test.cpp
-  - remote_test/yosupo/math/convolution_mod.2.test.cpp
-  - remote_test/yosupo/math/convolution_mod.1.test.cpp
-  - remote_test/yosupo/math/convolution_mod.1.test.cpp
-  - remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
-  - remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
-  - remote_test/yosupo/math/partition_function.0.test.cpp
-  - remote_test/yosupo/math/partition_function.0.test.cpp
-  - remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
-  - remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
-  - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
-  - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
-  - remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
-  - remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
-  - remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
-  - remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
-  - remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
-  - remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
-  - remote_test/yosupo/math/convolution_mod.0.test.cpp
-  - remote_test/yosupo/math/convolution_mod.0.test.cpp
-  - remote_test/yosupo/math/multipoint_evaluation.0.test.cpp
-  - remote_test/yosupo/math/multipoint_evaluation.0.test.cpp
-  - remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
-  - remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
-  - remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
-  - remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
-  - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
-  - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
-  - remote_test/yosupo/math/multivariate_convolution.0.test.cpp
-  - remote_test/yosupo/math/multivariate_convolution.0.test.cpp
-  - remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
-  - remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
-  - remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
-  - remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
-  - remote_test/yosupo/math/sqrt_mod.0.test.cpp
-  - remote_test/yosupo/math/sqrt_mod.0.test.cpp
-  - remote_test/yosupo/math/division_of_polynomials.0.test.cpp
-  - remote_test/yosupo/math/division_of_polynomials.0.test.cpp
-  - remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
-  - remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
-  - remote_test/yosupo/math/factorize.0.test.cpp
-  - remote_test/yosupo/math/factorize.0.test.cpp
-  - remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
-  - remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
-  - remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
-  - remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
-  - remote_test/yosupo/math/convolution_mod.3.test.cpp
-  - remote_test/yosupo/math/convolution_mod.3.test.cpp
   - remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
-  - remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
-  - remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
+  - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
+  - remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/exp_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
+  - remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
+  - remote_test/yosupo/math/convolution_mod.3.test.cpp
+  - remote_test/yosupo/math/convolution_mod.3.test.cpp
+  - remote_test/yosupo/math/partition_function.0.test.cpp
+  - remote_test/yosupo/math/partition_function.0.test.cpp
+  - remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
+  - remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
+  - remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
+  - remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
+  - remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
+  - remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
+  - remote_test/yosupo/math/convolution_mod.2.test.cpp
+  - remote_test/yosupo/math/convolution_mod.2.test.cpp
+  - remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/factorize.0.test.cpp
+  - remote_test/yosupo/math/factorize.0.test.cpp
+  - remote_test/yosupo/math/sqrt_mod.0.test.cpp
+  - remote_test/yosupo/math/sqrt_mod.0.test.cpp
+  - remote_test/yosupo/math/multivariate_convolution.0.test.cpp
+  - remote_test/yosupo/math/multivariate_convolution.0.test.cpp
+  - remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
+  - remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
   - remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
+  - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
+  - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
+  - remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
+  - remote_test/yosupo/math/division_of_polynomials.0.test.cpp
+  - remote_test/yosupo/math/division_of_polynomials.0.test.cpp
+  - remote_test/yosupo/math/convolution_mod.0.test.cpp
+  - remote_test/yosupo/math/convolution_mod.0.test.cpp
+  - remote_test/yosupo/math/convolution_mod.1.test.cpp
+  - remote_test/yosupo/math/convolution_mod.1.test.cpp
+  - remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
+  - remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
+  - remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
+  - remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
+  - remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
+  - remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
+  - remote_test/yosupo/math/multipoint_evaluation.0.test.cpp
+  - remote_test/yosupo/math/multipoint_evaluation.0.test.cpp
+  - remote_test/yosupo/string/suffix_array.0.test.cpp
   - remote_test/yosupo/string/z_algorithm.0.test.cpp
+  - remote_test/aizu/datastructure/weighted_union_find.0.test.cpp
+  - remote_test/aizu/number_theory/extended_euclidean_algorithm.0.test.cpp
+  - remote_test/aizu/number_theory/binary_pow.0.test.cpp
 documentation_of: common.hpp
 layout: document
 redirect_from:

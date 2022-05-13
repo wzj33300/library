@@ -111,6 +111,9 @@ data:
   - name: string
     pages:
     - icon: ':heavy_check_mark:'
+      path: string/suffix_array.hpp
+      title: Suffix Array (SA-IS)
+    - icon: ':heavy_check_mark:'
       path: string/z_function.hpp
       title: Z Function
   verificationCategories:
@@ -220,6 +223,9 @@ data:
       title: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
   - name: remote_test/yosupo/string
     pages:
+    - icon: ':heavy_check_mark:'
+      path: remote_test/yosupo/string/suffix_array.0.test.cpp
+      title: remote_test/yosupo/string/suffix_array.0.test.cpp
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/string/z_algorithm.0.test.cpp
       title: remote_test/yosupo/string/z_algorithm.0.test.cpp
