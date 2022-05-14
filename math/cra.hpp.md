@@ -1,20 +1,20 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yuki/math/187.0.test.cpp
     title: remote_test/yuki/math/187.0.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/cra.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\n#define\
@@ -55,7 +55,7 @@ data:
     \                                const std::vector<long long> &m) {\n  const int\
     \ n = static_cast<int>(a.size());\n  assert(a.size() == m.size());\n  auto safe_mod\
     \ = [](long long a, long long m) { return a %= m, (a < 0 ? a + m : a); };\n  long\
-    \ long A = 0, M = 1;\n  for (int i = 0; i < n; ++i) {\n    auto res = detail::cra2(safe_mod(a[i],\
+    \ long A = 0, M = 1;\n  for (int i = 0; i != n; ++i) {\n    auto res = detail::cra2(safe_mod(a[i],\
     \ m[i]), m[i], A, M);\n    if (!res) return {};\n    std::tie(A, M) = res.value();\n\
     \  }\n  return std::make_pair(A, M);\n}\n\nstd::optional<std::pair<int, int>>\
     \ cra_mod(const std::vector<int> &a, const std::vector<int> &m,\n            \
@@ -66,14 +66,14 @@ data:
     \ auto &&mi = m_cpy[i];\n    for (int j = 0; j != i; ++j) {\n      auto &&mj =\
     \ m_cpy[j];\n      auto d    = std::gcd(mi, mj);\n      if (d == 1) continue;\n\
     \      if (safe_mod(a[i], d) != safe_mod(a[j], d)) return {};\n      mi /= d,\
-    \ mj /= d;\n      auto k = std::gcd(mi, d);\n      if (k != 1)\n        while\
-    \ (d % k == 0) mi *= k, d /= k;\n      mj *= d;\n    }\n  }\n  m_cpy.push_back(modular);\n\
+    \ mj /= d;\n      if (auto k = std::gcd(mi, d); k != 1)\n        while (d % k\
+    \ == 0) mi *= k, d /= k;\n      mj *= d;\n    }\n  }\n  m_cpy.push_back(modular);\n\
     \  std::vector<int> pp(n + 1, 1), res(n + 1);\n  for (int i = 0; i != n; ++i)\
-    \ {\n    auto u = (a[i] - res[i]) * inv_gcd(pp[i], m_cpy[i]).first % m_cpy[i];\n\
-    \    if (u < 0) u += m_cpy[i];\n    for (int j = i + 1; j <= n; ++j)\n      res[j]\
-    \ = (res[j] + u * pp[j]) % m_cpy[j],\n      pp[j]  = static_cast<long long>(pp[j])\
-    \ * m_cpy[i] % m_cpy[j];\n  }\n  return std::make_pair(res.back(), pp.back());\n\
-    }\n\nLIB_END\n\n\n"
+    \ {\n    auto u = (safe_mod(a[i], m_cpy[i]) - res[i]) * inv_gcd(pp[i], m_cpy[i]).first\
+    \ % m_cpy[i];\n    if (u < 0) u += m_cpy[i];\n    for (int j = i + 1; j <= n;\
+    \ ++j)\n      res[j] = (res[j] + u * pp[j]) % m_cpy[j],\n      pp[j]  = static_cast<long\
+    \ long>(pp[j]) * m_cpy[i] % m_cpy[j];\n  }\n  return std::make_pair(res.back(),\
+    \ pp.back());\n}\n\nLIB_END\n\n\n"
   code: "#ifndef CRA_HPP\n#define CRA_HPP\n\n#include \"../common.hpp\"\n#include\
     \ \"extended_gcd.hpp\"\n\n#include <cassert>\n#include <numeric>\n#include <optional>\n\
     #include <utility>\n#include <vector>\n\nLIB_BEGIN\n\nnamespace detail {\n\nstd::optional<std::pair<long\
@@ -88,7 +88,7 @@ data:
     \ long> &a,\n                                                   const std::vector<long\
     \ long> &m) {\n  const int n = static_cast<int>(a.size());\n  assert(a.size()\
     \ == m.size());\n  auto safe_mod = [](long long a, long long m) { return a %=\
-    \ m, (a < 0 ? a + m : a); };\n  long long A = 0, M = 1;\n  for (int i = 0; i <\
+    \ m, (a < 0 ? a + m : a); };\n  long long A = 0, M = 1;\n  for (int i = 0; i !=\
     \ n; ++i) {\n    auto res = detail::cra2(safe_mod(a[i], m[i]), m[i], A, M);\n\
     \    if (!res) return {};\n    std::tie(A, M) = res.value();\n  }\n  return std::make_pair(A,\
     \ M);\n}\n\nstd::optional<std::pair<int, int>> cra_mod(const std::vector<int>\
@@ -99,13 +99,13 @@ data:
     \ and make coprime\n  for (int i = 0; i != n; ++i) {\n    auto &&mi = m_cpy[i];\n\
     \    for (int j = 0; j != i; ++j) {\n      auto &&mj = m_cpy[j];\n      auto d\
     \    = std::gcd(mi, mj);\n      if (d == 1) continue;\n      if (safe_mod(a[i],\
-    \ d) != safe_mod(a[j], d)) return {};\n      mi /= d, mj /= d;\n      auto k =\
-    \ std::gcd(mi, d);\n      if (k != 1)\n        while (d % k == 0) mi *= k, d /=\
-    \ k;\n      mj *= d;\n    }\n  }\n  m_cpy.push_back(modular);\n  std::vector<int>\
-    \ pp(n + 1, 1), res(n + 1);\n  for (int i = 0; i != n; ++i) {\n    auto u = (a[i]\
-    \ - res[i]) * inv_gcd(pp[i], m_cpy[i]).first % m_cpy[i];\n    if (u < 0) u +=\
-    \ m_cpy[i];\n    for (int j = i + 1; j <= n; ++j)\n      res[j] = (res[j] + u\
-    \ * pp[j]) % m_cpy[j],\n      pp[j]  = static_cast<long long>(pp[j]) * m_cpy[i]\
+    \ d) != safe_mod(a[j], d)) return {};\n      mi /= d, mj /= d;\n      if (auto\
+    \ k = std::gcd(mi, d); k != 1)\n        while (d % k == 0) mi *= k, d /= k;\n\
+    \      mj *= d;\n    }\n  }\n  m_cpy.push_back(modular);\n  std::vector<int> pp(n\
+    \ + 1, 1), res(n + 1);\n  for (int i = 0; i != n; ++i) {\n    auto u = (safe_mod(a[i],\
+    \ m_cpy[i]) - res[i]) * inv_gcd(pp[i], m_cpy[i]).first % m_cpy[i];\n    if (u\
+    \ < 0) u += m_cpy[i];\n    for (int j = i + 1; j <= n; ++j)\n      res[j] = (res[j]\
+    \ + u * pp[j]) % m_cpy[j],\n      pp[j]  = static_cast<long long>(pp[j]) * m_cpy[i]\
     \ % m_cpy[j];\n  }\n  return std::make_pair(res.back(), pp.back());\n}\n\nLIB_END\n\
     \n#endif"
   dependsOn:
@@ -114,8 +114,8 @@ data:
   isVerificationFile: false
   path: math/cra.hpp
   requiredBy: []
-  timestamp: '2022-05-15 00:44:30+08:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2022-05-15 01:05:22+08:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yuki/math/187.0.test.cpp
 documentation_of: math/cra.hpp
