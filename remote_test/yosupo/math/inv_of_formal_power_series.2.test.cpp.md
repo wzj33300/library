@@ -1,34 +1,34 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT
       prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/sqrt_mod.hpp
     title: Square Roots (in $\mathbb{F} _ p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
       \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_fourier_transform.hpp
     title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$ for
       FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
@@ -180,7 +180,7 @@ data:
     \  // clang-format on\n  return c_[n_++];\n}\n\nLIB_END\n\n\n#line 1 \"math/sqrt_mod.hpp\"\
     \n\n\n\n#line 5 \"math/sqrt_mod.hpp\"\n\n#include <random>\n#line 9 \"math/sqrt_mod.hpp\"\
     \n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nstd::vector<ModIntT> sqrt_mod_prime(ModIntT\
-    \ a) {\n  // Bostan-Mori's algorithm\n  if (a.is_zero()) return {a};\n  const\
+    \ a) {\n  // Bostan--Mori's algorithm\n  if (a.is_zero()) return {a};\n  const\
     \ auto p = ModIntT::mod();\n  if (a.pow(p >> 1) == -1) return {};\n  if ((p &\
     \ 3) == 3) {\n    ModIntT b(a.pow((p + 1) >> 2));\n    return {b, -b};\n  }\n\
     \  std::mt19937 gen(std::random_device{}());\n  std::uniform_int_distribution<std::remove_cv_t<decltype(p)>>\
@@ -431,7 +431,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
   requiredBy: []
-  timestamp: '2022-05-04 20:34:26+08:00'
+  timestamp: '2022-05-15 00:44:30+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp

@@ -1,14 +1,14 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
   _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/polynomial.hpp
     title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
       \rbrack$ for FFT prime $p$)
@@ -40,28 +40,28 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
     title: remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/sqrt_mod.0.test.cpp
     title: remote_test/yosupo/math/sqrt_mod.0.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
     title: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
     title: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/sqrt_mod.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\n\
     #define LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END }\n#define\
     \ LIB ::lib::\n\n\n#line 5 \"math/sqrt_mod.hpp\"\n\n#include <random>\n#include\
     \ <type_traits>\n#include <vector>\n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\n\
-    std::vector<ModIntT> sqrt_mod_prime(ModIntT a) {\n  // Bostan-Mori's algorithm\n\
+    std::vector<ModIntT> sqrt_mod_prime(ModIntT a) {\n  // Bostan--Mori's algorithm\n\
     \  if (a.is_zero()) return {a};\n  const auto p = ModIntT::mod();\n  if (a.pow(p\
     \ >> 1) == -1) return {};\n  if ((p & 3) == 3) {\n    ModIntT b(a.pow((p + 1)\
     \ >> 2));\n    return {b, -b};\n  }\n  std::mt19937 gen(std::random_device{}());\n\
@@ -74,7 +74,7 @@ data:
   code: "#ifndef SQRT_MOD_HPP\n#define SQRT_MOD_HPP\n\n#include \"../common.hpp\"\n\
     \n#include <random>\n#include <type_traits>\n#include <vector>\n\nLIB_BEGIN\n\n\
     template <typename ModIntT>\nstd::vector<ModIntT> sqrt_mod_prime(ModIntT a) {\n\
-    \  // Bostan-Mori's algorithm\n  if (a.is_zero()) return {a};\n  const auto p\
+    \  // Bostan--Mori's algorithm\n  if (a.is_zero()) return {a};\n  const auto p\
     \ = ModIntT::mod();\n  if (a.pow(p >> 1) == -1) return {};\n  if ((p & 3) == 3)\
     \ {\n    ModIntT b(a.pow((p + 1) >> 2));\n    return {b, -b};\n  }\n  std::mt19937\
     \ gen(std::random_device{}());\n  std::uniform_int_distribution<std::remove_cv_t<decltype(p)>>\
@@ -91,8 +91,8 @@ data:
   requiredBy:
   - math/truncated_formal_power_series.hpp
   - math/polynomial.hpp
-  timestamp: '2022-04-26 19:23:58+08:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2022-05-15 00:44:30+08:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
@@ -114,7 +114,7 @@ title: Square Roots (in $\mathbb{F} _ p$)
 
 ## A Simple and Fast Algorithm
 
-I think this algorithm is identical to Bostan-Mori's algorithm. I omit the details here.
+I think this algorithm is identical to Bostan--Mori's algorithm. I omit the details here.
 
 ## Reference
 

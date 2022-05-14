@@ -3,7 +3,7 @@ data:
   libraryCategories:
   - name: .
     pages:
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: common.hpp
       title: common.hpp
   - name: datastructure
@@ -19,7 +19,7 @@ data:
       title: Weighted Disjoint Set
   - name: math
     pages:
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/binomial.hpp
       title: Binomial Coefficient (in $\mathbb{F} _ p$)
     - icon: ':heavy_check_mark:'
@@ -31,11 +31,14 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/convolution_mod.hpp
       title: Convolution (in $\mathbb{Z} m / \mathbb{Z} \lbrack z \rbrack$)
+    - icon: ':x:'
+      path: math/cra.hpp
+      title: Chinese Remainder Algorithm (in $\mathbb{Z} / m \mathbb{Z}$)
     - icon: ':heavy_check_mark:'
       path: math/czt.hpp
       title: Chirp Z-transform (Bluestein's algorithm) (in $\mathbb{F} _ p \lbrack
         z \rbrack$ for FFT prime $p$)
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/extended_gcd.hpp
       title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
     - icon: ':heavy_check_mark:'
@@ -45,7 +48,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/integer_factorization.hpp
       title: Integer Factorization (Pollard's rho algorithm) (in $\mathbb{Z}$)
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: math/linear_sieve.hpp
       title: Linear Sieve
     - icon: ':heavy_check_mark:'
@@ -53,41 +56,41 @@ data:
       title: Multivariate Convolution (in $\mathbb{F} _ p \lbrack z_1, \dots, z_d
         \rbrack \left/ \left( z_1^{l_1}, \dots, z_d^{l_d} \right)\right.$ for FFT
         prime $p$)
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/polynomial.hpp
       title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/radix2_ntt.hpp
       title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
     - icon: ':heavy_check_mark:'
       path: math/relaxed_convolution.hpp
       title: Relaxed Convolution (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack \rbrack$
         for FFT prime $p$)
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/semi_relaxed_convolution.hpp
       title: Semi-Relaxed Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT
         prime $p$)
     - icon: ':warning:'
       path: math/shift_sample_points_single.hpp
       title: Shift Sample Points (Single) (in $\mathbb{F} _ p \lbrack z \rbrack$)
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/sqrt_mod.hpp
       title: Square Roots (in $\mathbb{F} _ p$)
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: math/stirling_numbers.hpp
       title: Stirling Numbers (in $\mathbb{F} _ p$ for FFT prime $p$)
     - icon: ':heavy_check_mark:'
       path: math/subproduct_tree.hpp
       title: Multipoint Evaluation and Interpolation (in $\mathbb{F} _ p$ for FFT
         prime $p$)
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/taylor_shift.hpp
       title: Polynomial Taylor Shift (in $\mathbb{F} _ p$ for FFT prime $p$)
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/truncated_formal_power_series.hpp
       title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
         \rbrack$ for FFT prime $p$)
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/truncated_fourier_transform.hpp
       title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$ for
         FFT prime $p$)
@@ -96,7 +99,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: modint/long_montgomery_modint.hpp
       title: Long Montgomery ModInt
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: modint/montgomery_modint.hpp
       title: Montgomery ModInt
     - icon: ':heavy_check_mark:'
@@ -105,7 +108,7 @@ data:
     - icon: ':warning:'
       path: modint/runtime_modint.hpp
       title: Runtime ModInt
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: modint/runtime_montgomery_modint.hpp
       title: Runtime Montgomery ModInt
   - name: string
@@ -209,16 +212,16 @@ data:
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
       title: remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: remote_test/yosupo/math/sqrt_mod.0.test.cpp
       title: remote_test/yosupo/math/sqrt_mod.0.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
       title: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
       title: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
       title: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
   - name: remote_test/yosupo/string
@@ -229,6 +232,11 @@ data:
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/string/z_algorithm.0.test.cpp
       title: remote_test/yosupo/string/z_algorithm.0.test.cpp
+  - name: remote_test/yuki/math
+    pages:
+    - icon: ':x:'
+      path: remote_test/yuki/math/187.0.test.cpp
+      title: remote_test/yuki/math/187.0.test.cpp
 layout: toppage
 ---
 [![License](https://img.shields.io/github/license/hly1204/library)](https://github.com/hly1204/library/blob/master/LICENSE) ![Standard](https://img.shields.io/badge/C%2B%2B-17-green)
