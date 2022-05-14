@@ -60,20 +60,20 @@ data:
     \  }\n  return std::make_pair(A, M);\n}\n\nstd::optional<std::pair<int, int>>\
     \ cra_mod(const std::vector<int> &a, const std::vector<int> &m,\n            \
     \                               const int modular) {\n  const int n = static_cast<int>(a.size());\n\
-    \  assert(a.size() == m.size());\n  auto safe_mod = [](int a, int m) {\n    if\
-    \ ((a %= m) < 0) a += m;\n    return a;\n  };\n  std::vector<int> m_cpy(m);\n\
-    \  // check conflicts and make coprime\n  for (int i = 0; i != n; ++i) {\n   \
-    \ auto &&mi = m_cpy[i];\n    for (int j = 0; j != i; ++j) {\n      auto &&mj =\
-    \ m_cpy[j];\n      auto d    = std::gcd(mi, mj);\n      if (d == 1) continue;\n\
-    \      if (safe_mod(a[i], d) != safe_mod(a[j], d)) return {};\n      mi /= d,\
-    \ mj /= d;\n      if (auto k = std::gcd(mi, d); k != 1)\n        while (d % k\
-    \ == 0) mi *= k, d /= k;\n      mj *= d;\n    }\n  }\n  m_cpy.push_back(modular);\n\
-    \  std::vector<int> pp(n + 1, 1), res(n + 1);\n  for (int i = 0; i != n; ++i)\
-    \ {\n    auto u = (safe_mod(a[i], m_cpy[i]) - res[i]) * inv_gcd(pp[i], m_cpy[i]).first\
-    \ % m_cpy[i];\n    if (u < 0) u += m_cpy[i];\n    for (int j = i + 1; j <= n;\
-    \ ++j)\n      res[j] = (res[j] + u * pp[j]) % m_cpy[j],\n      pp[j]  = static_cast<long\
-    \ long>(pp[j]) * m_cpy[i] % m_cpy[j];\n  }\n  return std::make_pair(res.back(),\
-    \ pp.back());\n}\n\nLIB_END\n\n\n"
+    \  assert(a.size() == m.size());\n  auto safe_mod = [](int a, int m) { return\
+    \ a %= m, (a < 0 ? a + m : a); };\n  std::vector<int> m_cpy(m);\n  // check conflicts\
+    \ and make coprime\n  for (int i = 0; i != n; ++i) {\n    auto &&mi = m_cpy[i];\n\
+    \    for (int j = 0; j != i; ++j) {\n      auto &&mj = m_cpy[j];\n      auto d\
+    \    = std::gcd(mi, mj);\n      if (d == 1) continue;\n      if (safe_mod(a[i],\
+    \ d) != safe_mod(a[j], d)) return {};\n      mi /= d, mj /= d;\n      if (auto\
+    \ k = std::gcd(mi, d); k != 1)\n        while (d % k == 0) mi *= k, d /= k;\n\
+    \      mj *= d;\n    }\n  }\n  m_cpy.push_back(modular);\n  std::vector<int> pp(n\
+    \ + 1, 1), res(n + 1);\n  for (int i = 0; i != n; ++i) {\n    auto u = (safe_mod(a[i],\
+    \ m_cpy[i]) - res[i]) * inv_gcd(pp[i], m_cpy[i]).first % m_cpy[i];\n    if (u\
+    \ < 0) u += m_cpy[i];\n    for (int j = i + 1; j <= n; ++j)\n      res[j] = (res[j]\
+    \ + u * pp[j]) % m_cpy[j],\n      pp[j]  = static_cast<long long>(pp[j]) * m_cpy[i]\
+    \ % m_cpy[j];\n  }\n  return std::make_pair(res.back(), pp.back());\n}\n\nLIB_END\n\
+    \n\n"
   code: "#ifndef CRA_HPP\n#define CRA_HPP\n\n#include \"../common.hpp\"\n#include\
     \ \"extended_gcd.hpp\"\n\n#include <cassert>\n#include <numeric>\n#include <optional>\n\
     #include <utility>\n#include <vector>\n\nLIB_BEGIN\n\nnamespace detail {\n\nstd::optional<std::pair<long\
@@ -94,27 +94,26 @@ data:
     \ M);\n}\n\nstd::optional<std::pair<int, int>> cra_mod(const std::vector<int>\
     \ &a, const std::vector<int> &m,\n                                           const\
     \ int modular) {\n  const int n = static_cast<int>(a.size());\n  assert(a.size()\
-    \ == m.size());\n  auto safe_mod = [](int a, int m) {\n    if ((a %= m) < 0) a\
-    \ += m;\n    return a;\n  };\n  std::vector<int> m_cpy(m);\n  // check conflicts\
-    \ and make coprime\n  for (int i = 0; i != n; ++i) {\n    auto &&mi = m_cpy[i];\n\
-    \    for (int j = 0; j != i; ++j) {\n      auto &&mj = m_cpy[j];\n      auto d\
-    \    = std::gcd(mi, mj);\n      if (d == 1) continue;\n      if (safe_mod(a[i],\
-    \ d) != safe_mod(a[j], d)) return {};\n      mi /= d, mj /= d;\n      if (auto\
-    \ k = std::gcd(mi, d); k != 1)\n        while (d % k == 0) mi *= k, d /= k;\n\
-    \      mj *= d;\n    }\n  }\n  m_cpy.push_back(modular);\n  std::vector<int> pp(n\
-    \ + 1, 1), res(n + 1);\n  for (int i = 0; i != n; ++i) {\n    auto u = (safe_mod(a[i],\
-    \ m_cpy[i]) - res[i]) * inv_gcd(pp[i], m_cpy[i]).first % m_cpy[i];\n    if (u\
-    \ < 0) u += m_cpy[i];\n    for (int j = i + 1; j <= n; ++j)\n      res[j] = (res[j]\
-    \ + u * pp[j]) % m_cpy[j],\n      pp[j]  = static_cast<long long>(pp[j]) * m_cpy[i]\
-    \ % m_cpy[j];\n  }\n  return std::make_pair(res.back(), pp.back());\n}\n\nLIB_END\n\
-    \n#endif"
+    \ == m.size());\n  auto safe_mod = [](int a, int m) { return a %= m, (a < 0 ?\
+    \ a + m : a); };\n  std::vector<int> m_cpy(m);\n  // check conflicts and make\
+    \ coprime\n  for (int i = 0; i != n; ++i) {\n    auto &&mi = m_cpy[i];\n    for\
+    \ (int j = 0; j != i; ++j) {\n      auto &&mj = m_cpy[j];\n      auto d    = std::gcd(mi,\
+    \ mj);\n      if (d == 1) continue;\n      if (safe_mod(a[i], d) != safe_mod(a[j],\
+    \ d)) return {};\n      mi /= d, mj /= d;\n      if (auto k = std::gcd(mi, d);\
+    \ k != 1)\n        while (d % k == 0) mi *= k, d /= k;\n      mj *= d;\n    }\n\
+    \  }\n  m_cpy.push_back(modular);\n  std::vector<int> pp(n + 1, 1), res(n + 1);\n\
+    \  for (int i = 0; i != n; ++i) {\n    auto u = (safe_mod(a[i], m_cpy[i]) - res[i])\
+    \ * inv_gcd(pp[i], m_cpy[i]).first % m_cpy[i];\n    if (u < 0) u += m_cpy[i];\n\
+    \    for (int j = i + 1; j <= n; ++j)\n      res[j] = (res[j] + u * pp[j]) % m_cpy[j],\n\
+    \      pp[j]  = static_cast<long long>(pp[j]) * m_cpy[i] % m_cpy[j];\n  }\n  return\
+    \ std::make_pair(res.back(), pp.back());\n}\n\nLIB_END\n\n#endif"
   dependsOn:
   - common.hpp
   - math/extended_gcd.hpp
   isVerificationFile: false
   path: math/cra.hpp
   requiredBy: []
-  timestamp: '2022-05-15 01:05:22+08:00'
+  timestamp: '2022-05-15 01:09:52+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yuki/math/187.0.test.cpp
