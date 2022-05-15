@@ -1,20 +1,20 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: remote_test/yuki/math/187.0.test.cpp
     title: remote_test/yuki/math/187.0.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/cra.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\n#define\
@@ -114,7 +114,7 @@ data:
   path: math/cra.hpp
   requiredBy: []
   timestamp: '2022-05-15 01:09:52+08:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yuki/math/187.0.test.cpp
 documentation_of: math/cra.hpp

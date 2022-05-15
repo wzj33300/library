@@ -1,26 +1,26 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: common.hpp
     title: common.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/random.hpp
     title: Pseudo Random Number Generator
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/sqrt_mod.hpp
     title: Square Roots (in $\mathbb{F} _ p$)
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modint/runtime_modint.hpp
     title: Runtime ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/sqrt_mod
@@ -61,27 +61,27 @@ data:
     \n#include <iostream>\n#line 12 \"modint/runtime_modint.hpp\"\n\nLIB_BEGIN\n\n\
     template <int /* IdT */>\nclass runtime_modint31 {\n  using i32 = std::int32_t;\n\
     \  using u32 = std::uint32_t;\n  using u64 = std::uint64_t;\n\n  u32 v_{};\n\n\
-    \  static u32 norm(i32 x) { return x + (-(x < 0) & MOD); }\n  static u32 redc(u64\
-    \ x) {\n    u32 t = (x + static_cast<u64>(static_cast<u32>(x) * R) * MOD_ODD)\
-    \ >> 32;\n    return t - (MOD_ODD & -((MOD_ODD - 1 - t) >> 31));\n  }\n  static\
-    \ u32 tsf(u32 x) { return (static_cast<u64>(x % MOD_ODD) * R2) << OFFSET | (x\
-    \ & MASK); }\n\n  static u32 R, R2, MOD, MOD_ODD, OFFSET, MASK;\n  static i32\
-    \ SMOD;\n\npublic:\n  static bool set_mod(u32 m) {\n    if (m == 1 || m >> 31\
-    \ != 0) return false;\n    for (MOD = MOD_ODD = m, OFFSET = 0; (MOD_ODD & 1) ==\
-    \ 0; ++OFFSET, MOD_ODD >>= 1) {}\n    MASK = (1 << OFFSET) - 1, SMOD = static_cast<i32>(MOD);\n\
-    \    {\n      // compute R\n      u32 t = 2, iv = MOD_ODD * (t - MOD_ODD * MOD_ODD);\n\
-    \      iv *= t - MOD_ODD * iv, iv *= t - MOD_ODD * iv;\n      R = iv * (MOD_ODD\
-    \ * iv - t);\n    }\n    // compute R2\n    R2 = -static_cast<u64>(MOD_ODD) %\
-    \ MOD_ODD;\n    return true;\n  }\n  static u32 mod() { return MOD; }\n  static\
-    \ i32 smod() { return SMOD; }\n  runtime_modint31() {}\n  template <typename IntT,\
-    \ std::enable_if_t<std::is_integral_v<IntT>, int> = 0>\n  runtime_modint31(IntT\
-    \ v) : v_(tsf(norm(v % SMOD))) {}\n  u32 val() const {\n    u32 h = redc(v_ >>\
-    \ OFFSET);\n    return ((h - v_) * R & MASK) * MOD_ODD + h;\n  }\n  i32 sval()\
-    \ const { return val(); }\n  bool is_zero() const { return v_ == 0; }\n  template\
-    \ <typename IntT, std::enable_if_t<std::is_integral_v<IntT>, int> = 0>\n  explicit\
-    \ constexpr operator IntT() const {\n    return static_cast<IntT>(val());\n  }\n\
-    \  runtime_modint31 operator-() const {\n    runtime_modint31 res;\n    u32 h\
-    \  = v_ >> OFFSET;\n    res.v_ = (((MOD_ODD & -(h != 0)) - h) << OFFSET) | (-v_\
+    \  static inline u32 norm(i32 x) { return x + (-(x < 0) & MOD); }\n  static inline\
+    \ u32 redc(u64 x) {\n    u32 t = (x + static_cast<u64>(static_cast<u32>(x) * R)\
+    \ * MOD_ODD) >> 32;\n    return t - (MOD_ODD & -((MOD_ODD - 1 - t) >> 31));\n\
+    \  }\n  static inline u32 tsf(u32 x) {\n    return redc(static_cast<u64>(x % MOD_ODD)\
+    \ * R2) << OFFSET | (x & MASK);\n  }\n\n  static u32 R, R2, MOD, MOD_ODD, OFFSET,\
+    \ MASK;\n  static i32 SMOD;\n\npublic:\n  static inline bool set_mod(u32 m) {\n\
+    \    if (m == 1 || m >> 31 != 0) return false;\n    for (MOD = MOD_ODD = m, OFFSET\
+    \ = 0; (MOD_ODD & 1) == 0; ++OFFSET, MOD_ODD >>= 1) {}\n    MASK = (1 << OFFSET)\
+    \ - 1, SMOD = static_cast<i32>(MOD);\n    {\n      // compute R\n      u32 t =\
+    \ 2, iv = MOD_ODD * (t - MOD_ODD * MOD_ODD);\n      iv *= t - MOD_ODD * iv, iv\
+    \ *= t - MOD_ODD * iv;\n      R = iv * (MOD_ODD * iv - t);\n    }\n    // compute\
+    \ R2\n    R2 = -static_cast<u64>(MOD_ODD) % MOD_ODD;\n    return true;\n  }\n\
+    \  static inline u32 mod() { return MOD; }\n  static inline i32 smod() { return\
+    \ SMOD; }\n  runtime_modint31() {}\n  template <typename IntT, std::enable_if_t<std::is_integral_v<IntT>,\
+    \ int> = 0>\n  runtime_modint31(IntT v) : v_(tsf(norm(v % SMOD))) {}\n  u32 val()\
+    \ const {\n    u32 h = redc(v_ >> OFFSET);\n    return ((h - v_) * R & MASK) *\
+    \ MOD_ODD + h;\n  }\n  i32 sval() const { return val(); }\n  bool is_zero() const\
+    \ { return v_ == 0; }\n  template <typename IntT, std::enable_if_t<std::is_integral_v<IntT>,\
+    \ int> = 0>\n  explicit operator IntT() const {\n    return static_cast<IntT>(val());\n\
+    \  }\n  runtime_modint31 operator-() const {\n    runtime_modint31 res;\n    u32\
+    \ h  = v_ >> OFFSET;\n    res.v_ = (((MOD_ODD & -(h != 0)) - h) << OFFSET) | (-v_\
     \ & MASK);\n    return res;\n  }\n  runtime_modint31 inv() const {\n    i32 x1\
     \ = 1, x3 = 0, a = sval(), b = SMOD;\n    while (b != 0) {\n      i32 q = a /\
     \ b, x1_old = x1, a_old = a;\n      x1 = x3, x3 = x1_old - x3 * q, a = b, b =\
@@ -147,8 +147,8 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/sqrt_mod.0.test.cpp
   requiredBy: []
-  timestamp: '2022-05-15 15:19:08+08:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2022-05-15 18:42:53+08:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/sqrt_mod.0.test.cpp
 layout: document
