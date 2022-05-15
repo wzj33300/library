@@ -56,15 +56,16 @@ data:
     \ 1 \"math/poly_extended_gcd.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\n#define\
     \ LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END }\n#define LIB\
     \ ::lib::\n\n\n#line 5 \"math/poly_extended_gcd.hpp\"\n\n#include <algorithm>\n\
-    #include <array>\n#include <cassert>\n#include <optional>\n#include <utility>\n\
-    \nLIB_BEGIN\n\n// helper class for Euclidean algorithm\ntemplate <typename PolyT>\n\
-    class polynomial_gcd_matrix : public std::array<std::array<PolyT, 2>, 2> {\n \
-    \ using MyBase = std::array<std::array<PolyT, 2>, 2>;\n\npublic:\n  polynomial_gcd_matrix(const\
-    \ PolyT &m00, const PolyT &m01, const PolyT &m10, const PolyT &m11)\n      : MyBase{std::array<PolyT,\
-    \ 2>{m00, m01}, std::array<PolyT, 2>{m10, m11}} {}\n  polynomial_gcd_matrix operator*(const\
-    \ polynomial_gcd_matrix &rhs) const {\n    return polynomial_gcd_matrix((*this)[0][0]\
-    \ * rhs[0][0] + (*this)[0][1] * rhs[1][0],\n                                 (*this)[0][0]\
-    \ * rhs[0][1] + (*this)[0][1] * rhs[1][1],\n                                 (*this)[1][0]\
+    #include <array>\n#include <cassert>\n#include <optional>\n#include <tuple>\n\
+    #include <utility>\n\nLIB_BEGIN\n\n// helper class for Euclidean algorithm\ntemplate\
+    \ <typename PolyT>\nclass polynomial_gcd_matrix : public std::array<std::array<PolyT,\
+    \ 2>, 2> {\n  using MyBase = std::array<std::array<PolyT, 2>, 2>;\n\npublic:\n\
+    \  polynomial_gcd_matrix(const PolyT &m00, const PolyT &m01, const PolyT &m10,\
+    \ const PolyT &m11)\n      : MyBase{std::array<PolyT, 2>{m00, m01}, std::array<PolyT,\
+    \ 2>{m10, m11}} {}\n  polynomial_gcd_matrix operator*(const polynomial_gcd_matrix\
+    \ &rhs) const {\n    return polynomial_gcd_matrix((*this)[0][0] * rhs[0][0] +\
+    \ (*this)[0][1] * rhs[1][0],\n                                 (*this)[0][0] *\
+    \ rhs[0][1] + (*this)[0][1] * rhs[1][1],\n                                 (*this)[1][0]\
     \ * rhs[0][0] + (*this)[1][1] * rhs[1][0],\n                                 (*this)[1][0]\
     \ * rhs[0][1] + (*this)[1][1] * rhs[1][1]);\n  }\n  std::array<PolyT, 2> operator*(const\
     \ std::array<PolyT, 2> &rhs) const {\n    return {(*this)[0][0] * rhs[0] + (*this)[0][1]\
@@ -78,47 +79,52 @@ data:
     \ polynomial_gcd_matrix<PolyT>({}, {1}, {1}, -Q) * R;\n  int k = (m << 1) - D.deg();\n\
     \  return hgcd(PolyT(D.cbegin() + k, D.cend()), PolyT(E.cbegin() + k, E.cend()))\
     \ *\n         polynomial_gcd_matrix<PolyT>({}, {1}, {1}, -Q) * R;\n}\n\ntemplate\
-    \ <typename PolyT>\npolynomial_gcd_matrix<PolyT> cogcd(const PolyT &A, const PolyT\
-    \ &B) {\n  assert(A.deg() > B.deg());\n  assert(!B.is_zero());\n  polynomial_gcd_matrix<PolyT>\
-    \ M({1}, {}, {}, {1});\n  PolyT A_cpy(A), B_cpy(B);\n  for (;;) {\n    auto M0\
-    \     = hgcd(A_cpy, B_cpy);\n    auto [C, D] = M0 * std::array<PolyT, 2>{A_cpy,\
-    \ B_cpy};\n    if (D.is_zero()) return M0 * M;\n    auto [Q, E] = C.div_with_rem(D);\n\
-    \    M0          = polynomial_gcd_matrix<PolyT>({}, {1}, {1}, -Q) * M0;\n    if\
-    \ (E.is_zero()) return M0 * M;\n    A_cpy.swap(D), B_cpy.swap(E);\n    M = M0\
-    \ * M;\n  }\n}\n\n} // namespace detail\n\ntemplate <typename PolyT>\npolynomial_gcd_matrix<PolyT>\
-    \ poly_ext_gcd(const PolyT &A, const PolyT &B) {\n  if (B.is_zero()) return polynomial_gcd_matrix<PolyT>({1},\
-    \ {}, {}, {1});\n  if (A.is_zero()) return polynomial_gcd_matrix<PolyT>({}, {1},\
-    \ {1}, {});\n  auto [Q, R] = A.div_with_rem(B);\n  polynomial_gcd_matrix<PolyT>\
-    \ M({}, {1}, {1}, -Q);\n  return R.is_zero() ? M : detail::cogcd(B, R) * M;\n\
-    }\n\ntemplate <typename PolyT>\nstd::optional<PolyT> poly_inv(const PolyT &A,\
-    \ const PolyT &modular) {\n  auto M = poly_ext_gcd(A, modular);\n  auto d = M[0][0]\
-    \ * A + M[0][1] * modular;\n  if (d.deg() != 0) return {};\n  std::for_each(M[0][0].begin(),\
-    \ M[0][0].end(), [iv = d.front().inv()](auto &v) { v *= iv; });\n  return M[0][0];\n\
-    }\n\nLIB_END\n\n\n#line 1 \"math/polynomial.hpp\"\n\n\n\n#line 1 \"math/truncated_formal_power_series.hpp\"\
-    \n\n\n\n#line 1 \"math/extended_gcd.hpp\"\n\n\n\n#line 5 \"math/extended_gcd.hpp\"\
-    \n\n#include <tuple>\n#line 8 \"math/extended_gcd.hpp\"\n#include <vector>\n\n\
-    LIB_BEGIN\n\n// Input:  integer `a` and `b`.\n// Output: (x, y, z) such that `a`x\
-    \ + `b`y = z = gcd(`a`, `b`).\n[[deprecated]] std::tuple<long long, long long,\
-    \ long long> ext_gcd(long long a, long long b) {\n  long long x11 = 1, x12 = 0,\
-    \ x21 = 0, x22 = 1;\n  while (b != 0) {\n    long long q = a / b, x11_cpy = x11,\
-    \ x12_cpy = x12, a_cpy = a;\n    x11 = x21, x21 = x11_cpy - q * x21;\n    x12\
-    \ = x22, x22 = x12_cpy - q * x22;\n    a = b, b = a_cpy - q * b;\n  }\n  return\
-    \ std::make_tuple(x11, x12, a);\n}\n\n// Input:  integer `a` and `b`.\n// Output:\
-    \ (x, gcd(`a`, `b`)) such that `a`x \u2261 gcd(`a`, `b`) (mod `b`).\nstd::pair<long\
-    \ long, long long> inv_gcd(long long a, long long b) {\n  long long x11 = 1, x21\
-    \ = 0;\n  while (b != 0) {\n    long long q = a / b, x11_cpy = x11, a_cpy = a;\n\
-    \    x11 = x21, x21 = x11_cpy - q * x21;\n    a = b, b = a_cpy - q * b;\n  }\n\
-    \  return std::make_pair(x11, a);\n}\n\nnamespace detail {\n\ntemplate <typename\
-    \ ModIntT>\nclass modular_inverse {\n  std::vector<ModIntT> ivs{ModIntT()};\n\n\
-    \  enum : int { LIM = 1 << 20 };\n\npublic:\n  modular_inverse() {}\n  ModIntT\
-    \ operator()(int k) {\n    // assume `ModIntT::mod()` is prime.\n    if (k > LIM)\
-    \ return ModIntT(k).inv();\n    // preprocess modular inverse from 1 to `k`\n\
-    \    if (int n = static_cast<int>(ivs.size()); n <= k) {\n      int nn = n;\n\
-    \      while (nn <= k) nn <<= 1;\n      ivs.resize(nn);\n      ModIntT v(1);\n\
-    \      for (int i = n; i != nn; ++i) ivs[i] = v, v *= ModIntT(i);\n      v = v.inv();\n\
-    \      for (int i = nn - 1; i >= n; --i) ivs[i] *= v, v *= ModIntT(i);\n    }\n\
-    \    return ivs[k];\n  }\n};\n\n} // namespace detail\n\nLIB_END\n\n\n#line 1\
-    \ \"math/semi_relaxed_convolution.hpp\"\n\n\n\n#line 1 \"math/radix2_ntt.hpp\"\
+    \ <typename PolyT>\nstd::pair<polynomial_gcd_matrix<PolyT>, PolyT> cogcd(const\
+    \ PolyT &A, const PolyT &B) {\n  assert(A.deg() > B.deg());\n  assert(!B.is_zero());\n\
+    \  polynomial_gcd_matrix<PolyT> M({1}, {}, {}, {1});\n  PolyT A_cpy(A), B_cpy(B);\n\
+    \  for (;;) {\n    auto M0     = hgcd(A_cpy, B_cpy);\n    auto [C, D] = M0 * std::array<PolyT,\
+    \ 2>{A_cpy, B_cpy};\n    if (D.is_zero()) return std::make_pair(M0 * M, C);\n\
+    \    auto [Q, E] = C.div_with_rem(D);\n    M0          = polynomial_gcd_matrix<PolyT>({},\
+    \ {1}, {1}, -Q) * M0;\n    if (E.is_zero()) return std::make_pair(M0 * M, D);\n\
+    \    A_cpy.swap(D), B_cpy.swap(E);\n    M = M0 * M;\n  }\n}\n\n} // namespace\
+    \ detail\n\ntemplate <typename PolyT>\nstd::tuple<PolyT, PolyT, PolyT> poly_ext_gcd(const\
+    \ PolyT &A, const PolyT &B) {\n  if (B.is_zero()) return std::make_tuple(PolyT{1},\
+    \ PolyT{}, A);\n  if (A.is_zero()) return std::make_tuple(PolyT{}, PolyT{1}, B);\n\
+    \  if (A.deg() > B.deg()) {\n    auto [M, d] = detail::cogcd(A, B);\n    return\
+    \ std::make_tuple(M[0][0], M[0][1], d);\n  } else if (A.deg() < B.deg()) {\n \
+    \   auto [M, d] = detail::cogcd(B, A);\n    return std::make_tuple(M[0][1], M[0][0],\
+    \ d);\n  } else {\n    auto [Q, R] = A.div_with_rem(B);\n    if (R.is_zero())\
+    \ return std::make_tuple(PolyT{}, PolyT{1}, B);\n    auto [M, d] = detail::cogcd(B,\
+    \ R);\n    M           = M * polynomial_gcd_matrix<PolyT>({}, {1}, {1}, -Q);\n\
+    \    return std::make_tuple(M[0][0], M[0][1], d);\n  }\n}\n\ntemplate <typename\
+    \ PolyT>\nstd::optional<PolyT> poly_inv(const PolyT &A, const PolyT &modular)\
+    \ {\n  auto [x, y, d] = poly_ext_gcd(A, modular);\n  if (d.deg() != 0) return\
+    \ {};\n  std::for_each(x.begin(), x.end(), [iv = d.front().inv()](auto &v) { v\
+    \ *= iv; });\n  return x;\n}\n\nLIB_END\n\n\n#line 1 \"math/polynomial.hpp\"\n\
+    \n\n\n#line 1 \"math/truncated_formal_power_series.hpp\"\n\n\n\n#line 1 \"math/extended_gcd.hpp\"\
+    \n\n\n\n#line 5 \"math/extended_gcd.hpp\"\n\n#line 8 \"math/extended_gcd.hpp\"\
+    \n#include <vector>\n\nLIB_BEGIN\n\n// Input:  integer `a` and `b`.\n// Output:\
+    \ (x, y, z) such that `a`x + `b`y = z = gcd(`a`, `b`).\n[[deprecated]] std::tuple<long\
+    \ long, long long, long long> ext_gcd(long long a, long long b) {\n  long long\
+    \ x11 = 1, x12 = 0, x21 = 0, x22 = 1;\n  while (b != 0) {\n    long long q = a\
+    \ / b, x11_cpy = x11, x12_cpy = x12, a_cpy = a;\n    x11 = x21, x21 = x11_cpy\
+    \ - q * x21;\n    x12 = x22, x22 = x12_cpy - q * x22;\n    a = b, b = a_cpy -\
+    \ q * b;\n  }\n  return std::make_tuple(x11, x12, a);\n}\n\n// Input:  integer\
+    \ `a` and `b`.\n// Output: (x, gcd(`a`, `b`)) such that `a`x \u2261 gcd(`a`, `b`)\
+    \ (mod `b`).\nstd::pair<long long, long long> inv_gcd(long long a, long long b)\
+    \ {\n  long long x11 = 1, x21 = 0;\n  while (b != 0) {\n    long long q = a /\
+    \ b, x11_cpy = x11, a_cpy = a;\n    x11 = x21, x21 = x11_cpy - q * x21;\n    a\
+    \ = b, b = a_cpy - q * b;\n  }\n  return std::make_pair(x11, a);\n}\n\nnamespace\
+    \ detail {\n\ntemplate <typename ModIntT>\nclass modular_inverse {\n  std::vector<ModIntT>\
+    \ ivs{ModIntT()};\n\n  enum : int { LIM = 1 << 20 };\n\npublic:\n  modular_inverse()\
+    \ {}\n  ModIntT operator()(int k) {\n    // assume `ModIntT::mod()` is prime.\n\
+    \    if (k > LIM) return ModIntT(k).inv();\n    // preprocess modular inverse\
+    \ from 1 to `k`\n    if (int n = static_cast<int>(ivs.size()); n <= k) {\n   \
+    \   int nn = n;\n      while (nn <= k) nn <<= 1;\n      ivs.resize(nn);\n    \
+    \  ModIntT v(1);\n      for (int i = n; i != nn; ++i) ivs[i] = v, v *= ModIntT(i);\n\
+    \      v = v.inv();\n      for (int i = nn - 1; i >= n; --i) ivs[i] *= v, v *=\
+    \ ModIntT(i);\n    }\n    return ivs[k];\n  }\n};\n\n} // namespace detail\n\n\
+    LIB_END\n\n\n#line 1 \"math/semi_relaxed_convolution.hpp\"\n\n\n\n#line 1 \"math/radix2_ntt.hpp\"\
     \n\n\n\n#line 5 \"math/radix2_ntt.hpp\"\n\n#line 9 \"math/radix2_ntt.hpp\"\n#include\
     \ <type_traits>\n#line 11 \"math/radix2_ntt.hpp\"\n\nLIB_BEGIN\n\nnamespace detail\
     \ {\n\ntemplate <typename IntT>\nconstexpr std::enable_if_t<std::is_integral_v<IntT>,\
@@ -537,7 +543,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/inv_of_polynomials.0.test.cpp
   requiredBy: []
-  timestamp: '2022-05-15 17:31:59+08:00'
+  timestamp: '2022-05-16 00:56:12+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/inv_of_polynomials.0.test.cpp
