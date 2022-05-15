@@ -109,5 +109,6 @@ data:
   - remote_test/yosupo/math/inv_of_polynomials.0.test.cpp
 documentation_of: math/poly_extended_gcd.hpp
 layout: document
-title: Extended Euclidean Algorithm (in $\mathbb{F} _ p$ for FFT prime $p$)
+title: Extended Euclidean Algorithm (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT
+  prime $p$)
 ---

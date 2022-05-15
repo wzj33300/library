@@ -58,7 +58,8 @@ data:
       \left/ \left( z_1^{l_1}, \dots, z_d^{l_d} \right)\right.$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/poly_extended_gcd.hpp
-    title: Extended Euclidean Algorithm (in $\mathbb{F} _ p$ for FFT prime $p$)
+    title: Extended Euclidean Algorithm (in $\mathbb{F} _ p \lbrack z \rbrack$ for
+      FFT prime $p$)
   - icon: ':heavy_check_mark:'
     path: math/polynomial.hpp
     title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
