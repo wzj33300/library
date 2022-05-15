@@ -5,8 +5,17 @@ data:
     path: common.hpp
     title: common.hpp
   - icon: ':question:'
+    path: common.hpp
+    title: common.hpp
+  - icon: ':question:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
+  - icon: ':x:'
+    path: math/poly_extended_gcd.hpp
+    title: Extended Euclidean Algorithm (in $\mathbb{F} _ p$ for FFT prime $p$)
+  - icon: ':question:'
+    path: math/polynomial.hpp
+    title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
@@ -21,87 +30,97 @@ data:
     path: math/sqrt_mod.hpp
     title: Square Roots (in $\mathbb{F} _ p$)
   - icon: ':question:'
+    path: math/truncated_formal_power_series.hpp
+    title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
+      \rbrack$ for FFT prime $p$)
+  - icon: ':question:'
     path: math/truncated_fourier_transform.hpp
     title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$ for
       FFT prime $p$)
-  _extendedRequiredBy:
   - icon: ':question:'
-    path: math/polynomial.hpp
-    title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: remote_test/yosupo/math/convolution_mod.1.test.cpp
-    title: remote_test/yosupo/math/convolution_mod.1.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: remote_test/yosupo/math/division_of_polynomials.0.test.cpp
-    title: remote_test/yosupo/math/division_of_polynomials.0.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
-    title: remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
-    title: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
-  - icon: ':x:'
-    path: remote_test/yosupo/math/inv_of_polynomials.0.test.cpp
-    title: remote_test/yosupo/math/inv_of_polynomials.0.test.cpp
-  - icon: ':x:'
-    path: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
-    title: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
-  - icon: ':x:'
-    path: remote_test/yosupo/math/multipoint_evaluation.0.test.cpp
-    title: remote_test/yosupo/math/multipoint_evaluation.0.test.cpp
-  - icon: ':x:'
-    path: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
-    title: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
-  - icon: ':x:'
-    path: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
-    title: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
-  - icon: ':x:'
-    path: remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
-    title: remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
-  - icon: ':x:'
-    path: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
-    title: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
-  - icon: ':x:'
-    path: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
-    title: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
-  - icon: ':x:'
-    path: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
-    title: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
+    path: modint/montgomery_modint.hpp
+    title: Montgomery ModInt
+  _extendedRequiredBy: []
+  _extendedVerifiedWith: []
   _isVerificationFailed: true
-  _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _pathExtension: cpp
+  _verificationStatusIcon: ':x:'
   attributes:
-    links: []
-  bundledCode: "#line 1 \"math/truncated_formal_power_series.hpp\"\n\n\n\n#line 1\
-    \ \"common.hpp\"\n\n\n\n#define LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n\
-    #define LIB_END }\n#define LIB ::lib::\n\n\n#line 1 \"math/extended_gcd.hpp\"\n\
-    \n\n\n#line 5 \"math/extended_gcd.hpp\"\n\n#include <tuple>\n#include <utility>\n\
-    #include <vector>\n\nLIB_BEGIN\n\n// Input:  integer `a` and `b`.\n// Output:\
-    \ (x, y, z) such that `a`x + `b`y = z = gcd(`a`, `b`).\n[[deprecated]] std::tuple<long\
-    \ long, long long, long long> ext_gcd(long long a, long long b) {\n  long long\
-    \ x11 = 1, x12 = 0, x21 = 0, x22 = 1;\n  while (b != 0) {\n    long long q = a\
-    \ / b, x11_cpy = x11, x12_cpy = x12, a_cpy = a;\n    x11 = x21, x21 = x11_cpy\
-    \ - q * x21;\n    x12 = x22, x22 = x12_cpy - q * x22;\n    a = b, b = a_cpy -\
-    \ q * b;\n  }\n  return std::make_tuple(x11, x12, a);\n}\n\n// Input:  integer\
-    \ `a` and `b`.\n// Output: (x, gcd(`a`, `b`)) such that `a`x \u2261 gcd(`a`, `b`)\
-    \ (mod `b`).\nstd::pair<long long, long long> inv_gcd(long long a, long long b)\
-    \ {\n  long long x11 = 1, x21 = 0;\n  while (b != 0) {\n    long long q = a /\
-    \ b, x11_cpy = x11, a_cpy = a;\n    x11 = x21, x21 = x11_cpy - q * x21;\n    a\
-    \ = b, b = a_cpy - q * b;\n  }\n  return std::make_pair(x11, a);\n}\n\nnamespace\
-    \ detail {\n\ntemplate <typename ModIntT>\nclass modular_inverse {\n  std::vector<ModIntT>\
-    \ ivs{ModIntT()};\n\n  enum : int { LIM = 1 << 20 };\n\npublic:\n  modular_inverse()\
-    \ {}\n  ModIntT operator()(int k) {\n    // assume `ModIntT::mod()` is prime.\n\
-    \    if (k > LIM) return ModIntT(k).inv();\n    // preprocess modular inverse\
-    \ from 1 to `k`\n    if (int n = static_cast<int>(ivs.size()); n <= k) {\n   \
-    \   int nn = n;\n      while (nn <= k) nn <<= 1;\n      ivs.resize(nn);\n    \
-    \  ModIntT v(1);\n      for (int i = n; i != nn; ++i) ivs[i] = v, v *= ModIntT(i);\n\
-    \      v = v.inv();\n      for (int i = nn - 1; i >= n; --i) ivs[i] *= v, v *=\
-    \ ModIntT(i);\n    }\n    return ivs[k];\n  }\n};\n\n} // namespace detail\n\n\
-    LIB_END\n\n\n#line 1 \"math/semi_relaxed_convolution.hpp\"\n\n\n\n#line 1 \"math/radix2_ntt.hpp\"\
-    \n\n\n\n#line 5 \"math/radix2_ntt.hpp\"\n\n#include <algorithm>\n#include <array>\n\
-    #include <cassert>\n#include <type_traits>\n#line 11 \"math/radix2_ntt.hpp\"\n\
-    \nLIB_BEGIN\n\nnamespace detail {\n\ntemplate <typename IntT>\nconstexpr std::enable_if_t<std::is_integral_v<IntT>,\
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://judge.yosupo.jp/problem/inv_of_polynomials
+    links:
+    - https://judge.yosupo.jp/problem/inv_of_polynomials
+  bundledCode: "#line 1 \"remote_test/yosupo/math/inv_of_polynomials.0.test.cpp\"\n\
+    #define PROBLEM \"https://judge.yosupo.jp/problem/inv_of_polynomials\"\n\n#line\
+    \ 1 \"math/poly_extended_gcd.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\n\n#define\
+    \ LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END }\n#define LIB\
+    \ ::lib::\n\n\n#line 5 \"math/poly_extended_gcd.hpp\"\n\n#include <algorithm>\n\
+    #include <array>\n#include <cassert>\n#include <optional>\n#include <utility>\n\
+    \nLIB_BEGIN\n\n// helper class for Euclidean algorithm\ntemplate <typename PolyT>\n\
+    class polynomial_gcd_matrix : public std::array<std::array<PolyT, 2>, 2> {\n \
+    \ using MyBase = std::array<std::array<PolyT, 2>, 2>;\n\npublic:\n  polynomial_gcd_matrix(const\
+    \ PolyT &m00, const PolyT &m01, const PolyT &m10, const PolyT &m11)\n      : MyBase{std::array<PolyT,\
+    \ 2>{m00, m01}, std::array<PolyT, 2>{m10, m11}} {}\n  polynomial_gcd_matrix operator*(const\
+    \ polynomial_gcd_matrix &rhs) const {\n    return polynomial_gcd_matrix((*this)[0][0]\
+    \ * rhs[0][0] + (*this)[0][1] * rhs[1][0],\n                                 (*this)[0][0]\
+    \ * rhs[0][1] + (*this)[0][1] * rhs[1][1],\n                                 (*this)[1][0]\
+    \ * rhs[0][0] + (*this)[1][1] * rhs[1][0],\n                                 (*this)[1][0]\
+    \ * rhs[0][1] + (*this)[1][1] * rhs[1][1]);\n  }\n  std::array<PolyT, 2> operator*(const\
+    \ std::array<PolyT, 2> &rhs) const {\n    return {(*this)[0][0] * rhs[0] + (*this)[0][1]\
+    \ * rhs[1],\n            (*this)[1][0] * rhs[0] + (*this)[1][1] * rhs[1]};\n \
+    \ }\n};\n\nnamespace detail {\n\ntemplate <typename PolyT>\npolynomial_gcd_matrix<PolyT>\
+    \ hgcd(const PolyT &A, const PolyT &B) {\n  assert(A.deg() > B.deg());\n  assert(!B.is_zero());\n\
+    \  int m = (A.deg() + 1) >> 1;\n  if (B.deg() < m) return polynomial_gcd_matrix<PolyT>({1},\
+    \ {}, {}, {1});\n  auto R      = hgcd(PolyT(A.cbegin() + m, A.cend()), PolyT(B.cbegin()\
+    \ + m, B.cend()));\n  auto [C, D] = R * std::array<PolyT, 2>{A, B};\n  if (D.deg()\
+    \ < m) return R;\n  auto [Q, E] = C.div_with_rem(D);\n  if (E.deg() < m) return\
+    \ polynomial_gcd_matrix<PolyT>({}, {1}, {1}, -Q) * R;\n  int k = (m << 1) - D.deg();\n\
+    \  return hgcd(PolyT(D.cbegin() + k, D.cend()), PolyT(E.cbegin() + k, E.cend()))\
+    \ *\n         polynomial_gcd_matrix<PolyT>({}, {1}, {1}, -Q) * R;\n}\n\ntemplate\
+    \ <typename PolyT>\npolynomial_gcd_matrix<PolyT> cogcd(const PolyT &A, const PolyT\
+    \ &B) {\n  assert(A.deg() > B.deg());\n  assert(!B.is_zero());\n  polynomial_gcd_matrix<PolyT>\
+    \ M({1}, {}, {}, {1});\n  PolyT A_cpy(A), B_cpy(B);\n  for (;;) {\n    M     \
+    \      = hgcd(A_cpy, B_cpy) * M;\n    auto [C, D] = M * std::array<PolyT, 2>{A_cpy,\
+    \ B_cpy};\n    if (D.is_zero()) return M;\n    auto [Q, E] = C.div_with_rem(D);\n\
+    \    M           = polynomial_gcd_matrix<PolyT>({}, {1}, {1}, -Q) * M;\n    if\
+    \ (E.is_zero()) return M;\n    A_cpy.swap(D), B_cpy.swap(E);\n  }\n}\n\n} // namespace\
+    \ detail\n\ntemplate <typename PolyT>\npolynomial_gcd_matrix<PolyT> poly_ext_gcd(const\
+    \ PolyT &A, const PolyT &B) {\n  if (B.is_zero()) return polynomial_gcd_matrix<PolyT>({1},\
+    \ {}, {}, {1});\n  if (A.is_zero()) return polynomial_gcd_matrix<PolyT>({}, {1},\
+    \ {1}, {});\n  auto [Q, R] = A.div_with_rem(B);\n  polynomial_gcd_matrix<PolyT>\
+    \ M({}, {1}, {1}, -Q);\n  return R.is_zero() ? M : detail::cogcd(B, R) * M;\n\
+    }\n\ntemplate <typename PolyT>\nstd::optional<PolyT> poly_inv(const PolyT &A,\
+    \ const PolyT &modular) {\n  auto M = poly_ext_gcd(A, modular);\n  auto d = M[0][0]\
+    \ * A + M[0][1] * modular;\n  if (d.deg() != 0) return {};\n  std::for_each(M[0][0].begin(),\
+    \ M[0][0].end(), [iv = d.front().inv()](auto &v) { v *= iv; });\n  return M[0][0];\n\
+    }\n\nLIB_END\n\n\n#line 1 \"math/polynomial.hpp\"\n\n\n\n#line 1 \"math/truncated_formal_power_series.hpp\"\
+    \n\n\n\n#line 1 \"math/extended_gcd.hpp\"\n\n\n\n#line 5 \"math/extended_gcd.hpp\"\
+    \n\n#include <tuple>\n#line 8 \"math/extended_gcd.hpp\"\n#include <vector>\n\n\
+    LIB_BEGIN\n\n// Input:  integer `a` and `b`.\n// Output: (x, y, z) such that `a`x\
+    \ + `b`y = z = gcd(`a`, `b`).\n[[deprecated]] std::tuple<long long, long long,\
+    \ long long> ext_gcd(long long a, long long b) {\n  long long x11 = 1, x12 = 0,\
+    \ x21 = 0, x22 = 1;\n  while (b != 0) {\n    long long q = a / b, x11_cpy = x11,\
+    \ x12_cpy = x12, a_cpy = a;\n    x11 = x21, x21 = x11_cpy - q * x21;\n    x12\
+    \ = x22, x22 = x12_cpy - q * x22;\n    a = b, b = a_cpy - q * b;\n  }\n  return\
+    \ std::make_tuple(x11, x12, a);\n}\n\n// Input:  integer `a` and `b`.\n// Output:\
+    \ (x, gcd(`a`, `b`)) such that `a`x \u2261 gcd(`a`, `b`) (mod `b`).\nstd::pair<long\
+    \ long, long long> inv_gcd(long long a, long long b) {\n  long long x11 = 1, x21\
+    \ = 0;\n  while (b != 0) {\n    long long q = a / b, x11_cpy = x11, a_cpy = a;\n\
+    \    x11 = x21, x21 = x11_cpy - q * x21;\n    a = b, b = a_cpy - q * b;\n  }\n\
+    \  return std::make_pair(x11, a);\n}\n\nnamespace detail {\n\ntemplate <typename\
+    \ ModIntT>\nclass modular_inverse {\n  std::vector<ModIntT> ivs{ModIntT()};\n\n\
+    \  enum : int { LIM = 1 << 20 };\n\npublic:\n  modular_inverse() {}\n  ModIntT\
+    \ operator()(int k) {\n    // assume `ModIntT::mod()` is prime.\n    if (k > LIM)\
+    \ return ModIntT(k).inv();\n    // preprocess modular inverse from 1 to `k`\n\
+    \    if (int n = static_cast<int>(ivs.size()); n <= k) {\n      int nn = n;\n\
+    \      while (nn <= k) nn <<= 1;\n      ivs.resize(nn);\n      ModIntT v(1);\n\
+    \      for (int i = n; i != nn; ++i) ivs[i] = v, v *= ModIntT(i);\n      v = v.inv();\n\
+    \      for (int i = nn - 1; i >= n; --i) ivs[i] *= v, v *= ModIntT(i);\n    }\n\
+    \    return ivs[k];\n  }\n};\n\n} // namespace detail\n\nLIB_END\n\n\n#line 1\
+    \ \"math/semi_relaxed_convolution.hpp\"\n\n\n\n#line 1 \"math/radix2_ntt.hpp\"\
+    \n\n\n\n#line 5 \"math/radix2_ntt.hpp\"\n\n#line 9 \"math/radix2_ntt.hpp\"\n#include\
+    \ <type_traits>\n#line 11 \"math/radix2_ntt.hpp\"\n\nLIB_BEGIN\n\nnamespace detail\
+    \ {\n\ntemplate <typename IntT>\nconstexpr std::enable_if_t<std::is_integral_v<IntT>,\
     \ int> bsf(IntT v) {\n  if (static_cast<std::make_signed_t<IntT>>(v) <= 0) return\
     \ -1;\n  int res = 0;\n  for (; (v & 1) == 0; ++res) v >>= 1;\n  return res;\n\
     }\n\ntemplate <typename ModIntT>\nconstexpr ModIntT quadratic_nonresidue_prime()\
@@ -283,7 +302,7 @@ data:
     \ -= a_[i + len] * r;\n      }\n    }\n    Container &a_;\n    const T i2_;\n\
     \  } rec(a);\n  rec.run(0, n, len);\n  a.resize(n);\n}\n\nLIB_END\n\n\n#line 9\
     \ \"math/truncated_formal_power_series.hpp\"\n\n#line 12 \"math/truncated_formal_power_series.hpp\"\
-    \n#include <iostream>\n#include <iterator>\n#include <optional>\n#line 17 \"math/truncated_formal_power_series.hpp\"\
+    \n#include <iostream>\n#include <iterator>\n#line 17 \"math/truncated_formal_power_series.hpp\"\
     \n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nclass truncated_formal_power_series\
     \ : public std::vector<ModIntT> {\n  using MyBase = std::vector<ModIntT>;\n  static_assert(std::is_same_v<typename\
     \ MyBase::value_type, ModIntT>);\n  static typename detail::modular_inverse<ModIntT>\
@@ -388,147 +407,142 @@ data:
     \  if (o & 1) return {};\n  auto res = sqrt_mod_prime(this->operator[](o));\n\
     \  if (res.empty()) return {};\n  return sqrt_hint(n, res.front());\n}\n\ntemplate\
     \ <typename ModIntT>\nusing tfps = truncated_formal_power_series<ModIntT>;\n\n\
-    LIB_END\n\n\n"
-  code: "#ifndef TRUNCATED_FORMAL_POWER_SERIES_HPP\n#define TRUNCATED_FORMAL_POWER_SERIES_HPP\n\
-    \n#include \"../common.hpp\"\n#include \"extended_gcd.hpp\"\n#include \"semi_relaxed_convolution.hpp\"\
-    \n#include \"sqrt_mod.hpp\"\n#include \"truncated_fourier_transform.hpp\"\n\n\
-    #include <algorithm>\n#include <cassert>\n#include <iostream>\n#include <iterator>\n\
-    #include <optional>\n#include <type_traits>\n#include <vector>\n\nLIB_BEGIN\n\n\
-    template <typename ModIntT>\nclass truncated_formal_power_series : public std::vector<ModIntT>\
-    \ {\n  using MyBase = std::vector<ModIntT>;\n  static_assert(std::is_same_v<typename\
-    \ MyBase::value_type, ModIntT>);\n  static typename detail::modular_inverse<ModIntT>\
-    \ invs;\n\npublic:\n  using std::vector<ModIntT>::vector;\n\n  enum : int { NEGATIVE_INFINITY\
-    \ = -1 };\n\n  // leading coefficient\n  ModIntT lc() const {\n    int d = deg();\n\
-    \    return d == NEGATIVE_INFINITY ? ModIntT() : this->operator[](d);\n  }\n \
-    \ // degree\n  int deg() const {\n    // treat formal power series like polynomials\n\
-    \    int n = static_cast<int>(this->size()) - 1;\n    while (n >= 0 && this->operator[](n).is_zero())\
-    \ --n;\n    return n == -1 ? NEGATIVE_INFINITY : n;\n  }\n  // order\n  int ord()\
-    \ const {\n    int d = deg();\n    if (d == NEGATIVE_INFINITY) return NEGATIVE_INFINITY;\n\
-    \    for (int i = 0;; ++i)\n      if (!this->operator[](i).is_zero()) return i;\n\
-    \  }\n  bool is_zero() const { return deg() == NEGATIVE_INFINITY; }\n  void shrink()\
-    \ { this->resize(deg() + 1); }\n  truncated_formal_power_series operator-() {\n\
-    \    truncated_formal_power_series res(*this);\n    for (auto &&i : res) i = -i;\n\
-    \    return res;\n  }\n\n  truncated_formal_power_series &operator+=(const truncated_formal_power_series\
-    \ &rhs) {\n    if (this->size() < rhs.size()) this->resize(rhs.size());\n    for\
-    \ (int i = 0, e = static_cast<int>(rhs.size()); i != e; ++i) this->operator[](i)\
-    \ += rhs[i];\n    return *this;\n  }\n  truncated_formal_power_series &operator-=(const\
-    \ truncated_formal_power_series &rhs) {\n    if (this->size() < rhs.size()) this->resize(rhs.size());\n\
-    \    for (int i = 0, e = static_cast<int>(rhs.size()); i != e; ++i) this->operator[](i)\
-    \ -= rhs[i];\n    return *this;\n  }\n  truncated_formal_power_series &operator*=(const\
-    \ truncated_formal_power_series &rhs);\n  truncated_formal_power_series integr(ModIntT\
-    \ c = ModIntT()) const {\n    const int n = static_cast<int>(this->size()) + 1;\n\
-    \    truncated_formal_power_series res(n);\n    res.front() = c;\n    for (int\
-    \ i = 1; i < n; ++i) res[i] = this->operator[](i - 1) * invs(i);\n    return res;\n\
-    \  }\n  truncated_formal_power_series deriv() const {\n    const int n = static_cast<int>(this->size())\
-    \ - 1;\n    if (n <= 0) return truncated_formal_power_series{};\n    truncated_formal_power_series\
-    \ res(n);\n    for (int i = 1; i <= n; ++i) res[i - 1] = this->operator[](i) *\
-    \ i;\n    return res;\n  }\n  truncated_formal_power_series inv(int n) const;\n\
-    \  truncated_formal_power_series log(int n) const { return deriv().div(*this,\
-    \ n - 1).integr(); }\n  truncated_formal_power_series exp(int n) const;\n  truncated_formal_power_series\
-    \ div(const truncated_formal_power_series &rhs, int n) const;\n  truncated_formal_power_series\
-    \ pow(int n, int e) const;\n  std::optional<truncated_formal_power_series> sqrt_hint(int\
-    \ n, ModIntT c) const;\n  std::optional<truncated_formal_power_series> sqrt(int\
-    \ n) const;\n\n  friend truncated_formal_power_series operator+(const truncated_formal_power_series\
-    \ &lhs,\n                                                 const truncated_formal_power_series\
-    \ &rhs) {\n    return truncated_formal_power_series(lhs) += rhs;\n  }\n  friend\
-    \ truncated_formal_power_series operator-(const truncated_formal_power_series\
-    \ &lhs,\n                                                 const truncated_formal_power_series\
-    \ &rhs) {\n    return truncated_formal_power_series(lhs) -= rhs;\n  }\n  friend\
-    \ truncated_formal_power_series operator*(const truncated_formal_power_series\
-    \ &lhs,\n                                                 const truncated_formal_power_series\
-    \ &rhs) {\n    return truncated_formal_power_series(lhs) *= rhs;\n  }\n\n  friend\
-    \ std::istream &operator>>(std::istream &lhs, truncated_formal_power_series &rhs)\
-    \ {\n    for (auto &&i : rhs) lhs >> i;\n    return lhs;\n  }\n  friend std::ostream\
-    \ &operator<<(std::ostream &lhs, const truncated_formal_power_series &rhs) {\n\
-    \    int s = 0, e = static_cast<int>(rhs.size());\n    lhs << '[';\n    for (auto\
-    \ &&i : rhs) {\n      lhs << i;\n      if (s >= 1) lhs << 'x';\n      // clang-format\
-    \ off\n      if (s > 9) lhs << \"^(\" << s << ')';\n      else if (s > 1) lhs\
-    \ << '^' << s;\n      // clang-format on\n      if (++s != e) lhs << \" + \";\n\
-    \    }\n    return lhs << ']';\n  }\n};\n\ntemplate <typename IterT>\ntruncated_formal_power_series(IterT,\
-    \ IterT)\n    -> truncated_formal_power_series<typename std::iterator_traits<IterT>::value_type>;\n\
-    \ntemplate <typename ModIntT>\ntypename detail::modular_inverse<ModIntT> truncated_formal_power_series<ModIntT>::invs;\n\
-    \ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT> &\ntruncated_formal_power_series<ModIntT>::operator*=(const\
-    \ truncated_formal_power_series &rhs) {\n  // 6E\n  int n = static_cast<int>(this->size()),\
-    \ m = static_cast<int>(rhs.size());\n  if (n == 0 || m == 0) {\n    this->clear();\n\
-    \    return *this;\n  }\n  if (std::min(n, m) <= 32) {\n    truncated_formal_power_series\
-    \ res(n + m - 1);\n    for (int i = 0; i != n; ++i)\n      for (int j = 0; j !=\
-    \ m; ++j) res[i + j] += this->operator[](i) * rhs[j];\n    return this->operator=(res);\n\
-    \  }\n  int len = n + m - 1;\n  truncated_formal_power_series rhs_cpy(len);\n\
-    \  std::copy_n(rhs.cbegin(), m, rhs_cpy.begin());\n  this->resize(len);\n  tft(*this),\
-    \ tft(rhs_cpy);\n  for (int i = 0; i != len; ++i) this->operator[](i) *= rhs_cpy[i];\n\
-    \  itft(*this);\n  return *this;\n}\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT>\
-    \ truncated_formal_power_series<ModIntT>::inv(int n) const {\n  if (n <= 0) return\
-    \ {};\n  const std::vector a(this->cbegin(), this->cend());\n  semi_relaxed_convolution\
-    \ src(a, [iv = a.front().inv()](int n, const std::vector<ModIntT> &c) {\n    return\
-    \ n == 0 ? iv : -c[n] * iv;\n  });\n  auto &&multiplier = src.await(n).get_multiplier();\n\
-    \  return truncated_formal_power_series(multiplier.cbegin(), multiplier.cend());\n\
-    }\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT> truncated_formal_power_series<ModIntT>::exp(int\
-    \ n) const {\n  if (n <= 0) return {};\n  auto &&d = deriv();\n  std::vector dv(d.cbegin(),\
-    \ d.cend());\n  semi_relaxed_convolution src(dv, [](int n, const std::vector<ModIntT>\
-    \ &c) {\n    return n == 0 ? ModIntT(1) : c[n - 1] * invs(n);\n  });\n  auto &&multiplier\
-    \ = src.await(n).get_multiplier();\n  return truncated_formal_power_series(multiplier.cbegin(),\
-    \ multiplier.cend());\n}\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT>\n\
-    truncated_formal_power_series<ModIntT>::div(const truncated_formal_power_series\
-    \ &rhs, int n) const {\n  assert(!rhs.is_zero());\n  if (n <= 0) return {};\n\
-    \  const std::vector a(rhs.cbegin(), rhs.cend());\n  semi_relaxed_convolution\
-    \ src(\n      a, [this, iv = a.front().inv()](int n, const std::vector<ModIntT>\
-    \ &c) {\n        return ((n < static_cast<int>(this->size()) ? this->operator[](n)\
-    \ : ModIntT()) - c[n]) * iv;\n      });\n  auto &&multiplier = src.await(n).get_multiplier();\n\
-    \  return truncated_formal_power_series(multiplier.cbegin(), multiplier.cend());\n\
-    }\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT> truncated_formal_power_series<ModIntT>::pow(int\
-    \ n,\n                                                                       \
-    \            int e) const {\n  const int o        = ord();\n  const long long\
-    \ zs = static_cast<long long>(o) * e; // count zeros\n  if (o == NEGATIVE_INFINITY\
-    \ || zs >= n) return truncated_formal_power_series(n);\n  const int nn = n - static_cast<int>(zs);\n\
-    \  const ModIntT c(this->operator[](o)), ic(c.inv()), ce(c.pow(e)), me(e);\n \
-    \ truncated_formal_power_series cpy(this->cbegin() + o, this->cend()); // optimize?\n\
-    \  for (auto &&i : cpy) i *= ic;\n  cpy = cpy.log(nn);\n  for (auto &&i : cpy)\
-    \ i *= me;\n  cpy = cpy.exp(nn);\n  for (auto &&i : cpy) i *= ce;\n  cpy.insert(cpy.begin(),\
-    \ zs, ModIntT());\n  return cpy;\n}\n\ntemplate <typename ModIntT>\nstd::optional<truncated_formal_power_series<ModIntT>>\n\
-    truncated_formal_power_series<ModIntT>::sqrt_hint(int n, ModIntT c) const {\n\
-    \  if (this->empty()) return {};\n  const int o = ord();\n  if (o == NEGATIVE_INFINITY)\
-    \ return truncated_formal_power_series(n);\n  if ((o & 1) || c * c != this->operator[](o))\
-    \ return {};\n  truncated_formal_power_series cpy(this->cbegin() + o, this->cend());\n\
-    \  const ModIntT iv(cpy.front().inv());\n  for (auto &&i : cpy) i *= iv;\n  cpy\
-    \ = cpy.pow(n - (o >> 1), static_cast<int>(ModIntT(2).inv()));\n  for (auto &&i\
-    \ : cpy) i *= c;\n  cpy.insert(cpy.begin(), o >> 1, ModIntT());\n  return cpy;\n\
-    }\n\ntemplate <typename ModIntT>\nstd::optional<truncated_formal_power_series<ModIntT>>\n\
-    truncated_formal_power_series<ModIntT>::sqrt(int n) const {\n  if (this->empty())\
-    \ return {};\n  const int o = ord();\n  if (o == NEGATIVE_INFINITY) return truncated_formal_power_series(n);\n\
-    \  if (o & 1) return {};\n  auto res = sqrt_mod_prime(this->operator[](o));\n\
-    \  if (res.empty()) return {};\n  return sqrt_hint(n, res.front());\n}\n\ntemplate\
-    \ <typename ModIntT>\nusing tfps = truncated_formal_power_series<ModIntT>;\n\n\
-    LIB_END\n\n#endif"
+    LIB_END\n\n\n#line 6 \"math/polynomial.hpp\"\n\n#line 12 \"math/polynomial.hpp\"\
+    \n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nclass polynomial : public truncated_formal_power_series<ModIntT>\
+    \ {\n  using MyBase = truncated_formal_power_series<ModIntT>;\n  static_assert(std::is_same_v<typename\
+    \ MyBase::value_type, ModIntT>);\n\npublic:\n  using truncated_formal_power_series<ModIntT>::truncated_formal_power_series;\n\
+    \n  polynomial(const MyBase &rhs) : MyBase(rhs) {}\n  ModIntT operator()(ModIntT\
+    \ c) const {\n    ModIntT res;\n    for (int i = this->deg(); i >= 0; --i) res\
+    \ = res * c + this->operator[](i);\n    return res;\n  }\n  polynomial operator-()\
+    \ { return MyBase::operator-(); }\n  polynomial &operator+=(const polynomial &rhs)\
+    \ {\n    MyBase::operator+=(rhs);\n    this->shrink();\n    return *this;\n  }\n\
+    \  polynomial &operator-=(const polynomial &rhs) {\n    MyBase::operator-=(rhs);\n\
+    \    this->shrink();\n    return *this;\n  }\n  polynomial &operator*=(const polynomial\
+    \ &rhs) {\n    MyBase::operator*=(rhs);\n    this->shrink();\n    return *this;\n\
+    \  }\n  polynomial &operator/=(const polynomial &rhs) {\n    const int n = this->deg(),\
+    \ m = rhs.deg();\n    assert(m != MyBase::NEGATIVE_INFINITY);\n    if (n < m)\
+    \ {\n      this->clear();\n      return *this;\n    }\n    auto irev_rhs = polynomial(rhs.crbegin()\
+    \ + (rhs.size() - m - 1), rhs.crend()).inv(n - m + 1);\n    auto lhsirhs  = *this\
+    \ * polynomial(irev_rhs.crbegin(), irev_rhs.crend());\n    this->resize(n - m\
+    \ + 1);\n    std::copy(lhsirhs.cbegin() + n, lhsirhs.cend(), this->begin());\n\
+    \    return *this;\n  }\n  polynomial &operator%=(const polynomial &rhs) {\n \
+    \   return this->operator=(div_with_rem(rhs).second);\n  }\n  std::pair<polynomial,\
+    \ polynomial> div_with_rem(const polynomial &rhs) const {\n    const int n = this->deg(),\
+    \ m = rhs.deg();\n    if (n < m) return std::make_pair(polynomial(), *this);\n\
+    \    auto q    = *this / rhs;\n    auto qrhs = q * rhs;\n    polynomial r(m);\n\
+    \    for (int i = 0; i != m; ++i) r[i] = this->operator[](i) - qrhs[i];\n    r.shrink();\n\
+    \    return std::make_pair(q, r);\n  }\n\n  friend polynomial operator+(const\
+    \ polynomial &lhs, const polynomial &rhs) {\n    return polynomial(lhs) += rhs;\n\
+    \  }\n  friend polynomial operator-(const polynomial &lhs, const polynomial &rhs)\
+    \ {\n    return polynomial(lhs) -= rhs;\n  }\n  friend polynomial operator*(const\
+    \ polynomial &lhs, const polynomial &rhs) {\n    return polynomial(lhs) *= rhs;\n\
+    \  }\n  friend polynomial operator/(const polynomial &lhs, const polynomial &rhs)\
+    \ {\n    return polynomial(lhs) /= rhs;\n  }\n  friend polynomial operator%(const\
+    \ polynomial &lhs, const polynomial &rhs) {\n    return polynomial(lhs) %= rhs;\n\
+    \  }\n  friend std::istream &operator>>(std::istream &lhs, polynomial &rhs) {\n\
+    \    for (auto &&i : rhs) lhs >> i;\n    return lhs;\n  }\n  friend std::ostream\
+    \ &operator<<(std::ostream &lhs, const polynomial &rhs) {\n    return lhs << MyBase(rhs.begin(),\
+    \ rhs.end()); // debug only (SLOW)\n  }\n};\n\ntemplate <typename IterT>\npolynomial(IterT,\
+    \ IterT) -> polynomial<typename std::iterator_traits<IterT>::value_type>;\n\n\
+    LIB_END\n\n\n#line 1 \"modint/montgomery_modint.hpp\"\n\n\n\n#line 5 \"modint/montgomery_modint.hpp\"\
+    \n\n#ifdef LIB_DEBUG\n  #include <stdexcept>\n#endif\n#line 12 \"modint/montgomery_modint.hpp\"\
+    \n\nLIB_BEGIN\n\ntemplate <std::uint32_t ModT>\nclass montgomery_modint30 {\n\
+    \  using i32 = std::int32_t;\n  using u32 = std::uint32_t;\n  using u64 = std::uint64_t;\n\
+    \n  u32 v_{};\n\n  static constexpr u32 get_r() {\n    u32 t = 2, iv = MOD * (t\
+    \ - MOD * MOD);\n    iv *= t - MOD * iv, iv *= t - MOD * iv;\n    return iv *\
+    \ (MOD * iv - t);\n  }\n  static constexpr u32 redc(u64 x) {\n    return (x +\
+    \ static_cast<u64>(static_cast<u32>(x) * R) * MOD) >> 32;\n  }\n  static constexpr\
+    \ u32 norm(u32 x) { return x - (MOD & -((MOD - 1 - x) >> 31)); }\n\n  static constexpr\
+    \ u32 MOD  = ModT;\n  static constexpr u32 MOD2 = MOD << 1;\n  static constexpr\
+    \ u32 R    = get_r();\n  static constexpr u32 R2   = -static_cast<u64>(MOD) %\
+    \ MOD;\n  static constexpr i32 SMOD = static_cast<i32>(MOD);\n\n  static_assert(MOD\
+    \ & 1);\n  static_assert(-R * MOD == 1);\n  static_assert((MOD >> 30) == 0);\n\
+    \  static_assert(MOD != 1);\n\npublic:\n  static constexpr u32 mod() { return\
+    \ MOD; }\n  static constexpr i32 smod() { return SMOD; }\n  constexpr montgomery_modint30()\
+    \ {}\n  template <typename IntT, std::enable_if_t<std::is_integral_v<IntT>, int>\
+    \ = 0>\n  constexpr montgomery_modint30(IntT v) : v_(redc(static_cast<u64>(v %\
+    \ SMOD + SMOD) * R2)) {}\n  constexpr u32 val() const { return norm(redc(v_));\
+    \ }\n  constexpr i32 sval() const { return norm(redc(v_)); }\n  constexpr bool\
+    \ is_zero() const { return v_ == 0 || v_ == MOD; }\n  template <typename IntT,\
+    \ std::enable_if_t<std::is_integral_v<IntT>, int> = 0>\n  explicit constexpr operator\
+    \ IntT() const {\n    return static_cast<IntT>(val());\n  }\n  constexpr montgomery_modint30\
+    \ operator-() const {\n    montgomery_modint30 res;\n    res.v_ = (MOD2 & -(v_\
+    \ != 0)) - v_;\n    return res;\n  }\n  constexpr montgomery_modint30 inv() const\
+    \ {\n    i32 x1 = 1, x3 = 0, a = sval(), b = SMOD;\n    while (b != 0) {\n   \
+    \   i32 q = a / b, x1_old = x1, a_old = a;\n      x1 = x3, x3 = x1_old - x3 *\
+    \ q, a = b, b = a_old - b * q;\n    }\n#ifdef LIB_DEBUG\n    if (a != 1) throw\
+    \ std::runtime_error(\"modular inverse error\");\n#endif\n    return montgomery_modint30(x1);\n\
+    \  }\n  constexpr montgomery_modint30 &operator+=(const montgomery_modint30 &rhs)\
+    \ {\n    v_ += rhs.v_ - MOD2, v_ += MOD2 & -(v_ >> 31);\n    return *this;\n \
+    \ }\n  constexpr montgomery_modint30 &operator-=(const montgomery_modint30 &rhs)\
+    \ {\n    v_ -= rhs.v_, v_ += MOD2 & -(v_ >> 31);\n    return *this;\n  }\n  constexpr\
+    \ montgomery_modint30 &operator*=(const montgomery_modint30 &rhs) {\n    v_ =\
+    \ redc(static_cast<u64>(v_) * rhs.v_);\n    return *this;\n  }\n  constexpr montgomery_modint30\
+    \ &operator/=(const montgomery_modint30 &rhs) {\n    return operator*=(rhs.inv());\n\
+    \  }\n  constexpr montgomery_modint30 pow(u64 e) const {\n    for (montgomery_modint30\
+    \ res(1), x(*this);; x *= x) {\n      if (e & 1) res *= x;\n      if ((e >>= 1)\
+    \ == 0) return res;\n    }\n  }\n  constexpr void swap(montgomery_modint30 &rhs)\
+    \ {\n    auto v = v_;\n    v_ = rhs.v_, rhs.v_ = v;\n  }\n  friend constexpr montgomery_modint30\
+    \ operator+(const montgomery_modint30 &lhs,\n                                \
+    \                 const montgomery_modint30 &rhs) {\n    return montgomery_modint30(lhs)\
+    \ += rhs;\n  }\n  friend constexpr montgomery_modint30 operator-(const montgomery_modint30\
+    \ &lhs,\n                                                 const montgomery_modint30\
+    \ &rhs) {\n    return montgomery_modint30(lhs) -= rhs;\n  }\n  friend constexpr\
+    \ montgomery_modint30 operator*(const montgomery_modint30 &lhs,\n            \
+    \                                     const montgomery_modint30 &rhs) {\n    return\
+    \ montgomery_modint30(lhs) *= rhs;\n  }\n  friend constexpr montgomery_modint30\
+    \ operator/(const montgomery_modint30 &lhs,\n                                \
+    \                 const montgomery_modint30 &rhs) {\n    return montgomery_modint30(lhs)\
+    \ /= rhs;\n  }\n  friend constexpr bool operator==(const montgomery_modint30 &lhs,\
+    \ const montgomery_modint30 &rhs) {\n    return norm(lhs.v_) == norm(rhs.v_);\n\
+    \  }\n  friend constexpr bool operator!=(const montgomery_modint30 &lhs, const\
+    \ montgomery_modint30 &rhs) {\n    return norm(lhs.v_) != norm(rhs.v_);\n  }\n\
+    \  friend std::istream &operator>>(std::istream &is, montgomery_modint30 &rhs)\
+    \ {\n    i32 x;\n    is >> x;\n    rhs = montgomery_modint30(x);\n    return is;\n\
+    \  }\n  friend std::ostream &operator<<(std::ostream &os, const montgomery_modint30\
+    \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t ModT>\n\
+    using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 6 \"remote_test/yosupo/math/inv_of_polynomials.0.test.cpp\"\
+    \n\n#line 8 \"remote_test/yosupo/math/inv_of_polynomials.0.test.cpp\"\n\nint main()\
+    \ {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\"\
+    , \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n\
+    \  int n, m;\n  std::cin >> n >> m;\n  lib::polynomial<lib::mm30<998244353>> A(n),\
+    \ B(m);\n  for (auto &&i : A) std::cin >> i;\n  for (auto &&i : B) std::cin >>\
+    \ i;\n  auto iA = lib::poly_inv(A, B);\n  if (iA) {\n    std::cout << iA->deg()\
+    \ + 1 << '\\n';\n    for (auto i : iA.value()) std::cout << i << ' ';\n  } else\
+    \ {\n    std::cout << \"-1\";\n  }\n  return 0;\n}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/inv_of_polynomials\"\n\n\
+    #include \"math/poly_extended_gcd.hpp\"\n#include \"math/polynomial.hpp\"\n#include\
+    \ \"modint/montgomery_modint.hpp\"\n\n#include <iostream>\n\nint main() {\n#ifdef\
+    \ LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n\
+    #endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n  int n,\
+    \ m;\n  std::cin >> n >> m;\n  lib::polynomial<lib::mm30<998244353>> A(n), B(m);\n\
+    \  for (auto &&i : A) std::cin >> i;\n  for (auto &&i : B) std::cin >> i;\n  auto\
+    \ iA = lib::poly_inv(A, B);\n  if (iA) {\n    std::cout << iA->deg() + 1 << '\\\
+    n';\n    for (auto i : iA.value()) std::cout << i << ' ';\n  } else {\n    std::cout\
+    \ << \"-1\";\n  }\n  return 0;\n}"
   dependsOn:
+  - math/poly_extended_gcd.hpp
   - common.hpp
+  - math/polynomial.hpp
+  - math/truncated_formal_power_series.hpp
   - math/extended_gcd.hpp
   - math/semi_relaxed_convolution.hpp
   - math/radix2_ntt.hpp
   - math/sqrt_mod.hpp
   - math/random.hpp
   - math/truncated_fourier_transform.hpp
-  isVerificationFile: false
-  path: math/truncated_formal_power_series.hpp
-  requiredBy:
-  - math/polynomial.hpp
-  timestamp: '2022-05-15 15:19:08+08:00'
-  verificationStatus: LIBRARY_SOME_WA
-  verifiedWith:
-  - remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
-  - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
-  - remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
-  - remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
-  - remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
-  - remote_test/yosupo/math/inv_of_polynomials.0.test.cpp
-  - remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
-  - remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
-  - remote_test/yosupo/math/division_of_polynomials.0.test.cpp
-  - remote_test/yosupo/math/convolution_mod.1.test.cpp
-  - remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
-  - remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
-  - remote_test/yosupo/math/multipoint_evaluation.0.test.cpp
-documentation_of: math/truncated_formal_power_series.hpp
+  - modint/montgomery_modint.hpp
+  - common.hpp
+  isVerificationFile: true
+  path: remote_test/yosupo/math/inv_of_polynomials.0.test.cpp
+  requiredBy: []
+  timestamp: '2022-05-15 17:08:24+08:00'
+  verificationStatus: TEST_WRONG_ANSWER
+  verifiedWith: []
+documentation_of: remote_test/yosupo/math/inv_of_polynomials.0.test.cpp
 layout: document
-title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
-  \rbrack$ for FFT prime $p$)
+redirect_from:
+- /verify/remote_test/yosupo/math/inv_of_polynomials.0.test.cpp
+- /verify/remote_test/yosupo/math/inv_of_polynomials.0.test.cpp.html
+title: remote_test/yosupo/math/inv_of_polynomials.0.test.cpp
 ---

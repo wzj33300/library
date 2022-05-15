@@ -56,6 +56,9 @@ data:
       title: Multivariate Convolution (in $\mathbb{F} _ p \lbrack z_1, \dots, z_d
         \rbrack \left/ \left( z_1^{l_1}, \dots, z_d^{l_d} \right)\right.$ for FFT
         prime $p$)
+    - icon: ':x:'
+      path: math/poly_extended_gcd.hpp
+      title: Extended Euclidean Algorithm (in $\mathbb{F} _ p$ for FFT prime $p$)
     - icon: ':question:'
       path: math/polynomial.hpp
       title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
@@ -182,6 +185,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
       title: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
+    - icon: ':x:'
+      path: remote_test/yosupo/math/inv_of_polynomials.0.test.cpp
+      title: remote_test/yosupo/math/inv_of_polynomials.0.test.cpp
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
       title: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp

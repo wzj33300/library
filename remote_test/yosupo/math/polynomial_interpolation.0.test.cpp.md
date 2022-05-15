@@ -388,7 +388,7 @@ data:
     \ + 1);\n    std::copy(lhsirhs.cbegin() + n, lhsirhs.cend(), this->begin());\n\
     \    return *this;\n  }\n  polynomial &operator%=(const polynomial &rhs) {\n \
     \   return this->operator=(div_with_rem(rhs).second);\n  }\n  std::pair<polynomial,\
-    \ polynomial> div_with_rem(const polynomial &rhs) {\n    const int n = this->deg(),\
+    \ polynomial> div_with_rem(const polynomial &rhs) const {\n    const int n = this->deg(),\
     \ m = rhs.deg();\n    if (n < m) return std::make_pair(polynomial(), *this);\n\
     \    auto q    = *this / rhs;\n    auto qrhs = q * rhs;\n    polynomial r(m);\n\
     \    for (int i = 0; i != m; ++i) r[i] = this->operator[](i) - qrhs[i];\n    r.shrink();\n\
@@ -567,7 +567,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
   requiredBy: []
-  timestamp: '2022-05-15 15:19:08+08:00'
+  timestamp: '2022-05-15 17:08:24+08:00'
   verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp

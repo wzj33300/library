@@ -39,6 +39,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
     title: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
+  - icon: ':x:'
+    path: remote_test/yosupo/math/inv_of_polynomials.0.test.cpp
+    title: remote_test/yosupo/math/inv_of_polynomials.0.test.cpp
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
@@ -220,6 +223,7 @@ data:
   - remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
   - remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/convolution_mod.2.test.cpp
+  - remote_test/yosupo/math/inv_of_polynomials.0.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.0.test.cpp
   - remote_test/yosupo/math/multivariate_convolution.0.test.cpp
   - remote_test/yosupo/math/inv_of_formal_power_series.1.test.cpp
