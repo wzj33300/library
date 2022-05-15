@@ -28,19 +28,19 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
     title: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
     title: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/multipoint_evaluation.0.test.cpp
     title: remote_test/yosupo/math/multipoint_evaluation.0.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
     title: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
     title: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
     title: remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
   - icon: ':x:'
@@ -79,10 +79,10 @@ data:
     \ u64 operator()() { return next(); }\n};\n\nLIB_END\n\n\n#line 6 \"math/sqrt_mod.hpp\"\
     \n\n#include <random>\n#include <type_traits>\n#include <vector>\n\nLIB_BEGIN\n\
     \ntemplate <typename ModIntT>\nstd::vector<ModIntT> sqrt_mod_prime(ModIntT a)\
-    \ {\n  // Bostan--Mori's algorithm\n  if (a.is_zero()) return {a};\n  const auto\
-    \ p = ModIntT::mod();\n  if (a.pow(p >> 1) == -1) return {};\n  if ((p & 3) ==\
-    \ 3) {\n    ModIntT b(a.pow((p + 1) >> 2));\n    return {b, -b};\n  }\n  xoshiro256starstar\
-    \ gen(std::random_device{}());\n  std::uniform_int_distribution<std::remove_cv_t<decltype(p)>>\
+    \ {\n  // Bostan--Mori's algorithm\n  const auto p = ModIntT::mod();\n  if (p\
+    \ == 2 || a.is_zero()) return {a};\n  if (a.pow(p >> 1) == -1) return {};\n  if\
+    \ ((p & 3) == 3) {\n    ModIntT b(a.pow((p + 1) >> 2));\n    return {b, -b};\n\
+    \  }\n  xoshiro256starstar gen(std::random_device{}());\n  std::uniform_int_distribution<std::remove_cv_t<decltype(p)>>\
     \ dis(2, p - 1);\n  ModIntT t;\n  do { t = dis(gen); } while ((t * t - 4 * a).pow(p\
     \ >> 1) != -1);\n  ModIntT k0(1), k1, k2(-t), k3(a);\n  for (auto e = (p + 1)\
     \ >> 1;;) {\n    // clang-format off\n    if (e & 1) k0 = k1 - k0 * k2, k1 *=\
@@ -92,10 +92,10 @@ data:
   code: "#ifndef SQRT_MOD_HPP\n#define SQRT_MOD_HPP\n\n#include \"../common.hpp\"\n\
     #include \"random.hpp\"\n\n#include <random>\n#include <type_traits>\n#include\
     \ <vector>\n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nstd::vector<ModIntT> sqrt_mod_prime(ModIntT\
-    \ a) {\n  // Bostan--Mori's algorithm\n  if (a.is_zero()) return {a};\n  const\
-    \ auto p = ModIntT::mod();\n  if (a.pow(p >> 1) == -1) return {};\n  if ((p &\
-    \ 3) == 3) {\n    ModIntT b(a.pow((p + 1) >> 2));\n    return {b, -b};\n  }\n\
-    \  xoshiro256starstar gen(std::random_device{}());\n  std::uniform_int_distribution<std::remove_cv_t<decltype(p)>>\
+    \ a) {\n  // Bostan--Mori's algorithm\n  const auto p = ModIntT::mod();\n  if\
+    \ (p == 2 || a.is_zero()) return {a};\n  if (a.pow(p >> 1) == -1) return {};\n\
+    \  if ((p & 3) == 3) {\n    ModIntT b(a.pow((p + 1) >> 2));\n    return {b, -b};\n\
+    \  }\n  xoshiro256starstar gen(std::random_device{}());\n  std::uniform_int_distribution<std::remove_cv_t<decltype(p)>>\
     \ dis(2, p - 1);\n  ModIntT t;\n  do { t = dis(gen); } while ((t * t - 4 * a).pow(p\
     \ >> 1) != -1);\n  ModIntT k0(1), k1, k2(-t), k3(a);\n  for (auto e = (p + 1)\
     \ >> 1;;) {\n    // clang-format off\n    if (e & 1) k0 = k1 - k0 * k2, k1 *=\
@@ -110,7 +110,7 @@ data:
   requiredBy:
   - math/truncated_formal_power_series.hpp
   - math/polynomial.hpp
-  timestamp: '2022-05-15 14:54:25+08:00'
+  timestamp: '2022-05-15 15:19:08+08:00'
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp

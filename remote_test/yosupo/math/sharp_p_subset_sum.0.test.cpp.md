@@ -10,14 +10,14 @@ data:
   - icon: ':question:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/formal_power_series.hpp
     title: Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack \rbrack$
       for FFT prime $p$)
   - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/relaxed_convolution.hpp
     title: Relaxed Convolution (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack \rbrack$
       for FFT prime $p$)
@@ -26,9 +26,9 @@ data:
     title: Montgomery ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/sharp_p_subset_sum
@@ -186,7 +186,7 @@ data:
     \ * ac_[sft - 1][i];\n        idft(c0);\n        for (int i = 0; i != (2 << sft)\
     \ - 1; ++i) c_[n_ + 1 + i] += c0[i];\n      }\n  }\n  return c_[n_++];\n}\n\n\
     LIB_END\n\n\n#line 8 \"math/formal_power_series.hpp\"\n\n#line 10 \"math/formal_power_series.hpp\"\
-    \n#include <memory>\n#include <optional>\n#line 13 \"math/formal_power_series.hpp\"\
+    \n#include <memory>\n#include <optional>\n#line 14 \"math/formal_power_series.hpp\"\
     \n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nclass formal_power_series {\n  using\
     \ F = std::function<ModIntT(int)>;\n  F h_;\n\n  static typename detail::modular_inverse<ModIntT>\
     \ invs;\n\npublic:\n  formal_power_series() : h_([](int) { return ModIntT(); })\
@@ -224,11 +224,12 @@ data:
     \ os) * iv; });\n          formal_power_series t1([h0 = t0.log().handle(), kk](int\
     \ i) { return h0(i) * kk; });\n          s.emplace([vk = v.pow(k), h1 = t1.exp().handle()](int\
     \ i) { return h1(i) * vk; });\n          return zero_cnt == 0 ? (*s)(i) : ModIntT();\n\
-    \        });\n  }\n  formal_power_series sqrt(std::function<ModIntT(ModIntT)>\
-    \ f) const {\n    // `h_(0) == 0` is not allowed.\n    auto t = [h = h_, f, i2\
-    \ = ModIntT()](int i, auto const &c) mutable {\n      if (i != 0) return (h(i)\
-    \ - c[i]) * i2;\n      ModIntT fi(f(h(i)));\n      i2 = (fi * ModIntT(2)).inv();\n\
-    \      return fi;\n    };\n    auto rc = std::make_shared<relaxed_convolution<ModIntT>>(t,\
+    \        });\n  }\n  template <typename SqrtFuncT,\n            typename std::enable_if_t<std::is_invocable_r_v<ModIntT,\
+    \ SqrtFuncT, ModIntT>, int> = 0>\n  formal_power_series sqrt(SqrtFuncT &&f) const\
+    \ {\n    // `h_(0) == 0` is not allowed.\n    auto t = [h = h_, f, i2 = ModIntT()](int\
+    \ i, auto const &c) mutable {\n      if (i != 0) return (h(i) - c[i]) * i2;\n\
+    \      ModIntT fi(f(h(i)));\n      i2 = (fi * ModIntT(2)).inv();\n      return\
+    \ fi;\n    };\n    auto rc = std::make_shared<relaxed_convolution<ModIntT>>(t,\
     \ t);\n    return formal_power_series([rc](int i) { return rc->next(), rc->get_multiplier()[i];\
     \ });\n  }\n  formal_power_series operator+(const formal_power_series &rhs) const\
     \ {\n    return formal_power_series([h0 = h_, h1 = rhs.h_](int i) { return h0(i)\
@@ -352,8 +353,8 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
   requiredBy: []
-  timestamp: '2022-05-01 23:18:47+08:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2022-05-15 15:19:08+08:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
 layout: document

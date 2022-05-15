@@ -19,7 +19,7 @@ data:
       title: Weighted Disjoint Set
   - name: math
     pages:
-    - icon: ':question:'
+    - icon: ':x:'
       path: math/binomial.hpp
       title: Binomial Coefficient (in $\mathbb{F} _ p$)
     - icon: ':heavy_check_mark:'
@@ -31,7 +31,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/convolution_mod.hpp
       title: Convolution (in $\mathbb{Z} m / \mathbb{Z} \lbrack z \rbrack$)
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: math/cra.hpp
       title: Chinese Remainder Algorithm (in $\mathbb{Z} / m \mathbb{Z}$)
     - icon: ':heavy_check_mark:'
@@ -41,7 +41,7 @@ data:
     - icon: ':question:'
       path: math/extended_gcd.hpp
       title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/formal_power_series.hpp
       title: Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack \rbrack$
         for FFT prime $p$)
@@ -65,7 +65,7 @@ data:
     - icon: ':question:'
       path: math/random.hpp
       title: Pseudo Random Number Generator
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/relaxed_convolution.hpp
       title: Relaxed Convolution (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack \rbrack$
         for FFT prime $p$)
@@ -82,11 +82,11 @@ data:
     - icon: ':x:'
       path: math/stirling_numbers.hpp
       title: Stirling Numbers (in $\mathbb{F} _ p$ for FFT prime $p$)
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: math/subproduct_tree.hpp
       title: Multipoint Evaluation and Interpolation (in $\mathbb{F} _ p$ for FFT
         prime $p$)
-    - icon: ':question:'
+    - icon: ':x:'
       path: math/taylor_shift.hpp
       title: Polynomial Taylor Shift (in $\mathbb{F} _ p$ for FFT prime $p$)
     - icon: ':question:'
@@ -108,10 +108,10 @@ data:
     - icon: ':heavy_check_mark:'
       path: modint/runtime_long_montgomery_modint.hpp
       title: Runtime Long Montgomery ModInt
-    - icon: ':warning:'
+    - icon: ':x:'
       path: modint/runtime_modint.hpp
       title: Runtime ModInt
-    - icon: ':x:'
+    - icon: ':warning:'
       path: modint/runtime_montgomery_modint.hpp
       title: Runtime Montgomery ModInt
   - name: string
@@ -185,34 +185,34 @@ data:
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
       title: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
       title: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: remote_test/yosupo/math/multipoint_evaluation.0.test.cpp
       title: remote_test/yosupo/math/multipoint_evaluation.0.test.cpp
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/multivariate_convolution.0.test.cpp
       title: remote_test/yosupo/math/multivariate_convolution.0.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: remote_test/yosupo/math/partition_function.0.test.cpp
       title: remote_test/yosupo/math/partition_function.0.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
       title: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
       title: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
       title: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
       title: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
       title: remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
       title: remote_test/yosupo/math/sharp_p_subset_sum.0.test.cpp
     - icon: ':x:'
@@ -237,7 +237,7 @@ data:
       title: remote_test/yosupo/string/z_algorithm.0.test.cpp
   - name: remote_test/yuki/math
     pages:
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: remote_test/yuki/math/187.0.test.cpp
       title: remote_test/yuki/math/187.0.test.cpp
 layout: toppage

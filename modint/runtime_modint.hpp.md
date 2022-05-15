@@ -5,10 +5,13 @@ data:
     path: common.hpp
     title: common.hpp
   _extendedRequiredBy: []
-  _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _extendedVerifiedWith:
+  - icon: ':x:'
+    path: remote_test/yosupo/math/sqrt_mod.0.test.cpp
+    title: remote_test/yosupo/math/sqrt_mod.0.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':x:'
   attributes:
     links: []
   bundledCode: "#line 1 \"modint/runtime_modint.hpp\"\n\n\n\n#line 1 \"common.hpp\"\
@@ -147,8 +150,9 @@ data:
   path: modint/runtime_modint.hpp
   requiredBy: []
   timestamp: '2022-05-08 22:42:20+08:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  verificationStatus: LIBRARY_ALL_WA
+  verifiedWith:
+  - remote_test/yosupo/math/sqrt_mod.0.test.cpp
 documentation_of: modint/runtime_modint.hpp
 layout: document
 title: Runtime ModInt
