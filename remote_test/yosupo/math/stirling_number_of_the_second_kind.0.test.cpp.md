@@ -1,56 +1,59 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/binomial.hpp
     title: Binomial Coefficient (in $\mathbb{F} _ p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/linear_sieve.hpp
     title: Linear Sieve
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/polynomial.hpp
     title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
+    path: math/random.hpp
+    title: Pseudo Random Number Generator
+  - icon: ':question:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT
       prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/sqrt_mod.hpp
     title: Square Roots (in $\mathbb{F} _ p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/stirling_numbers.hpp
     title: Stirling Numbers (in $\mathbb{F} _ p$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/taylor_shift.hpp
     title: Polynomial Taylor Shift (in $\mathbb{F} _ p$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
       \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_fourier_transform.hpp
     title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$ for
       FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/stirling_number_of_the_second_kind
@@ -193,39 +196,53 @@ data:
     \ FnT, int, const std::vector<ModIntT> &>)\n    c_[n_] += fixed_A_.front() * B_.emplace_back(handle_(n_,\
     \ c_));\n  else\n    c_[n_] += fixed_A_.front() * B_.emplace_back(handle_(n_));\n\
     \  // clang-format on\n  return c_[n_++];\n}\n\nLIB_END\n\n\n#line 1 \"math/sqrt_mod.hpp\"\
-    \n\n\n\n#line 5 \"math/sqrt_mod.hpp\"\n\n#include <random>\n#line 9 \"math/sqrt_mod.hpp\"\
-    \n\nLIB_BEGIN\n\ntemplate <typename ModIntT>\nstd::vector<ModIntT> sqrt_mod_prime(ModIntT\
-    \ a) {\n  // Bostan--Mori's algorithm\n  if (a.is_zero()) return {a};\n  const\
-    \ auto p = ModIntT::mod();\n  if (a.pow(p >> 1) == -1) return {};\n  if ((p &\
-    \ 3) == 3) {\n    ModIntT b(a.pow((p + 1) >> 2));\n    return {b, -b};\n  }\n\
-    \  std::mt19937 gen(std::random_device{}());\n  std::uniform_int_distribution<std::remove_cv_t<decltype(p)>>\
-    \ dis(2, p - 1);\n  ModIntT t;\n  do { t = dis(gen); } while ((t * t - 4 * a).pow(p\
-    \ >> 1) != -1);\n  ModIntT k0(1), k1, k2(-t), k3(a);\n  for (auto e = (p + 1)\
-    \ >> 1;;) {\n    // clang-format off\n    if (e & 1) k0 = k1 - k0 * k2, k1 *=\
-    \ k3;\n    else k1 = k0 * k3 - k1 * k2;\n    // clang-format on\n    if ((e >>=\
-    \ 1) == 0) return {k0, -k0};\n    k2 = k3 + k3 - k2 * k2, k3 *= k3;\n  }\n}\n\n\
-    LIB_END\n\n\n#line 1 \"math/truncated_fourier_transform.hpp\"\n\n\n\n#line 6 \"\
-    math/truncated_fourier_transform.hpp\"\n\n#line 10 \"math/truncated_fourier_transform.hpp\"\
-    \n\nLIB_BEGIN\n\ntemplate <typename ContainerT>\nvoid tft(ContainerT &&a) {\n\
-    \  using Container          = std::remove_cv_t<std::remove_reference_t<ContainerT>>;\n\
-    \  using T                  = typename Container::value_type;\n  static constexpr\
-    \ auto rt = detail::root<T>();\n  static std::vector<T> root(1);\n  const int\
-    \ n = static_cast<int>(a.size());\n  if ((n & (n - 1)) == 0) return dft(std::forward<ContainerT>(a));\n\
-    \  const int len = ntt_len(n);\n  if (int s = static_cast<int>(root.size()); s\
-    \ << 1 < len) {\n    root.resize(len >> 1);\n    for (int i = detail::bsf(s),\
-    \ j; 1 << i < len >> 1; ++i) {\n      root[j = 1 << i] = rt[i];\n      for (int\
-    \ k = j + 1; k < j << 1; ++k) root[k] = root[k - j] * root[j];\n    }\n  }\n \
-    \ a.resize(len);\n  for (int j = 0, l = len >> 1; j != l; ++j) {\n    T u(a[j]),\
-    \ v(a[j + l]);\n    a[j] = u + v, a[j + l] = u - v;\n  }\n  for (int i = len >>\
-    \ 1; i >= 2; i >>= 1) {\n    for (int j = 0, l = i >> 1; j != l; ++j) {\n    \
-    \  T u(a[j]), v(a[j + l]);\n      a[j] = u + v, a[j + l] = u - v;\n    }\n   \
-    \ for (int j = i, l = i >> 1, m = 1; j < n && j != len; j += i, ++m)\n      for\
-    \ (int k = j; k != j + l; ++k) {\n        T u(a[k]), v(a[k + l] * root[m]);\n\
-    \        a[k] = u + v, a[k + l] = u - v;\n      }\n  }\n  a.resize(n);\n}\n\n\
-    template <typename ContainerT>\nvoid itft(ContainerT &&a) {\n  using Container\
-    \           = std::remove_cv_t<std::remove_reference_t<ContainerT>>;\n  using\
-    \ T                   = typename Container::value_type;\n  static constexpr auto\
-    \ rt  = detail::root<T>();\n  static constexpr auto irt = detail::iroot<T>();\n\
+    \n\n\n\n#line 1 \"math/random.hpp\"\n\n\n\n#line 5 \"math/random.hpp\"\n\n#include\
+    \ <cstdint>\n#include <limits>\n\nLIB_BEGIN\n\n// see https://prng.di.unimi.it/xoshiro256starstar.c\n\
+    // original license CC0 1.0\nclass xoshiro256starstar {\n  using u64 = std::uint64_t;\n\
+    \n  static inline u64 rotl(const u64 x, int k) { return (x << k) | (x >> (64 -\
+    \ k)); }\n\n  u64 s_[4];\n\n  u64 next() {\n    const u64 res = rotl(s_[1] * 5,\
+    \ 7) * 9;\n    const u64 t   = s_[1] << 17;\n    s_[2] ^= s_[0], s_[3] ^= s_[1],\
+    \ s_[1] ^= s_[2], s_[0] ^= s_[3], s_[2] ^= t,\n        s_[3] = rotl(s_[3], 45);\n\
+    \    return res;\n  }\n\npublic:\n  // see https://prng.di.unimi.it/splitmix64.c\n\
+    \  explicit xoshiro256starstar(u64 seed) {\n    for (int i = 0; i != 4; ++i) {\n\
+    \      u64 z = (seed += 0x9e3779b97f4a7c15);\n      z     = (z ^ (z >> 30)) *\
+    \ 0xbf58476d1ce4e5b9;\n      z     = (z ^ (z >> 27)) * 0x94d049bb133111eb;\n \
+    \     s_[i] = z ^ (z >> 31);\n    }\n  }\n  // see https://en.cppreference.com/w/cpp/named_req/UniformRandomBitGenerator\n\
+    \  using result_type = u64;\n  static inline u64 min() { return std::numeric_limits<u64>::min();\
+    \ }\n  static inline u64 max() { return std::numeric_limits<u64>::max(); }\n \
+    \ u64 operator()() { return next(); }\n};\n\nLIB_END\n\n\n#line 6 \"math/sqrt_mod.hpp\"\
+    \n\n#include <random>\n#line 10 \"math/sqrt_mod.hpp\"\n\nLIB_BEGIN\n\ntemplate\
+    \ <typename ModIntT>\nstd::vector<ModIntT> sqrt_mod_prime(ModIntT a) {\n  // Bostan--Mori's\
+    \ algorithm\n  if (a.is_zero()) return {a};\n  const auto p = ModIntT::mod();\n\
+    \  if (a.pow(p >> 1) == -1) return {};\n  if ((p & 3) == 3) {\n    ModIntT b(a.pow((p\
+    \ + 1) >> 2));\n    return {b, -b};\n  }\n  xoshiro256starstar gen(std::random_device{}());\n\
+    \  std::uniform_int_distribution<std::remove_cv_t<decltype(p)>> dis(2, p - 1);\n\
+    \  ModIntT t;\n  do { t = dis(gen); } while ((t * t - 4 * a).pow(p >> 1) != -1);\n\
+    \  ModIntT k0(1), k1, k2(-t), k3(a);\n  for (auto e = (p + 1) >> 1;;) {\n    //\
+    \ clang-format off\n    if (e & 1) k0 = k1 - k0 * k2, k1 *= k3;\n    else k1 =\
+    \ k0 * k3 - k1 * k2;\n    // clang-format on\n    if ((e >>= 1) == 0) return {k0,\
+    \ -k0};\n    k2 = k3 + k3 - k2 * k2, k3 *= k3;\n  }\n}\n\nLIB_END\n\n\n#line 1\
+    \ \"math/truncated_fourier_transform.hpp\"\n\n\n\n#line 6 \"math/truncated_fourier_transform.hpp\"\
+    \n\n#line 10 \"math/truncated_fourier_transform.hpp\"\n\nLIB_BEGIN\n\ntemplate\
+    \ <typename ContainerT>\nvoid tft(ContainerT &&a) {\n  using Container       \
+    \   = std::remove_cv_t<std::remove_reference_t<ContainerT>>;\n  using T      \
+    \            = typename Container::value_type;\n  static constexpr auto rt = detail::root<T>();\n\
+    \  static std::vector<T> root(1);\n  const int n = static_cast<int>(a.size());\n\
+    \  if ((n & (n - 1)) == 0) return dft(std::forward<ContainerT>(a));\n  const int\
+    \ len = ntt_len(n);\n  if (int s = static_cast<int>(root.size()); s << 1 < len)\
+    \ {\n    root.resize(len >> 1);\n    for (int i = detail::bsf(s), j; 1 << i <\
+    \ len >> 1; ++i) {\n      root[j = 1 << i] = rt[i];\n      for (int k = j + 1;\
+    \ k < j << 1; ++k) root[k] = root[k - j] * root[j];\n    }\n  }\n  a.resize(len);\n\
+    \  for (int j = 0, l = len >> 1; j != l; ++j) {\n    T u(a[j]), v(a[j + l]);\n\
+    \    a[j] = u + v, a[j + l] = u - v;\n  }\n  for (int i = len >> 1; i >= 2; i\
+    \ >>= 1) {\n    for (int j = 0, l = i >> 1; j != l; ++j) {\n      T u(a[j]), v(a[j\
+    \ + l]);\n      a[j] = u + v, a[j + l] = u - v;\n    }\n    for (int j = i, l\
+    \ = i >> 1, m = 1; j < n && j != len; j += i, ++m)\n      for (int k = j; k !=\
+    \ j + l; ++k) {\n        T u(a[k]), v(a[k + l] * root[m]);\n        a[k] = u +\
+    \ v, a[k + l] = u - v;\n      }\n  }\n  a.resize(n);\n}\n\ntemplate <typename\
+    \ ContainerT>\nvoid itft(ContainerT &&a) {\n  using Container           = std::remove_cv_t<std::remove_reference_t<ContainerT>>;\n\
+    \  using T                   = typename Container::value_type;\n  static constexpr\
+    \ auto rt  = detail::root<T>();\n  static constexpr auto irt = detail::iroot<T>();\n\
     \  static std::vector<T> root{T(1)}, iroot{T(1)};\n  const int n = static_cast<int>(a.size());\n\
     \  if ((n & (n - 1)) == 0) return idft(std::forward<ContainerT>(a));\n  const\
     \ int len = ntt_len(n);\n  if (int s = static_cast<int>(root.size()); s << 1 <\
@@ -449,60 +466,60 @@ data:
     \    if (i & 1) res[i] = -res[i];\n  }\n  (res *= rhs).resize(n + 1);\n  return\
     \ res;\n}\n\nLIB_END\n\n\n#line 1 \"modint/montgomery_modint.hpp\"\n\n\n\n#line\
     \ 5 \"modint/montgomery_modint.hpp\"\n\n#ifdef LIB_DEBUG\n  #include <stdexcept>\n\
-    #endif\n#include <cstdint>\n#line 12 \"modint/montgomery_modint.hpp\"\n\nLIB_BEGIN\n\
-    \ntemplate <std::uint32_t ModT>\nclass montgomery_modint30 {\n  using i32 = std::int32_t;\n\
-    \  using u32 = std::uint32_t;\n  using u64 = std::uint64_t;\n\n  u32 v_{};\n\n\
-    \  static constexpr u32 get_r() {\n    u32 t = 2, iv = MOD * (t - MOD * MOD);\n\
-    \    iv *= t - MOD * iv, iv *= t - MOD * iv;\n    return iv * (MOD * iv - t);\n\
-    \  }\n  static constexpr u32 redc(u64 x) {\n    return (x + static_cast<u64>(static_cast<u32>(x)\
-    \ * R) * MOD) >> 32;\n  }\n  static constexpr u32 norm(u32 x) { return x - (MOD\
-    \ & -((MOD - 1 - x) >> 31)); }\n\n  static constexpr u32 MOD  = ModT;\n  static\
-    \ constexpr u32 MOD2 = MOD << 1;\n  static constexpr u32 R    = get_r();\n  static\
-    \ constexpr u32 R2   = -static_cast<u64>(MOD) % MOD;\n  static constexpr i32 SMOD\
-    \ = static_cast<i32>(MOD);\n\n  static_assert(MOD & 1);\n  static_assert(-R *\
-    \ MOD == 1);\n  static_assert((MOD >> 30) == 0);\n  static_assert(MOD != 1);\n\
-    \npublic:\n  static constexpr u32 mod() { return MOD; }\n  static constexpr i32\
-    \ smod() { return SMOD; }\n  constexpr montgomery_modint30() {}\n  template <typename\
-    \ IntT, std::enable_if_t<std::is_integral_v<IntT>, int> = 0>\n  constexpr montgomery_modint30(IntT\
-    \ v) : v_(redc(static_cast<u64>(v % SMOD + SMOD) * R2)) {}\n  constexpr u32 val()\
-    \ const { return norm(redc(v_)); }\n  constexpr i32 sval() const { return norm(redc(v_));\
-    \ }\n  constexpr bool is_zero() const { return v_ == 0 || v_ == MOD; }\n  template\
-    \ <typename IntT, std::enable_if_t<std::is_integral_v<IntT>, int> = 0>\n  explicit\
-    \ constexpr operator IntT() const {\n    return static_cast<IntT>(val());\n  }\n\
-    \  constexpr montgomery_modint30 operator-() const {\n    montgomery_modint30\
-    \ res;\n    res.v_ = (MOD2 & -(v_ != 0)) - v_;\n    return res;\n  }\n  constexpr\
-    \ montgomery_modint30 inv() const {\n    i32 x1 = 1, x3 = 0, a = sval(), b = SMOD;\n\
-    \    while (b != 0) {\n      i32 q = a / b, x1_old = x1, a_old = a;\n      x1\
-    \ = x3, x3 = x1_old - x3 * q, a = b, b = a_old - b * q;\n    }\n#ifdef LIB_DEBUG\n\
-    \    if (a != 1) throw std::runtime_error(\"modular inverse error\");\n#endif\n\
-    \    return montgomery_modint30(x1);\n  }\n  constexpr montgomery_modint30 &operator+=(const\
-    \ montgomery_modint30 &rhs) {\n    v_ += rhs.v_ - MOD2, v_ += MOD2 & -(v_ >> 31);\n\
-    \    return *this;\n  }\n  constexpr montgomery_modint30 &operator-=(const montgomery_modint30\
-    \ &rhs) {\n    v_ -= rhs.v_, v_ += MOD2 & -(v_ >> 31);\n    return *this;\n  }\n\
-    \  constexpr montgomery_modint30 &operator*=(const montgomery_modint30 &rhs) {\n\
-    \    v_ = redc(static_cast<u64>(v_) * rhs.v_);\n    return *this;\n  }\n  constexpr\
-    \ montgomery_modint30 &operator/=(const montgomery_modint30 &rhs) {\n    return\
-    \ operator*=(rhs.inv());\n  }\n  constexpr montgomery_modint30 pow(u64 e) const\
-    \ {\n    for (montgomery_modint30 res(1), x(*this);; x *= x) {\n      if (e &\
-    \ 1) res *= x;\n      if ((e >>= 1) == 0) return res;\n    }\n  }\n  constexpr\
-    \ void swap(montgomery_modint30 &rhs) {\n    auto v = v_;\n    v_ = rhs.v_, rhs.v_\
-    \ = v;\n  }\n  friend constexpr montgomery_modint30 operator+(const montgomery_modint30\
-    \ &lhs,\n                                                 const montgomery_modint30\
-    \ &rhs) {\n    return montgomery_modint30(lhs) += rhs;\n  }\n  friend constexpr\
-    \ montgomery_modint30 operator-(const montgomery_modint30 &lhs,\n            \
-    \                                     const montgomery_modint30 &rhs) {\n    return\
-    \ montgomery_modint30(lhs) -= rhs;\n  }\n  friend constexpr montgomery_modint30\
-    \ operator*(const montgomery_modint30 &lhs,\n                                \
+    #endif\n#line 12 \"modint/montgomery_modint.hpp\"\n\nLIB_BEGIN\n\ntemplate <std::uint32_t\
+    \ ModT>\nclass montgomery_modint30 {\n  using i32 = std::int32_t;\n  using u32\
+    \ = std::uint32_t;\n  using u64 = std::uint64_t;\n\n  u32 v_{};\n\n  static constexpr\
+    \ u32 get_r() {\n    u32 t = 2, iv = MOD * (t - MOD * MOD);\n    iv *= t - MOD\
+    \ * iv, iv *= t - MOD * iv;\n    return iv * (MOD * iv - t);\n  }\n  static constexpr\
+    \ u32 redc(u64 x) {\n    return (x + static_cast<u64>(static_cast<u32>(x) * R)\
+    \ * MOD) >> 32;\n  }\n  static constexpr u32 norm(u32 x) { return x - (MOD & -((MOD\
+    \ - 1 - x) >> 31)); }\n\n  static constexpr u32 MOD  = ModT;\n  static constexpr\
+    \ u32 MOD2 = MOD << 1;\n  static constexpr u32 R    = get_r();\n  static constexpr\
+    \ u32 R2   = -static_cast<u64>(MOD) % MOD;\n  static constexpr i32 SMOD = static_cast<i32>(MOD);\n\
+    \n  static_assert(MOD & 1);\n  static_assert(-R * MOD == 1);\n  static_assert((MOD\
+    \ >> 30) == 0);\n  static_assert(MOD != 1);\n\npublic:\n  static constexpr u32\
+    \ mod() { return MOD; }\n  static constexpr i32 smod() { return SMOD; }\n  constexpr\
+    \ montgomery_modint30() {}\n  template <typename IntT, std::enable_if_t<std::is_integral_v<IntT>,\
+    \ int> = 0>\n  constexpr montgomery_modint30(IntT v) : v_(redc(static_cast<u64>(v\
+    \ % SMOD + SMOD) * R2)) {}\n  constexpr u32 val() const { return norm(redc(v_));\
+    \ }\n  constexpr i32 sval() const { return norm(redc(v_)); }\n  constexpr bool\
+    \ is_zero() const { return v_ == 0 || v_ == MOD; }\n  template <typename IntT,\
+    \ std::enable_if_t<std::is_integral_v<IntT>, int> = 0>\n  explicit constexpr operator\
+    \ IntT() const {\n    return static_cast<IntT>(val());\n  }\n  constexpr montgomery_modint30\
+    \ operator-() const {\n    montgomery_modint30 res;\n    res.v_ = (MOD2 & -(v_\
+    \ != 0)) - v_;\n    return res;\n  }\n  constexpr montgomery_modint30 inv() const\
+    \ {\n    i32 x1 = 1, x3 = 0, a = sval(), b = SMOD;\n    while (b != 0) {\n   \
+    \   i32 q = a / b, x1_old = x1, a_old = a;\n      x1 = x3, x3 = x1_old - x3 *\
+    \ q, a = b, b = a_old - b * q;\n    }\n#ifdef LIB_DEBUG\n    if (a != 1) throw\
+    \ std::runtime_error(\"modular inverse error\");\n#endif\n    return montgomery_modint30(x1);\n\
+    \  }\n  constexpr montgomery_modint30 &operator+=(const montgomery_modint30 &rhs)\
+    \ {\n    v_ += rhs.v_ - MOD2, v_ += MOD2 & -(v_ >> 31);\n    return *this;\n \
+    \ }\n  constexpr montgomery_modint30 &operator-=(const montgomery_modint30 &rhs)\
+    \ {\n    v_ -= rhs.v_, v_ += MOD2 & -(v_ >> 31);\n    return *this;\n  }\n  constexpr\
+    \ montgomery_modint30 &operator*=(const montgomery_modint30 &rhs) {\n    v_ =\
+    \ redc(static_cast<u64>(v_) * rhs.v_);\n    return *this;\n  }\n  constexpr montgomery_modint30\
+    \ &operator/=(const montgomery_modint30 &rhs) {\n    return operator*=(rhs.inv());\n\
+    \  }\n  constexpr montgomery_modint30 pow(u64 e) const {\n    for (montgomery_modint30\
+    \ res(1), x(*this);; x *= x) {\n      if (e & 1) res *= x;\n      if ((e >>= 1)\
+    \ == 0) return res;\n    }\n  }\n  constexpr void swap(montgomery_modint30 &rhs)\
+    \ {\n    auto v = v_;\n    v_ = rhs.v_, rhs.v_ = v;\n  }\n  friend constexpr montgomery_modint30\
+    \ operator+(const montgomery_modint30 &lhs,\n                                \
     \                 const montgomery_modint30 &rhs) {\n    return montgomery_modint30(lhs)\
-    \ *= rhs;\n  }\n  friend constexpr montgomery_modint30 operator/(const montgomery_modint30\
+    \ += rhs;\n  }\n  friend constexpr montgomery_modint30 operator-(const montgomery_modint30\
     \ &lhs,\n                                                 const montgomery_modint30\
-    \ &rhs) {\n    return montgomery_modint30(lhs) /= rhs;\n  }\n  friend constexpr\
-    \ bool operator==(const montgomery_modint30 &lhs, const montgomery_modint30 &rhs)\
-    \ {\n    return norm(lhs.v_) == norm(rhs.v_);\n  }\n  friend constexpr bool operator!=(const\
-    \ montgomery_modint30 &lhs, const montgomery_modint30 &rhs) {\n    return norm(lhs.v_)\
-    \ != norm(rhs.v_);\n  }\n  friend std::istream &operator>>(std::istream &is, montgomery_modint30\
-    \ &rhs) {\n    i32 x;\n    is >> x;\n    rhs = montgomery_modint30(x);\n    return\
-    \ is;\n  }\n  friend std::ostream &operator<<(std::ostream &os, const montgomery_modint30\
+    \ &rhs) {\n    return montgomery_modint30(lhs) -= rhs;\n  }\n  friend constexpr\
+    \ montgomery_modint30 operator*(const montgomery_modint30 &lhs,\n            \
+    \                                     const montgomery_modint30 &rhs) {\n    return\
+    \ montgomery_modint30(lhs) *= rhs;\n  }\n  friend constexpr montgomery_modint30\
+    \ operator/(const montgomery_modint30 &lhs,\n                                \
+    \                 const montgomery_modint30 &rhs) {\n    return montgomery_modint30(lhs)\
+    \ /= rhs;\n  }\n  friend constexpr bool operator==(const montgomery_modint30 &lhs,\
+    \ const montgomery_modint30 &rhs) {\n    return norm(lhs.v_) == norm(rhs.v_);\n\
+    \  }\n  friend constexpr bool operator!=(const montgomery_modint30 &lhs, const\
+    \ montgomery_modint30 &rhs) {\n    return norm(lhs.v_) != norm(rhs.v_);\n  }\n\
+    \  friend std::istream &operator>>(std::istream &is, montgomery_modint30 &rhs)\
+    \ {\n    i32 x;\n    is >> x;\n    rhs = montgomery_modint30(x);\n    return is;\n\
+    \  }\n  friend std::ostream &operator<<(std::ostream &os, const montgomery_modint30\
     \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t ModT>\n\
     using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 6 \"remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp\"\
     \n\n#line 10 \"remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp\"\
@@ -527,6 +544,7 @@ data:
   - math/semi_relaxed_convolution.hpp
   - math/radix2_ntt.hpp
   - math/sqrt_mod.hpp
+  - math/random.hpp
   - math/truncated_fourier_transform.hpp
   - math/stirling_numbers.hpp
   - math/binomial.hpp
@@ -537,8 +555,8 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
   requiredBy: []
-  timestamp: '2022-05-15 00:44:30+08:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2022-05-15 14:54:25+08:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
 layout: document
