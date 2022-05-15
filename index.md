@@ -19,7 +19,7 @@ data:
       title: Weighted Disjoint Set
   - name: math
     pages:
-    - icon: ':x:'
+    - icon: ':question:'
       path: math/binomial.hpp
       title: Binomial Coefficient (in $\mathbb{F} _ p$)
     - icon: ':heavy_check_mark:'
@@ -56,7 +56,7 @@ data:
       title: Multivariate Convolution (in $\mathbb{F} _ p \lbrack z_1, \dots, z_d
         \rbrack \left/ \left( z_1^{l_1}, \dots, z_d^{l_d} \right)\right.$ for FFT
         prime $p$)
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: math/poly_extended_gcd.hpp
       title: Extended Euclidean Algorithm (in $\mathbb{F} _ p$ for FFT prime $p$)
     - icon: ':question:'
@@ -85,11 +85,11 @@ data:
     - icon: ':x:'
       path: math/stirling_numbers.hpp
       title: Stirling Numbers (in $\mathbb{F} _ p$ for FFT prime $p$)
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: math/subproduct_tree.hpp
       title: Multipoint Evaluation and Interpolation (in $\mathbb{F} _ p$ for FFT
         prime $p$)
-    - icon: ':x:'
+    - icon: ':question:'
       path: math/taylor_shift.hpp
       title: Polynomial Taylor Shift (in $\mathbb{F} _ p$ for FFT prime $p$)
     - icon: ':question:'
@@ -185,34 +185,34 @@ data:
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
       title: remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/inv_of_polynomials.0.test.cpp
       title: remote_test/yosupo/math/inv_of_polynomials.0.test.cpp
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
       title: remote_test/yosupo/math/log_of_formal_power_series.0.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
       title: remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/multipoint_evaluation.0.test.cpp
       title: remote_test/yosupo/math/multipoint_evaluation.0.test.cpp
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/multivariate_convolution.0.test.cpp
       title: remote_test/yosupo/math/multivariate_convolution.0.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/partition_function.0.test.cpp
       title: remote_test/yosupo/math/partition_function.0.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
       title: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
       title: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
       title: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
       title: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
     - icon: ':x:'

@@ -10,7 +10,7 @@ data:
   - icon: ':question:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/poly_extended_gcd.hpp
     title: Extended Euclidean Algorithm (in $\mathbb{F} _ p$ for FFT prime $p$)
   - icon: ':question:'
@@ -42,9 +42,9 @@ data:
     title: Montgomery ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/inv_of_polynomials
@@ -79,13 +79,13 @@ data:
     \ *\n         polynomial_gcd_matrix<PolyT>({}, {1}, {1}, -Q) * R;\n}\n\ntemplate\
     \ <typename PolyT>\npolynomial_gcd_matrix<PolyT> cogcd(const PolyT &A, const PolyT\
     \ &B) {\n  assert(A.deg() > B.deg());\n  assert(!B.is_zero());\n  polynomial_gcd_matrix<PolyT>\
-    \ M({1}, {}, {}, {1});\n  PolyT A_cpy(A), B_cpy(B);\n  for (;;) {\n    M     \
-    \      = hgcd(A_cpy, B_cpy) * M;\n    auto [C, D] = M * std::array<PolyT, 2>{A_cpy,\
-    \ B_cpy};\n    if (D.is_zero()) return M;\n    auto [Q, E] = C.div_with_rem(D);\n\
-    \    M           = polynomial_gcd_matrix<PolyT>({}, {1}, {1}, -Q) * M;\n    if\
-    \ (E.is_zero()) return M;\n    A_cpy.swap(D), B_cpy.swap(E);\n  }\n}\n\n} // namespace\
-    \ detail\n\ntemplate <typename PolyT>\npolynomial_gcd_matrix<PolyT> poly_ext_gcd(const\
-    \ PolyT &A, const PolyT &B) {\n  if (B.is_zero()) return polynomial_gcd_matrix<PolyT>({1},\
+    \ M({1}, {}, {}, {1});\n  PolyT A_cpy(A), B_cpy(B);\n  for (;;) {\n    auto M0\
+    \     = hgcd(A_cpy, B_cpy);\n    auto [C, D] = M0 * std::array<PolyT, 2>{A_cpy,\
+    \ B_cpy};\n    if (D.is_zero()) return M0 * M;\n    auto [Q, E] = C.div_with_rem(D);\n\
+    \    M0          = polynomial_gcd_matrix<PolyT>({}, {1}, {1}, -Q) * M0;\n    if\
+    \ (E.is_zero()) return M0 * M;\n    A_cpy.swap(D), B_cpy.swap(E);\n    M = M0\
+    \ * M;\n  }\n}\n\n} // namespace detail\n\ntemplate <typename PolyT>\npolynomial_gcd_matrix<PolyT>\
+    \ poly_ext_gcd(const PolyT &A, const PolyT &B) {\n  if (B.is_zero()) return polynomial_gcd_matrix<PolyT>({1},\
     \ {}, {}, {1});\n  if (A.is_zero()) return polynomial_gcd_matrix<PolyT>({}, {1},\
     \ {1}, {});\n  auto [Q, R] = A.div_with_rem(B);\n  polynomial_gcd_matrix<PolyT>\
     \ M({}, {1}, {1}, -Q);\n  return R.is_zero() ? M : detail::cogcd(B, R) * M;\n\
@@ -536,8 +536,8 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/inv_of_polynomials.0.test.cpp
   requiredBy: []
-  timestamp: '2022-05-15 17:08:24+08:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2022-05-15 17:31:59+08:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/inv_of_polynomials.0.test.cpp
 layout: document
