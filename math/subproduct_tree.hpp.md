@@ -103,35 +103,35 @@ data:
     \ {}\n    poly_info(const PolyT &poly, const PolyT &cached_dft) : poly_(poly),\
     \ cached_dft_(cached_dft) {}\n    explicit poly_info(const poly_info &) = default;\n\
     \  };\n\n  std::vector<std::vector<poly_info>> tree_{};\n\npublic:\n  explicit\
-    \ subproduct_tree(const std::vector<T> &x) {\n    if (x.empty()) return;\n   \
-    \ auto &&l0 = tree_.emplace_back();\n    for (auto &&i : x) l0.emplace_back(PolyT{-i,\
-    \ T(1)}, PolyT{1 - i});\n    while (tree_.back().size() != 1) {\n      auto &a\
-    \     = tree_.back();\n      const int n = static_cast<int>(a.size());\n     \
-    \ std::vector<poly_info> b;\n      for (int i = 0; i + 1 < n; i += 2) {\n    \
-    \    auto &&aif  = a[i].poly_;\n        auto &&ais  = a[i].cached_dft_;\n    \
-    \    auto &&ai1f = a[i + 1].poly_;\n        auto &&ai1s = a[i + 1].cached_dft_;\n\
-    \        dft_doubling(aif, ais);\n        while (ai1s.size() < ais.size()) dft_doubling(ai1f,\
-    \ ai1s);\n        auto v = ais;\n        for (int j = 0, je = static_cast<int>(v.size());\
-    \ j != je; ++j) v[j] *= ai1s[j];\n        auto dv = v;\n        idft(v);\n   \
-    \     auto vs = aif.size() + ai1f.size() - 1;\n        if (v.size() < vs) v.front()\
-    \ -= v.emplace_back(1);\n        v.resize(vs);\n        b.emplace_back(std::move(v),\
-    \ std::move(dv));\n      }\n      if (n & 1) b.emplace_back(a.back());\n     \
-    \ tree_.emplace_back(std::move(b));\n    }\n  }\n  std::vector<T> evaluate(const\
-    \ PolyT &a) const;\n  PolyT interpolate(const std::vector<T> &y) const;\n};\n\n\
-    template <typename PolyT>\nstd::vector<typename PolyT::value_type> subproduct_tree<PolyT>::evaluate(const\
-    \ PolyT &a) const {\n  if (tree_.empty()) return {};\n  if (a.is_zero()) return\
-    \ std::vector<T>(tree_.front().size());\n  const int n = static_cast<int>(tree_.front().size()),\
-    \ m = a.deg();\n  // Compute `a`/((x - `x.front()`)...(x - `x.back()`)) and\n\
-    \  // take the coefficients of x^(-1), ..., x^(-`n`)\n  const auto irev_x =\n\
-    \      PolyT(tree_.back().front().poly_.crbegin(), tree_.back().front().poly_.crend()).inv(m\
-    \ + 1);\n  auto aix = a * PolyT(irev_x.crbegin(), irev_x.crend());\n  if (m -\
-    \ n < -1) aix.resize(m + n);\n  aix.erase(aix.begin(), aix.begin() + m);\n  aix.resize(n);\n\
-    \  std::vector<PolyT> resp{aix};\n  {\n    auto t  = tree_.rbegin() + 1;\n   \
-    \ auto te = tree_.rend();\n    for (; t != te; ++t) {\n      std::vector<PolyT>\
-    \ res;\n      const int ts = static_cast<int>(t->size());\n      for (int i =\
-    \ 0, ie = static_cast<int>(resp.size()); i != ie; ++i)\n        if ((i << 1 |\
-    \ 1) < ts) {\n          auto &&l      = t->at(i << 1);\n          auto &&r   \
-    \   = t->at(i << 1 | 1);\n          const int len = static_cast<int>(l.cached_dft_.size());\n\
+    \ subproduct_tree(const std::vector<T> &x);\n  std::vector<T> evaluate(const PolyT\
+    \ &a) const;\n  PolyT interpolate(const std::vector<T> &y) const;\n};\n\ntemplate\
+    \ <typename PolyT>\nsubproduct_tree<PolyT>::subproduct_tree(const std::vector<T>\
+    \ &x) {\n  if (x.empty()) return;\n  auto &&l0 = tree_.emplace_back();\n  for\
+    \ (auto &&i : x) l0.emplace_back(PolyT{-i, T(1)}, PolyT{1 - i});\n  while (tree_.back().size()\
+    \ != 1) {\n    auto &&a    = tree_.back();\n    const int n = static_cast<int>(a.size());\n\
+    \    std::vector<poly_info> b;\n    for (int i = 0; i + 1 < n; i += 2) {\n   \
+    \   auto &&aif  = a[i].poly_;\n      auto &&ais  = a[i].cached_dft_;\n      auto\
+    \ &&ai1f = a[i + 1].poly_;\n      auto &&ai1s = a[i + 1].cached_dft_;\n      dft_doubling(aif,\
+    \ ais);\n      while (ai1s.size() < ais.size()) dft_doubling(ai1f, ai1s);\n  \
+    \    auto v = ais;\n      for (int j = 0, je = static_cast<int>(v.size()); j !=\
+    \ je; ++j) v[j] *= ai1s[j];\n      auto dv = v;\n      idft(v);\n      auto vs\
+    \ = aif.size() + ai1f.size() - 1;\n      if (v.size() < vs) {\n        v.emplace_back(1);\n\
+    \        v.front() -= v.back();\n      }\n      v.resize(vs);\n      b.emplace_back(std::move(v),\
+    \ std::move(dv));\n    }\n    if (n & 1) b.emplace_back(a.back());\n    tree_.emplace_back(std::move(b));\n\
+    \  }\n}\n\ntemplate <typename PolyT>\nstd::vector<typename PolyT::value_type>\
+    \ subproduct_tree<PolyT>::evaluate(const PolyT &a) const {\n  if (tree_.empty())\
+    \ return {};\n  if (a.is_zero()) return std::vector<T>(tree_.front().size());\n\
+    \  const int n = static_cast<int>(tree_.front().size()), m = a.deg();\n  // Compute\
+    \ `a`/((x - `x.front()`)...(x - `x.back()`)) and\n  // take the coefficients of\
+    \ x^(-1), ..., x^(-`n`)\n  const auto irev_x =\n      PolyT(tree_.back().front().poly_.crbegin(),\
+    \ tree_.back().front().poly_.crend()).inv(m + 1);\n  auto aix = a * PolyT(irev_x.crbegin(),\
+    \ irev_x.crend());\n  if (m - n < -1) aix.resize(m + n);\n  aix.erase(aix.begin(),\
+    \ aix.begin() + m);\n  aix.resize(n);\n  std::vector<PolyT> resp{aix};\n  {\n\
+    \    auto t  = tree_.rbegin() + 1;\n    auto te = tree_.rend();\n    for (; t\
+    \ != te; ++t) {\n      std::vector<PolyT> res;\n      const int ts = static_cast<int>(t->size());\n\
+    \      for (int i = 0, ie = static_cast<int>(resp.size()); i != ie; ++i)\n   \
+    \     if ((i << 1 | 1) < ts) {\n          auto &&l      = t->at(i << 1);\n   \
+    \       auto &&r      = t->at(i << 1 | 1);\n          const int len = static_cast<int>(l.cached_dft_.size());\n\
     \          resp[i].resize(len);\n          dft(resp[i]);\n          auto respi_cpy\
     \ = resp[i];\n          for (int j = 0; j != len; ++j)\n            resp[i][j]\
     \ *= r.cached_dft_[j], respi_cpy[j] *= l.cached_dft_[j];\n          res.emplace_back(std::move(resp[i]));\n\
@@ -173,35 +173,36 @@ data:
     \ cached_dft_(std::move(cached_dft)) {}\n    poly_info(const PolyT &poly, const\
     \ PolyT &cached_dft) : poly_(poly), cached_dft_(cached_dft) {}\n    explicit poly_info(const\
     \ poly_info &) = default;\n  };\n\n  std::vector<std::vector<poly_info>> tree_{};\n\
-    \npublic:\n  explicit subproduct_tree(const std::vector<T> &x) {\n    if (x.empty())\
-    \ return;\n    auto &&l0 = tree_.emplace_back();\n    for (auto &&i : x) l0.emplace_back(PolyT{-i,\
-    \ T(1)}, PolyT{1 - i});\n    while (tree_.back().size() != 1) {\n      auto &a\
-    \     = tree_.back();\n      const int n = static_cast<int>(a.size());\n     \
-    \ std::vector<poly_info> b;\n      for (int i = 0; i + 1 < n; i += 2) {\n    \
-    \    auto &&aif  = a[i].poly_;\n        auto &&ais  = a[i].cached_dft_;\n    \
-    \    auto &&ai1f = a[i + 1].poly_;\n        auto &&ai1s = a[i + 1].cached_dft_;\n\
-    \        dft_doubling(aif, ais);\n        while (ai1s.size() < ais.size()) dft_doubling(ai1f,\
-    \ ai1s);\n        auto v = ais;\n        for (int j = 0, je = static_cast<int>(v.size());\
-    \ j != je; ++j) v[j] *= ai1s[j];\n        auto dv = v;\n        idft(v);\n   \
-    \     auto vs = aif.size() + ai1f.size() - 1;\n        if (v.size() < vs) v.front()\
-    \ -= v.emplace_back(1);\n        v.resize(vs);\n        b.emplace_back(std::move(v),\
-    \ std::move(dv));\n      }\n      if (n & 1) b.emplace_back(a.back());\n     \
-    \ tree_.emplace_back(std::move(b));\n    }\n  }\n  std::vector<T> evaluate(const\
-    \ PolyT &a) const;\n  PolyT interpolate(const std::vector<T> &y) const;\n};\n\n\
-    template <typename PolyT>\nstd::vector<typename PolyT::value_type> subproduct_tree<PolyT>::evaluate(const\
-    \ PolyT &a) const {\n  if (tree_.empty()) return {};\n  if (a.is_zero()) return\
-    \ std::vector<T>(tree_.front().size());\n  const int n = static_cast<int>(tree_.front().size()),\
-    \ m = a.deg();\n  // Compute `a`/((x - `x.front()`)...(x - `x.back()`)) and\n\
-    \  // take the coefficients of x^(-1), ..., x^(-`n`)\n  const auto irev_x =\n\
-    \      PolyT(tree_.back().front().poly_.crbegin(), tree_.back().front().poly_.crend()).inv(m\
-    \ + 1);\n  auto aix = a * PolyT(irev_x.crbegin(), irev_x.crend());\n  if (m -\
-    \ n < -1) aix.resize(m + n);\n  aix.erase(aix.begin(), aix.begin() + m);\n  aix.resize(n);\n\
-    \  std::vector<PolyT> resp{aix};\n  {\n    auto t  = tree_.rbegin() + 1;\n   \
-    \ auto te = tree_.rend();\n    for (; t != te; ++t) {\n      std::vector<PolyT>\
-    \ res;\n      const int ts = static_cast<int>(t->size());\n      for (int i =\
-    \ 0, ie = static_cast<int>(resp.size()); i != ie; ++i)\n        if ((i << 1 |\
-    \ 1) < ts) {\n          auto &&l      = t->at(i << 1);\n          auto &&r   \
-    \   = t->at(i << 1 | 1);\n          const int len = static_cast<int>(l.cached_dft_.size());\n\
+    \npublic:\n  explicit subproduct_tree(const std::vector<T> &x);\n  std::vector<T>\
+    \ evaluate(const PolyT &a) const;\n  PolyT interpolate(const std::vector<T> &y)\
+    \ const;\n};\n\ntemplate <typename PolyT>\nsubproduct_tree<PolyT>::subproduct_tree(const\
+    \ std::vector<T> &x) {\n  if (x.empty()) return;\n  auto &&l0 = tree_.emplace_back();\n\
+    \  for (auto &&i : x) l0.emplace_back(PolyT{-i, T(1)}, PolyT{1 - i});\n  while\
+    \ (tree_.back().size() != 1) {\n    auto &&a    = tree_.back();\n    const int\
+    \ n = static_cast<int>(a.size());\n    std::vector<poly_info> b;\n    for (int\
+    \ i = 0; i + 1 < n; i += 2) {\n      auto &&aif  = a[i].poly_;\n      auto &&ais\
+    \  = a[i].cached_dft_;\n      auto &&ai1f = a[i + 1].poly_;\n      auto &&ai1s\
+    \ = a[i + 1].cached_dft_;\n      dft_doubling(aif, ais);\n      while (ai1s.size()\
+    \ < ais.size()) dft_doubling(ai1f, ai1s);\n      auto v = ais;\n      for (int\
+    \ j = 0, je = static_cast<int>(v.size()); j != je; ++j) v[j] *= ai1s[j];\n   \
+    \   auto dv = v;\n      idft(v);\n      auto vs = aif.size() + ai1f.size() - 1;\n\
+    \      if (v.size() < vs) {\n        v.emplace_back(1);\n        v.front() -=\
+    \ v.back();\n      }\n      v.resize(vs);\n      b.emplace_back(std::move(v),\
+    \ std::move(dv));\n    }\n    if (n & 1) b.emplace_back(a.back());\n    tree_.emplace_back(std::move(b));\n\
+    \  }\n}\n\ntemplate <typename PolyT>\nstd::vector<typename PolyT::value_type>\
+    \ subproduct_tree<PolyT>::evaluate(const PolyT &a) const {\n  if (tree_.empty())\
+    \ return {};\n  if (a.is_zero()) return std::vector<T>(tree_.front().size());\n\
+    \  const int n = static_cast<int>(tree_.front().size()), m = a.deg();\n  // Compute\
+    \ `a`/((x - `x.front()`)...(x - `x.back()`)) and\n  // take the coefficients of\
+    \ x^(-1), ..., x^(-`n`)\n  const auto irev_x =\n      PolyT(tree_.back().front().poly_.crbegin(),\
+    \ tree_.back().front().poly_.crend()).inv(m + 1);\n  auto aix = a * PolyT(irev_x.crbegin(),\
+    \ irev_x.crend());\n  if (m - n < -1) aix.resize(m + n);\n  aix.erase(aix.begin(),\
+    \ aix.begin() + m);\n  aix.resize(n);\n  std::vector<PolyT> resp{aix};\n  {\n\
+    \    auto t  = tree_.rbegin() + 1;\n    auto te = tree_.rend();\n    for (; t\
+    \ != te; ++t) {\n      std::vector<PolyT> res;\n      const int ts = static_cast<int>(t->size());\n\
+    \      for (int i = 0, ie = static_cast<int>(resp.size()); i != ie; ++i)\n   \
+    \     if ((i << 1 | 1) < ts) {\n          auto &&l      = t->at(i << 1);\n   \
+    \       auto &&r      = t->at(i << 1 | 1);\n          const int len = static_cast<int>(l.cached_dft_.size());\n\
     \          resp[i].resize(len);\n          dft(resp[i]);\n          auto respi_cpy\
     \ = resp[i];\n          for (int j = 0; j != len; ++j)\n            resp[i][j]\
     \ *= r.cached_dft_[j], respi_cpy[j] *= l.cached_dft_[j];\n          res.emplace_back(std::move(resp[i]));\n\
@@ -241,7 +242,7 @@ data:
   isVerificationFile: false
   path: math/subproduct_tree.hpp
   requiredBy: []
-  timestamp: '2022-05-08 14:55:26+08:00'
+  timestamp: '2022-05-16 23:10:26+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
