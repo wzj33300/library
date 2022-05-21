@@ -3,6 +3,9 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
+    path: datastructure/binary_trie.hpp
+    title: Binary Trie
+  - icon: ':heavy_check_mark:'
     path: datastructure/cartesian_tree.hpp
     title: Cartesian Tree
   - icon: ':heavy_check_mark:'
@@ -135,6 +138,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/datastructure/cartesian_tree.0.test.cpp
     title: remote_test/yosupo/datastructure/cartesian_tree.0.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: remote_test/yosupo/datastructure/set_xor_min.0.test.cpp
+    title: remote_test/yosupo/datastructure/set_xor_min.0.test.cpp
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/datastructure/union_find.0.test.cpp
     title: remote_test/yosupo/datastructure/union_find.0.test.cpp
@@ -394,6 +400,7 @@ data:
   - datastructure/cartesian_tree.hpp
   - datastructure/weighted_disjoint_set.hpp
   - datastructure/disjoint_set.hpp
+  - datastructure/binary_trie.hpp
   timestamp: '2022-04-20 11:49:11+08:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
@@ -457,6 +464,7 @@ data:
   - remote_test/yosupo/string/z_algorithm.0.test.cpp
   - remote_test/yosupo/datastructure/cartesian_tree.0.test.cpp
   - remote_test/yosupo/datastructure/union_find.0.test.cpp
+  - remote_test/yosupo/datastructure/set_xor_min.0.test.cpp
   - remote_test/aizu/datastructure/weighted_union_find.0.test.cpp
   - remote_test/aizu/number_theory/extended_euclidean_algorithm.0.test.cpp
   - remote_test/aizu/number_theory/binary_pow.0.test.cpp

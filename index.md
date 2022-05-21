@@ -9,6 +9,9 @@ data:
   - name: datastructure
     pages:
     - icon: ':heavy_check_mark:'
+      path: datastructure/binary_trie.hpp
+      title: Binary Trie
+    - icon: ':heavy_check_mark:'
       path: datastructure/cartesian_tree.hpp
       title: Cartesian Tree
     - icon: ':heavy_check_mark:'
@@ -145,6 +148,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/datastructure/cartesian_tree.0.test.cpp
       title: remote_test/yosupo/datastructure/cartesian_tree.0.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: remote_test/yosupo/datastructure/set_xor_min.0.test.cpp
+      title: remote_test/yosupo/datastructure/set_xor_min.0.test.cpp
     - icon: ':heavy_check_mark:'
       path: remote_test/yosupo/datastructure/union_find.0.test.cpp
       title: remote_test/yosupo/datastructure/union_find.0.test.cpp
