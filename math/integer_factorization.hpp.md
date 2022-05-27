@@ -1,13 +1,13 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/random.hpp
     title: Pseudo Random Number Generator
   - icon: ':heavy_check_mark:'
@@ -101,13 +101,14 @@ data:
     \ 7) * 9;\n    const u64 t   = s_[1] << 17;\n    s_[2] ^= s_[0], s_[3] ^= s_[1],\
     \ s_[1] ^= s_[2], s_[0] ^= s_[3], s_[2] ^= t,\n        s_[3] = rotl(s_[3], 45);\n\
     \    return res;\n  }\n\npublic:\n  // see https://prng.di.unimi.it/splitmix64.c\n\
-    \  explicit xoshiro256starstar(u64 seed) {\n    for (int i = 0; i != 4; ++i) {\n\
-    \      u64 z = (seed += 0x9e3779b97f4a7c15);\n      z     = (z ^ (z >> 30)) *\
-    \ 0xbf58476d1ce4e5b9;\n      z     = (z ^ (z >> 27)) * 0x94d049bb133111eb;\n \
-    \     s_[i] = z ^ (z >> 31);\n    }\n  }\n  // see https://en.cppreference.com/w/cpp/named_req/UniformRandomBitGenerator\n\
-    \  using result_type = u64;\n  static inline u64 min() { return std::numeric_limits<u64>::min();\
-    \ }\n  static inline u64 max() { return std::numeric_limits<u64>::max(); }\n \
-    \ u64 operator()() { return next(); }\n};\n\nLIB_END\n\n\n#line 7 \"math/integer_factorization.hpp\"\
+    \  // original license CC0 1.0\n  explicit xoshiro256starstar(u64 seed) {\n  \
+    \  for (int i = 0; i != 4; ++i) {\n      u64 z = (seed += 0x9e3779b97f4a7c15);\n\
+    \      z     = (z ^ (z >> 30)) * 0xbf58476d1ce4e5b9;\n      z     = (z ^ (z >>\
+    \ 27)) * 0x94d049bb133111eb;\n      s_[i] = z ^ (z >> 31);\n    }\n  }\n  // see\
+    \ https://en.cppreference.com/w/cpp/named_req/UniformRandomBitGenerator\n  using\
+    \ result_type = u64;\n  static constexpr u64 min() { return std::numeric_limits<u64>::min();\
+    \ }\n  static constexpr u64 max() { return std::numeric_limits<u64>::max(); }\n\
+    \  u64 operator()() { return next(); }\n};\n\nLIB_END\n\n\n#line 7 \"math/integer_factorization.hpp\"\
     \n\n#include <cassert>\n#include <map>\n#include <numeric>\n#include <random>\n\
     \nLIB_BEGIN\n\nnamespace detail {\n\ntemplate <template <int /* IdT */> typename\
     \ ModIntT>\nunsigned long long rho(unsigned long long n) {\n  using mint = ModIntT<-1>;\n\
@@ -178,7 +179,7 @@ data:
   isVerificationFile: false
   path: math/integer_factorization.hpp
   requiredBy: []
-  timestamp: '2022-05-15 18:42:53+08:00'
+  timestamp: '2022-05-27 06:01:13+00:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - remote_test/yosupo/math/factorize.0.test.cpp

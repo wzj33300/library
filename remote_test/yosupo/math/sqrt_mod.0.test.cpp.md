@@ -1,26 +1,26 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/random.hpp
     title: Pseudo Random Number Generator
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/sqrt_mod.hpp
     title: Square Roots (in $\mathbb{F} _ p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: modint/runtime_modint.hpp
     title: Runtime ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/sqrt_mod
@@ -38,13 +38,14 @@ data:
     \ 7) * 9;\n    const u64 t   = s_[1] << 17;\n    s_[2] ^= s_[0], s_[3] ^= s_[1],\
     \ s_[1] ^= s_[2], s_[0] ^= s_[3], s_[2] ^= t,\n        s_[3] = rotl(s_[3], 45);\n\
     \    return res;\n  }\n\npublic:\n  // see https://prng.di.unimi.it/splitmix64.c\n\
-    \  explicit xoshiro256starstar(u64 seed) {\n    for (int i = 0; i != 4; ++i) {\n\
-    \      u64 z = (seed += 0x9e3779b97f4a7c15);\n      z     = (z ^ (z >> 30)) *\
-    \ 0xbf58476d1ce4e5b9;\n      z     = (z ^ (z >> 27)) * 0x94d049bb133111eb;\n \
-    \     s_[i] = z ^ (z >> 31);\n    }\n  }\n  // see https://en.cppreference.com/w/cpp/named_req/UniformRandomBitGenerator\n\
-    \  using result_type = u64;\n  static inline u64 min() { return std::numeric_limits<u64>::min();\
-    \ }\n  static inline u64 max() { return std::numeric_limits<u64>::max(); }\n \
-    \ u64 operator()() { return next(); }\n};\n\nLIB_END\n\n\n#line 6 \"math/sqrt_mod.hpp\"\
+    \  // original license CC0 1.0\n  explicit xoshiro256starstar(u64 seed) {\n  \
+    \  for (int i = 0; i != 4; ++i) {\n      u64 z = (seed += 0x9e3779b97f4a7c15);\n\
+    \      z     = (z ^ (z >> 30)) * 0xbf58476d1ce4e5b9;\n      z     = (z ^ (z >>\
+    \ 27)) * 0x94d049bb133111eb;\n      s_[i] = z ^ (z >> 31);\n    }\n  }\n  // see\
+    \ https://en.cppreference.com/w/cpp/named_req/UniformRandomBitGenerator\n  using\
+    \ result_type = u64;\n  static constexpr u64 min() { return std::numeric_limits<u64>::min();\
+    \ }\n  static constexpr u64 max() { return std::numeric_limits<u64>::max(); }\n\
+    \  u64 operator()() { return next(); }\n};\n\nLIB_END\n\n\n#line 6 \"math/sqrt_mod.hpp\"\
     \n\n#include <random>\n#include <type_traits>\n#include <vector>\n\nLIB_BEGIN\n\
     \ntemplate <typename ModIntT>\nstd::vector<ModIntT> sqrt_mod_prime(ModIntT a)\
     \ {\n  // Bostan--Mori's algorithm\n  const auto p = ModIntT::mod();\n  if (p\
@@ -147,8 +148,8 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/sqrt_mod.0.test.cpp
   requiredBy: []
-  timestamp: '2022-05-15 18:42:53+08:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2022-05-27 06:01:13+00:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/sqrt_mod.0.test.cpp
 layout: document
