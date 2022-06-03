@@ -442,7 +442,7 @@ data:
     \ p;\n  std::vector<ModIntT> res(n);\n  if (n >= 1) {\n    res.front() = (e ==\
     \ 0 ? ModIntT(1) : ModIntT()); // 0^0 = 1\n    if (n >= 2) res[1] = ModIntT(1);\n\
     \  }\n  for (int i = 2; i < n; ++i) {\n    if (!is_comp[i]) {\n      p.push_back(i);\n\
-    \      res[i] = ModIntT(i).pow(e);\n    }\n    for (int j = 0, je = p.size();\
+    \      res[i] = ModIntT(i).pow(e);\n    }\n    for (int j = 0, je = static_cast<int>(p.size());\
     \ j < je && i * p[j] < n; ++j) {\n      is_comp[i * p[j]] = true;\n      res[i\
     \ * p[j]]     = res[i] * res[p[j]];\n      if (i % p[j] == 0) break;\n    }\n\
     \  }\n  return res;\n}\n\nLIB_END\n\n\n#line 1 \"math/taylor_shift.hpp\"\n\n\n\
@@ -557,7 +557,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
   requiredBy: []
-  timestamp: '2022-05-27 06:01:13+00:00'
+  timestamp: '2022-06-03 11:52:48+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
