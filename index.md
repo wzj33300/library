@@ -18,6 +18,9 @@ data:
       path: datastructure/disjoint_set.hpp
       title: Disjoint Set
     - icon: ':heavy_check_mark:'
+      path: datastructure/min_height_based_leftist_tree.hpp
+      title: Min Height-Based Leftist Tree
+    - icon: ':heavy_check_mark:'
       path: datastructure/weighted_disjoint_set.hpp
       title: Weighted Disjoint Set
   - name: math
@@ -132,6 +135,9 @@ data:
   verificationCategories:
   - name: remote_test/aizu/datastructure
     pages:
+    - icon: ':heavy_check_mark:'
+      path: remote_test/aizu/datastructure/priority_queue.0.test.cpp
+      title: remote_test/aizu/datastructure/priority_queue.0.test.cpp
     - icon: ':heavy_check_mark:'
       path: remote_test/aizu/datastructure/weighted_union_find.0.test.cpp
       title: remote_test/aizu/datastructure/weighted_union_find.0.test.cpp
