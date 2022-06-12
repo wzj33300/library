@@ -53,21 +53,21 @@ data:
     \ &operator=(const height_based_leftist_tree &) = delete;\n\n  bool empty() const\
     \ { return root_ == nullptr; }\n  std::size_t size() const { return size_; }\n\
     \  std::make_signed_t<std::size_t> ssize() const { return size_; }\n  wrapper\
-    \ insert(const T &value) {\n    node *p = new node(value);\n    root_   = meld(root_,\
-    \ p);\n    ++size_;\n    return wrapper(p);\n  }\n  T find_min() const { return\
-    \ root_->value_; }\n  T extract(wrapper wp) {\n    node *p = const_cast<node *>(wp.data()),\
-    \ *pp = p->parent_;\n    if (p->left_ != nullptr) {\n      p->left_->parent_ =\
-    \ nullptr;\n      if (p->right_ != nullptr) p->right_->parent_ = nullptr;\n  \
-    \  }\n    if (pp != nullptr) {\n      if (pp->left_ == p) {\n        if ((pp->left_\
-    \ = meld(p->left_, p->right_)) != nullptr) pp->left_->parent_ = pp;\n      } else\
-    \ {\n        if ((pp->right_ = meld(p->left_, p->right_)) != nullptr) pp->right_->parent_\
-    \ = pp;\n      }\n      // Only could be done with height-based variant?\n   \
-    \   for (; pp != nullptr; pp = pp->parent_) {\n        if (s(pp->left_) < s(pp->right_))\
+    \ push(const T &value) {\n    node *p = new node(value);\n    root_   = meld(root_,\
+    \ p);\n    ++size_;\n    return wrapper(p);\n  }\n  T top() const { return root_->value_;\
+    \ }\n  T pop(wrapper wp) {\n    node *p = const_cast<node *>(wp.data()), *pp =\
+    \ p->parent_;\n    if (p->left_ != nullptr) {\n      p->left_->parent_ = nullptr;\n\
+    \      if (p->right_ != nullptr) p->right_->parent_ = nullptr;\n    }\n    if\
+    \ (pp != nullptr) {\n      if (pp->left_ == p) {\n        if ((pp->left_ = meld(p->left_,\
+    \ p->right_)) != nullptr) pp->left_->parent_ = pp;\n      } else {\n        if\
+    \ ((pp->right_ = meld(p->left_, p->right_)) != nullptr) pp->right_->parent_ =\
+    \ pp;\n      }\n      // Only could be done with height-based variant?\n     \
+    \ for (; pp != nullptr; pp = pp->parent_) {\n        if (s(pp->left_) < s(pp->right_))\
     \ std::swap(pp->left_, pp->right_);\n        if (pp->rank_ != s(pp->right_) +\
     \ 1) {\n          pp->rank_ = s(pp->right_) + 1;\n        } else {\n         \
     \ break;\n        }\n      }\n    } else {\n      root_ = meld(p->left_, p->right_);\n\
     \    }\n    T res(p->value_);\n    p->left_ = p->right_ = nullptr;\n    delete\
-    \ p;\n    --size_;\n    return res;\n  }\n  T extract_min() {\n    assert(!empty());\n\
+    \ p;\n    --size_;\n    return res;\n  }\n  T pop() {\n    assert(!empty());\n\
     \    node *p = root_;\n    T res(p->value_);\n    if (p->left_ != nullptr) {\n\
     \      p->left_->parent_ = nullptr;\n      if (p->right_ != nullptr) p->right_->parent_\
     \ = nullptr;\n    }\n    root_    = meld(p->left_, p->right_);\n    p->left_ =\
@@ -81,9 +81,9 @@ data:
     \  std::cin.tie(nullptr);\n  auto cmp = [](long long a, long long b) { return\
     \ a > b; };\n  lib::hblt<long long, decltype(cmp)> h(cmp);\n  for (;;) {\n   \
     \ char cmd[20];\n    std::cin >> cmd;\n    if (cmd[2] == 's') {\n      long long\
-    \ v;\n      std::cin >> v;\n      h.insert(v);\n    } else if (cmd[2] == 't')\
-    \ {\n      std::cout << h.extract_min() << '\\n';\n    } else {\n      break;\n\
-    \    }\n  }\n  return 0;\n}\n"
+    \ v;\n      std::cin >> v;\n      h.push(v);\n    } else if (cmd[2] == 't') {\n\
+    \      std::cout << h.pop() << '\\n';\n    } else {\n      break;\n    }\n  }\n\
+    \  return 0;\n}\n"
   code: "#define PROBLEM \"https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/all/ALDS1_9_C\"\
     \n\n#include \"datastructure/height_based_leftist_tree.hpp\"\n\n#include <iostream>\n\
     \nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\", stdin), std::freopen(\"\
@@ -91,7 +91,7 @@ data:
     \  auto cmp = [](long long a, long long b) { return a > b; };\n  lib::hblt<long\
     \ long, decltype(cmp)> h(cmp);\n  for (;;) {\n    char cmd[20];\n    std::cin\
     \ >> cmd;\n    if (cmd[2] == 's') {\n      long long v;\n      std::cin >> v;\n\
-    \      h.insert(v);\n    } else if (cmd[2] == 't') {\n      std::cout << h.extract_min()\
+    \      h.push(v);\n    } else if (cmd[2] == 't') {\n      std::cout << h.pop()\
     \ << '\\n';\n    } else {\n      break;\n    }\n  }\n  return 0;\n}"
   dependsOn:
   - datastructure/height_based_leftist_tree.hpp
@@ -99,7 +99,7 @@ data:
   isVerificationFile: true
   path: remote_test/aizu/datastructure/priority_queue.0.test.cpp
   requiredBy: []
-  timestamp: '2022-06-12 08:57:42+08:00'
+  timestamp: '2022-06-12 09:11:35+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/aizu/datastructure/priority_queue.0.test.cpp
