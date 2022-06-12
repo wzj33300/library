@@ -12,8 +12,8 @@ data:
     path: datastructure/disjoint_set.hpp
     title: Disjoint Set
   - icon: ':heavy_check_mark:'
-    path: datastructure/min_height_based_leftist_tree.hpp
-    title: Min Height-Based Leftist Tree
+    path: datastructure/height_based_leftist_tree.hpp
+    title: Height-Based Leftist Tree
   - icon: ':heavy_check_mark:'
     path: datastructure/weighted_disjoint_set.hpp
     title: Weighted Disjoint Set
@@ -397,9 +397,9 @@ data:
   - math/sqrt_mod.hpp
   - math/polynomial.hpp
   - datastructure/cartesian_tree.hpp
-  - datastructure/min_height_based_leftist_tree.hpp
   - datastructure/disjoint_set.hpp
   - datastructure/binary_trie.hpp
+  - datastructure/height_based_leftist_tree.hpp
   - datastructure/weighted_disjoint_set.hpp
   - modint/runtime_modint.hpp
   - modint/runtime_long_montgomery_modint.hpp

@@ -18,8 +18,8 @@ data:
       path: datastructure/disjoint_set.hpp
       title: Disjoint Set
     - icon: ':heavy_check_mark:'
-      path: datastructure/min_height_based_leftist_tree.hpp
-      title: Min Height-Based Leftist Tree
+      path: datastructure/height_based_leftist_tree.hpp
+      title: Height-Based Leftist Tree
     - icon: ':heavy_check_mark:'
       path: datastructure/weighted_disjoint_set.hpp
       title: Weighted Disjoint Set
