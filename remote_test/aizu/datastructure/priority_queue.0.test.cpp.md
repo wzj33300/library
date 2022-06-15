@@ -24,13 +24,13 @@ data:
     \ LIB_END }\n#define LIB ::lib::\n\n\n#line 5 \"datastructure/height_based_leftist_tree.hpp\"\
     \n\n#include <algorithm>\n#include <cassert>\n#include <cstdint>\n#include <functional>\n\
     #include <iterator>\n#include <queue>\n#include <type_traits>\n#include <utility>\n\
-    \nLIB_BEGIN\n\n// Min Heap\ntemplate <typename T, typename CmpT = std::less<>>\n\
-    class height_based_leftist_tree {\n  static_assert(std::is_copy_constructible_v<T>);\n\
-    \n  class node {\n  public:\n    node *left_{}, *right_{}, *parent_{};\n    int\
-    \ rank_{1}; // a.k.a. s value\n    T value_;\n    node(const T &value) : value_(value)\
-    \ {}\n    ~node() {\n      delete left_;\n      delete right_;\n    }\n  } * root_{};\n\
-    \  CmpT cmp_;\n  std::size_t size_{};\n\n  static std::size_t s(node *a) { return\
-    \ a ? a->rank_ : 0; }\n\n  node *meld(node *a, node *b) {\n    if (a == nullptr)\
+    \nLIB_BEGIN\n\n// Min Heap\ntemplate <typename T, typename CmpT>\nclass height_based_leftist_tree\
+    \ {\n  static_assert(std::is_copy_constructible_v<T>);\n\n  class node {\n  public:\n\
+    \    node *left_{}, *right_{}, *parent_{};\n    int rank_{1}; // a.k.a. s value\n\
+    \    T value_;\n    node(const T &value) : value_(value) {}\n    ~node() {\n \
+    \     delete left_;\n      delete right_;\n    }\n  } * root_{};\n  CmpT cmp_;\n\
+    \  std::size_t size_{};\n\n  static std::size_t s(node *a) { return a != nullptr\
+    \ ? a->rank_ : 0; }\n\n  node *meld(node *a, node *b) {\n    if (a == nullptr)\
     \ return b;\n    if (b == nullptr) return a;\n    if (!cmp_(a->value_, b->value_))\
     \ std::swap(a, b);\n    if (a->right_) a->right_->parent_ = nullptr;\n    if (((a->right_\
     \ = meld(a->right_, b))->parent_ = a)->left_ == nullptr ||\n        a->left_->rank_\
@@ -40,7 +40,7 @@ data:
     \ size_type        = std::size_t;\n  using signed_size_type = std::make_signed_t<std::size_t>;\n\
     \n  class wrapper {\n    const node *p_{};\n\n  public:\n    wrapper() = default;\n\
     \    wrapper(const node *p) : p_(p) {}\n    const T &operator*() const { return\
-    \ *p_; }\n    const node *data() const { return p_; }\n  };\n\n  height_based_leftist_tree(CmpT\
+    \ *p_; }\n    const node *data() const { return p_; }\n  };\n\n  explicit height_based_leftist_tree(CmpT\
     \ cmp = CmpT()) : cmp_(cmp) {}\n  template <\n      typename IterT,\n      std::enable_if_t<std::is_convertible_v<typename\
     \ std::iterator_traits<IterT>::value_type, T>,\n                       int> =\
     \ 0>\n  height_based_leftist_tree(IterT begin, IterT end, CmpT cmp = CmpT())\n\
@@ -74,8 +74,8 @@ data:
     \ p->right_ = nullptr;\n    delete p;\n    --size_;\n    return res;\n  }\n  height_based_leftist_tree\
     \ &meld(height_based_leftist_tree &rhs) {\n    size_ += rhs.size_;\n    root_\
     \     = meld(root_, rhs.root_);\n    rhs.root_ = nullptr;\n    rhs.size_ = 0;\n\
-    \    return *this;\n  }\n};\n\ntemplate <typename T, typename CmpT>\nusing hblt\
-    \ = height_based_leftist_tree<T, CmpT>;\n\nLIB_END\n\n\n#line 4 \"remote_test/aizu/datastructure/priority_queue.0.test.cpp\"\
+    \    return *this;\n  }\n};\n\ntemplate <typename T, typename CmpT = std::less<>>\n\
+    using hblt = height_based_leftist_tree<T, CmpT>;\n\nLIB_END\n\n\n#line 4 \"remote_test/aizu/datastructure/priority_queue.0.test.cpp\"\
     \n\n#include <iostream>\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\",\
     \ \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
     \  std::cin.tie(nullptr);\n  auto cmp = [](long long a, long long b) { return\
@@ -99,7 +99,7 @@ data:
   isVerificationFile: true
   path: remote_test/aizu/datastructure/priority_queue.0.test.cpp
   requiredBy: []
-  timestamp: '2022-06-12 09:11:35+08:00'
+  timestamp: '2022-06-15 23:22:50+00:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/aizu/datastructure/priority_queue.0.test.cpp
