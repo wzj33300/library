@@ -1,17 +1,17 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/binomial_convolution.hpp
     title: Binomial Convolution (in $\mathbb{Z} / m \mathbb{Z}$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/convolution.hpp
     title: Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   - icon: ':heavy_check_mark:'
@@ -21,10 +21,10 @@ data:
     path: math/multivariate_convolution.hpp
     title: Multivariate Convolution (in $\mathbb{F} _ p \lbrack z_1, \dots, z_d \rbrack
       \left/ \left( z_1^{l_1}, \dots, z_d^{l_d} \right)\right.$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/polynomial.hpp
     title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
       \rbrack$ for FFT prime $p$)
@@ -59,30 +59,30 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/multivariate_convolution.0.test.cpp
     title: remote_test/yosupo/math/multivariate_convolution.0.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
     title: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
     title: remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
     title: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
     title: remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
     title: remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
     title: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
     title: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/truncated_fourier_transform.hpp\"\n\n\n\n#line 1 \"\
@@ -163,14 +163,14 @@ data:
     \n\n#line 6 \"math/truncated_fourier_transform.hpp\"\n\n#line 8 \"math/truncated_fourier_transform.hpp\"\
     \n#include <utility>\n#line 10 \"math/truncated_fourier_transform.hpp\"\n\nLIB_BEGIN\n\
     \ntemplate <typename ContainerT>\nvoid tft(ContainerT &&a) {\n  using Container\
-    \          = std::remove_cv_t<std::remove_reference_t<ContainerT>>;\n  using T\
-    \                  = typename Container::value_type;\n  static constexpr auto\
-    \ rt = detail::root<T>();\n  static std::vector<T> root(1);\n  const int n = static_cast<int>(a.size());\n\
-    \  if ((n & (n - 1)) == 0) return dft(std::forward<ContainerT>(a));\n  const int\
-    \ len = ntt_len(n);\n  if (int s = static_cast<int>(root.size()); s << 1 < len)\
-    \ {\n    root.resize(len >> 1);\n    for (int i = detail::bsf(s), j; 1 << i <\
-    \ len >> 1; ++i) {\n      root[j = 1 << i] = rt[i];\n      for (int k = j + 1;\
-    \ k < j << 1; ++k) root[k] = root[k - j] * root[j];\n    }\n  }\n  a.resize(len);\n\
+    \          = std::decay_t<ContainerT>;\n  using T                  = typename\
+    \ Container::value_type;\n  static constexpr auto rt = detail::root<T>();\n  static\
+    \ std::vector<T> root(1);\n  const int n = static_cast<int>(a.size());\n  if ((n\
+    \ & (n - 1)) == 0) return dft(std::forward<ContainerT>(a));\n  const int len =\
+    \ ntt_len(n);\n  if (int s = static_cast<int>(root.size()); s << 1 < len) {\n\
+    \    root.resize(len >> 1);\n    for (int i = detail::bsf(s), j; 1 << i < len\
+    \ >> 1; ++i) {\n      root[j = 1 << i] = rt[i];\n      for (int k = j + 1; k <\
+    \ j << 1; ++k) root[k] = root[k - j] * root[j];\n    }\n  }\n  a.resize(len);\n\
     \  for (int j = 0, l = len >> 1; j != l; ++j) {\n    T u(a[j]), v(a[j + l]);\n\
     \    a[j] = u + v, a[j + l] = u - v;\n  }\n  for (int i = len >> 1; i >= 2; i\
     \ >>= 1) {\n    for (int j = 0, l = i >> 1; j != l; ++j) {\n      T u(a[j]), v(a[j\
@@ -178,7 +178,7 @@ data:
     \ = i >> 1, m = 1; j < n && j != len; j += i, ++m)\n      for (int k = j; k !=\
     \ j + l; ++k) {\n        T u(a[k]), v(a[k + l] * root[m]);\n        a[k] = u +\
     \ v, a[k + l] = u - v;\n      }\n  }\n  a.resize(n);\n}\n\ntemplate <typename\
-    \ ContainerT>\nvoid itft(ContainerT &&a) {\n  using Container           = std::remove_cv_t<std::remove_reference_t<ContainerT>>;\n\
+    \ ContainerT>\nvoid itft(ContainerT &&a) {\n  using Container           = std::decay_t<ContainerT>;\n\
     \  using T                   = typename Container::value_type;\n  static constexpr\
     \ auto rt  = detail::root<T>();\n  static constexpr auto irt = detail::iroot<T>();\n\
     \  static std::vector<T> root{T(1)}, iroot{T(1)};\n  const int n = static_cast<int>(a.size());\n\
@@ -211,7 +211,7 @@ data:
   code: "#ifndef TRUNCATED_FOURIER_TRANSFORM_HPP\n#define TRUNCATED_FOURIER_TRANSFORM_HPP\n\
     \n#include \"../common.hpp\"\n#include \"radix2_ntt.hpp\"\n\n#include <type_traits>\n\
     #include <utility>\n#include <vector>\n\nLIB_BEGIN\n\ntemplate <typename ContainerT>\n\
-    void tft(ContainerT &&a) {\n  using Container          = std::remove_cv_t<std::remove_reference_t<ContainerT>>;\n\
+    void tft(ContainerT &&a) {\n  using Container          = std::decay_t<ContainerT>;\n\
     \  using T                  = typename Container::value_type;\n  static constexpr\
     \ auto rt = detail::root<T>();\n  static std::vector<T> root(1);\n  const int\
     \ n = static_cast<int>(a.size());\n  if ((n & (n - 1)) == 0) return dft(std::forward<ContainerT>(a));\n\
@@ -227,23 +227,23 @@ data:
     \ (int k = j; k != j + l; ++k) {\n        T u(a[k]), v(a[k + l] * root[m]);\n\
     \        a[k] = u + v, a[k + l] = u - v;\n      }\n  }\n  a.resize(n);\n}\n\n\
     template <typename ContainerT>\nvoid itft(ContainerT &&a) {\n  using Container\
-    \           = std::remove_cv_t<std::remove_reference_t<ContainerT>>;\n  using\
-    \ T                   = typename Container::value_type;\n  static constexpr auto\
-    \ rt  = detail::root<T>();\n  static constexpr auto irt = detail::iroot<T>();\n\
-    \  static std::vector<T> root{T(1)}, iroot{T(1)};\n  const int n = static_cast<int>(a.size());\n\
-    \  if ((n & (n - 1)) == 0) return idft(std::forward<ContainerT>(a));\n  const\
-    \ int len = ntt_len(n);\n  if (int s = static_cast<int>(root.size()); s << 1 <\
-    \ len) {\n    root.resize(len >> 1);\n    iroot.resize(len >> 1);\n    for (int\
-    \ i = detail::bsf(s), j; 1 << i < len >> 1; ++i) {\n      root[j = 1 << i] = rt[i],\
-    \ iroot[j] = irt[i];\n      for (int k = j + 1; k < j << 1; ++k)\n        root[k]\
-    \ = root[k - j] * root[j], iroot[k] = iroot[k - j] * iroot[j];\n    }\n  }\n \
-    \ a.resize(len);\n  struct itft_rec {\n    itft_rec(Container &a) : a_(a), i2_(T(2).inv())\
-    \ {}\n    // [`head`, `tail`), [`tail`, `last`)\n    void run(int head, int tail,\
-    \ int last) {\n      if (head >= tail) return;\n      if (int mid = (last - head)\
-    \ / 2 + head, len = mid - head; mid <= tail) {\n        // pull up [`head`, `mid`)\n\
-    \        T i2p(1);\n        for (int i = 1; i != len; i <<= 1, i2p *= i2_)\n \
-    \         for (int j = head, m = head / (i << 1); j != mid; j += i << 1, ++m)\n\
-    \            for (int k = j; k != j + i; ++k) {\n              T u(a_[k]), v(a_[k\
+    \           = std::decay_t<ContainerT>;\n  using T                   = typename\
+    \ Container::value_type;\n  static constexpr auto rt  = detail::root<T>();\n \
+    \ static constexpr auto irt = detail::iroot<T>();\n  static std::vector<T> root{T(1)},\
+    \ iroot{T(1)};\n  const int n = static_cast<int>(a.size());\n  if ((n & (n - 1))\
+    \ == 0) return idft(std::forward<ContainerT>(a));\n  const int len = ntt_len(n);\n\
+    \  if (int s = static_cast<int>(root.size()); s << 1 < len) {\n    root.resize(len\
+    \ >> 1);\n    iroot.resize(len >> 1);\n    for (int i = detail::bsf(s), j; 1 <<\
+    \ i < len >> 1; ++i) {\n      root[j = 1 << i] = rt[i], iroot[j] = irt[i];\n \
+    \     for (int k = j + 1; k < j << 1; ++k)\n        root[k] = root[k - j] * root[j],\
+    \ iroot[k] = iroot[k - j] * iroot[j];\n    }\n  }\n  a.resize(len);\n  struct\
+    \ itft_rec {\n    itft_rec(Container &a) : a_(a), i2_(T(2).inv()) {}\n    // [`head`,\
+    \ `tail`), [`tail`, `last`)\n    void run(int head, int tail, int last) {\n  \
+    \    if (head >= tail) return;\n      if (int mid = (last - head) / 2 + head,\
+    \ len = mid - head; mid <= tail) {\n        // pull up [`head`, `mid`)\n     \
+    \   T i2p(1);\n        for (int i = 1; i != len; i <<= 1, i2p *= i2_)\n      \
+    \    for (int j = head, m = head / (i << 1); j != mid; j += i << 1, ++m)\n   \
+    \         for (int k = j; k != j + i; ++k) {\n              T u(a_[k]), v(a_[k\
     \ + i]);\n              a_[k] = u + v, a_[k + i] = (u - v) * iroot[m];\n     \
     \       }\n        for (int i = head; i != mid; ++i) a_[i] *= i2p;\n        //\
     \ push down [`tail`, `last`)\n        T r(root[head / (len << 1)] * 2);\n    \
@@ -263,32 +263,32 @@ data:
   isVerificationFile: false
   path: math/truncated_fourier_transform.hpp
   requiredBy:
-  - math/multivariate_convolution.hpp
-  - math/truncated_formal_power_series.hpp
-  - math/convolution_mod.hpp
   - math/binomial_convolution.hpp
-  - math/convolution.hpp
   - math/polynomial.hpp
-  timestamp: '2022-05-01 20:49:46+08:00'
-  verificationStatus: LIBRARY_ALL_AC
+  - math/convolution_mod.hpp
+  - math/truncated_formal_power_series.hpp
+  - math/convolution.hpp
+  - math/multivariate_convolution.hpp
+  timestamp: '2022-06-22 23:05:33+08:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
-  - remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
-  - remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
-  - remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
-  - remote_test/yosupo/math/multivariate_convolution.0.test.cpp
-  - remote_test/yosupo/math/convolution_mod.1.test.cpp
-  - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
-  - remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
   - remote_test/yosupo/math/multipoint_evaluation.0.test.cpp
-  - remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
-  - remote_test/yosupo/math/convolution_mod.0.test.cpp
-  - remote_test/yosupo/math/inv_of_polynomials.0.test.cpp
+  - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
   - remote_test/yosupo/math/pow_of_formal_power_series.1.test.cpp
   - remote_test/yosupo/math/division_of_polynomials.0.test.cpp
+  - remote_test/yosupo/math/convolution_mod.0.test.cpp
   - remote_test/yosupo/math/log_of_formal_power_series.1.test.cpp
+  - remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
   - remote_test/yosupo/math/sqrt_of_formal_power_series.0.test.cpp
-  - remote_test/yosupo/math/inv_of_formal_power_series.2.test.cpp
+  - remote_test/yosupo/math/inv_of_polynomials.0.test.cpp
+  - remote_test/yosupo/math/multivariate_convolution.0.test.cpp
+  - remote_test/yosupo/math/polynomial_taylor_shift.0.test.cpp
+  - remote_test/yosupo/math/exp_of_formal_power_series.1.test.cpp
+  - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
   - remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
+  - remote_test/yosupo/math/convolution_mod.1.test.cpp
+  - remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
+  - remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
 documentation_of: math/truncated_fourier_transform.hpp
 layout: document
 title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT

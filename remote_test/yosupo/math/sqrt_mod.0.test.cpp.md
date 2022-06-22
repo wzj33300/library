@@ -1,26 +1,26 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/random.hpp
     title: Pseudo Random Number Generator
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/sqrt_mod.hpp
     title: Square Roots (in $\mathbb{F} _ p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: modint/runtime_modint.hpp
     title: Runtime ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/sqrt_mod
@@ -51,7 +51,7 @@ data:
     \ {\n  // Bostan--Mori's algorithm\n  const auto p = ModIntT::mod();\n  if (p\
     \ == 2 || a.is_zero()) return {a};\n  if (a.pow(p >> 1) == -1) return {};\n  if\
     \ ((p & 3) == 3) {\n    ModIntT b(a.pow((p + 1) >> 2));\n    return {b, -b};\n\
-    \  }\n  xoshiro256starstar gen(std::random_device{}());\n  std::uniform_int_distribution<std::remove_cv_t<decltype(p)>>\
+    \  }\n  xoshiro256starstar gen(std::random_device{}());\n  std::uniform_int_distribution<std::decay_t<decltype(p)>>\
     \ dis(2, p - 1);\n  ModIntT t;\n  do { t = dis(gen); } while ((t * t - 4 * a).pow(p\
     \ >> 1) != -1);\n  ModIntT k0(1), k1, k2(-t), k3(a);\n  for (auto e = (p + 1)\
     \ >> 1;;) {\n    // clang-format off\n    if (e & 1) k0 = k1 - k0 * k2, k1 *=\
@@ -148,8 +148,8 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/sqrt_mod.0.test.cpp
   requiredBy: []
-  timestamp: '2022-05-27 06:01:13+00:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2022-06-22 23:05:33+08:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/sqrt_mod.0.test.cpp
 layout: document

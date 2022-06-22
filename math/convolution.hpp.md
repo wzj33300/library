@@ -1,18 +1,18 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_fourier_transform.hpp
     title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$ for
       FFT prime $p$)
   _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/binomial_convolution.hpp
     title: Binomial Convolution (in $\mathbb{Z} / m \mathbb{Z}$)
   - icon: ':heavy_check_mark:'
@@ -25,12 +25,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
     title: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
     title: remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/convolution.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\
@@ -111,14 +111,14 @@ data:
     \n\n#line 6 \"math/truncated_fourier_transform.hpp\"\n\n#line 8 \"math/truncated_fourier_transform.hpp\"\
     \n#include <utility>\n#line 10 \"math/truncated_fourier_transform.hpp\"\n\nLIB_BEGIN\n\
     \ntemplate <typename ContainerT>\nvoid tft(ContainerT &&a) {\n  using Container\
-    \          = std::remove_cv_t<std::remove_reference_t<ContainerT>>;\n  using T\
-    \                  = typename Container::value_type;\n  static constexpr auto\
-    \ rt = detail::root<T>();\n  static std::vector<T> root(1);\n  const int n = static_cast<int>(a.size());\n\
-    \  if ((n & (n - 1)) == 0) return dft(std::forward<ContainerT>(a));\n  const int\
-    \ len = ntt_len(n);\n  if (int s = static_cast<int>(root.size()); s << 1 < len)\
-    \ {\n    root.resize(len >> 1);\n    for (int i = detail::bsf(s), j; 1 << i <\
-    \ len >> 1; ++i) {\n      root[j = 1 << i] = rt[i];\n      for (int k = j + 1;\
-    \ k < j << 1; ++k) root[k] = root[k - j] * root[j];\n    }\n  }\n  a.resize(len);\n\
+    \          = std::decay_t<ContainerT>;\n  using T                  = typename\
+    \ Container::value_type;\n  static constexpr auto rt = detail::root<T>();\n  static\
+    \ std::vector<T> root(1);\n  const int n = static_cast<int>(a.size());\n  if ((n\
+    \ & (n - 1)) == 0) return dft(std::forward<ContainerT>(a));\n  const int len =\
+    \ ntt_len(n);\n  if (int s = static_cast<int>(root.size()); s << 1 < len) {\n\
+    \    root.resize(len >> 1);\n    for (int i = detail::bsf(s), j; 1 << i < len\
+    \ >> 1; ++i) {\n      root[j = 1 << i] = rt[i];\n      for (int k = j + 1; k <\
+    \ j << 1; ++k) root[k] = root[k - j] * root[j];\n    }\n  }\n  a.resize(len);\n\
     \  for (int j = 0, l = len >> 1; j != l; ++j) {\n    T u(a[j]), v(a[j + l]);\n\
     \    a[j] = u + v, a[j + l] = u - v;\n  }\n  for (int i = len >> 1; i >= 2; i\
     \ >>= 1) {\n    for (int j = 0, l = i >> 1; j != l; ++j) {\n      T u(a[j]), v(a[j\
@@ -126,7 +126,7 @@ data:
     \ = i >> 1, m = 1; j < n && j != len; j += i, ++m)\n      for (int k = j; k !=\
     \ j + l; ++k) {\n        T u(a[k]), v(a[k + l] * root[m]);\n        a[k] = u +\
     \ v, a[k + l] = u - v;\n      }\n  }\n  a.resize(n);\n}\n\ntemplate <typename\
-    \ ContainerT>\nvoid itft(ContainerT &&a) {\n  using Container           = std::remove_cv_t<std::remove_reference_t<ContainerT>>;\n\
+    \ ContainerT>\nvoid itft(ContainerT &&a) {\n  using Container           = std::decay_t<ContainerT>;\n\
     \  using T                   = typename Container::value_type;\n  static constexpr\
     \ auto rt  = detail::root<T>();\n  static constexpr auto irt = detail::iroot<T>();\n\
     \  static std::vector<T> root{T(1)}, iroot{T(1)};\n  const int n = static_cast<int>(a.size());\n\
@@ -190,14 +190,14 @@ data:
   isVerificationFile: false
   path: math/convolution.hpp
   requiredBy:
-  - math/convolution_mod.hpp
   - math/binomial_convolution.hpp
-  timestamp: '2022-05-04 12:04:29+08:00'
-  verificationStatus: LIBRARY_ALL_AC
+  - math/convolution_mod.hpp
+  timestamp: '2022-06-22 23:05:33+08:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
+  - remote_test/yosupo/math/convolution_mod.0.test.cpp
   - remote_test/yosupo/math/polynomial_taylor_shift.1.test.cpp
   - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
-  - remote_test/yosupo/math/convolution_mod.0.test.cpp
 documentation_of: math/convolution.hpp
 layout: document
 title: Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
