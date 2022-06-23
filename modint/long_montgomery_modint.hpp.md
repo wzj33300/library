@@ -10,7 +10,7 @@ data:
     title: Binomial Convolution (in $\mathbb{Z} / m \mathbb{Z}$)
   - icon: ':heavy_check_mark:'
     path: math/convolution_mod.hpp
-    title: Convolution (in $\mathbb{Z} m / \mathbb{Z} \lbrack z \rbrack$)
+    title: Convolution (in $\mathbb{Z} / m \mathbb{Z} \lbrack z \rbrack$)
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp

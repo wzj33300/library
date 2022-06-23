@@ -36,7 +36,7 @@ data:
       title: Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
     - icon: ':heavy_check_mark:'
       path: math/convolution_mod.hpp
-      title: Convolution (in $\mathbb{Z} m / \mathbb{Z} \lbrack z \rbrack$)
+      title: Convolution (in $\mathbb{Z} / m \mathbb{Z} \lbrack z \rbrack$)
     - icon: ':heavy_check_mark:'
       path: math/cra.hpp
       title: Chinese Remainder Algorithm (in $\mathbb{Z} / m \mathbb{Z}$)

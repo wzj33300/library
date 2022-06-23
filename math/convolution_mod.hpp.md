@@ -279,5 +279,5 @@ data:
   - remote_test/yosupo/math/convolution_mod_1000000007.0.test.cpp
 documentation_of: math/convolution_mod.hpp
 layout: document
-title: Convolution (in $\mathbb{Z} m / \mathbb{Z} \lbrack z \rbrack$)
+title: Convolution (in $\mathbb{Z} / m \mathbb{Z} \lbrack z \rbrack$)
 ---
