@@ -10,14 +10,14 @@ data:
   - icon: ':question:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/formal_power_series.hpp
     title: Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack \rbrack$
       for FFT prime $p$)
   - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/relaxed_convolution.hpp
     title: Relaxed Convolution (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack \rbrack$
       for FFT prime $p$)
@@ -26,38 +26,40 @@ data:
     title: Montgomery ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
+    ERROR: ''
     PROBLEM: https://judge.yosupo.jp/problem/pow_of_formal_power_series
     links:
     - https://judge.yosupo.jp/problem/pow_of_formal_power_series
   bundledCode: "#line 1 \"remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp\"\
     \n#define PROBLEM \"https://judge.yosupo.jp/problem/pow_of_formal_power_series\"\
-    \n\n#line 1 \"math/formal_power_series.hpp\"\n\n\n\n#line 1 \"common.hpp\"\n\n\
-    \n\n#define LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define LIB_END }\n\
-    #define LIB ::lib::\n\n\n#line 1 \"math/extended_gcd.hpp\"\n\n\n\n#line 5 \"math/extended_gcd.hpp\"\
-    \n\n#include <tuple>\n#include <utility>\n#include <vector>\n\nLIB_BEGIN\n\n//\
-    \ Input:  integer `a` and `b`.\n// Output: (x, y, z) such that `a`x + `b`y = z\
-    \ = gcd(`a`, `b`).\n[[deprecated]] std::tuple<long long, long long, long long>\
-    \ ext_gcd(long long a, long long b) {\n  long long x11 = 1, x12 = 0, x21 = 0,\
-    \ x22 = 1;\n  while (b != 0) {\n    long long q = a / b, x11_cpy = x11, x12_cpy\
-    \ = x12, a_cpy = a;\n    x11 = x21, x21 = x11_cpy - q * x21;\n    x12 = x22, x22\
-    \ = x12_cpy - q * x22;\n    a = b, b = a_cpy - q * b;\n  }\n  return std::make_tuple(x11,\
-    \ x12, a);\n}\n\n// Input:  integer `a` and `b`.\n// Output: (x, gcd(`a`, `b`))\
-    \ such that `a`x \u2261 gcd(`a`, `b`) (mod `b`).\nstd::pair<long long, long long>\
-    \ inv_gcd(long long a, long long b) {\n  long long x11 = 1, x21 = 0;\n  while\
-    \ (b != 0) {\n    long long q = a / b, x11_cpy = x11, a_cpy = a;\n    x11 = x21,\
-    \ x21 = x11_cpy - q * x21;\n    a = b, b = a_cpy - q * b;\n  }\n  return std::make_pair(x11,\
-    \ a);\n}\n\nnamespace detail {\n\ntemplate <typename ModIntT>\nclass modular_inverse\
-    \ {\n  std::vector<ModIntT> ivs{ModIntT()};\n\n  enum : int { LIM = 1 << 20 };\n\
-    \npublic:\n  modular_inverse() {}\n  ModIntT operator()(int k) {\n    // assume\
-    \ `ModIntT::mod()` is prime.\n    if (k > LIM) return ModIntT(k).inv();\n    //\
-    \ preprocess modular inverse from 1 to `k`\n    if (int n = static_cast<int>(ivs.size());\
-    \ n <= k) {\n      int nn = n;\n      while (nn <= k) nn <<= 1;\n      ivs.resize(nn);\n\
-    \      ModIntT v(1);\n      for (int i = n; i != nn; ++i) ivs[i] = v, v *= ModIntT(i);\n\
+    \n#define ERROR\n\n#line 1 \"math/formal_power_series.hpp\"\n\n\n\n#line 1 \"\
+    common.hpp\"\n\n\n\n#define LIB_DEBUG\n\n#define LIB_BEGIN namespace lib {\n#define\
+    \ LIB_END }\n#define LIB ::lib::\n\n\n#line 1 \"math/extended_gcd.hpp\"\n\n\n\n\
+    #line 5 \"math/extended_gcd.hpp\"\n\n#include <tuple>\n#include <utility>\n#include\
+    \ <vector>\n\nLIB_BEGIN\n\n// Input:  integer `a` and `b`.\n// Output: (x, y,\
+    \ z) such that `a`x + `b`y = z = gcd(`a`, `b`).\n[[deprecated]] std::tuple<long\
+    \ long, long long, long long> ext_gcd(long long a, long long b) {\n  long long\
+    \ x11 = 1, x12 = 0, x21 = 0, x22 = 1;\n  while (b != 0) {\n    long long q = a\
+    \ / b, x11_cpy = x11, x12_cpy = x12, a_cpy = a;\n    x11 = x21, x21 = x11_cpy\
+    \ - q * x21;\n    x12 = x22, x22 = x12_cpy - q * x22;\n    a = b, b = a_cpy -\
+    \ q * b;\n  }\n  return std::make_tuple(x11, x12, a);\n}\n\n// Input:  integer\
+    \ `a` and `b`.\n// Output: (x, gcd(`a`, `b`)) such that `a`x \u2261 gcd(`a`, `b`)\
+    \ (mod `b`).\nstd::pair<long long, long long> inv_gcd(long long a, long long b)\
+    \ {\n  long long x11 = 1, x21 = 0;\n  while (b != 0) {\n    long long q = a /\
+    \ b, x11_cpy = x11, a_cpy = a;\n    x11 = x21, x21 = x11_cpy - q * x21;\n    a\
+    \ = b, b = a_cpy - q * b;\n  }\n  return std::make_pair(x11, a);\n}\n\nnamespace\
+    \ detail {\n\ntemplate <typename ModIntT>\nclass modular_inverse {\n  std::vector<ModIntT>\
+    \ ivs{ModIntT()};\n\n  enum : int { LIM = 1 << 20 };\n\npublic:\n  modular_inverse()\
+    \ {}\n  ModIntT operator()(int k) {\n    // assume `ModIntT::mod()` is prime.\n\
+    \    if (k > LIM) return ModIntT(k).inv();\n    // preprocess modular inverse\
+    \ from 1 to `k`\n    if (int n = static_cast<int>(ivs.size()); n <= k) {\n   \
+    \   int nn = n;\n      while (nn <= k) nn <<= 1;\n      ivs.resize(nn);\n    \
+    \  ModIntT v(1);\n      for (int i = n; i != nn; ++i) ivs[i] = v, v *= ModIntT(i);\n\
     \      v = v.inv();\n      for (int i = nn - 1; i >= n; --i) ivs[i] *= v, v *=\
     \ ModIntT(i);\n    }\n    return ivs[k];\n  }\n};\n\n} // namespace detail\n\n\
     LIB_END\n\n\n#line 1 \"math/radix2_ntt.hpp\"\n\n\n\n#line 5 \"math/radix2_ntt.hpp\"\
@@ -326,23 +328,25 @@ data:
     \ &rhs) {\n    i32 x;\n    is >> x;\n    rhs = montgomery_modint30(x);\n    return\
     \ is;\n  }\n  friend std::ostream &operator<<(std::ostream &os, const montgomery_modint30\
     \ &rhs) {\n    return os << rhs.val();\n  }\n};\n\ntemplate <std::uint32_t ModT>\n\
-    using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 5 \"remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp\"\
-    \n\n#line 7 \"remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp\"\n\
+    using mm30 = montgomery_modint30<ModT>;\n\nLIB_END\n\n\n#line 6 \"remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp\"\
+    \n\n#line 8 \"remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp\"\n\
     #include <iterator>\n\nint main() {\n#ifdef LOCAL\n  std::freopen(\"in\", \"r\"\
     , stdin), std::freopen(\"out\", \"w\", stdout);\n#endif\n  std::ios::sync_with_stdio(false);\n\
-    \  std::cin.tie(nullptr);\n  int n, m;\n  std::cin >> n >> m;\n  using mint =\
-    \ lib::mm30<998244353>;\n  lib::fps<mint> f([it = std::istream_iterator<mint>(std::cin)](int)\
-    \ mutable { return *it++; });\n  auto iv = f.pow(m);\n  for (int i = 0; i != n;\
-    \ ++i) std::cout << iv[i] << ' ';\n  return 0;\n}\n"
+    \  std::cin.tie(nullptr);\n  int n;\n  long long m; // I don't want to deal with\
+    \ the case that `m` is too large.\n  std::cin >> n >> m;\n  using mint = lib::mm30<998244353>;\n\
+    \  lib::fps<mint> f([it = std::istream_iterator<mint>(std::cin)](int) mutable\
+    \ { return *it++; });\n  auto iv = f.pow(static_cast<int>(m));\n  for (int i =\
+    \ 0; i != n; ++i) std::cout << iv[i] << ' ';\n  return 0;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/pow_of_formal_power_series\"\
-    \n\n#include \"math/formal_power_series.hpp\"\n#include \"modint/montgomery_modint.hpp\"\
+    \n#define ERROR\n\n#include \"math/formal_power_series.hpp\"\n#include \"modint/montgomery_modint.hpp\"\
     \n\n#include <iostream>\n#include <iterator>\n\nint main() {\n#ifdef LOCAL\n \
     \ std::freopen(\"in\", \"r\", stdin), std::freopen(\"out\", \"w\", stdout);\n\
-    #endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n  int n,\
-    \ m;\n  std::cin >> n >> m;\n  using mint = lib::mm30<998244353>;\n  lib::fps<mint>\
+    #endif\n  std::ios::sync_with_stdio(false);\n  std::cin.tie(nullptr);\n  int n;\n\
+    \  long long m; // I don't want to deal with the case that `m` is too large.\n\
+    \  std::cin >> n >> m;\n  using mint = lib::mm30<998244353>;\n  lib::fps<mint>\
     \ f([it = std::istream_iterator<mint>(std::cin)](int) mutable { return *it++;\
-    \ });\n  auto iv = f.pow(m);\n  for (int i = 0; i != n; ++i) std::cout << iv[i]\
-    \ << ' ';\n  return 0;\n}"
+    \ });\n  auto iv = f.pow(static_cast<int>(m));\n  for (int i = 0; i != n; ++i)\
+    \ std::cout << iv[i] << ' ';\n  return 0;\n}"
   dependsOn:
   - math/formal_power_series.hpp
   - common.hpp
@@ -354,8 +358,8 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
   requiredBy: []
-  timestamp: '2022-05-15 15:19:08+08:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2022-06-28 22:07:25+08:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/pow_of_formal_power_series.0.test.cpp
 layout: document
