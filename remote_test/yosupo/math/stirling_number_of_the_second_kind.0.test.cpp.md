@@ -1,59 +1,59 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/binomial.hpp
     title: Binomial Coefficient (in $\mathbb{F} _ p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/linear_sieve.hpp
     title: Linear Sieve
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/polynomial.hpp
     title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/random.hpp
     title: Pseudo Random Number Generator
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT
       prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/sqrt_mod.hpp
     title: Square Roots (in $\mathbb{F} _ p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/stirling_numbers.hpp
     title: Stirling Numbers (in $\mathbb{F} _ p$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/taylor_shift.hpp
     title: Polynomial Taylor Shift (in $\mathbb{F} _ p$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
       \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_fourier_transform.hpp
     title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$ for
       FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: modint/montgomery_modint.hpp
     title: Montgomery ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/stirling_number_of_the_second_kind
@@ -305,12 +305,12 @@ data:
     \  truncated_formal_power_series log(int n) const { return deriv().div(*this,\
     \ n - 1).integr(); }\n  truncated_formal_power_series exp(int n) const;\n  truncated_formal_power_series\
     \ div(const truncated_formal_power_series &rhs, int n) const;\n  truncated_formal_power_series\
-    \ pow(int n, int e) const;\n  std::optional<truncated_formal_power_series> sqrt_hint(int\
-    \ n, ModIntT c) const;\n  std::optional<truncated_formal_power_series> sqrt(int\
-    \ n) const;\n\n  friend truncated_formal_power_series operator+(const truncated_formal_power_series\
-    \ &lhs,\n                                                 const truncated_formal_power_series\
-    \ &rhs) {\n    return truncated_formal_power_series(lhs) += rhs;\n  }\n  friend\
-    \ truncated_formal_power_series operator-(const truncated_formal_power_series\
+    \ pow(int n, long long e) const;\n  std::optional<truncated_formal_power_series>\
+    \ sqrt_hint(int n, ModIntT c) const;\n  std::optional<truncated_formal_power_series>\
+    \ sqrt(int n) const;\n\n  friend truncated_formal_power_series operator+(const\
+    \ truncated_formal_power_series &lhs,\n                                      \
+    \           const truncated_formal_power_series &rhs) {\n    return truncated_formal_power_series(lhs)\
+    \ += rhs;\n  }\n  friend truncated_formal_power_series operator-(const truncated_formal_power_series\
     \ &lhs,\n                                                 const truncated_formal_power_series\
     \ &rhs) {\n    return truncated_formal_power_series(lhs) -= rhs;\n  }\n  friend\
     \ truncated_formal_power_series operator*(const truncated_formal_power_series\
@@ -354,11 +354,12 @@ data:
     \ &c) {\n        return ((n < static_cast<int>(this->size()) ? this->operator[](n)\
     \ : ModIntT()) - c[n]) * iv;\n      });\n  auto &&multiplier = src.await(n).get_multiplier();\n\
     \  return truncated_formal_power_series(multiplier.cbegin(), multiplier.cend());\n\
-    }\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT> truncated_formal_power_series<ModIntT>::pow(int\
-    \ n,\n                                                                       \
-    \            int e) const {\n  const int o        = ord();\n  const long long\
-    \ zs = static_cast<long long>(o) * e; // count zeros\n  if (o == NEGATIVE_INFINITY\
-    \ || zs >= n) return truncated_formal_power_series(n);\n  const int nn = n - static_cast<int>(zs);\n\
+    }\n\ntemplate <typename ModIntT>\ntruncated_formal_power_series<ModIntT>\ntruncated_formal_power_series<ModIntT>::pow(int\
+    \ n, long long e) const {\n  if (e == 0) {\n    truncated_formal_power_series\
+    \ res{1};\n    res.resize(n);\n    return res;\n  }\n  const int o = ord();\n\
+    \  if (o == NEGATIVE_INFINITY || (o > n / e || (o == n / e && n % e == 0)))\n\
+    \    return truncated_formal_power_series(n);\n  const long long zs = static_cast<long\
+    \ long>(o) * e; // count zeros\n  const int nn       = n - static_cast<int>(zs);\n\
     \  const ModIntT c(this->operator[](o)), ic(c.inv()), ce(c.pow(e)), me(e);\n \
     \ truncated_formal_power_series cpy(this->cbegin() + o, this->cend()); // optimize?\n\
     \  for (auto &&i : cpy) i *= ic;\n  cpy = cpy.log(nn);\n  for (auto &&i : cpy)\
@@ -556,8 +557,8 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
   requiredBy: []
-  timestamp: '2022-06-22 23:05:33+08:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2022-06-28 21:51:36+08:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/stirling_number_of_the_second_kind.0.test.cpp
 layout: document
