@@ -10,31 +10,31 @@ data:
   - icon: ':question:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/polynomial.hpp
     title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/random.hpp
     title: Pseudo Random Number Generator
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT
       prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/sqrt_mod.hpp
     title: Square Roots (in $\mathbb{F} _ p$)
   - icon: ':heavy_check_mark:'
     path: math/subproduct_tree.hpp
     title: Multipoint Evaluation and Interpolation (in $\mathbb{F} _ p$ for FFT prime
       $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
       \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_fourier_transform.hpp
     title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$ for
       FFT prime $p$)
@@ -166,16 +166,17 @@ data:
     \ at(int k) {\n    while (n_ <= k) next();\n    return c_[k];\n  }\n  ModIntT\
     \ operator[](int k) { return at(k); }\n  ModIntT next();\n};\n\ntemplate <typename\
     \ ModIntT, typename FnT>\nModIntT semi_relaxed_convolution<ModIntT, FnT>::next()\
-    \ {\n  {\n    // enlarge space\n    int len = ntt_len(n_ << 1 | 1);\n    if (static_cast<int>(c_.size())\
-    \ < len) c_.resize(len);\n    if (static_cast<int>(fixed_A_.size()) < len) fixed_A_.resize(len);\n\
-    \  }\n  if ((n_ & (BASE_CASE_SIZE - 1)) == 0)\n    for (int t = n_ / BASE_CASE_SIZE,\
-    \ block_size = BASE_CASE_SIZE, lv = 0; t != 0;\n         t >>= LOG_BLOCK, block_size\
-    \ <<= LOG_BLOCK, ++lv)\n      if (int i = t & MASK, block_size2 = block_size <<\
-    \ 1, l = n_ - block_size; i != 0) {\n        if (block_size * i == n_) {\n   \
-    \       if (static_cast<int>(dft_A_cache_.size()) == lv) {\n            dft_A_cache_.emplace_back();\n\
-    \            dft_B_cache_.emplace_back(BLOCK - 1);\n          }\n          dft(dft_A_cache_[lv].emplace_back(fixed_A_.cbegin()\
+    \ {\n  {\n    // enlarge space\n    const int len = ntt_len(n_ << 1 | 1);\n  \
+    \  if (static_cast<int>(c_.size()) < len) c_.resize(len);\n    if (static_cast<int>(fixed_A_.size())\
+    \ < len) fixed_A_.resize(len);\n  }\n  if ((n_ & (BASE_CASE_SIZE - 1)) == 0)\n\
+    \    for (int t = n_ / BASE_CASE_SIZE, block_size = BASE_CASE_SIZE, lv = 0; t\
+    \ != 0;\n         t >>= LOG_BLOCK, block_size <<= LOG_BLOCK, ++lv)\n      if (int\
+    \ i = t & MASK, block_size2 = block_size << 1, l = n_ - block_size; i != 0) {\n\
+    \        if (block_size * i == n_) {\n          if (static_cast<int>(dft_A_cache_.size())\
+    \ == lv) {\n            dft_A_cache_.emplace_back();\n            dft_B_cache_.emplace_back(BLOCK\
+    \ - 1);\n          }\n          dft(dft_A_cache_[lv].emplace_back(fixed_A_.cbegin()\
     \ + (i - 1) * block_size,\n                                            fixed_A_.cbegin()\
-    \ + (i + 1) * block_size));\n        }\n        auto &B_cache = dft_B_cache_[lv];\n\
+    \ + (i + 1) * block_size));\n        }\n        auto &&B_cache = dft_B_cache_[lv];\n\
     \        B_cache[i - 1].resize(block_size2);\n        std::fill_n(std::copy_n(B_.cbegin()\
     \ + l, block_size, B_cache[i - 1].begin()), block_size,\n                    ModIntT());\n\
     \        dft(B_cache[i - 1]);\n        std::vector<ModIntT> temp_sum(block_size2);\n\
@@ -438,30 +439,29 @@ data:
     \ x^(-1), ..., x^(-`n`)\n  const auto irev_x =\n      PolyT(tree_.back().front().poly_.crbegin(),\
     \ tree_.back().front().poly_.crend()).inv(m + 1);\n  auto aix = a * PolyT(irev_x.crbegin(),\
     \ irev_x.crend());\n  if (m - n < -1) aix.resize(m + n);\n  aix.erase(aix.begin(),\
-    \ aix.begin() + m);\n  aix.resize(n);\n  std::vector<PolyT> resp{aix};\n  {\n\
-    \    auto t  = tree_.rbegin() + 1;\n    auto te = tree_.rend();\n    for (; t\
-    \ != te; ++t) {\n      std::vector<PolyT> res;\n      const int ts = static_cast<int>(t->size());\n\
-    \      for (int i = 0, ie = static_cast<int>(resp.size()); i != ie; ++i)\n   \
-    \     if ((i << 1 | 1) < ts) {\n          auto &&l      = t->at(i << 1);\n   \
-    \       auto &&r      = t->at(i << 1 | 1);\n          const int len = static_cast<int>(l.cached_dft_.size());\n\
-    \          resp[i].resize(len);\n          dft(resp[i]);\n          auto respi_cpy\
-    \ = resp[i];\n          for (int j = 0; j != len; ++j)\n            resp[i][j]\
-    \ *= r.cached_dft_[j], respi_cpy[j] *= l.cached_dft_[j];\n          res.emplace_back(std::move(resp[i]));\n\
-    \          auto &&rr = res.emplace_back(std::move(respi_cpy));\n          auto\
-    \ &&lr = *(res.rbegin() + 1);\n          idft(lr), idft(rr);\n          lr.erase(lr.begin(),\
-    \ lr.begin() + r.poly_.deg());\n          lr.resize(l.poly_.deg());\n        \
-    \  rr.erase(rr.begin(), rr.begin() + l.poly_.deg());\n          rr.resize(r.poly_.deg());\n\
-    \        } else {\n          res.emplace_back(std::move(resp[i]));\n        }\n\
-    \      resp.swap(res);\n    }\n  }\n  std::vector<T> res(n);\n  for (int i = 0;\
-    \ i != n; ++i) res[i] = resp[i].front();\n  return res;\n}\n\ntemplate <typename\
-    \ PolyT>\nPolyT subproduct_tree<PolyT>::interpolate(const std::vector<T> &y) const\
-    \ {\n  assert(y.size() == tree_.front().size());\n  const int n = static_cast<int>(y.size());\n\
-    \  auto yp     = evaluate(tree_.back().front().poly_.deriv());\n  std::vector<T>\
-    \ iyp(yp.size());\n  {\n    T v(1);\n    for (int i = 0; i != n; ++i) iyp[i] =\
-    \ v, v *= yp[i];\n    v = v.inv();\n    for (int i = n - 1; i >= 0; --i) iyp[i]\
-    \ *= v, v *= yp[i];\n  }\n  std::vector<PolyT> resp;\n  resp.reserve(n);\n  for\
-    \ (int i = 0; i != n; ++i) resp.emplace_back(PolyT{y[i] * iyp[i]});\n  for (auto\
-    \ t = tree_.begin(); resp.size() != 1; ++t) {\n    assert(t->size() == resp.size());\n\
+    \ aix.begin() + m);\n  aix.resize(n);\n  std::vector<PolyT> resp{aix};\n  for\
+    \ (auto t = tree_.rbegin() + 1, te = tree_.rend(); t != te; ++t) {\n    std::vector<PolyT>\
+    \ res;\n    const int ts = static_cast<int>(t->size());\n    for (int i = 0, ie\
+    \ = static_cast<int>(resp.size()); i != ie; ++i)\n      if ((i << 1 | 1) < ts)\
+    \ {\n        auto &&l      = t->at(i << 1);\n        auto &&r      = t->at(i <<\
+    \ 1 | 1);\n        const int len = static_cast<int>(l.cached_dft_.size());\n \
+    \       resp[i].resize(len);\n        dft(resp[i]);\n        auto respi_cpy =\
+    \ resp[i];\n        for (int j = 0; j != len; ++j)\n          resp[i][j] *= r.cached_dft_[j],\
+    \ respi_cpy[j] *= l.cached_dft_[j];\n        res.emplace_back(std::move(resp[i]));\n\
+    \        auto &&rr = res.emplace_back(std::move(respi_cpy));\n        auto &&lr\
+    \ = *(res.rbegin() + 1);\n        idft(lr), idft(rr);\n        lr.erase(lr.begin(),\
+    \ lr.begin() + r.poly_.deg());\n        lr.resize(l.poly_.deg());\n        rr.erase(rr.begin(),\
+    \ rr.begin() + l.poly_.deg());\n        rr.resize(r.poly_.deg());\n      } else\
+    \ {\n        res.emplace_back(std::move(resp[i]));\n      }\n    resp.swap(res);\n\
+    \  }\n  std::vector<T> res(n);\n  for (int i = 0; i != n; ++i) res[i] = resp[i].front();\n\
+    \  return res;\n}\n\ntemplate <typename PolyT>\nPolyT subproduct_tree<PolyT>::interpolate(const\
+    \ std::vector<T> &y) const {\n  assert(y.size() == tree_.front().size());\n  const\
+    \ int n = static_cast<int>(y.size());\n  auto yp     = evaluate(tree_.back().front().poly_.deriv());\n\
+    \  std::vector<T> iyp(yp.size());\n  {\n    T v(1);\n    for (int i = 0; i !=\
+    \ n; ++i) iyp[i] = v, v *= yp[i];\n    v = v.inv();\n    for (int i = n - 1; i\
+    \ >= 0; --i) iyp[i] *= v, v *= yp[i];\n  }\n  std::vector<PolyT> resp;\n  resp.reserve(n);\n\
+    \  for (int i = 0; i != n; ++i) resp.emplace_back(PolyT{y[i] * iyp[i]});\n  for\
+    \ (auto t = tree_.begin(); resp.size() != 1; ++t) {\n    assert(t->size() == resp.size());\n\
     \    std::vector<PolyT> res;\n    for (int i = 0, ie = static_cast<int>(resp.size());\
     \ i + 1 < ie; i += 2) {\n      auto &&l = t->at(i).cached_dft_;\n      auto &&r\
     \ = t->at(i + 1).cached_dft_;\n      dft_doubling(resp[i]);\n      const int len\
@@ -570,7 +570,7 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp
   requiredBy: []
-  timestamp: '2022-06-28 21:51:36+08:00'
+  timestamp: '2022-07-02 07:42:02+08:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/polynomial_interpolation.0.test.cpp

@@ -7,42 +7,42 @@ data:
   - icon: ':question:'
     path: common.hpp
     title: common.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/binomial.hpp
     title: Binomial Coefficient (in $\mathbb{F} _ p$)
   - icon: ':question:'
     path: math/extended_gcd.hpp
     title: Extended Euclidean Algorithm (in $\mathbb{Z}$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/linear_sieve.hpp
     title: Linear Sieve
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/polynomial.hpp
     title: Polynomial (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
   - icon: ':question:'
     path: math/radix2_ntt.hpp
     title: Radix-2 NTT (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/random.hpp
     title: Pseudo Random Number Generator
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/semi_relaxed_convolution.hpp
     title: Semi-Relaxed Convolution (in $\mathbb{F} _ p \lbrack z \rbrack$ for FFT
       prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/sqrt_mod.hpp
     title: Square Roots (in $\mathbb{F} _ p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/stirling_numbers.hpp
     title: Stirling Numbers (in $\mathbb{F} _ p$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/taylor_shift.hpp
     title: Polynomial Taylor Shift (in $\mathbb{F} _ p$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_formal_power_series.hpp
     title: Truncated Formal Power Series (in $\mathbb{F} _ p \lbrack \lbrack z \rbrack
       \rbrack$ for FFT prime $p$)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/truncated_fourier_transform.hpp
     title: Truncated Fourier Transform (in $\mathbb{F} _ p \lbrack z \rbrack$ for
       FFT prime $p$)
@@ -51,9 +51,9 @@ data:
     title: Montgomery ModInt
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/stirling_number_of_the_first_kind
@@ -174,16 +174,17 @@ data:
     \ at(int k) {\n    while (n_ <= k) next();\n    return c_[k];\n  }\n  ModIntT\
     \ operator[](int k) { return at(k); }\n  ModIntT next();\n};\n\ntemplate <typename\
     \ ModIntT, typename FnT>\nModIntT semi_relaxed_convolution<ModIntT, FnT>::next()\
-    \ {\n  {\n    // enlarge space\n    int len = ntt_len(n_ << 1 | 1);\n    if (static_cast<int>(c_.size())\
-    \ < len) c_.resize(len);\n    if (static_cast<int>(fixed_A_.size()) < len) fixed_A_.resize(len);\n\
-    \  }\n  if ((n_ & (BASE_CASE_SIZE - 1)) == 0)\n    for (int t = n_ / BASE_CASE_SIZE,\
-    \ block_size = BASE_CASE_SIZE, lv = 0; t != 0;\n         t >>= LOG_BLOCK, block_size\
-    \ <<= LOG_BLOCK, ++lv)\n      if (int i = t & MASK, block_size2 = block_size <<\
-    \ 1, l = n_ - block_size; i != 0) {\n        if (block_size * i == n_) {\n   \
-    \       if (static_cast<int>(dft_A_cache_.size()) == lv) {\n            dft_A_cache_.emplace_back();\n\
-    \            dft_B_cache_.emplace_back(BLOCK - 1);\n          }\n          dft(dft_A_cache_[lv].emplace_back(fixed_A_.cbegin()\
+    \ {\n  {\n    // enlarge space\n    const int len = ntt_len(n_ << 1 | 1);\n  \
+    \  if (static_cast<int>(c_.size()) < len) c_.resize(len);\n    if (static_cast<int>(fixed_A_.size())\
+    \ < len) fixed_A_.resize(len);\n  }\n  if ((n_ & (BASE_CASE_SIZE - 1)) == 0)\n\
+    \    for (int t = n_ / BASE_CASE_SIZE, block_size = BASE_CASE_SIZE, lv = 0; t\
+    \ != 0;\n         t >>= LOG_BLOCK, block_size <<= LOG_BLOCK, ++lv)\n      if (int\
+    \ i = t & MASK, block_size2 = block_size << 1, l = n_ - block_size; i != 0) {\n\
+    \        if (block_size * i == n_) {\n          if (static_cast<int>(dft_A_cache_.size())\
+    \ == lv) {\n            dft_A_cache_.emplace_back();\n            dft_B_cache_.emplace_back(BLOCK\
+    \ - 1);\n          }\n          dft(dft_A_cache_[lv].emplace_back(fixed_A_.cbegin()\
     \ + (i - 1) * block_size,\n                                            fixed_A_.cbegin()\
-    \ + (i + 1) * block_size));\n        }\n        auto &B_cache = dft_B_cache_[lv];\n\
+    \ + (i + 1) * block_size));\n        }\n        auto &&B_cache = dft_B_cache_[lv];\n\
     \        B_cache[i - 1].resize(block_size2);\n        std::fill_n(std::copy_n(B_.cbegin()\
     \ + l, block_size, B_cache[i - 1].begin()), block_size,\n                    ModIntT());\n\
     \        dft(B_cache[i - 1]);\n        std::vector<ModIntT> temp_sum(block_size2);\n\
@@ -558,8 +559,8 @@ data:
   isVerificationFile: true
   path: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
   requiredBy: []
-  timestamp: '2022-06-28 21:51:36+08:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2022-07-02 07:42:02+08:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: remote_test/yosupo/math/stirling_number_of_the_first_kind.0.test.cpp
 layout: document
